@@ -94,9 +94,10 @@ def load_characters():
         print(f"Copied character data from parent project")
 
     if not local_path.exists():
-        print(f"ERROR: Character data not found at {local_path}")
-        print(f"  Expected: archetypometrics_characters.tsv in artifacts/")
-        sys.exit(1)
+        raise FileNotFoundError(
+            f"Character data not found at {local_path}\n"
+            f"  Expected: archetypometrics_characters.tsv in artifacts/"
+        )
 
     characters = []
     with open(local_path, "r", encoding="utf-8") as f:

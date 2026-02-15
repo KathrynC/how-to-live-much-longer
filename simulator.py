@@ -164,18 +164,36 @@ def _cliff_factor(heteroplasmy: float) -> float:
     return 1.0 / (1.0 + np.exp(CLIFF_STEEPNESS * (heteroplasmy - HETEROPLASMY_CLIFF)))
 
 
-def _deletion_rate(age: float, genetic_vulnerability: float) -> float:
-    """Age-dependent mtDNA deletion rate.
+def _deletion_rate(age: float, genetic_vulnerability: float,
+                   atp_norm: float = 1.0, mitophagy_rate: float = BASELINE_MITOPHAGY_RATE) -> float:
+    """ATP- and mitophagy-dependent mtDNA deletion rate.
 
     Cramer Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
     Aging Cell 22(6), 2023): DT = 11.81 yr before age 65, 3.06 yr after.
     Also Ch. II.H, p.15: "deletion damage builds exponentially."
-    Corrected 2026-02-15: AGE_TRANSITION=65 per Cramer email.
+
+    Corrected 2026-02-15 (C9): AGE_TRANSITION=65 per Cramer email.
+    Corrected 2026-02-15 (C10): Per Cramer email, the transition age is NOT
+    a fixed number — it is coupled to ATP energy level and mitophagy efficiency.
+    When ATP is high and mitophagy is effective, the cell maintains "young"
+    repair capacity longer (transition shifts later). When ATP drops or
+    mitophagy fails, the transition happens earlier. Implementation: the
+    effective transition age is AGE_TRANSITION ± shift based on cellular health,
+    with a smooth sigmoid blend (width 5 years) instead of a hard cutoff.
     """
-    if age < AGE_TRANSITION:
-        doubling_time = DOUBLING_TIME_YOUNG
-    else:
-        doubling_time = DOUBLING_TIME_OLD
+    # Health-dependent shift: good ATP + high mitophagy → later transition
+    # atp_norm=1.0, mitophagy=baseline → shift=0 (nominal age 65)
+    # atp_norm=0.5, mitophagy=low → shift≈-8 years (transition at ~57)
+    # atp_norm=1.0, mitophagy=high → shift≈+5 years (transition at ~70)
+    health_factor = atp_norm * (mitophagy_rate / BASELINE_MITOPHAGY_RATE)
+    shift = 10.0 * (health_factor - 1.0)  # ±10 years at extremes
+    shift = max(-15.0, min(shift, 10.0))  # cap the shift range
+    effective_transition = AGE_TRANSITION + shift
+
+    # Smooth sigmoid blend instead of hard cutoff (width ~5 years)
+    blend = 1.0 / (1.0 + np.exp(-(age - effective_transition) / 2.5))
+    doubling_time = DOUBLING_TIME_YOUNG * (1.0 - blend) + DOUBLING_TIME_OLD * blend
+
     # Rate = ln(2) / doubling_time, scaled by genetic vulnerability
     return (np.log(2) / doubling_time) * genetic_vulnerability
 
@@ -261,8 +279,13 @@ def derivatives(
     # unbounded growth (fixes C2/M4).
     copy_number_pressure = max(1.0 - total, -0.5)  # caps downward pressure
 
-    # ── Age-dependent deletion rate ───────────────────────────────────────
-    del_rate = _deletion_rate(age, gen_vuln)
+    # ── Age- and health-dependent deletion rate (C10) ────────────────────
+    # Mitophagy rate at current state (same formula as used below for dn_d)
+    _current_mitophagy_rate = (BASELINE_MITOPHAGY_RATE
+                               + rapa * 0.08
+                               + nad_supp * 0.03 * cd38_survival)
+    del_rate = _deletion_rate(age, gen_vuln, atp_norm=energy_available,
+                              mitophagy_rate=_current_mitophagy_rate)
 
     # ── 1. dN_healthy/dt ──────────────────────────────────────────────────
     # Replication: gated by ATP (fix C1), NAD, and copy number pressure.

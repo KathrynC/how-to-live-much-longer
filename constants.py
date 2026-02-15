@@ -111,11 +111,18 @@ CLIFF_STEEPNESS = 15.0
 DOUBLING_TIME_YOUNG = 11.8   # years (Cramer Appendix 2, p.155)
 DOUBLING_TIME_OLD = 3.06     # years (Cramer Appendix 2, p.155)
 AGE_TRANSITION = 65.0        # Cramer Appendix 2 p.155: "DT before age 65" (corrected per Cramer email 2026-02-15)
+                             # NOTE (C10): This is now the NOMINAL transition age. The effective
+                             # transition is dynamically shifted by ATP and mitophagy in simulator.py
+                             # _deletion_rate(). See Cramer email 2026-02-15 (third).
 
 # Baseline ATP production (metabolic units per day)
 # Cramer Ch. VIII.A, Table 3, p.100: "Normal Somatic Cell Operation:
 # ~1 MU/day" where 1 MU ≡ 10^8 ATP energy releases.
 BASELINE_ATP = 1.0
+
+# ATP crisis threshold: fraction of initial ATP below which we consider
+# the cell to be in energy crisis. Used by analytics.py for time-to-crisis.
+ATP_CRISIS_FRACTION = 0.5
 
 # ROS generation: damaged mitochondria produce more ROS (vicious cycle)
 # Cramer Ch. IV.B p.53: ROS as byproduct of ETC; Ch. II.H p.14: damaged

@@ -10,6 +10,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **C8: Transplant is primary rejuvenation** — Addition rate doubled (0.15 → 0.30), headroom raised (1.2 → 1.5), and competitive displacement of damaged copies added (0.12 * n_d). Transplant now clearly outperforms NAD supplementation and can rescue near-cliff patients.
 - **CRAMER CORRECTION APPLIED (2026-02-15):** Per John Cramer's second email:
   - **C9: AGE_TRANSITION restored to 65** — The mtDNA deletion doubling time transition was incorrectly set to age 40. Book data (Appendix 2 p.155, Va23) places it at age 65. Corrected in constants.py and simulator.py.
+- **CRAMER CORRECTION APPLIED (2026-02-15):** Per John Cramer's third email:
+  - **C10: AGE_TRANSITION coupled to ATP and mitophagy** — The deletion-damage slope change should not be a fixed age. It is now dynamically coupled to ATP energy level and mitophagy efficiency. High ATP + effective mitophagy → transition shifts later (up to +10 years). Low ATP + poor mitophagy → transition shifts earlier (up to -15 years). Hard cutoff replaced with smooth sigmoid blend (width ~5 years).
 
 ## Project Overview
 

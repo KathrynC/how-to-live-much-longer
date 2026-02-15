@@ -21,7 +21,7 @@ import json
 import numpy as np
 
 from constants import (
-    HETEROPLASMY_CLIFF, DT,
+    HETEROPLASMY_CLIFF, DT, ATP_CRISIS_FRACTION,
     YAMANAKA_ENERGY_COST_MIN, YAMANAKA_ENERGY_COST_MAX,
 )
 
@@ -95,8 +95,8 @@ def compute_energy(result: dict) -> dict[str, float]:
     else:
         atp_slope = 0.0
 
-    # Time to energy crisis: first time ATP drops below 50% of initial
-    crisis_threshold = 0.5 * atp_initial
+    # Time to energy crisis: first time ATP drops below threshold fraction of initial
+    crisis_threshold = ATP_CRISIS_FRACTION * atp_initial
     crisis_indices = np.where(atp < crisis_threshold)[0]
     if len(crisis_indices) > 0:
         time_to_crisis = float(time[crisis_indices[0]])
@@ -358,7 +358,7 @@ def compute_intervention(result: dict, baseline_result: dict | None = None) -> d
     total_dose = sum(intervention.get(k, 0.0) for k in intervention)
 
     # Time-to-crisis comparison
-    crisis_thresh = 0.5 * result["states"][0, 2]
+    crisis_thresh = ATP_CRISIS_FRACTION * result["states"][0, 2]
     crisis_idx = np.where(result["states"][:, 2] < crisis_thresh)[0]
     crisis_time = float(result["time"][crisis_idx[0]]) if len(crisis_idx) > 0 else float("inf")
 
