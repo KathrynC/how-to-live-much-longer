@@ -5,6 +5,26 @@ Simulates 7 state variables over a configurable time horizon using a
 ROS-damage vicious cycle, heteroplasmy cliff, age-dependent deletion
 doubling, and six intervention mechanisms.
 
+Reference:
+    Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
+    DNA Connection*. ISBN 979-8-9928220-0-4.
+
+Key biological mechanisms and their book sources:
+    - ROS-damage vicious cycle: Ch. II.H pp.14-15, Appendix 2 pp.152-154
+    - Heteroplasmy cliff: mitochondrial genetics literature (Rossignol 2003)
+    - Deletion doubling times: Appendix 2 p.155, Fig. 23 (Va23 data)
+    - Replication advantage: Appendix 2 pp.154-155 ("at least 21% faster")
+    - Rapamycin → mTOR → mitophagy: Ch. VI.A.1 pp.71-72
+    - NAD+ supplementation (NMN/NR): Ch. VI.A.3 pp.72-73 (Ca16)
+    - Mitophagy (PINK1/Parkin): Ch. VI.B p.75
+    - Senolytics (D+Q+F): Ch. VII.A.2 p.91
+    - Yamanaka reprogramming: Ch. VII.B pp.92-95, energy cost Ch. VIII.A
+      Table 3 p.100 (~3-5 MU, citing Ci24, Fo18)
+    - Senescent cells: Ch. VII.A pp.89-90, Ch. VIII.F p.103 (~2x energy)
+    - Membrane potential (ΔΨ): Ch. IV pp.46-47, Ch. VI.B p.75
+    - Mitochondrial transplant: Ch. VIII.G pp.104-107 (mitlets)
+    - ATP = 1 MU/day baseline: Ch. VIII.A Table 3 p.100
+
 State variables:
     0. N_healthy          — healthy mtDNA copies (normalized, 1.0 = full)
     1. N_damaged          — damaged mtDNA copies (normalized)
@@ -54,8 +74,10 @@ def _cliff_factor(heteroplasmy):
 def _deletion_rate(age, genetic_vulnerability):
     """Age-dependent mtDNA deletion rate.
 
-    Before AGE_TRANSITION: slow doubling (11.8 yr).
-    After: fast doubling (3.06 yr). Cramer Ch. 4.
+    Cramer Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
+    Aging Cell 22(6), 2023): DT = 11.81 yr before age 65, 3.06 yr after.
+    Also Ch. II.H, p.15: "deletion damage builds exponentially."
+    NOTE: Book transition is age 65; simulation uses AGE_TRANSITION=40.
     """
     if age < AGE_TRANSITION:
         doubling_time = DOUBLING_TIME_YOUNG
@@ -136,15 +158,19 @@ def derivatives(state, t, intervention, patient):
                      * energy_available * max(copy_number_pressure, 0.0))
 
     # ROS-induced damage: converts healthy → damaged (the vicious cycle
-    # entry point). Coupling strength increased (fix M3).
+    # entry point). Cramer Ch. II.H p.14, Appendix 2 pp.152-153.
+    # Coupling strength increased (fix M3).
     damage_rate = 0.15 * ros * gen_vuln * n_h
 
     # Transplant: adds healthy copies, capped by copy number regulation.
-    # Only effective while total < 1.2 (can't overfill).
+    # Cramer Ch. VIII.G pp.104-107: high-volume mitochondrial transplant
+    # via bioreactor-grown stem cells → mitlet encapsulation.
     transplant_headroom = max(1.2 - total, 0.0)
     transplant_add = transplant * 0.15 * min(transplant_headroom, 1.0)
 
     # Yamanaka repair: converts damaged → healthy. GATED BY ATP (fix M1).
+    # Cramer Ch. VII.B pp.92-95: epigenetic reprogramming (OSKMLN).
+    # Ch. VIII.A Table 3 p.100: costs ~3-5 MU (Ci24, Fo18).
     # At ATP=0, no repair occurs regardless of intensity.
     repair_rate = yama * 0.06 * n_d * energy_available
 
@@ -160,9 +186,10 @@ def derivatives(state, t, intervention, patient):
             + exercise_biogenesis - apoptosis_h)
 
     # ── 2. dN_damaged/dt ──────────────────────────────────────────────────
-    # Damaged copies replicate FASTER (survival of the smallest, Cramer Ch.4).
-    # No spurious 0.5 factor (fix M2). Replication advantage is real.
-    # Also gated by ATP and copy number pressure.
+    # Damaged copies replicate FASTER ("replicative advantage").
+    # Cramer Appendix 2 pp.154-155: deleted mtDNA (>3kbp) replicates
+    # "at least 21% faster" (Va23). Code uses conservative 1.05 (5%).
+    # No spurious 0.5 factor (fix M2). Also gated by ATP and copy number.
     replication_d = (base_replication_rate * DAMAGED_REPLICATION_ADVANTAGE
                      * n_d * nad * energy_available
                      * max(copy_number_pressure, 0.0))
@@ -170,15 +197,20 @@ def derivatives(state, t, intervention, patient):
     # New damage from ROS (arrives from healthy pool)
     new_damage = damage_rate
 
-    # Age-dependent de novo deletions (Cramer Ch. 4).
+    # Age-dependent de novo deletions.
+    # Cramer Appendix 2 pp.152-155: deletions arise from Pol γ replication
+    # errors, double-strand breaks, and replication slippage.
     # Proportional to healthy pool (deletions occur during replication).
     # Removed the 0.01 suppression factor (fix m6).
     age_deletions = del_rate * 0.05 * n_h * energy_available
 
     # Mitophagy: selective clearance of damaged copies.
-    # Enhanced by rapamycin. NAD+ supplementation improves mitochondrial
-    # quality control — it selectively enhances mitophagy of damaged copies
-    # rather than boosting damaged replication (fix C3).
+    # Cramer Ch. VI.B p.75: PINK1/Parkin pathway — low ΔΨ → PINK1
+    # accumulates → Parkin signals removal.
+    # Enhanced by rapamycin (Ch. VI.A.1 pp.71-72: mTOR inhibition).
+    # NAD+ supplementation improves mitochondrial quality control —
+    # selectively enhances mitophagy of damaged copies rather than
+    # boosting damaged replication (fix C3).
     mitophagy_rate = (BASELINE_MITOPHAGY_RATE
                       + rapa * 0.08       # rapamycin: ~4x boost at max dose
                       + nad_supp * 0.03)  # NAD: mild quality control boost
@@ -235,8 +267,8 @@ def derivatives(state, t, intervention, patient):
     dros = 1.0 * (ros_eq - ros)
 
     # ── 5. dNAD/dt ────────────────────────────────────────────────────────
-    # NAD+ declines with age (Camacho-Pereira et al. 2016).
-    # Supplementation restores toward a higher target.
+    # NAD+ declines with age. Cramer Ch. VI.A.3 pp.72-73: NMN/NR
+    # supplementation. Ca16 = Camacho-Pereira et al. 2016 (Ch. VI refs p.87).
     # NAD does NOT boost damaged replication (fix C3) — it's consumed
     # by quality control processes (sirtuins, PARPs) that preferentially
     # benefit healthy mitochondria.
@@ -251,12 +283,14 @@ def derivatives(state, t, intervention, patient):
     dnad = 0.3 * (nad_target - nad) - ros_drain - yama_drain
 
     # ── 6. dSenescent/dt ─────────────────────────────────────────────────
+    # Cramer Ch. VII.A pp.89-90: senescent cells cease dividing, emit SASP.
+    # Ch. VIII.F p.103: use ~2x energy, apoptosis costs ~0.5-0.7 MU (Table 3).
     # Senescence triggered by ROS, low ATP, and age.
     # Low energy accelerates senescence (cliff feedback, fix C1).
     energy_stress = max(1.0 - energy_available, 0.0)
     new_sen = (SENESCENCE_RATE * (1.0 + 2.0 * ros + energy_stress)
                * (1.0 + 0.01 * max(age - 40, 0)))
-    # Senolytic clearance
+    # Senolytic clearance (Cramer Ch. VII.A.2 p.91: D+Q+F protocol)
     clearance = seno * 0.2 * sen
     # Natural immune clearance (declines with age)
     immune_clear = 0.01 * sen * max(1.0 - 0.01 * max(age - 50, 0), 0.1)
@@ -266,6 +300,8 @@ def derivatives(state, t, intervention, patient):
     dsen = new_sen - clearance - immune_clear
 
     # ── 7. dMembrane_potential/dt ────────────────────────────────────────
+    # Cramer Ch. IV pp.46-47: proton gradient across inner membrane.
+    # Ch. VI.B p.75: low ΔΨ triggers PINK1-mediated mitophagy.
     # ΔΨ is maintained by the electron transport chain. Collapses with
     # the cliff (healthy ETC function required).
     psi_eq = cliff * min(nad, 1.0) * (1.0 - 0.3 * sen)

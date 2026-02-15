@@ -6,6 +6,65 @@ All simulation parameters, biological constants (from Cramer 2025),
 Reference:
     Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
     DNA Connection*. ISBN 979-8-9928220-0-4.
+
+Citation key (Cramer 2025 chapter/page references):
+    HETEROPLASMY_CLIFF = 0.7
+        Not given as an explicit number in the book. Cramer discusses a
+        ~25% overall MitoClock damage threshold (Ch. V.K, p.66) which is
+        a different metric (total deletions + point mutations). The 70%
+        heteroplasmy cliff is a standard value from the mitochondrial
+        genetics literature (e.g., Rossignol et al. 2003).
+    CLIFF_STEEPNESS = 15.0
+        Simulation calibration. Not from the book.
+    DOUBLING_TIME_YOUNG = 11.8, DOUBLING_TIME_OLD = 3.06
+        Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
+        *Aging Cell* 22(6), 2023). "The fits indicate that the doubling
+        time (DT) before age 65 is 11.81 years and the doubling time
+        after age 65 is 3.06 years." Also Ch. II.H, p.15.
+        NOTE: The book uses age 65 as the transition, but AGE_TRANSITION
+        is set to 40.0 in this simulation — a deliberate choice to model
+        earlier onset; discuss with Cramer.
+    AGE_TRANSITION = 40.0
+        Book says 65 (Appendix 2, p.155). Simulation uses 40.
+    BASELINE_ATP = 1.0
+        Ch. VIII.A, Table 3, p.100: "Normal Somatic Cell Operation:
+        ~1 MU/day" where 1 MU ≡ 10^8 ATP energy releases.
+    BASELINE_ROS = 0.1
+        Ch. IV.B Stop 8, p.53 and Ch. II.H, p.14: ROS is a byproduct
+        of electron transport chain ATP production. Normalized coupling
+        strength is a simulation parameter.
+    ROS_PER_DAMAGED = 0.3
+        Ch. II.H, p.14: damaged mitochondria with defective ETC leak
+        electrons → superoxide; also Appendix 2, pp.152-153 (ROS is
+        "a rather minor direct contributor" to damage, but the vicious
+        cycle coupling is real). Coupling strength is a simulation param.
+    BASELINE_NAD = 1.0, NAD_DECLINE_RATE = 0.01
+        Ch. VI.A.3, pp.72-73: NAD+ Boosting (NMN/NR). The age-dependent
+        decline references Ca16 (Camacho-Pereira et al. 2016, listed in
+        Ch. VI refs, p.87). Specific rate is a simulation parameter.
+    BASELINE_MEMBRANE_POTENTIAL = 1.0
+        Ch. IV, pp.46-47: proton gradient across inner membrane (~180mV
+        in healthy mitochondria). Ch. VI.B, p.75: low ΔΨ = damaged →
+        triggers PINK1 accumulation → mitophagy. Normalized to 1.0.
+    SENESCENCE_RATE = 0.005
+        Ch. VII.A, pp.89-92 and Ch. V.I, p.64: senescence mechanisms.
+        Ch. VIII.F, p.103: senescent cells use ~2x energy, emit SASP.
+        Rate is a simulation parameter.
+    YAMANAKA_ENERGY_COST_MIN/MAX = 3.0/5.0
+        Ch. VIII.A, Table 3, p.100: "Yamanaka Reprogramming: ~3-5 MU".
+        Ch. VII.B, p.95: "demanding an estimated 3 to 10 times as much
+        ATP energy as is required for normal somatic cell operation"
+        (citing Ci24, Fo18). Code uses the lower end of the range.
+    BASELINE_MITOPHAGY_RATE = 0.02
+        Ch. VI.B, p.75: PINK1/Parkin pathway — damaged mitochondria with
+        low membrane potential are tagged for removal. The specific rate
+        is a simulation parameter; no quantitative rate in the book.
+    DAMAGED_REPLICATION_ADVANTAGE = 1.05
+        Appendix 2, pp.154-155: deleted mtDNA rings (>3kbp, >18% of
+        length) replicate "at least 21% faster" than full-length (p.155,
+        citing Va23). Also Ch. II.H, p.15 ("deletion damage builds
+        exponentially"). The code's 1.05 (5%) is conservative relative
+        to Cramer's data suggesting ≥1.21.
 """
 
 import numpy as np
@@ -19,52 +78,72 @@ N_STEPS = int(SIM_YEARS / DT)  # 3000 steps
 # ── Biological constants (Cramer 2025) ───────────────────────────────────────
 
 # mtDNA copy number per cell (typical range 100-10,000; we use ~1000 as
-# a normalized baseline where 1.0 = full complement)
+# a normalized baseline where 1.0 = full complement).
+# Cramer Ch. V.J p.65: varies by tissue type; Appendix 3 p.157: PGCs have
+# 10-100 copies, mature embryonic cells have 3,000-4,000.
 BASELINE_MTDNA_COPIES = 1000.0
 
 # Heteroplasmy cliff: the fraction of damaged mtDNA at which ATP production
-# collapses nonlinearly. Cramer identifies ~70% as the critical threshold.
+# collapses nonlinearly. From mitochondrial genetics literature (Rossignol
+# et al. 2003). Cramer's MitoClock uses a different metric (~25% total
+# damage score, Ch. V.K p.66).
 HETEROPLASMY_CLIFF = 0.7
 
 # Cliff steepness: controls the sigmoid sharpness at the cliff edge.
-# Higher = sharper transition. Calibrated so 60%→90% het spans ~10% ATP drop
-# to ~80% ATP drop.
+# Calibrated so 60%→90% het spans ~10% ATP drop to ~80% ATP drop.
+# Simulation parameter, not from book.
 CLIFF_STEEPNESS = 15.0
 
-# mtDNA deletion doubling times (Cramer 2025, Ch. 4)
-# - Before age ~40: deletions double every 11.8 years (slow accumulation)
-# - After age ~40: deletions double every 3.06 years (accelerating damage)
-DOUBLING_TIME_YOUNG = 11.8   # years
-DOUBLING_TIME_OLD = 3.06     # years
-AGE_TRANSITION = 40.0        # age at which doubling rate accelerates
+# mtDNA deletion doubling times
+# Cramer Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
+# Aging Cell 22(6), 2023): DT = 11.81 yr before age 65, 3.06 yr after.
+# Also Ch. II.H, p.15: "deletion damage builds exponentially."
+# NOTE: Book uses age 65 as transition; simulation uses 40 (deliberate).
+DOUBLING_TIME_YOUNG = 11.8   # years (Cramer Appendix 2, p.155)
+DOUBLING_TIME_OLD = 3.06     # years (Cramer Appendix 2, p.155)
+AGE_TRANSITION = 40.0        # book says 65 (Appendix 2 p.155); sim uses 40
 
 # Baseline ATP production (metabolic units per day)
-# A healthy cell with full mtDNA complement produces ~1.0 MU/day
+# Cramer Ch. VIII.A, Table 3, p.100: "Normal Somatic Cell Operation:
+# ~1 MU/day" where 1 MU ≡ 10^8 ATP energy releases.
 BASELINE_ATP = 1.0
 
 # ROS generation: damaged mitochondria produce more ROS (vicious cycle)
+# Cramer Ch. IV.B p.53: ROS as byproduct of ETC; Ch. II.H p.14: damaged
+# mitochondria leak electrons → superoxide. Coupling strengths are sim params.
 BASELINE_ROS = 0.1           # normalized ROS at zero damage
 ROS_PER_DAMAGED = 0.3        # additional ROS per unit damaged fraction
 
 # NAD+ baseline and age-dependent decline
+# Cramer Ch. VI.A.3, pp.72-73: NAD+ Boosting (NMN/NR supplementation).
+# Ca16 = Camacho-Pereira et al. 2016, cited in Ch. VI refs p.87.
 BASELINE_NAD = 1.0
-NAD_DECLINE_RATE = 0.01      # per year natural decline
+NAD_DECLINE_RATE = 0.01      # per year natural decline (sim param)
 
 # Membrane potential (ΔΨ in normalized units, 1.0 = healthy ~180mV)
+# Cramer Ch. IV pp.46-47: proton gradient across inner membrane.
+# Ch. VI.B p.75: low ΔΨ = damaged → PINK1 accumulates → mitophagy.
 BASELINE_MEMBRANE_POTENTIAL = 1.0
 
 # Senescence: fraction of cells that become senescent
+# Cramer Ch. VII.A pp.89-92: senescence mechanisms, p16 marker.
+# Ch. VIII.F p.103: senescent cells use ~2x energy, emit SASP.
 BASELINE_SENESCENT = 0.0
-SENESCENCE_RATE = 0.005      # per year base rate
+SENESCENCE_RATE = 0.005      # per year base rate (sim param)
 
 # Energy costs (MU/day) for Yamanaka reprogramming
+# Cramer Ch. VIII.A, Table 3, p.100: "Yamanaka Reprogramming: ~3-5 MU".
+# Ch. VII.B p.95: "3 to 10 times" normal cell energy (citing Ci24, Fo18).
 YAMANAKA_ENERGY_COST_MIN = 3.0
 YAMANAKA_ENERGY_COST_MAX = 5.0
 
 # Mitophagy: baseline rate of damaged mtDNA clearance
-BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year
+# Cramer Ch. VI.B p.75: PINK1/Parkin pathway. No quantitative rate in book.
+BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 
-# Replication advantage: damaged (shorter) mtDNA replicates slightly faster
+# Replication advantage: damaged (shorter) mtDNA replicates faster
+# Cramer Appendix 2 pp.154-155: deletions >3kbp replicate "at least 21%
+# faster" (Va23). 1.05 is conservative; book data suggests ≥1.21.
 DAMAGED_REPLICATION_ADVANTAGE = 1.05
 
 # ── 12-Dimensional parameter space ──────────────────────────────────────────
