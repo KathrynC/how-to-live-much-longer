@@ -225,6 +225,7 @@ Based on Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction i
 
 Full analysis: [`artifacts/landscape_characterization.md`](artifacts/landscape_characterization.md)
 Cross-project comparison: [`artifacts/cross_project_gnarliness_comparison.md`](artifacts/cross_project_gnarliness_comparison.md)
+Project state and next steps: [`artifacts/project_state_2026-02-15.md`](artifacts/project_state_2026-02-15.md) — infrastructure-rich, data-poor; ~27 min of compute would populate the atlas
 
 The 12D parameter space has been partially characterized (~400 simulations). Key findings:
 
