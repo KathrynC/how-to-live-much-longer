@@ -1,7 +1,7 @@
 {
   "experiment": "perturbation_probing",
-  "date": "2026-02-15 10:51:23",
-  "elapsed_seconds": 15.986516237258911,
+  "date": "2026-02-15 16:48:13",
+  "elapsed_seconds": 18.46112895011902,
   "n_probes": 8,
   "n_builtin": 8,
   "n_llm": 0,
@@ -9,75 +9,75 @@
     {
       "label": "no_treatment_moderate",
       "center_metrics": {
-        "final_atp": 0.4849800183062739,
-        "final_het": 0.6611656915327817,
-        "min_atp": 0.4849800183062739,
-        "mean_atp": 0.71587731001233
+        "final_atp": 0.5183977846789988,
+        "final_het": 0.6471342765195,
+        "min_atp": 0.5183977846789988,
+        "mean_atp": 0.7297949865176292
       },
       "n_perturbations": 18,
-      "fragility_score": 9.589941296663726,
-      "most_sensitive_param": "baseline_heteroplasmy",
+      "fragility_score": 11.57357881471454,
+      "most_sensitive_param": "transplant_rate",
       "least_sensitive_param": "baseline_age",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 1.0056037485659697,
-          "sensitivity_het": 0.4909894535402737,
-          "combined": 1.4965932021062434
+          "sensitivity_atp": 1.0055849662828154,
+          "sensitivity_het": 0.5594408586100641,
+          "combined": 1.5650258248928794
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.5596023367532088,
-          "sensitivity_het": 0.20500495640068395,
-          "combined": 0.7646072931538928
+          "sensitivity_atp": 0.25436307963496607,
+          "sensitivity_het": 0.10379689759822175,
+          "combined": 0.3581599772331878
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.07006446304908209,
-          "sensitivity_het": 0.002177876419968694,
-          "combined": 0.07224233946905079
+          "sensitivity_atp": 0.07597792386942359,
+          "sensitivity_het": 0.0018090703657436258,
+          "combined": 0.07778699423516722
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.9094346106336992,
-          "sensitivity_het": 0.5566641914575676,
-          "combined": 1.4660988020912669
+          "sensitivity_atp": 0.7855016430593531,
+          "sensitivity_het": 0.5519541557106777,
+          "combined": 1.3374557987700308
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.9428135069867116,
-          "sensitivity_het": 0.4634013815313376,
-          "combined": 1.4062148885180492
+          "sensitivity_atp": 1.9501699802176642,
+          "sensitivity_het": 1.8870073610178033,
+          "combined": 3.8371773412354675
         },
         "exercise_level": {
-          "sensitivity_atp": 0.0316999784394173,
-          "sensitivity_het": 0.027544877963828762,
-          "combined": 0.05924485640324606
+          "sensitivity_atp": 0.03044339828105147,
+          "sensitivity_het": 0.02916755118939629,
+          "combined": 0.05961094947044776
         },
         "baseline_age": {
-          "sensitivity_atp": 0.004577081675290903,
-          "sensitivity_het": 0.0006258826686882102,
-          "combined": 0.0052029643439791134
+          "sensitivity_atp": 0.007592885080059708,
+          "sensitivity_het": 0.0019170612088902752,
+          "combined": 0.009509946288949984
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 1.656698129644385,
-          "sensitivity_het": 0.7132187011520807,
-          "combined": 2.3699168307964658
+          "sensitivity_atp": 1.6726331582467302,
+          "sensitivity_het": 0.7725625342885856,
+          "combined": 2.4451956925353158
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.01861541380926382,
-          "sensitivity_het": 0.007171308688708744,
-          "combined": 0.025786722497972564
+          "sensitivity_atp": 0.02802900025575178,
+          "sensitivity_het": 0.01185319136941504,
+          "combined": 0.03988219162516682
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.7228546103517116,
-          "sensitivity_het": 0.3360563878941265,
-          "combined": 1.058910998245838
+          "sensitivity_atp": 0.6719358442953262,
+          "sensitivity_het": 0.33161256479369117,
+          "combined": 1.0035484090890172
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.3339632086837898,
-          "sensitivity_het": 0.14104182471284532,
-          "combined": 0.47500503339663513
+          "sensitivity_atp": 0.32450368654053086,
+          "sensitivity_het": 0.14800932086419172,
+          "combined": 0.4725130074047226
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.27450720895423525,
-          "sensitivity_het": 0.11561015668685198,
-          "combined": 0.39011736564108723
+          "sensitivity_atp": 0.2529020214665184,
+          "sensitivity_het": 0.11481066046766908,
+          "combined": 0.3677126819341875
         }
       },
       "perturbations": [
@@ -87,15 +87,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.10056037485659697,
-          "delta_het": 0.04909894535402737,
-          "sensitivity_atp": 1.0056037485659697,
-          "sensitivity_het": 0.4909894535402737,
+          "delta_atp": 0.10055849662828154,
+          "delta_het": 0.05594408586100641,
+          "sensitivity_atp": 1.0055849662828154,
+          "sensitivity_het": 0.5594408586100641,
           "perturbed_metrics": {
-            "final_atp": 0.5855403931628709,
-            "final_het": 0.6120667461787543,
-            "min_atp": 0.5855403931628709,
-            "mean_atp": 0.7452028944099051
+            "final_atp": 0.6189562813072803,
+            "final_het": 0.5911901906584935,
+            "min_atp": 0.6189562813072803,
+            "mean_atp": 0.7583664874400586
           }
         },
         {
@@ -104,15 +104,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.05596023367532088,
-          "delta_het": 0.020500495640068395,
-          "sensitivity_atp": 0.5596023367532088,
-          "sensitivity_het": 0.20500495640068395,
+          "delta_atp": 0.025436307963496607,
+          "delta_het": 0.010379689759822175,
+          "sensitivity_atp": 0.25436307963496607,
+          "sensitivity_het": 0.10379689759822175,
           "perturbed_metrics": {
-            "final_atp": 0.5409402519815948,
-            "final_het": 0.6406651958927133,
-            "min_atp": 0.5409402519815948,
-            "mean_atp": 0.7398625676339607
+            "final_atp": 0.5438340926424954,
+            "final_het": 0.6367545867596778,
+            "min_atp": 0.5438340926424954,
+            "mean_atp": 0.7396808698103542
           }
         },
         {
@@ -121,15 +121,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.007006446304908209,
-          "delta_het": 0.0002177876419968694,
-          "sensitivity_atp": 0.07006446304908209,
-          "sensitivity_het": 0.002177876419968694,
+          "delta_atp": 0.007597792386942359,
+          "delta_het": 0.00018090703657436258,
+          "sensitivity_atp": 0.07597792386942359,
+          "sensitivity_het": 0.0018090703657436258,
           "perturbed_metrics": {
-            "final_atp": 0.4919864646111821,
-            "final_het": 0.6613834791747786,
-            "min_atp": 0.4919864646111821,
-            "mean_atp": 0.7198392963756832
+            "final_atp": 0.5259955770659411,
+            "final_het": 0.6473151835560743,
+            "min_atp": 0.5259955770659411,
+            "mean_atp": 0.7339359307163514
           }
         },
         {
@@ -138,15 +138,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.09094346106336992,
-          "delta_het": 0.05566641914575676,
-          "sensitivity_atp": 0.9094346106336992,
-          "sensitivity_het": 0.5566641914575676,
+          "delta_atp": 0.07855016430593531,
+          "delta_het": 0.055195415571067774,
+          "sensitivity_atp": 0.7855016430593531,
+          "sensitivity_het": 0.5519541557106777,
           "perturbed_metrics": {
-            "final_atp": 0.5759234793696438,
-            "final_het": 0.605499272387025,
-            "min_atp": 0.5759234793696438,
-            "mean_atp": 0.7284919443209473
+            "final_atp": 0.5969479489849341,
+            "final_het": 0.5919388609484322,
+            "min_atp": 0.5969479489849341,
+            "mean_atp": 0.7372836673222006
           }
         },
         {
@@ -155,15 +155,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.09428135069867116,
-          "delta_het": 0.04634013815313376,
-          "sensitivity_atp": 0.9428135069867116,
-          "sensitivity_het": 0.4634013815313376,
+          "delta_atp": 0.19501699802176642,
+          "delta_het": 0.18870073610178034,
+          "sensitivity_atp": 1.9501699802176642,
+          "sensitivity_het": 1.8870073610178033,
           "perturbed_metrics": {
-            "final_atp": 0.5792613690049451,
-            "final_het": 0.614825553379648,
-            "min_atp": 0.5792613690049451,
-            "mean_atp": 0.740883196309045
+            "final_atp": 0.7134147827007652,
+            "final_het": 0.4584335404177196,
+            "min_atp": 0.7134147827007652,
+            "mean_atp": 0.7872690516002541
           }
         },
         {
@@ -172,15 +172,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.00316999784394173,
-          "delta_het": 0.0027544877963828762,
-          "sensitivity_atp": 0.0316999784394173,
-          "sensitivity_het": 0.027544877963828762,
+          "delta_atp": 0.003044339828105147,
+          "delta_het": 0.002916755118939629,
+          "sensitivity_atp": 0.03044339828105147,
+          "sensitivity_het": 0.02916755118939629,
           "perturbed_metrics": {
-            "final_atp": 0.48815001615021564,
-            "final_het": 0.6584112037363988,
-            "min_atp": 0.48815001615021564,
-            "mean_atp": 0.7142174790681561
+            "final_atp": 0.5214421245071039,
+            "final_het": 0.6442175214005603,
+            "min_atp": 0.5214421245071039,
+            "mean_atp": 0.7280792125578122
           }
         },
         {
@@ -189,15 +189,15 @@
           "original_value": 60.0,
           "perturbed_value": 50.0,
           "delta_param": 10.0,
-          "delta_atp": 0.04595229548734958,
-          "delta_het": 0.005975688436899218,
-          "sensitivity_atp": 0.004595229548734958,
-          "sensitivity_het": 0.0005975688436899218,
+          "delta_atp": 0.07742888869176412,
+          "delta_het": 0.019695547857687457,
+          "sensitivity_atp": 0.007742888869176412,
+          "sensitivity_het": 0.0019695547857687457,
           "perturbed_metrics": {
-            "final_atp": 0.5309323137936235,
-            "final_het": 0.6551900030958825,
-            "min_atp": 0.5309323137936235,
-            "mean_atp": 0.7555493382935895
+            "final_atp": 0.5958266733707629,
+            "final_het": 0.6274387286618125,
+            "min_atp": 0.5958266733707629,
+            "mean_atp": 0.7799220460292331
           }
         },
         {
@@ -206,15 +206,15 @@
           "original_value": 60.0,
           "perturbed_value": 70.0,
           "delta_param": 10.0,
-          "delta_atp": 0.045589338018468484,
-          "delta_het": 0.006541964936864986,
-          "sensitivity_atp": 0.004558933801846849,
-          "sensitivity_het": 0.0006541964936864986,
+          "delta_atp": 0.07442881290943004,
+          "delta_het": 0.018645676320118043,
+          "sensitivity_atp": 0.007442881290943004,
+          "sensitivity_het": 0.0018645676320118044,
           "perturbed_metrics": {
-            "final_atp": 0.4393906802878054,
-            "final_het": 0.6677076564696467,
-            "min_atp": 0.4393906802878054,
-            "mean_atp": 0.6765194007971137
+            "final_atp": 0.44396897176956873,
+            "final_het": 0.665779952839618,
+            "min_atp": 0.44396897176956873,
+            "mean_atp": 0.6785677374357258
           }
         },
         {
@@ -223,15 +223,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.3,
           "delta_param": 0.10000000000000003,
-          "delta_atp": 0.13904802320677645,
-          "delta_het": 0.0713816535372862,
-          "sensitivity_atp": 1.390480232067764,
-          "sensitivity_het": 0.7138165353728618,
+          "delta_atp": 0.13062838410390532,
+          "delta_het": 0.07729799695702744,
+          "sensitivity_atp": 1.3062838410390527,
+          "sensitivity_het": 0.7729799695702742,
           "perturbed_metrics": {
-            "final_atp": 0.6240280415130504,
-            "final_het": 0.5897840379954955,
-            "min_atp": 0.6240280415130504,
-            "mean_atp": 0.7696478115851597
+            "final_atp": 0.6490261687829041,
+            "final_het": 0.5698362795624725,
+            "min_atp": 0.6490261687829041,
+            "mean_atp": 0.7772655947416935
           }
         },
         {
@@ -240,15 +240,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.5,
           "delta_param": 0.09999999999999998,
-          "delta_atp": 0.19229160272210055,
-          "delta_het": 0.07126208669312994,
-          "sensitivity_atp": 1.922916027221006,
-          "sensitivity_het": 0.7126208669312996,
+          "delta_atp": 0.20389824754544073,
+          "delta_het": 0.07721450990068968,
+          "sensitivity_atp": 2.0389824754544077,
+          "sensitivity_het": 0.772145099006897,
           "perturbed_metrics": {
-            "final_atp": 0.29268841558417336,
-            "final_het": 0.7324277782259117,
-            "min_atp": 0.29268841558417336,
-            "mean_atp": 0.5970982692166278
+            "final_atp": 0.31449953713355805,
+            "final_het": 0.7243487864201896,
+            "min_atp": 0.31449953713355805,
+            "mean_atp": 0.6132482366028716
           }
         },
         {
@@ -257,15 +257,15 @@
           "original_value": 0.6,
           "perturbed_value": 0.4,
           "delta_param": 0.19999999999999996,
-          "delta_atp": 0.003962029667823108,
-          "delta_het": 0.0015257780781151586,
-          "sensitivity_atp": 0.019810148339115544,
-          "sensitivity_het": 0.007628890390575795,
+          "delta_atp": 0.005876977144761764,
+          "delta_het": 0.002471827508025215,
+          "sensitivity_atp": 0.029384885723808825,
+          "sensitivity_het": 0.012359137540126078,
           "perturbed_metrics": {
-            "final_atp": 0.4810179886384508,
-            "final_het": 0.6626914696108969,
-            "min_atp": 0.4810179886384508,
-            "mean_atp": 0.7028077498947528
+            "final_atp": 0.512520807534237,
+            "final_het": 0.6496061040275252,
+            "min_atp": 0.512520807534237,
+            "mean_atp": 0.716037799443382
           }
         },
         {
@@ -274,15 +274,15 @@
           "original_value": 0.6,
           "perturbed_value": 0.8,
           "delta_param": 0.20000000000000007,
-          "delta_atp": 0.00348413585588242,
-          "delta_het": 0.001342745397368339,
-          "sensitivity_atp": 0.017420679279412092,
-          "sensitivity_het": 0.006713726986841692,
+          "delta_atp": 0.005334622957538948,
+          "delta_het": 0.0022694490397408007,
+          "sensitivity_atp": 0.02667311478769473,
+          "sensitivity_het": 0.011347245198704,
           "perturbed_metrics": {
-            "final_atp": 0.4884641541621563,
-            "final_het": 0.6598229461354134,
-            "min_atp": 0.4884641541621563,
-            "mean_atp": 0.7287234917402828
+            "final_atp": 0.5237324076365377,
+            "final_het": 0.6448648274797592,
+            "min_atp": 0.5237324076365377,
+            "mean_atp": 0.7433061695750058
           }
         },
         {
@@ -291,15 +291,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.1571429892852988,
-          "delta_het": 0.08924888096758044,
-          "sensitivity_atp": 0.6285719571411952,
-          "sensitivity_het": 0.35699552387032174,
+          "delta_atp": 0.137279242130512,
+          "delta_het": 0.08745295385489282,
+          "sensitivity_atp": 0.549116968522048,
+          "sensitivity_het": 0.3498118154195713,
           "perturbed_metrics": {
-            "final_atp": 0.6421230075915727,
-            "final_het": 0.5719168105652013,
-            "min_atp": 0.6421230075915727,
-            "mean_atp": 0.7619110765634953
+            "final_atp": 0.6556770268095108,
+            "final_het": 0.5596813226646071,
+            "min_atp": 0.6556770268095108,
+            "mean_atp": 0.7677247163805757
           }
         },
         {
@@ -308,15 +308,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.204284315890557,
-          "delta_het": 0.07877931297948282,
-          "sensitivity_atp": 0.817137263562228,
-          "sensitivity_het": 0.3151172519179313,
+          "delta_atp": 0.19868868001715106,
+          "delta_het": 0.07835332854195276,
+          "sensitivity_atp": 0.7947547200686043,
+          "sensitivity_het": 0.31341331416781104,
           "perturbed_metrics": {
-            "final_atp": 0.2806957024157169,
-            "final_het": 0.7399450045122645,
-            "min_atp": 0.2806957024157169,
-            "mean_atp": 0.6433629846232982
+            "final_atp": 0.3197091046618477,
+            "final_het": 0.7254876050614527,
+            "min_atp": 0.3197091046618477,
+            "mean_atp": 0.666424643590736
           }
         },
         {
@@ -325,15 +325,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.08064160519708397,
-          "delta_het": 0.03699584237467379,
-          "sensitivity_atp": 0.32256642078833586,
-          "sensitivity_het": 0.14798336949869517,
+          "delta_atp": 0.07613794870723622,
+          "delta_het": 0.03882989539895598,
+          "sensitivity_atp": 0.3045517948289449,
+          "sensitivity_het": 0.15531958159582393,
           "perturbed_metrics": {
-            "final_atp": 0.5656216235033579,
-            "final_het": 0.6241698491581079,
-            "min_atp": 0.5656216235033579,
-            "mean_atp": 0.7409224062342376
+            "final_atp": 0.594535733386235,
+            "final_het": 0.608304381120544,
+            "min_atp": 0.594535733386235,
+            "mean_atp": 0.7522611510358505
           }
         },
         {
@@ -342,15 +342,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.08633999914481094,
-          "delta_het": 0.03352506998174887,
-          "sensitivity_atp": 0.34535999657924377,
-          "sensitivity_het": 0.13410027992699547,
+          "delta_atp": 0.0861138945630292,
+          "delta_het": 0.035174765033139876,
+          "sensitivity_atp": 0.3444555782521168,
+          "sensitivity_het": 0.1406990601325595,
           "perturbed_metrics": {
-            "final_atp": 0.39864001916146297,
-            "final_het": 0.6946907615145306,
-            "min_atp": 0.39864001916146297,
-            "mean_atp": 0.6864120978735919
+            "final_atp": 0.43228389011596957,
+            "final_het": 0.6823090415526398,
+            "min_atp": 0.43228389011596957,
+            "mean_atp": 0.702351173552275
           }
         },
         {
@@ -359,15 +359,15 @@
           "original_value": 0.3,
           "perturbed_value": 0.1,
           "delta_param": 0.19999999999999998,
-          "delta_atp": 0.05159088651177823,
-          "delta_het": 0.02293084957833358,
-          "sensitivity_atp": 0.25795443255889117,
-          "sensitivity_het": 0.11465424789166791,
+          "delta_atp": 0.04670257358461638,
+          "delta_het": 0.022721972330940754,
+          "sensitivity_atp": 0.23351286792308193,
+          "sensitivity_het": 0.11360986165470378,
           "perturbed_metrics": {
-            "final_atp": 0.5365709048180521,
-            "final_het": 0.6382348419544481,
-            "min_atp": 0.5365709048180521,
-            "mean_atp": 0.7302979669441716
+            "final_atp": 0.5651003582636152,
+            "final_het": 0.6244123041885592,
+            "min_atp": 0.5651003582636152,
+            "mean_atp": 0.7422073710769599
           }
         },
         {
@@ -376,15 +376,15 @@
           "original_value": 0.3,
           "perturbed_value": 0.5,
           "delta_param": 0.2,
-          "delta_atp": 0.058211997069915866,
-          "delta_het": 0.023313213096407215,
-          "sensitivity_atp": 0.29105998534957933,
-          "sensitivity_het": 0.11656606548203607,
+          "delta_atp": 0.054458235001990984,
+          "delta_het": 0.023202291856126878,
+          "sensitivity_atp": 0.2722911750099549,
+          "sensitivity_het": 0.11601145928063439,
           "perturbed_metrics": {
-            "final_atp": 0.42676802123635804,
-            "final_het": 0.6844789046291889,
-            "min_atp": 0.42676802123635804,
-            "mean_atp": 0.6991140772267793
+            "final_atp": 0.4639395496770078,
+            "final_het": 0.6703365683756268,
+            "min_atp": 0.4639395496770078,
+            "mean_atp": 0.7150885235139893
           }
         }
       ]
@@ -392,75 +392,75 @@
     {
       "label": "full_cocktail_moderate",
       "center_metrics": {
-        "final_atp": 0.812918080445073,
-        "final_het": 0.3252986095961589,
-        "min_atp": 0.812918080445073,
-        "mean_atp": 0.8532589554958806
+        "final_atp": 0.7786189767675984,
+        "final_het": 0.3181571284497139,
+        "min_atp": 0.7786189767675984,
+        "mean_atp": 0.8245558528655039
       },
       "n_perturbations": 22,
-      "fragility_score": 2.2964057932840394,
-      "most_sensitive_param": "yamanaka_intensity",
+      "fragility_score": 2.987761164555073,
+      "most_sensitive_param": "transplant_rate",
       "least_sensitive_param": "baseline_nad_level",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.026501882274030164,
-          "sensitivity_het": 0.33658672142987556,
-          "combined": 0.3630886037039057
+          "sensitivity_atp": 0.023865901985959725,
+          "sensitivity_het": 0.3435766395708837,
+          "combined": 0.3674425415568434
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.1467355014522873,
-          "sensitivity_het": 0.12946293628710326,
-          "combined": 0.27619843773939057
+          "sensitivity_atp": 0.10572620063359683,
+          "sensitivity_het": 0.1310881468938122,
+          "combined": 0.23681434752740904
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.02304926763212678,
-          "sensitivity_het": 0.0014349749583755234,
-          "combined": 0.024484242590502303
+          "sensitivity_atp": 0.02250529743206431,
+          "sensitivity_het": 0.0010028517428281036,
+          "combined": 0.023508149174892412
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.19766253252652133,
-          "sensitivity_het": 0.28847176713856393,
-          "combined": 0.48613429966508526
+          "sensitivity_atp": 0.19986792247526752,
+          "sensitivity_het": 0.2736569255955362,
+          "combined": 0.47352484807080375
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.012724768147405197,
-          "sensitivity_het": 0.2708465767712198,
-          "combined": 0.283571344918625
+          "sensitivity_atp": 0.027961111065878397,
+          "sensitivity_het": 0.9366159687837716,
+          "combined": 0.96457707984965
         },
         "exercise_level": {
-          "sensitivity_atp": 0.029214119304856734,
-          "sensitivity_het": 0.023962530580925234,
-          "combined": 0.05317664988578197
+          "sensitivity_atp": 0.029364521238152363,
+          "sensitivity_het": 0.024258859012557532,
+          "combined": 0.053623380250709896
         },
         "baseline_age": {
-          "sensitivity_atp": 0.004101327058281573,
-          "sensitivity_het": 8.440698542738211e-05,
-          "combined": 0.004185734043708956
+          "sensitivity_atp": 0.004197535097312488,
+          "sensitivity_het": 0.002207368089321843,
+          "combined": 0.006404903186634331
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.021762807991978494,
-          "sensitivity_het": 0.3130817354838922,
-          "combined": 0.33484454347587067
+          "sensitivity_atp": 0.02288448445020297,
+          "sensitivity_het": 0.37282187564720765,
+          "combined": 0.3957063600974106
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.0002920060635122623,
-          "sensitivity_het": 0.0015095109357993186,
-          "combined": 0.001801516999311581
+          "sensitivity_atp": 0.00042468692503183636,
+          "sensitivity_het": 0.004248643855275236,
+          "combined": 0.004673330780307072
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.017125793303980563,
-          "sensitivity_het": 0.27176548877554263,
-          "combined": 0.2888912820795232
+          "sensitivity_atp": 0.013767664295399662,
+          "sensitivity_het": 0.25812652448252094,
+          "combined": 0.2718941887779206
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.0108472658521519,
-          "sensitivity_het": 0.12112476093075475,
-          "combined": 0.13197202678290665
+          "sensitivity_atp": 0.01052741521671341,
+          "sensitivity_het": 0.1312518048227076,
+          "combined": 0.141779220039421
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.003856993935642261,
-          "sensitivity_het": 0.04420011746378502,
-          "combined": 0.04805711139942728
+          "sensitivity_atp": 0.0034450754819281837,
+          "sensitivity_het": 0.04436773976114264,
+          "combined": 0.04781281524307082
         }
       },
       "perturbations": [
@@ -470,15 +470,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.01060049133057217,
-          "delta_het": 0.09699260726791742,
-          "sensitivity_atp": 0.04240196532228868,
-          "sensitivity_het": 0.3879704290716697,
+          "delta_atp": 0.009600007794923093,
+          "delta_het": 0.09984377207536299,
+          "sensitivity_atp": 0.03840003117969237,
+          "sensitivity_het": 0.39937508830145196,
           "perturbed_metrics": {
-            "final_atp": 0.8023175891145008,
-            "final_het": 0.42229121686407634,
-            "min_atp": 0.8023175891145008,
-            "mean_atp": 0.8467191135564698
+            "final_atp": 0.7690189689726753,
+            "final_het": 0.4180009005250769,
+            "min_atp": 0.7690189689726753,
+            "mean_atp": 0.8191029313491427
           }
         },
         {
@@ -487,15 +487,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.0026504498064429116,
-          "delta_het": 0.07130075344702036,
-          "sensitivity_atp": 0.010601799225771646,
-          "sensitivity_het": 0.28520301378808144,
+          "delta_atp": 0.0023329431980567694,
+          "delta_het": 0.07194454771007885,
+          "sensitivity_atp": 0.009331772792227078,
+          "sensitivity_het": 0.2877781908403154,
           "perturbed_metrics": {
-            "final_atp": 0.8155685302515159,
-            "final_het": 0.25399785614913856,
-            "min_atp": 0.815528548687575,
-            "mean_atp": 0.8558129477340191
+            "final_atp": 0.7809519199656552,
+            "final_het": 0.24621258073963503,
+            "min_atp": 0.7809519199656552,
+            "mean_atp": 0.8266523568644247
           }
         },
         {
@@ -504,15 +504,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.03711065064728303,
-          "delta_het": 0.03461297166741789,
-          "sensitivity_atp": 0.1484426025891321,
-          "sensitivity_het": 0.13845188666967156,
+          "delta_atp": 0.022841565708751843,
+          "delta_het": 0.030125751431428704,
+          "sensitivity_atp": 0.09136626283500737,
+          "sensitivity_het": 0.12050300572571482,
           "perturbed_metrics": {
-            "final_atp": 0.7758074297977899,
-            "final_het": 0.3599115812635768,
-            "min_atp": 0.7758074297977899,
-            "mean_atp": 0.8219027389769044
+            "final_atp": 0.7557774110588465,
+            "final_het": 0.3482828798811426,
+            "min_atp": 0.7557774110588465,
+            "mean_atp": 0.805344136469038
           }
         },
         {
@@ -521,15 +521,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.03625710007886063,
-          "delta_het": 0.030118496476133738,
-          "sensitivity_atp": 0.1450284003154425,
-          "sensitivity_het": 0.12047398590453495,
+          "delta_atp": 0.030021534608046574,
+          "delta_het": 0.0354183220154774,
+          "sensitivity_atp": 0.1200861384321863,
+          "sensitivity_het": 0.1416732880619096,
           "perturbed_metrics": {
-            "final_atp": 0.8491751805239336,
-            "final_het": 0.2951801131200252,
-            "min_atp": 0.8160742061329794,
-            "mean_atp": 0.8841707394724524
+            "final_atp": 0.808640511375645,
+            "final_het": 0.2827388064342365,
+            "min_atp": 0.808640511375645,
+            "mean_atp": 0.8501058089643747
           }
         },
         {
@@ -538,15 +538,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.007975189675766492,
-          "delta_het": 0.0004672916896858448,
-          "sensitivity_atp": 0.03190075870306597,
-          "sensitivity_het": 0.0018691667587433791,
+          "delta_atp": 0.00777775833126193,
+          "delta_het": 0.0003325967886755321,
+          "sensitivity_atp": 0.03111103332504772,
+          "sensitivity_het": 0.0013303871547021284,
           "perturbed_metrics": {
-            "final_atp": 0.8049428907693065,
-            "final_het": 0.32483131790647307,
-            "min_atp": 0.8049428907693065,
-            "mean_atp": 0.8481624336795546
+            "final_atp": 0.7708412184363365,
+            "final_het": 0.31782453166103836,
+            "min_atp": 0.7708412184363365,
+            "mean_atp": 0.8195939623852302
           }
         },
         {
@@ -555,15 +555,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.003549444140296898,
-          "delta_het": 0.0002501957895019169,
-          "sensitivity_atp": 0.014197776561187592,
-          "sensitivity_het": 0.0010007831580076676,
+          "delta_atp": 0.003474890384770224,
+          "delta_het": 0.0001688290827385197,
+          "sensitivity_atp": 0.013899561539080896,
+          "sensitivity_het": 0.0006753163309540788,
           "perturbed_metrics": {
-            "final_atp": 0.8164675245853699,
-            "final_het": 0.32554880538566083,
-            "min_atp": 0.8155270501262603,
-            "mean_atp": 0.8560884910429668
+            "final_atp": 0.7820938671523686,
+            "final_het": 0.3183259575324524,
+            "min_atp": 0.7820938671523686,
+            "mean_atp": 0.8273171754088294
           }
         },
         {
@@ -572,15 +572,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.019766253252652133,
-          "delta_het": 0.028847176713856393,
-          "sensitivity_atp": 0.19766253252652133,
-          "sensitivity_het": 0.28847176713856393,
+          "delta_atp": 0.019986792247526752,
+          "delta_het": 0.027365692559553623,
+          "sensitivity_atp": 0.19986792247526752,
+          "sensitivity_het": 0.2736569255955362,
           "perturbed_metrics": {
-            "final_atp": 0.7931518271924208,
-            "final_het": 0.2964514328823025,
-            "min_atp": 0.7931518271924208,
-            "mean_atp": 0.8346023789004918
+            "final_atp": 0.7586321845200716,
+            "final_het": 0.29079143589016027,
+            "min_atp": 0.7586321845200716,
+            "mean_atp": 0.8056187364710702
           }
         },
         {
@@ -589,15 +589,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.0012724768147405197,
-          "delta_het": 0.02708465767712198,
-          "sensitivity_atp": 0.012724768147405197,
-          "sensitivity_het": 0.2708465767712198,
+          "delta_atp": 0.0027961111065878397,
+          "delta_het": 0.09366159687837716,
+          "sensitivity_atp": 0.027961111065878397,
+          "sensitivity_het": 0.9366159687837716,
           "perturbed_metrics": {
-            "final_atp": 0.8141905572598135,
-            "final_het": 0.29821395191903693,
-            "min_atp": 0.8141905572598135,
-            "mean_atp": 0.8543444224589596
+            "final_atp": 0.7814150878741862,
+            "final_het": 0.22449553157133673,
+            "min_atp": 0.7814150878741862,
+            "mean_atp": 0.8273925386553578
           }
         },
         {
@@ -606,15 +606,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0072610632015903676,
-          "delta_het": 0.006604009152646029,
-          "sensitivity_atp": 0.02904425280636147,
-          "sensitivity_het": 0.026416036610584115,
+          "delta_atp": 0.007301721940850325,
+          "delta_het": 0.006738979662780087,
+          "sensitivity_atp": 0.0292068877634013,
+          "sensitivity_het": 0.026955918651120347,
           "perturbed_metrics": {
-            "final_atp": 0.8201791436466633,
-            "final_het": 0.33190261874880495,
-            "min_atp": 0.8175216646103154,
-            "mean_atp": 0.8603870831294389
+            "final_atp": 0.7859206987084487,
+            "final_het": 0.324896108112494,
+            "min_atp": 0.7859206987084487,
+            "mean_atp": 0.8317249979533081
           }
         },
         {
@@ -623,15 +623,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.007345996450837999,
-          "delta_het": 0.005377256137816588,
-          "sensitivity_atp": 0.029383985803351997,
-          "sensitivity_het": 0.021509024551266354,
+          "delta_atp": 0.007380538678225856,
+          "delta_het": 0.005390449843498679,
+          "sensitivity_atp": 0.029522154712903426,
+          "sensitivity_het": 0.021561799373994717,
           "perturbed_metrics": {
-            "final_atp": 0.805572083994235,
-            "final_het": 0.31992135345834233,
-            "min_atp": 0.805572083994235,
-            "mean_atp": 0.8461006853929491
+            "final_atp": 0.7712384380893725,
+            "final_het": 0.3127666786062152,
+            "min_atp": 0.7712384380893725,
+            "mean_atp": 0.8173611639394329
           }
         },
         {
@@ -640,15 +640,15 @@
           "original_value": 60.0,
           "perturbed_value": 50.0,
           "delta_param": 10.0,
-          "delta_atp": 0.04103096194946654,
-          "delta_het": 0.0007103373663123747,
-          "sensitivity_atp": 0.004103096194946654,
-          "sensitivity_het": 7.103373663123746e-05,
+          "delta_atp": 0.04197132961300876,
+          "delta_het": 0.025181536626939338,
+          "sensitivity_atp": 0.004197132961300876,
+          "sensitivity_het": 0.002518153662693934,
           "perturbed_metrics": {
-            "final_atp": 0.8539490423945395,
-            "final_het": 0.32458827222984654,
-            "min_atp": 0.8223462978630552,
-            "mean_atp": 0.8900509758295978
+            "final_atp": 0.8205903063806071,
+            "final_het": 0.29297559182277455,
+            "min_atp": 0.8205903063806071,
+            "mean_atp": 0.8616086629066665
           }
         },
         {
@@ -657,15 +657,15 @@
           "original_value": 60.0,
           "perturbed_value": 70.0,
           "delta_param": 10.0,
-          "delta_atp": 0.040995579216164924,
-          "delta_het": 0.0009778023422352677,
-          "sensitivity_atp": 0.0040995579216164925,
-          "sensitivity_het": 9.778023422352678e-05,
+          "delta_atp": 0.041979372333241005,
+          "delta_het": 0.018965825159497518,
+          "sensitivity_atp": 0.0041979372333241,
+          "sensitivity_het": 0.0018965825159497518,
           "perturbed_metrics": {
-            "final_atp": 0.771922501228908,
-            "final_het": 0.3262764119383942,
-            "min_atp": 0.771922501228908,
-            "mean_atp": 0.8165820834188391
+            "final_atp": 0.7366396044343574,
+            "final_het": 0.3371229536092114,
+            "min_atp": 0.7366396044343574,
+            "mean_atp": 0.7871709164466629
           }
         },
         {
@@ -674,15 +674,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.3,
           "delta_param": 0.10000000000000003,
-          "delta_atp": 0.0014967786103478042,
-          "delta_het": 0.027563841854296445,
-          "sensitivity_atp": 0.014967786103478037,
-          "sensitivity_het": 0.27563841854296434,
+          "delta_atp": 0.0015011490557326201,
+          "delta_het": 0.03274662130729811,
+          "sensitivity_atp": 0.015011490557326196,
+          "sensitivity_het": 0.32746621307298096,
           "perturbed_metrics": {
-            "final_atp": 0.8144148590554208,
-            "final_het": 0.29773476774186247,
-            "min_atp": 0.8144148590554208,
-            "mean_atp": 0.8573346491606691
+            "final_atp": 0.780120125823331,
+            "final_het": 0.2854105071424158,
+            "min_atp": 0.780120125823331,
+            "mean_atp": 0.8282407145123055
           }
         },
         {
@@ -691,15 +691,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.5,
           "delta_param": 0.09999999999999998,
-          "delta_atp": 0.0028557829880478947,
-          "delta_het": 0.03505250524248199,
-          "sensitivity_atp": 0.028557829880478953,
-          "sensitivity_het": 0.35052505242481996,
+          "delta_atp": 0.0030757478343079736,
+          "delta_het": 0.04181775382214342,
+          "sensitivity_atp": 0.030757478343079743,
+          "sensitivity_het": 0.41817753822143433,
           "perturbed_metrics": {
-            "final_atp": 0.8100622974570251,
-            "final_het": 0.3603511148386409,
-            "min_atp": 0.7854287927860552,
-            "mean_atp": 0.8403314235122835
+            "final_atp": 0.7755432289332904,
+            "final_het": 0.3599748822718573,
+            "min_atp": 0.7755432289332904,
+            "mean_atp": 0.8121907326953216
           }
         },
         {
@@ -708,15 +708,15 @@
           "original_value": 0.6,
           "perturbed_value": 0.4,
           "delta_param": 0.19999999999999996,
-          "delta_atp": 6.090392780722098e-05,
-          "delta_het": 0.00033817220584952956,
-          "sensitivity_atp": 0.00030451963903610496,
-          "sensitivity_het": 0.0016908610292476482,
+          "delta_atp": 8.785195929561507e-05,
+          "delta_het": 0.0008953158114384241,
+          "sensitivity_atp": 0.00043925979647807545,
+          "sensitivity_het": 0.004476579057192121,
           "perturbed_metrics": {
-            "final_atp": 0.8128571765172657,
-            "final_het": 0.32563678180200845,
-            "min_atp": 0.7385892537293999,
-            "mean_atp": 0.8417601599094434
+            "final_atp": 0.7785311248083028,
+            "final_het": 0.3190524442611523,
+            "min_atp": 0.7382474519405823,
+            "mean_atp": 0.8130110966411626
           }
         },
         {
@@ -725,15 +725,15 @@
           "original_value": 0.6,
           "perturbed_value": 0.8,
           "delta_param": 0.20000000000000007,
-          "delta_atp": 5.589849759768395e-05,
-          "delta_het": 0.0002656321684701979,
-          "sensitivity_atp": 0.00027949248798841964,
-          "sensitivity_het": 0.001328160842350989,
+          "delta_atp": 8.202281071711948e-05,
+          "delta_het": 0.0008041417306716703,
+          "sensitivity_atp": 0.0004101140535855972,
+          "sensitivity_het": 0.00402070865335835,
           "perturbed_metrics": {
-            "final_atp": 0.8129739789426706,
-            "final_het": 0.3250329774276887,
-            "min_atp": 0.8129739789426706,
-            "mean_atp": 0.864743456320946
+            "final_atp": 0.7787009995783155,
+            "final_het": 0.3173529867190422,
+            "min_atp": 0.7787009995783155,
+            "mean_atp": 0.8360865785934326
           }
         },
         {
@@ -742,15 +742,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.002517675871433367,
-          "delta_het": 0.06717976854262975,
-          "sensitivity_atp": 0.010070703485733468,
-          "sensitivity_het": 0.268719074170519,
+          "delta_atp": 0.002094779826945503,
+          "delta_het": 0.06361386632972543,
+          "sensitivity_atp": 0.008379119307782013,
+          "sensitivity_het": 0.25445546531890173,
           "perturbed_metrics": {
-            "final_atp": 0.8154357563165063,
-            "final_het": 0.25811884105352917,
-            "min_atp": 0.8154357563165063,
-            "mean_atp": 0.85551397973641
+            "final_atp": 0.7807137565945439,
+            "final_het": 0.25454326211998846,
+            "min_atp": 0.7807137565945439,
+            "mean_atp": 0.8261906943005649
           }
         },
         {
@@ -759,15 +759,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.006045220780556915,
-          "delta_het": 0.06870297584514157,
-          "sensitivity_atp": 0.02418088312222766,
-          "sensitivity_het": 0.27481190338056627,
+          "delta_atp": 0.004789052320754328,
+          "delta_het": 0.06544939591153504,
+          "sensitivity_atp": 0.01915620928301731,
+          "sensitivity_het": 0.26179758364614014,
           "perturbed_metrics": {
-            "final_atp": 0.806872859664516,
-            "final_het": 0.3940015854413005,
-            "min_atp": 0.806872859664516,
-            "mean_atp": 0.849116988414536
+            "final_atp": 0.7738299244468441,
+            "final_het": 0.3836065243612489,
+            "min_atp": 0.7738299244468441,
+            "mean_atp": 0.8217071300598181
           }
         },
         {
@@ -776,15 +776,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.002415015275022636,
-          "delta_het": 0.030639562883912896,
-          "sensitivity_atp": 0.009660061100090545,
-          "sensitivity_het": 0.12255825153565159,
+          "delta_atp": 0.0023328587728690398,
+          "delta_het": 0.033216749168387905,
+          "sensitivity_atp": 0.009331435091476159,
+          "sensitivity_het": 0.13286699667355162,
           "perturbed_metrics": {
-            "final_atp": 0.8153330957200956,
-            "final_het": 0.294659046712246,
-            "min_atp": 0.8153330957200956,
-            "mean_atp": 0.8552305502507216
+            "final_atp": 0.7809518355404674,
+            "final_het": 0.284940379281326,
+            "min_atp": 0.7809518355404674,
+            "mean_atp": 0.8263695823697245
           }
         },
         {
@@ -793,15 +793,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0030086176510533136,
-          "delta_het": 0.029922817581464478,
-          "sensitivity_atp": 0.012034470604213254,
-          "sensitivity_het": 0.11969127032585791,
+          "delta_atp": 0.002930848835487665,
+          "delta_het": 0.032409153242965894,
+          "sensitivity_atp": 0.01172339534195066,
+          "sensitivity_het": 0.12963661297186357,
           "perturbed_metrics": {
-            "final_atp": 0.8099094627940197,
-            "final_het": 0.3552214271776234,
-            "min_atp": 0.8099094627940197,
-            "mean_atp": 0.8509609909801921
+            "final_atp": 0.7756881279321107,
+            "final_het": 0.3505662816926798,
+            "min_atp": 0.7756881279321107,
+            "mean_atp": 0.822441459090921
           }
         },
         {
@@ -810,15 +810,15 @@
           "original_value": 0.3,
           "perturbed_value": 0.1,
           "delta_param": 0.19999999999999998,
-          "delta_atp": 0.0007165207190822365,
-          "delta_het": 0.008557172989195116,
-          "sensitivity_atp": 0.0035826035954111828,
-          "sensitivity_het": 0.04278586494597559,
+          "delta_atp": 0.0006394040469975826,
+          "delta_het": 0.008575816115028001,
+          "sensitivity_atp": 0.0031970202349879133,
+          "sensitivity_het": 0.04287908057514001,
           "perturbed_metrics": {
-            "final_atp": 0.8136346011641552,
-            "final_het": 0.3167414366069638,
-            "min_atp": 0.8136346011641552,
-            "mean_atp": 0.8538810139871096
+            "final_atp": 0.779258380814596,
+            "final_het": 0.3095813123346859,
+            "min_atp": 0.779258380814596,
+            "mean_atp": 0.8250929368647728
           }
         },
         {
@@ -827,15 +827,15 @@
           "original_value": 0.3,
           "perturbed_value": 0.5,
           "delta_param": 0.2,
-          "delta_atp": 0.000826276855174668,
-          "delta_het": 0.009122873996318892,
-          "sensitivity_atp": 0.00413138427587334,
-          "sensitivity_het": 0.04561436998159446,
+          "delta_atp": 0.0007386261457736909,
+          "delta_het": 0.009171279789429054,
+          "sensitivity_atp": 0.0036931307288684545,
+          "sensitivity_het": 0.04585639894714527,
           "perturbed_metrics": {
-            "final_atp": 0.8120918035898983,
-            "final_het": 0.3344214835924778,
-            "min_atp": 0.8120918035898983,
-            "mean_atp": 0.8525773589728569
+            "final_atp": 0.7778803506218247,
+            "final_het": 0.32732840823914294,
+            "min_atp": 0.7778803506218247,
+            "mean_atp": 0.8239677682407783
           }
         }
       ]
@@ -843,75 +843,75 @@
     {
       "label": "near_cliff_no_treatment",
       "center_metrics": {
-        "final_atp": 0.026686733050638727,
-        "final_het": 0.91414916348013,
-        "min_atp": 0.026686733050638727,
-        "mean_atp": 0.1939153561562118
+        "final_atp": 0.026689973155489658,
+        "final_het": 0.9141412770364256,
+        "min_atp": 0.026689973155489658,
+        "mean_atp": 0.19393830838558374
       },
       "n_perturbations": 18,
-      "fragility_score": 3.9725004070824226,
+      "fragility_score": 7.948346382024495,
       "most_sensitive_param": "transplant_rate",
       "least_sensitive_param": "baseline_age",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.10302434965758944,
-          "sensitivity_het": 0.2245815288021391,
-          "combined": 0.32760587845972855
+          "sensitivity_atp": 0.10314249461044384,
+          "sensitivity_het": 0.22477522260573535,
+          "combined": 0.3279177172161792
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.04855066501798844,
-          "sensitivity_het": 0.1005179322918448,
-          "combined": 0.14906859730983324
+          "sensitivity_atp": 0.019031908888558872,
+          "sensitivity_het": 0.04235945390285378,
+          "combined": 0.061391362791412656
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.007543171641889446,
-          "sensitivity_het": 9.580570364486896e-05,
-          "combined": 0.007638977345534315
+          "sensitivity_atp": 0.007544032129042366,
+          "sensitivity_het": 9.569927357011565e-05,
+          "combined": 0.007639731402612482
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.11571206207698848,
-          "sensitivity_het": 0.12832316054694815,
-          "combined": 0.24403522262393662
+          "sensitivity_atp": 0.11569802605221378,
+          "sensitivity_het": 0.12833944505433292,
+          "combined": 0.24403747110654672
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.9998139345522874,
-          "sensitivity_het": 1.211497800450152,
-          "combined": 2.2113117350024396
+          "sensitivity_atp": 3.792958111753547,
+          "sensitivity_het": 2.4811327620085764,
+          "combined": 6.274090873762123
         },
         "exercise_level": {
-          "sensitivity_atp": 0.01543118315564914,
-          "sensitivity_het": 0.03722539252977164,
-          "combined": 0.05265657568542078
+          "sensitivity_atp": 0.015427643785088166,
+          "sensitivity_het": 0.03722988163237129,
+          "combined": 0.05265752541745945
         },
         "baseline_age": {
-          "sensitivity_atp": 0.0004307518371713682,
-          "sensitivity_het": 0.0005738850641392678,
-          "combined": 0.001004636901310636
+          "sensitivity_atp": 0.000447045816318731,
+          "sensitivity_het": 0.0006057767461151386,
+          "combined": 0.0010528225624338696
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.15056641588215106,
-          "sensitivity_het": 0.37723360074342305,
-          "combined": 0.5278000166255741
+          "sensitivity_atp": 0.15068417722844996,
+          "sensitivity_het": 0.37743133153098085,
+          "combined": 0.5281155087594308
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.0034710141634906274,
-          "sensitivity_het": 0.008348193893401301,
-          "combined": 0.011819208056891928
+          "sensitivity_atp": 0.0034768080706365245,
+          "sensitivity_het": 0.008361285215735537,
+          "combined": 0.01183809328637206
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.07226238009560014,
-          "sensitivity_het": 0.15994011850612444,
-          "combined": 0.2322024986017246
+          "sensitivity_atp": 0.07227413260590117,
+          "sensitivity_het": 0.15994813604488,
+          "combined": 0.23222226865078116
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.02154224299983918,
-          "sensitivity_het": 0.0527464453164308,
-          "combined": 0.07428868831626997
+          "sensitivity_atp": 0.021547374111216835,
+          "sensitivity_het": 0.05275284810991843,
+          "combined": 0.07430022222113526
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.039046764279389974,
-          "sensitivity_het": 0.09402160787436808,
-          "combined": 0.13306837215375805
+          "sensitivity_atp": 0.039054163735512154,
+          "sensitivity_het": 0.09402862111249544,
+          "combined": 0.1330827848480076
         }
       },
       "perturbations": [
@@ -921,15 +921,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.010302434965758944,
-          "delta_het": 0.02245815288021391,
-          "sensitivity_atp": 0.10302434965758944,
-          "sensitivity_het": 0.2245815288021391,
+          "delta_atp": 0.010314249461044384,
+          "delta_het": 0.022477522260573535,
+          "sensitivity_atp": 0.10314249461044384,
+          "sensitivity_het": 0.22477522260573535,
           "perturbed_metrics": {
-            "final_atp": 0.03698916801639767,
-            "final_het": 0.8916910105999161,
-            "min_atp": 0.03698916801639767,
-            "mean_atp": 0.21654623969816822
+            "final_atp": 0.03700422261653404,
+            "final_het": 0.891663754775852,
+            "min_atp": 0.03700422261653404,
+            "mean_atp": 0.21662035888441572
           }
         },
         {
@@ -938,15 +938,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.004855066501798844,
-          "delta_het": 0.01005179322918448,
-          "sensitivity_atp": 0.04855066501798844,
-          "sensitivity_het": 0.1005179322918448,
+          "delta_atp": 0.0019031908888558872,
+          "delta_het": 0.004235945390285378,
+          "sensitivity_atp": 0.019031908888558872,
+          "sensitivity_het": 0.04235945390285378,
           "perturbed_metrics": {
-            "final_atp": 0.03154179955243757,
-            "final_het": 0.9040973702509455,
-            "min_atp": 0.03154179955243757,
-            "mean_atp": 0.2058485500195536
+            "final_atp": 0.028593164044345545,
+            "final_het": 0.9099053316461402,
+            "min_atp": 0.028593164044345545,
+            "mean_atp": 0.1987699923436701
           }
         },
         {
@@ -955,15 +955,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.0007543171641889446,
-          "delta_het": 9.580570364486896e-06,
-          "sensitivity_atp": 0.007543171641889446,
-          "sensitivity_het": 9.580570364486896e-05,
+          "delta_atp": 0.0007544032129042366,
+          "delta_het": 9.569927357011565e-06,
+          "sensitivity_atp": 0.007544032129042366,
+          "sensitivity_het": 9.569927357011565e-05,
           "perturbed_metrics": {
-            "final_atp": 0.02744105021482767,
-            "final_het": 0.9141587440504945,
-            "min_atp": 0.02744105021482767,
-            "mean_atp": 0.19494292726857995
+            "final_atp": 0.027444376368393895,
+            "final_het": 0.9141508469637826,
+            "min_atp": 0.027444376368393895,
+            "mean_atp": 0.1949660654923678
           }
         },
         {
@@ -972,15 +972,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.011571206207698848,
-          "delta_het": 0.012832316054694815,
-          "sensitivity_atp": 0.11571206207698848,
-          "sensitivity_het": 0.12832316054694815,
+          "delta_atp": 0.011569802605221379,
+          "delta_het": 0.012833944505433292,
+          "sensitivity_atp": 0.11569802605221378,
+          "sensitivity_het": 0.12833944505433292,
           "perturbed_metrics": {
-            "final_atp": 0.015115526842939878,
-            "final_het": 0.9013168474254352,
-            "min_atp": 0.015115526842939878,
-            "mean_atp": 0.19598693278789117
+            "final_atp": 0.01512017055026828,
+            "final_het": 0.9013073325309923,
+            "min_atp": 0.01512017055026828,
+            "mean_atp": 0.19601270942476112
           }
         },
         {
@@ -989,15 +989,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.09998139345522875,
-          "delta_het": 0.1211497800450152,
-          "sensitivity_atp": 0.9998139345522874,
-          "sensitivity_het": 1.211497800450152,
+          "delta_atp": 0.3792958111753547,
+          "delta_het": 0.24811327620085766,
+          "sensitivity_atp": 3.792958111753547,
+          "sensitivity_het": 2.4811327620085764,
           "perturbed_metrics": {
-            "final_atp": 0.12666812650586748,
-            "final_het": 0.7929993834351148,
-            "min_atp": 0.12666812650586748,
-            "mean_atp": 0.2599105540240071
+            "final_atp": 0.40598578433084437,
+            "final_het": 0.6660280008355679,
+            "min_atp": 0.40598578433084437,
+            "mean_atp": 0.4706631654951383
           }
         },
         {
@@ -1006,15 +1006,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.001543118315564914,
-          "delta_het": 0.003722539252977164,
-          "sensitivity_atp": 0.01543118315564914,
-          "sensitivity_het": 0.03722539252977164,
+          "delta_atp": 0.0015427643785088166,
+          "delta_het": 0.0037229881632371287,
+          "sensitivity_atp": 0.015427643785088166,
+          "sensitivity_het": 0.03722988163237129,
           "perturbed_metrics": {
-            "final_atp": 0.025143614735073812,
-            "final_het": 0.9104266242271528,
-            "min_atp": 0.025143614735073812,
-            "mean_atp": 0.19334528838700582
+            "final_atp": 0.02514720877698084,
+            "final_het": 0.9104182888731884,
+            "min_atp": 0.02514720877698084,
+            "mean_atp": 0.19336876131429762
           }
         },
         {
@@ -1023,15 +1023,15 @@
           "original_value": 75.0,
           "perturbed_value": 60.0,
           "delta_param": 15.0,
-          "delta_atp": 0.006834059756536011,
-          "delta_het": 0.008544414083772489,
-          "sensitivity_atp": 0.0004556039837690674,
-          "sensitivity_het": 0.0005696276055848326,
+          "delta_atp": 0.007314321774567058,
+          "delta_het": 0.009480554451498868,
+          "sensitivity_atp": 0.0004876214516378039,
+          "sensitivity_het": 0.0006320369634332579,
           "perturbed_metrics": {
-            "final_atp": 0.03352079280717474,
-            "final_het": 0.9056047493963575,
-            "min_atp": 0.03352079280717474,
-            "mean_atp": 0.21308128611607277
+            "final_atp": 0.03400429493005672,
+            "final_het": 0.9046607225849267,
+            "min_atp": 0.03400429493005672,
+            "mean_atp": 0.2157462548351993
           }
         },
         {
@@ -1040,15 +1040,15 @@
           "original_value": 75.0,
           "perturbed_value": 80.0,
           "delta_param": 5.0,
-          "delta_atp": 0.0020294984528683446,
-          "delta_het": 0.0028907126134685157,
-          "sensitivity_atp": 0.0004058996905736689,
-          "sensitivity_het": 0.0005781425226937031,
+          "delta_atp": 0.0020323509049982903,
+          "delta_het": 0.002897582643985097,
+          "sensitivity_atp": 0.00040647018099965805,
+          "sensitivity_het": 0.0005795165287970194,
           "perturbed_metrics": {
-            "final_atp": 0.024657234597770382,
-            "final_het": 0.9170398760935985,
-            "min_atp": 0.024657234597770382,
-            "mean_atp": 0.18780454807372038
+            "final_atp": 0.024657622250491368,
+            "final_het": 0.9170388596804107,
+            "min_atp": 0.024657622250491368,
+            "mean_atp": 0.18780747354908728
           }
         },
         {
@@ -1057,15 +1057,15 @@
           "original_value": 0.65,
           "perturbed_value": 0.6,
           "delta_param": 0.050000000000000044,
-          "delta_atp": 0.010275154634592595,
-          "delta_het": 0.021362656759374654,
-          "sensitivity_atp": 0.2055030926918517,
-          "sensitivity_het": 0.4272531351874927,
+          "delta_atp": 0.010285855175748402,
+          "delta_het": 0.02137982361443591,
+          "sensitivity_atp": 0.20571710351496786,
+          "sensitivity_het": 0.42759647228871783,
           "perturbed_metrics": {
-            "final_atp": 0.03696188768523132,
-            "final_het": 0.8927865067207553,
-            "min_atp": 0.03696188768523132,
-            "mean_atp": 0.26655539025647407
+            "final_atp": 0.03697582833123806,
+            "final_het": 0.8927614534219896,
+            "min_atp": 0.03697582833123806,
+            "mean_atp": 0.26662940568257115
           }
         },
         {
@@ -1074,15 +1074,15 @@
           "original_value": 0.65,
           "perturbed_value": 0.8,
           "delta_param": 0.15000000000000002,
-          "delta_atp": 0.014344460860867561,
-          "delta_het": 0.04908210994490303,
-          "sensitivity_atp": 0.0956297390724504,
-          "sensitivity_het": 0.32721406629935346,
+          "delta_atp": 0.014347687641289806,
+          "delta_het": 0.0490899286159866,
+          "sensitivity_atp": 0.09565125094193203,
+          "sensitivity_het": 0.3272661907732439,
           "perturbed_metrics": {
-            "final_atp": 0.012342272189771165,
-            "final_het": 0.963231273425033,
-            "min_atp": 0.012342272189771165,
-            "mean_atp": 0.04895330963631477
+            "final_atp": 0.012342285514199853,
+            "final_het": 0.9632312056524122,
+            "min_atp": 0.012342285514199853,
+            "mean_atp": 0.0489534090054305
           }
         },
         {
@@ -1091,15 +1091,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.2,
           "delta_param": 0.2,
-          "delta_atp": 0.0007110260460051511,
-          "delta_het": 0.0017310367403573501,
-          "sensitivity_atp": 0.0035551302300257555,
-          "sensitivity_het": 0.00865518370178675,
+          "delta_atp": 0.000711998225664999,
+          "delta_het": 0.0017332601086552657,
+          "sensitivity_atp": 0.003559991128324995,
+          "sensitivity_het": 0.008666300543276328,
           "perturbed_metrics": {
-            "final_atp": 0.025975707004633575,
-            "final_het": 0.9158802002204873,
-            "min_atp": 0.025975707004633575,
-            "mean_atp": 0.18309010928100652
+            "final_atp": 0.02597797492982466,
+            "final_het": 0.9158745371450808,
+            "min_atp": 0.02597797492982466,
+            "mean_atp": 0.18310609658193353
           }
         },
         {
@@ -1108,15 +1108,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.6,
           "delta_param": 0.19999999999999996,
-          "delta_atp": 0.0006773796193910997,
-          "delta_het": 0.0016082408170031703,
-          "sensitivity_atp": 0.0033868980969554994,
-          "sensitivity_het": 0.008041204085015853,
+          "delta_atp": 0.0006787250025896106,
+          "delta_het": 0.001611253977638949,
+          "sensitivity_atp": 0.003393625012948054,
+          "sensitivity_het": 0.008056269888194747,
           "perturbed_metrics": {
-            "final_atp": 0.027364112670029826,
-            "final_het": 0.9125409226631268,
-            "min_atp": 0.027364112670029826,
-            "mean_atp": 0.204527611096036
+            "final_atp": 0.02736869815807927,
+            "final_het": 0.9125300230587866,
+            "min_atp": 0.02736869815807927,
+            "mean_atp": 0.20456024345926205
           }
         },
         {
@@ -1125,15 +1125,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.025885863513023986,
-          "delta_het": 0.04766217948571061,
-          "sensitivity_atp": 0.10354345405209595,
-          "sensitivity_het": 0.19064871794284244,
+          "delta_atp": 0.025890034296146145,
+          "delta_het": 0.04766409550907835,
+          "sensitivity_atp": 0.10356013718458458,
+          "sensitivity_het": 0.1906563820363134,
           "perturbed_metrics": {
-            "final_atp": 0.05257259656366271,
-            "final_het": 0.8664869839944194,
-            "min_atp": 0.05257259656366271,
-            "mean_atp": 0.23998842292669942
+            "final_atp": 0.0525800074516358,
+            "final_het": 0.8664771815273472,
+            "min_atp": 0.0525800074516358,
+            "mean_atp": 0.24001408091113943
           }
         },
         {
@@ -1142,15 +1142,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.5,
           "delta_param": 0.25,
-          "delta_atp": 0.010245326534776084,
-          "delta_het": 0.03230787976735161,
-          "sensitivity_atp": 0.040981306139104334,
-          "sensitivity_het": 0.12923151906940644,
+          "delta_atp": 0.010247032006804439,
+          "delta_het": 0.03230997251336165,
+          "sensitivity_atp": 0.040988128027217755,
+          "sensitivity_het": 0.1292398900534466,
           "perturbed_metrics": {
-            "final_atp": 0.016441406515862643,
-            "final_het": 0.9464570432474816,
-            "min_atp": 0.016441406515862643,
-            "mean_atp": 0.16311904389231152
+            "final_atp": 0.01644294114868522,
+            "final_het": 0.9464512495497872,
+            "min_atp": 0.01644294114868522,
+            "mean_atp": 0.16313961306646363
           }
         },
         {
@@ -1159,15 +1159,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.006299471497783815,
-          "delta_het": 0.01426081833092252,
-          "sensitivity_atp": 0.02519788599113526,
-          "sensitivity_het": 0.05704327332369008,
+          "delta_atp": 0.00630104188873196,
+          "delta_het": 0.0142625915921617,
+          "sensitivity_atp": 0.02520416755492784,
+          "sensitivity_het": 0.0570503663686468,
           "perturbed_metrics": {
-            "final_atp": 0.03298620454842254,
-            "final_het": 0.8998883451492075,
-            "min_atp": 0.03298620454842254,
-            "mean_atp": 0.20955066373055847
+            "final_atp": 0.03299101504422162,
+            "final_het": 0.8998786854442639,
+            "min_atp": 0.03299101504422162,
+            "mean_atp": 0.2095770897740537
           }
         },
         {
@@ -1176,15 +1176,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.004471650002135775,
-          "delta_het": 0.01211240432729288,
-          "sensitivity_atp": 0.0178866000085431,
-          "sensitivity_het": 0.04844961730917152,
+          "delta_atp": 0.004472645166876458,
+          "delta_het": 0.012113832462797514,
+          "sensitivity_atp": 0.01789058066750583,
+          "sensitivity_het": 0.048455329851190054,
           "perturbed_metrics": {
-            "final_atp": 0.02221508304850295,
-            "final_het": 0.9262615678074229,
-            "min_atp": 0.02221508304850295,
-            "mean_atp": 0.1805840592577057
+            "final_atp": 0.0222173279886132,
+            "final_het": 0.9262551094992231,
+            "min_atp": 0.0222173279886132,
+            "mean_atp": 0.18060418113570056
           }
         },
         {
@@ -1193,15 +1193,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.012248925380853586,
-          "delta_het": 0.025928248350287286,
-          "sensitivity_atp": 0.04899570152341434,
-          "sensitivity_het": 0.10371299340114915,
+          "delta_atp": 0.012251297332094336,
+          "delta_het": 0.02593007272933945,
+          "sensitivity_atp": 0.049005189328377344,
+          "sensitivity_het": 0.1037202909173578,
           "perturbed_metrics": {
-            "final_atp": 0.03893565843149231,
-            "final_het": 0.8882209151298427,
-            "min_atp": 0.03893565843149231,
-            "mean_atp": 0.21591661390369424
+            "final_atp": 0.038941270487583994,
+            "final_het": 0.8882112043070861,
+            "min_atp": 0.038941270487583994,
+            "mean_atp": 0.21594322171557506
           }
         },
         {
@@ -1210,15 +1210,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.0072744567588414015,
-          "delta_het": 0.021082555586896756,
-          "sensitivity_atp": 0.029097827035365606,
-          "sensitivity_het": 0.08433022234758702,
+          "delta_atp": 0.007275784535661741,
+          "delta_het": 0.02108423782690827,
+          "sensitivity_atp": 0.029103138142646964,
+          "sensitivity_het": 0.08433695130763308,
           "perturbed_metrics": {
-            "final_atp": 0.019412276291797325,
-            "final_het": 0.9352317190670267,
-            "min_atp": 0.019412276291797325,
-            "mean_atp": 0.1762700487257638
+            "final_atp": 0.019414188619827917,
+            "final_het": 0.9352255148633338,
+            "min_atp": 0.019414188619827917,
+            "mean_atp": 0.17629002832392204
           }
         }
       ]
@@ -1226,75 +1226,75 @@
     {
       "label": "near_cliff_with_treatment",
       "center_metrics": {
-        "final_atp": 0.7960528427326903,
-        "final_het": 0.2509853257348188,
-        "min_atp": 0.5022879985168212,
-        "mean_atp": 0.7863508809669684
+        "final_atp": 0.7568342163672253,
+        "final_het": 0.16450801352777691,
+        "min_atp": 0.5024740305056353,
+        "mean_atp": 0.7747381672367251
       },
       "n_perturbations": 23,
-      "fragility_score": 1.3050440086090636,
+      "fragility_score": 0.9134328466860413,
       "most_sensitive_param": "yamanaka_intensity",
       "least_sensitive_param": "baseline_nad_level",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.007348337010850692,
-          "sensitivity_het": 0.22348157264635615,
-          "combined": 0.23082990965720684
+          "sensitivity_atp": 0.0010605749111491924,
+          "sensitivity_het": 0.0882507256338132,
+          "combined": 0.08931130054496239
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.14163159194802732,
-          "sensitivity_het": 0.07964825934219705,
-          "combined": 0.22127985129022437
+          "sensitivity_atp": 0.12999974006158332,
+          "sensitivity_het": 0.05021606498636744,
+          "combined": 0.18021580504795076
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.03001147167971685,
-          "sensitivity_het": 0.0026773342855566096,
-          "combined": 0.03268880596527346
+          "sensitivity_atp": 0.028053668192538295,
+          "sensitivity_het": 0.00024742758788920405,
+          "combined": 0.0283010957804275
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.20724935176090642,
-          "sensitivity_het": 0.15312596851148774,
-          "combined": 0.36037532027239416
+          "sensitivity_atp": 0.21068548129074216,
+          "sensitivity_het": 0.04629637357599109,
+          "combined": 0.25698185486673325
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.002387925179267114,
-          "sensitivity_het": 0.06333092095992277,
-          "combined": 0.06571884613918988
+          "sensitivity_atp": 0.001410928134441658,
+          "sensitivity_het": 0.09602028338174262,
+          "combined": 0.09743121151618428
         },
         "exercise_level": {
-          "sensitivity_atp": 0.03054503692962718,
-          "sensitivity_het": 0.001444804647264153,
-          "combined": 0.03198984157689133
+          "sensitivity_atp": 0.030794550981668205,
+          "sensitivity_het": 0.008053029796130578,
+          "combined": 0.03884758077779878
         },
         "baseline_age": {
-          "sensitivity_atp": 0.004102389088201075,
-          "sensitivity_het": 9.598386605268831e-05,
-          "combined": 0.0041983729542537625
+          "sensitivity_atp": 0.004107108288801353,
+          "sensitivity_het": 0.0005649567949245981,
+          "combined": 0.004672065083725951
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.0033150817380674545,
-          "sensitivity_het": 0.03699019242892822,
-          "combined": 0.04030527416699567
+          "sensitivity_atp": 0.0009310892271826202,
+          "sensitivity_het": 0.0020942172919255478,
+          "combined": 0.003025306519108168
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.000194166770881854,
-          "sensitivity_het": 0.0007421848841963897,
-          "combined": 0.0009363516550782437
+          "sensitivity_atp": 0.0002284109236461163,
+          "sensitivity_het": 0.0004512593028389856,
+          "combined": 0.0006796702264851019
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.004709770340715069,
-          "sensitivity_het": 0.17507879950632532,
-          "combined": 0.1797885698470404
+          "sensitivity_atp": 0.0012597725705763008,
+          "sensitivity_het": 0.12117990428389819,
+          "combined": 0.12243967685447449
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.0069202179814342735,
-          "sensitivity_het": 0.09873467660181129,
-          "combined": 0.10565489458324556
+          "sensitivity_atp": 0.005309289322046773,
+          "sensitivity_het": 0.07864046250638834,
+          "combined": 0.08394975182843512
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.0020224012502048083,
-          "sensitivity_het": 0.02925556925106515,
-          "combined": 0.03127797050126996
+          "sensitivity_atp": 0.0005317023826074685,
+          "sensitivity_het": 0.007045825257148031,
+          "combined": 0.007577527639755499
         }
       },
       "perturbations": [
@@ -1304,15 +1304,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0026293891669849634,
-          "delta_het": 0.06629969911169742,
-          "sensitivity_atp": 0.010517556667939854,
-          "sensitivity_het": 0.2651987964467897,
+          "delta_atp": 0.0003276559337664908,
+          "delta_het": 0.0252283164131539,
+          "sensitivity_atp": 0.0013106237350659633,
+          "sensitivity_het": 0.1009132656526156,
           "perturbed_metrics": {
-            "final_atp": 0.7934234535657053,
-            "final_het": 0.3172850248465162,
-            "min_atp": 0.5022361530783,
-            "mean_atp": 0.7739062341335553
+            "final_atp": 0.7565065604334588,
+            "final_het": 0.18973632994093081,
+            "min_atp": 0.5024653618011066,
+            "mean_atp": 0.7729581735150344
           }
         },
         {
@@ -1321,15 +1321,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.0010447793384403825,
-          "delta_het": 0.04544108721148066,
-          "sensitivity_atp": 0.00417911735376153,
-          "sensitivity_het": 0.18176434884592263,
+          "delta_atp": 0.0002026315218081054,
+          "delta_het": 0.0188970464037527,
+          "sensitivity_atp": 0.0008105260872324216,
+          "sensitivity_het": 0.0755881856150108,
           "perturbed_metrics": {
-            "final_atp": 0.7970976220711307,
-            "final_het": 0.20554423852333814,
-            "min_atp": 0.5023276600402846,
-            "mean_atp": 0.7937398272668972
+            "final_atp": 0.7570368478890334,
+            "final_het": 0.14561096712402422,
+            "min_atp": 0.5024826947702301,
+            "mean_atp": 0.7760877600815892
           }
         },
         {
@@ -1338,15 +1338,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.03548312371489337,
-          "delta_het": 0.021476974695656625,
-          "sensitivity_atp": 0.1419324948595735,
-          "sensitivity_het": 0.0859078987826265,
+          "delta_atp": 0.028760878213067498,
+          "delta_het": 0.012240915753146397,
+          "sensitivity_atp": 0.11504351285226999,
+          "sensitivity_het": 0.04896366301258559,
           "perturbed_metrics": {
-            "final_atp": 0.7605697190177969,
-            "final_het": 0.2724623004304754,
-            "min_atp": 0.502236125881582,
-            "mean_atp": 0.7535614089873998
+            "final_atp": 0.7280733381541578,
+            "final_het": 0.1767489292809233,
+            "min_atp": 0.5024657712985169,
+            "mean_atp": 0.7497503907522415
           }
         },
         {
@@ -1355,15 +1355,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.03533267225912029,
-          "delta_het": 0.0183471549754419,
-          "sensitivity_atp": 0.14133068903648116,
-          "sensitivity_het": 0.0733886199017676,
+          "delta_atp": 0.036238991817724164,
+          "delta_het": 0.012867116740037321,
+          "sensitivity_atp": 0.14495596727089666,
+          "sensitivity_het": 0.051468466960149284,
           "perturbed_metrics": {
-            "final_atp": 0.8313855149918106,
-            "final_het": 0.2326381707593769,
-            "min_atp": 0.5023277752453977,
-            "mean_atp": 0.8186380384463144
+            "final_atp": 0.7930732081849494,
+            "final_het": 0.1516408967877396,
+            "min_atp": 0.5024844462987058,
+            "mean_atp": 0.8061501082719292
           }
         },
         {
@@ -1372,15 +1372,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.010623313608990714,
-          "delta_het": 0.0009005112662821002,
-          "sensitivity_atp": 0.04249325443596286,
-          "sensitivity_het": 0.003602045065128401,
+          "delta_atp": 0.009917020506096552,
+          "delta_het": 8.786982612912775e-05,
+          "sensitivity_atp": 0.03966808202438621,
+          "sensitivity_het": 0.000351479304516511,
           "perturbed_metrics": {
-            "final_atp": 0.7854295291236996,
-            "final_het": 0.2500848144685367,
-            "min_atp": 0.5022853178165668,
-            "mean_atp": 0.778933166947723
+            "final_atp": 0.7469171958611287,
+            "final_het": 0.1644201437016478,
+            "min_atp": 0.502473491237713,
+            "mean_atp": 0.7676851872635094
           }
         },
         {
@@ -1389,15 +1389,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.004382422230867711,
-          "delta_het": 0.0004381558764962046,
-          "sensitivity_atp": 0.017529688923470843,
-          "sensitivity_het": 0.0017526235059848183,
+          "delta_atp": 0.004109813590172595,
+          "delta_het": 3.5843967815474276e-05,
+          "sensitivity_atp": 0.01643925436069038,
+          "sensitivity_het": 0.0001433758712618971,
           "perturbed_metrics": {
-            "final_atp": 0.800435264963558,
-            "final_het": 0.251423481611315,
-            "min_atp": 0.5022906711290608,
-            "mean_atp": 0.790337361134655
+            "final_atp": 0.7609440299573978,
+            "final_het": 0.1645438574955924,
+            "min_atp": 0.5024745690522219,
+            "mean_atp": 0.7785546817766946
           }
         },
         {
@@ -1406,15 +1406,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.020724935176090642,
-          "delta_het": 0.015312596851148774,
-          "sensitivity_atp": 0.20724935176090642,
-          "sensitivity_het": 0.15312596851148774,
+          "delta_atp": 0.021068548129074216,
+          "delta_het": 0.004629637357599109,
+          "sensitivity_atp": 0.21068548129074216,
+          "sensitivity_het": 0.04629637357599109,
           "perturbed_metrics": {
-            "final_atp": 0.7753279075565996,
-            "final_het": 0.23567272888367002,
-            "min_atp": 0.49954573704508526,
-            "mean_atp": 0.7693942849861489
+            "final_atp": 0.735765668238151,
+            "final_het": 0.1598783761701778,
+            "min_atp": 0.5011088557072396,
+            "mean_atp": 0.7552393866354321
           }
         },
         {
@@ -1423,15 +1423,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0008752785221540771,
-          "delta_het": 0.022747211540359524,
-          "sensitivity_atp": 0.0035011140886163084,
-          "sensitivity_het": 0.0909888461614381,
+          "delta_atp": 0.00047445666032952527,
+          "delta_het": 0.02792248088006763,
+          "sensitivity_atp": 0.001897826641318101,
+          "sensitivity_het": 0.11168992352027052,
           "perturbed_metrics": {
-            "final_atp": 0.7951775642105362,
-            "final_het": 0.2737325372751783,
-            "min_atp": 0.5022314196987316,
-            "mean_atp": 0.7753872791113252
+            "final_atp": 0.7563597597068957,
+            "final_het": 0.19243049440784454,
+            "min_atp": 0.5023886826299735,
+            "mean_atp": 0.7665652938681519
           }
         },
         {
@@ -1440,15 +1440,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.00031868406747947997,
-          "delta_het": 0.008918248939601858,
-          "sensitivity_atp": 0.0012747362699179199,
-          "sensitivity_het": 0.03567299575840743,
+          "delta_atp": 0.00023100740689130372,
+          "delta_het": 0.02008766081080368,
+          "sensitivity_atp": 0.0009240296275652149,
+          "sensitivity_het": 0.08035064324321473,
           "perturbed_metrics": {
-            "final_atp": 0.7963715268001698,
-            "final_het": 0.24206707679521694,
-            "min_atp": 0.5023300456271214,
-            "mean_atp": 0.7920861541334825
+            "final_atp": 0.7570652237741166,
+            "final_het": 0.14442035271697323,
+            "min_atp": 0.5025143495367973,
+            "mean_atp": 0.7782390896146545
           }
         },
         {
@@ -1457,15 +1457,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.004582604688741387,
-          "delta_het": 0.0002182389007671648,
-          "sensitivity_atp": 0.030550697924942583,
-          "sensitivity_het": 0.001454926005114432,
+          "delta_atp": 0.0046219666184065256,
+          "delta_het": 0.001250163810905397,
+          "sensitivity_atp": 0.03081311078937684,
+          "sensitivity_het": 0.00833442540603598,
           "perturbed_metrics": {
-            "final_atp": 0.8006354474214317,
-            "final_het": 0.25076708683405163,
-            "min_atp": 0.5025704167800825,
-            "mean_atp": 0.790403174821218
+            "final_atp": 0.7614561829856318,
+            "final_het": 0.16325784971687152,
+            "min_atp": 0.5026025929054455,
+            "mean_atp": 0.7791463803870504
           }
         },
         {
@@ -1474,15 +1474,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.007634843983577944,
-          "delta_het": 0.0003586708223534685,
-          "sensitivity_atp": 0.030539375934311774,
-          "sensitivity_het": 0.001434683289413874,
+          "delta_atp": 0.007693997793489893,
+          "delta_het": 0.0019429085465562934,
+          "sensitivity_atp": 0.03077599117395957,
+          "sensitivity_het": 0.007771634186225174,
           "perturbed_metrics": {
-            "final_atp": 0.7884179987491123,
-            "final_het": 0.25134399655717227,
-            "min_atp": 0.5013448756236225,
-            "mean_atp": 0.7795584580603491
+            "final_atp": 0.7491402185737354,
+            "final_het": 0.1664509220743332,
+            "min_atp": 0.5020304418550268,
+            "mean_atp": 0.7673937425825449
           }
         },
         {
@@ -1491,15 +1491,15 @@
           "original_value": 75.0,
           "perturbed_value": 60.0,
           "delta_param": 15.0,
-          "delta_atp": 0.06157271459645797,
-          "delta_het": 0.0015251433123417701,
-          "sensitivity_atp": 0.004104847639763864,
-          "sensitivity_het": 0.00010167622082278468,
+          "delta_atp": 0.06170642551236505,
+          "delta_het": 0.012110775141838281,
+          "sensitivity_atp": 0.0041137617008243366,
+          "sensitivity_het": 0.0008073850094558854,
           "perturbed_metrics": {
-            "final_atp": 0.8576255573291482,
-            "final_het": 0.25251046904716057,
-            "min_atp": 0.5081388462384727,
-            "mean_atp": 0.8400820241958188
+            "final_atp": 0.8185406418795903,
+            "final_het": 0.15239723838593863,
+            "min_atp": 0.5082921977270314,
+            "mean_atp": 0.8297626191362408
           }
         },
         {
@@ -1508,15 +1508,15 @@
           "original_value": 75.0,
           "perturbed_value": 80.0,
           "delta_param": 5.0,
-          "delta_atp": 0.020499652683191427,
-          "delta_het": 0.0004514575564129597,
-          "sensitivity_atp": 0.004099930536638286,
-          "sensitivity_het": 9.029151128259194e-05,
+          "delta_atp": 0.02050227438389185,
+          "delta_het": 0.0016126429019665545,
+          "sensitivity_atp": 0.00410045487677837,
+          "sensitivity_het": 0.00032252858039331087,
           "perturbed_metrics": {
-            "final_atp": 0.7755531900494989,
-            "final_het": 0.25053386817840584,
-            "min_atp": 0.5003351383627846,
-            "mean_atp": 0.7684972414347733
+            "final_atp": 0.7363319419833334,
+            "final_het": 0.16612065642974347,
+            "min_atp": 0.5005342213283644,
+            "mean_atp": 0.7564009967215607
           }
         },
         {
@@ -1525,15 +1525,15 @@
           "original_value": 0.65,
           "perturbed_value": 0.6,
           "delta_param": 0.050000000000000044,
-          "delta_atp": 0.00017016970495442596,
-          "delta_het": 0.0024096061641230015,
-          "sensitivity_atp": 0.003403394099088516,
-          "sensitivity_het": 0.04819212328245999,
+          "delta_atp": 3.721753258134619e-05,
+          "delta_het": 7.435111870432443e-05,
+          "sensitivity_atp": 0.0007443506516269232,
+          "sensitivity_het": 0.0014870223740864872,
           "perturbed_metrics": {
-            "final_atp": 0.7962230124376447,
-            "final_het": 0.2485757195706958,
-            "min_atp": 0.604665506343242,
-            "mean_atp": 0.8042925335700599
+            "final_atp": 0.7568714338998066,
+            "final_het": 0.1644336624090726,
+            "min_atp": 0.6048422822191525,
+            "mean_atp": 0.7836221963838933
           }
         },
         {
@@ -1542,15 +1542,15 @@
           "original_value": 0.65,
           "perturbed_value": 0.8,
           "delta_param": 0.15000000000000002,
-          "delta_atp": 0.00048401540655695907,
-          "delta_het": 0.0038682392363094675,
-          "sensitivity_atp": 0.0032267693770463932,
-          "sensitivity_het": 0.025788261575396446,
+          "delta_atp": 0.00016767417041074761,
+          "delta_het": 0.0004052118314646913,
+          "sensitivity_atp": 0.0011178278027383173,
+          "sensitivity_het": 0.0027014122097646083,
           "perturbed_metrics": {
-            "final_atp": 0.7955688273261333,
-            "final_het": 0.25485356497112827,
-            "min_atp": 0.13438175410374298,
-            "mean_atp": 0.6954127170375314
+            "final_atp": 0.7566665421968145,
+            "final_het": 0.1649132253592416,
+            "min_atp": 0.1347783516072808,
+            "mean_atp": 0.7264257375232934
           }
         },
         {
@@ -1559,15 +1559,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.2,
           "delta_param": 0.2,
-          "delta_atp": 3.9763951613980275e-05,
-          "delta_het": 0.0001380014195596635,
-          "sensitivity_atp": 0.00019881975806990138,
-          "sensitivity_het": 0.0006900070977983175,
+          "delta_atp": 4.6145767513272595e-05,
+          "delta_het": 9.253705115777611e-05,
+          "sensitivity_atp": 0.00023072883756636298,
+          "sensitivity_het": 0.00046268525578888053,
           "perturbed_metrics": {
-            "final_atp": 0.7960130787810763,
-            "final_het": 0.25084732431525913,
-            "min_atp": 0.4494128284154849,
-            "mean_atp": 0.7767072433828794
+            "final_atp": 0.756788070599712,
+            "final_het": 0.1646005505789347,
+            "min_atp": 0.44956266728373845,
+            "mean_atp": 0.7645790195326038
           }
         },
         {
@@ -1576,15 +1576,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.6,
           "delta_param": 0.19999999999999996,
-          "delta_atp": 3.790275673876131e-05,
-          "delta_het": 0.00015887253411889235,
-          "sensitivity_atp": 0.0001895137836938066,
-          "sensitivity_het": 0.000794362670594462,
+          "delta_atp": 4.521860194517391e-05,
+          "delta_het": 8.79666699778181e-05,
+          "sensitivity_atp": 0.0002260930097258696,
+          "sensitivity_het": 0.0004398333498890906,
           "perturbed_metrics": {
-            "final_atp": 0.796090745489429,
-            "final_het": 0.2511441982689377,
-            "min_atp": 0.555156215475701,
-            "mean_atp": 0.7959294450563044
+            "final_atp": 0.7568794349691704,
+            "final_het": 0.1644200468577991,
+            "min_atp": 0.5553857781385461,
+            "mean_atp": 0.7848862208627935
           }
         },
         {
@@ -1593,15 +1593,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.0009194956155380574,
-          "delta_het": 0.043654941158874416,
-          "sensitivity_atp": 0.0036779824621522295,
-          "sensitivity_het": 0.17461976463549767,
+          "delta_atp": 0.0002735024819630061,
+          "delta_het": 0.030421469312906985,
+          "sensitivity_atp": 0.0010940099278520243,
+          "sensitivity_het": 0.12168587725162794,
           "perturbed_metrics": {
-            "final_atp": 0.7969723383482283,
-            "final_het": 0.20733038457594438,
-            "min_atp": 0.502314057256242,
-            "mean_atp": 0.7910922278714749
+            "final_atp": 0.7571077188491883,
+            "final_het": 0.13408654421486993,
+            "min_atp": 0.502479049945099,
+            "mean_atp": 0.775607114582728
           }
         },
         {
@@ -1610,15 +1610,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0014353895548194773,
-          "delta_het": 0.043884458594288245,
-          "sensitivity_atp": 0.005741558219277909,
-          "sensitivity_het": 0.17553783437715298,
+          "delta_atp": 0.0003563838033251443,
+          "delta_het": 0.03016848282904211,
+          "sensitivity_atp": 0.0014255352133005772,
+          "sensitivity_het": 0.12067393131616844,
           "perturbed_metrics": {
-            "final_atp": 0.7946174531778708,
-            "final_het": 0.29486978432910704,
-            "min_atp": 0.5022581919354688,
-            "mean_atp": 0.7803107249874868
+            "final_atp": 0.7564778325639001,
+            "final_het": 0.19467649635681902,
+            "min_atp": 0.5024690101172166,
+            "mean_atp": 0.7737369739573201
           }
         },
         {
@@ -1627,15 +1627,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.001664759109102576,
-          "delta_het": 0.025161375466563135,
-          "sensitivity_atp": 0.006659036436410304,
-          "sensitivity_het": 0.10064550186625254,
+          "delta_atp": 0.0013124055231031884,
+          "delta_het": 0.019959176314497812,
+          "sensitivity_atp": 0.0052496220924127535,
+          "sensitivity_het": 0.07983670525799125,
           "perturbed_metrics": {
-            "final_atp": 0.7977176018417929,
-            "final_het": 0.22582395026825566,
-            "min_atp": 0.5023021641382114,
-            "mean_atp": 0.7894664472123791
+            "final_atp": 0.7581466218903284,
+            "final_het": 0.1445488372132791,
+            "min_atp": 0.5024768647855364,
+            "mean_atp": 0.7760835607193831
           }
         },
         {
@@ -1644,15 +1644,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0017953498816145608,
-          "delta_het": 0.02420596283434251,
-          "sensitivity_atp": 0.007181399526458243,
-          "sensitivity_het": 0.09682385133737004,
+          "delta_atp": 0.0013422391379201981,
+          "delta_het": 0.01936105493869636,
+          "sensitivity_atp": 0.0053689565516807924,
+          "sensitivity_het": 0.07744421975478544,
           "perturbed_metrics": {
-            "final_atp": 0.7942574928510757,
-            "final_het": 0.2751912885691613,
-            "min_atp": 0.5022730349862049,
-            "mean_atp": 0.7829976795858489
+            "final_atp": 0.7554919772293051,
+            "final_het": 0.18386906846647327,
+            "min_atp": 0.5024711960048689,
+            "mean_atp": 0.7733585878149012
           }
         },
         {
@@ -1661,15 +1661,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.00047201363389126616,
-          "delta_het": 0.006982563408005543,
-          "sensitivity_atp": 0.0018880545355650646,
-          "sensitivity_het": 0.027930253632022173,
+          "delta_atp": 0.0001292719803497322,
+          "delta_het": 0.0017177914091919821,
+          "sensitivity_atp": 0.0005170879213989288,
+          "sensitivity_het": 0.006871165636767929,
           "perturbed_metrics": {
-            "final_atp": 0.7965248563665815,
-            "final_het": 0.24400276232681326,
-            "min_atp": 0.5022885071538448,
-            "mean_atp": 0.7885057033740127
+            "final_atp": 0.756963488347575,
+            "final_het": 0.16279022211858493,
+            "min_atp": 0.502474076066608,
+            "mean_atp": 0.7752106300747538
           }
         },
         {
@@ -1678,15 +1678,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.000539186991211138,
-          "delta_het": 0.007645221217527032,
-          "sensitivity_atp": 0.002156747964844552,
-          "sensitivity_het": 0.030580884870108127,
+          "delta_atp": 0.00013657921095400205,
+          "delta_het": 0.0018051212193820332,
+          "sensitivity_atp": 0.0005463168438160082,
+          "sensitivity_het": 0.007220484877528133,
           "perturbed_metrics": {
-            "final_atp": 0.7955136557414791,
-            "final_het": 0.25863054695234583,
-            "min_atp": 0.5022874898733172,
-            "mean_atp": 0.7839890012711164
+            "final_atp": 0.7566976371562713,
+            "final_het": 0.16631313474715895,
+            "min_atp": 0.5024739849445445,
+            "mean_atp": 0.7742444349050666
           }
         }
       ]
@@ -1694,75 +1694,75 @@
     {
       "label": "young_biohacker",
       "center_metrics": {
-        "final_atp": 0.9220413878125479,
-        "final_het": 0.23071046973848972,
-        "min_atp": 0.9220413878125479,
-        "mean_atp": 0.9601413685597565
+        "final_atp": 0.8878495296500029,
+        "final_het": 0.18894227899761012,
+        "min_atp": 0.8878495296500029,
+        "mean_atp": 0.943747552977436
       },
       "n_perturbations": 22,
-      "fragility_score": 1.5415767135072094,
-      "most_sensitive_param": "yamanaka_intensity",
+      "fragility_score": 1.8610248077904312,
+      "most_sensitive_param": "transplant_rate",
       "least_sensitive_param": "baseline_nad_level",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.0030944840167948704,
-          "sensitivity_het": 0.18767072774117327,
-          "combined": 0.19076521175796815
+          "sensitivity_atp": 0.0019095047845714883,
+          "sensitivity_het": 0.18556095496082692,
+          "combined": 0.18747045974539842
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.1373510131664264,
-          "sensitivity_het": 0.07170584949142272,
-          "combined": 0.20905686265784912
+          "sensitivity_atp": 0.10013260723682049,
+          "sensitivity_het": 0.07459492946611518,
+          "combined": 0.17472753670293567
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.04341215787369457,
-          "sensitivity_het": 0.0018037199954116143,
-          "combined": 0.045215877869106184
+          "sensitivity_atp": 0.04224303068134483,
+          "sensitivity_het": 0.0004973610125552641,
+          "combined": 0.04274039169390009
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.20968548616706717,
-          "sensitivity_het": 0.16474951544393518,
-          "combined": 0.37443500161100235
+          "sensitivity_atp": 0.21087940575426734,
+          "sensitivity_het": 0.1442417970483617,
+          "combined": 0.35512120280262904
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.001154630976533122,
-          "sensitivity_het": 0.07551431151947785,
-          "combined": 0.07666894249601097
+          "sensitivity_atp": 0.0035618753547672632,
+          "sensitivity_het": 0.42656060350467484,
+          "combined": 0.4301224788594421
         },
         "exercise_level": {
-          "sensitivity_atp": 0.03113077482589599,
-          "sensitivity_het": 0.007021888339859839,
-          "combined": 0.03815266316575583
+          "sensitivity_atp": 0.031100550534197913,
+          "sensitivity_het": 0.009373314753516881,
+          "combined": 0.040473865287714794
         },
         "baseline_age": {
-          "sensitivity_atp": 0.0039346904929832335,
-          "sensitivity_het": 0.00171940368129843,
-          "combined": 0.005654094174281664
+          "sensitivity_atp": 0.004110287508188409,
+          "sensitivity_het": 0.00019722119868609137,
+          "combined": 0.0043075087068745
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.005122909753595417,
-          "sensitivity_het": 0.22007548897893456,
-          "combined": 0.22519839873252998
+          "sensitivity_atp": 0.004205943742344731,
+          "sensitivity_het": 0.27734988494687796,
+          "combined": 0.2815558286892227
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.000435959078542251,
-          "sensitivity_het": 0.0007752829556153622,
-          "combined": 0.0012112420341576133
+          "sensitivity_atp": 0.0005653494776495609,
+          "sensitivity_het": 0.0014712403901636268,
+          "combined": 0.0020365898678131877
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.0047517321920622635,
-          "sensitivity_het": 0.2618685145900757,
-          "combined": 0.26662024678213797
+          "sensitivity_atp": 0.002415680483685456,
+          "sensitivity_het": 0.2193068342985618,
+          "combined": 0.22172251478224725
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.00613932502515957,
-          "sensitivity_het": 0.0924061399885685,
-          "combined": 0.09854546501372807
+          "sensitivity_atp": 0.005711421989834653,
+          "sensitivity_het": 0.10634856072357168,
+          "combined": 0.11205998271340634
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.0006865412124170319,
-          "sensitivity_het": 0.009366166000264511,
-          "combined": 0.010052707212681544
+          "sensitivity_atp": 0.00048022195350827523,
+          "sensitivity_het": 0.008206225985338822,
+          "combined": 0.008686447938847097
         }
       },
       "perturbations": [
@@ -1772,15 +1772,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.0006076161411195935,
-          "delta_het": 0.031458157421749317,
-          "sensitivity_atp": 0.004050774274130624,
-          "sensitivity_het": 0.20972104947832879,
+          "delta_atp": 0.00037392731944263513,
+          "delta_het": 0.03161773305614396,
+          "sensitivity_atp": 0.0024928487962842345,
+          "sensitivity_het": 0.21078488704095974,
           "perturbed_metrics": {
-            "final_atp": 0.9214337716714283,
-            "final_het": 0.26216862716023903,
-            "min_atp": 0.9214337716714283,
-            "mean_atp": 0.959972191868172
+            "final_atp": 0.8874756023305602,
+            "final_het": 0.22056001205375408,
+            "min_atp": 0.8874756023305602,
+            "mean_atp": 0.9436161969028941
           }
         },
         {
@@ -1789,15 +1789,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0005345484398647793,
-          "delta_het": 0.04140510150100443,
-          "sensitivity_atp": 0.002138193759459117,
-          "sensitivity_het": 0.16562040600401773,
+          "delta_atp": 0.00033154019321468553,
+          "delta_het": 0.04008425572017352,
+          "sensitivity_atp": 0.0013261607728587421,
+          "sensitivity_het": 0.16033702288069407,
           "perturbed_metrics": {
-            "final_atp": 0.9225759362524126,
-            "final_het": 0.18930536823748528,
-            "min_atp": 0.9225759362524126,
-            "mean_atp": 0.9603085800935263
+            "final_atp": 0.8881810698432175,
+            "final_het": 0.1488580232774366,
+            "min_atp": 0.8881810698432175,
+            "mean_atp": 0.9438820516891206
           }
         },
         {
@@ -1806,15 +1806,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.03503524459669016,
-          "delta_het": 0.01896673576752081,
-          "sensitivity_atp": 0.14014097838676065,
-          "sensitivity_het": 0.07586694307008324,
+          "delta_atp": 0.021352293647449505,
+          "delta_het": 0.017240524956470327,
+          "sensitivity_atp": 0.08540917458979802,
+          "sensitivity_het": 0.0689620998258813,
           "perturbed_metrics": {
-            "final_atp": 0.8870061432158577,
-            "final_het": 0.24967720550601052,
-            "min_atp": 0.8870061432158577,
-            "mean_atp": 0.9435113987776869
+            "final_atp": 0.8664972360025534,
+            "final_het": 0.20618280395408045,
+            "min_atp": 0.8664972360025534,
+            "mean_atp": 0.9266335604363694
           }
         },
         {
@@ -1823,15 +1823,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.033640261986523035,
-          "delta_het": 0.016886188978190553,
-          "sensitivity_atp": 0.13456104794609214,
-          "sensitivity_het": 0.06754475591276221,
+          "delta_atp": 0.02871400997096074,
+          "delta_het": 0.020056939776587263,
+          "sensitivity_atp": 0.11485603988384296,
+          "sensitivity_het": 0.08022775910634905,
           "perturbed_metrics": {
-            "final_atp": 0.9556816497990709,
-            "final_het": 0.21382428076029916,
-            "min_atp": 0.9544582489566737,
-            "mean_atp": 0.9657547635321944
+            "final_atp": 0.9165635396209636,
+            "final_het": 0.16888533922102286,
+            "min_atp": 0.9165635396209636,
+            "mean_atp": 0.9582299610943597
           }
         },
         {
@@ -1840,15 +1840,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 0.00525984073569985,
-          "delta_het": 0.00021101713410862089,
-          "sensitivity_atp": 0.0525984073569985,
-          "sensitivity_het": 0.002110171341086209,
+          "delta_atp": 0.00511504672745855,
+          "delta_het": 5.792762374179361e-05,
+          "sensitivity_atp": 0.0511504672745855,
+          "sensitivity_het": 0.0005792762374179361,
           "perturbed_metrics": {
-            "final_atp": 0.916781547076848,
-            "final_het": 0.2304994526043811,
-            "min_atp": 0.916781547076848,
-            "mean_atp": 0.9582798975192671
+            "final_atp": 0.8827344829225443,
+            "final_het": 0.18888435137386833,
+            "min_atp": 0.8827344829225443,
+            "mean_atp": 0.941930548295635
           }
         },
         {
@@ -1857,15 +1857,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.005133886258558595,
-          "delta_het": 0.00022459029746055292,
-          "sensitivity_atp": 0.034225908390390636,
-          "sensitivity_het": 0.0014972686497370196,
+          "delta_atp": 0.005000339113215624,
+          "delta_het": 6.231686815388882e-05,
+          "sensitivity_atp": 0.03333559408810416,
+          "sensitivity_het": 0.0004154457876925921,
           "perturbed_metrics": {
-            "final_atp": 0.9271752740711064,
-            "final_het": 0.23093506003595027,
-            "min_atp": 0.9271752740711064,
-            "mean_atp": 0.9621627764831724
+            "final_atp": 0.8928498687632185,
+            "final_het": 0.189004595865764,
+            "min_atp": 0.8928498687632185,
+            "mean_atp": 0.9457233554380956
           }
         },
         {
@@ -1874,15 +1874,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.020968548616706717,
-          "delta_het": 0.016474951544393518,
-          "sensitivity_atp": 0.20968548616706717,
-          "sensitivity_het": 0.16474951544393518,
+          "delta_atp": 0.021087940575426734,
+          "delta_het": 0.01442417970483617,
+          "sensitivity_atp": 0.21087940575426734,
+          "sensitivity_het": 0.1442417970483617,
           "perturbed_metrics": {
-            "final_atp": 0.9010728391958411,
-            "final_het": 0.2142355181940962,
-            "min_atp": 0.9010728391958411,
-            "mean_atp": 0.9423386952362763
+            "final_atp": 0.8667615890745761,
+            "final_het": 0.17451809929277395,
+            "min_atp": 0.8667615890745761,
+            "mean_atp": 0.9245121911980116
           }
         },
         {
@@ -1891,15 +1891,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.0001154630976533122,
-          "delta_het": 0.007551431151947785,
-          "sensitivity_atp": 0.001154630976533122,
-          "sensitivity_het": 0.07551431151947785,
+          "delta_atp": 0.0003561875354767263,
+          "delta_het": 0.042656060350467484,
+          "sensitivity_atp": 0.0035618753547672632,
+          "sensitivity_het": 0.42656060350467484,
           "perturbed_metrics": {
-            "final_atp": 0.9221568509102012,
-            "final_het": 0.22315903858654193,
-            "min_atp": 0.9221568509102012,
-            "mean_atp": 0.9601755287392078
+            "final_atp": 0.8882057171854796,
+            "final_het": 0.14628621864714264,
+            "min_atp": 0.8882057171854796,
+            "mean_atp": 0.9439004340580116
           }
         },
         {
@@ -1908,15 +1908,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.007788891428611833,
-          "delta_het": 0.0018522218192125461,
-          "sensitivity_atp": 0.03115556571444733,
-          "sensitivity_het": 0.0074088872768501846,
+          "delta_atp": 0.007781000598235166,
+          "delta_het": 0.002448196119413437,
+          "sensitivity_atp": 0.031124002392940664,
+          "sensitivity_het": 0.009792784477653749,
           "perturbed_metrics": {
-            "final_atp": 0.9298302792411597,
-            "final_het": 0.22885824791927717,
-            "min_atp": 0.9298302792411597,
-            "mean_atp": 0.9675204748893447
+            "final_atp": 0.895630530248238,
+            "final_het": 0.1864940828781967,
+            "min_atp": 0.895630530248238,
+            "mean_atp": 0.9511542096122502
           }
         },
         {
@@ -1925,15 +1925,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.0077764959843361625,
-          "delta_het": 0.0016587223507173732,
-          "sensitivity_atp": 0.03110598393734465,
-          "sensitivity_het": 0.006634889402869493,
+          "delta_atp": 0.00776927466886379,
+          "delta_het": 0.0022384612573450036,
+          "sensitivity_atp": 0.03107709867545516,
+          "sensitivity_het": 0.008953845029380014,
           "perturbed_metrics": {
-            "final_atp": 0.9142648918282117,
-            "final_het": 0.2323691920892071,
-            "min_atp": 0.9142648918282117,
-            "mean_atp": 0.9527669837849203
+            "final_atp": 0.8800802549811391,
+            "final_het": 0.19118074025495513,
+            "min_atp": 0.8800802549811391,
+            "mean_atp": 0.9363474040929898
           }
         },
         {
@@ -1942,15 +1942,15 @@
           "original_value": 30.0,
           "perturbed_value": 20.0,
           "delta_param": 10.0,
-          "delta_atp": 0.03705065858538947,
-          "delta_het": 0.02093651836245533,
-          "sensitivity_atp": 0.0037050658585389474,
-          "sensitivity_het": 0.002093651836245533,
+          "delta_atp": 0.04069511388419689,
+          "delta_het": 0.0014022651438539424,
+          "sensitivity_atp": 0.004069511388419688,
+          "sensitivity_het": 0.00014022651438539425,
           "perturbed_metrics": {
-            "final_atp": 0.9590920463979373,
-            "final_het": 0.20977395137603438,
-            "min_atp": 0.9540828262269613,
-            "mean_atp": 0.9660144907095212
+            "final_atp": 0.9285446435341997,
+            "final_het": 0.18754001385375618,
+            "min_atp": 0.9285446435341997,
+            "mean_atp": 0.9613126596093892
           }
         },
         {
@@ -1959,15 +1959,15 @@
           "original_value": 30.0,
           "perturbed_value": 40.0,
           "delta_param": 10.0,
-          "delta_atp": 0.0416431512742752,
-          "delta_het": 0.01345155526351327,
-          "sensitivity_atp": 0.00416431512742752,
-          "sensitivity_het": 0.0013451555263513271,
+          "delta_atp": 0.0415106362795713,
+          "delta_het": 0.0025421588298678854,
+          "sensitivity_atp": 0.00415106362795713,
+          "sensitivity_het": 0.0002542158829867885,
           "perturbed_metrics": {
-            "final_atp": 0.8803982365382726,
-            "final_het": 0.24416202500200299,
-            "min_atp": 0.8803982365382726,
-            "mean_atp": 0.9392246946839407
+            "final_atp": 0.8463388933704316,
+            "final_het": 0.191484437827478,
+            "min_atp": 0.8463388933704316,
+            "mean_atp": 0.9099763716290077
           }
         },
         {
@@ -1976,15 +1976,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.05,
           "delta_param": 0.05,
-          "delta_atp": 0.0002084504445113433,
-          "delta_het": 0.010154955606237442,
-          "sensitivity_atp": 0.004169008890226866,
-          "sensitivity_het": 0.20309911212474885,
+          "delta_atp": 0.00016780314255704365,
+          "delta_het": 0.01282802713636147,
+          "sensitivity_atp": 0.003356062851140873,
+          "sensitivity_het": 0.2565605427272294,
           "perturbed_metrics": {
-            "final_atp": 0.9222498382570592,
-            "final_het": 0.22055551413225227,
-            "min_atp": 0.9222498382570592,
-            "mean_atp": 0.9602788006919943
+            "final_atp": 0.8880173327925599,
+            "final_het": 0.17611425186124866,
+            "min_atp": 0.8880173327925599,
+            "mean_atp": 0.9438935842808951
           }
         },
         {
@@ -1993,15 +1993,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.2,
           "delta_param": 0.1,
-          "delta_atp": 0.0006076810616963968,
-          "delta_het": 0.023705186583312027,
-          "sensitivity_atp": 0.006076810616963968,
-          "sensitivity_het": 0.23705186583312027,
+          "delta_atp": 0.0005055824633548589,
+          "delta_het": 0.029813922716652647,
+          "sensitivity_atp": 0.005055824633548589,
+          "sensitivity_het": 0.29813922716652647,
           "perturbed_metrics": {
-            "final_atp": 0.9214337067508515,
-            "final_het": 0.25441565632180174,
-            "min_atp": 0.9214337067508515,
-            "mean_atp": 0.9596268245501347
+            "final_atp": 0.887343947186648,
+            "final_het": 0.21875620171426277,
+            "min_atp": 0.887343947186648,
+            "mean_atp": 0.9431933976132376
           }
         },
         {
@@ -2010,15 +2010,15 @@
           "original_value": 0.9,
           "perturbed_value": 0.6,
           "delta_param": 0.30000000000000004,
-          "delta_atp": 0.00016212921323299767,
-          "delta_het": 0.00031484338403250933,
-          "sensitivity_atp": 0.0005404307107766588,
-          "sensitivity_het": 0.001049477946775031,
+          "delta_atp": 0.000209985981524885,
+          "delta_het": 0.0005842051741349885,
+          "sensitivity_atp": 0.0006999532717496166,
+          "sensitivity_het": 0.0019473505804499614,
           "perturbed_metrics": {
-            "final_atp": 0.9218792585993149,
-            "final_het": 0.23102531312252222,
-            "min_atp": 0.8367166254857455,
-            "mean_atp": 0.9477884985571731
+            "final_atp": 0.887639543668478,
+            "final_het": 0.1895264841717451,
+            "min_atp": 0.8362309553702133,
+            "mean_atp": 0.9272392904818063
           }
         },
         {
@@ -2027,15 +2027,15 @@
           "original_value": 0.9,
           "perturbed_value": 1.0,
           "delta_param": 0.09999999999999998,
-          "delta_atp": 3.314874463078432e-05,
-          "delta_het": 5.0108796445569315e-05,
-          "sensitivity_atp": 0.00033148744630784327,
-          "sensitivity_het": 0.0005010879644556933,
+          "delta_atp": 4.307456835495049e-05,
+          "delta_het": 9.951301998772921e-05,
+          "sensitivity_atp": 0.00043074568354950504,
+          "sensitivity_het": 0.0009951301998772923,
           "perturbed_metrics": {
-            "final_atp": 0.9220745365571786,
-            "final_het": 0.23066036094204415,
-            "min_atp": 0.9220745365571786,
-            "mean_atp": 0.9625125231596723
+            "final_atp": 0.8878926042183578,
+            "final_het": 0.1888427659776224,
+            "min_atp": 0.8878926042183578,
+            "mean_atp": 0.9470248957628117
           }
         },
         {
@@ -2044,15 +2044,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0007726673908563519,
-          "delta_het": 0.06651807684357597,
-          "sensitivity_atp": 0.0030906695634254078,
-          "sensitivity_het": 0.2660723073743039,
+          "delta_atp": 0.00042937450683488976,
+          "delta_het": 0.05463003033173752,
+          "sensitivity_atp": 0.001717498027339559,
+          "sensitivity_het": 0.2185201213269501,
           "perturbed_metrics": {
-            "final_atp": 0.9228140552034042,
-            "final_het": 0.16419239289491375,
-            "min_atp": 0.9228140552034042,
-            "mean_atp": 0.9603954787235981
+            "final_atp": 0.8882789041568377,
+            "final_het": 0.1343122486658726,
+            "min_atp": 0.8882789041568377,
+            "mean_atp": 0.9439328409698624
           }
         },
         {
@@ -2061,15 +2061,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.0016031987051747798,
-          "delta_het": 0.06441618045146189,
-          "sensitivity_atp": 0.006412794820699119,
-          "sensitivity_het": 0.25766472180584754,
+          "delta_atp": 0.0007784657350078383,
+          "delta_het": 0.055023386817543374,
+          "sensitivity_atp": 0.0031138629400313533,
+          "sensitivity_het": 0.2200935472701735,
           "perturbed_metrics": {
-            "final_atp": 0.9204381891073731,
-            "final_het": 0.2951266501899516,
-            "min_atp": 0.9204381891073731,
-            "mean_atp": 0.9596700414847105
+            "final_atp": 0.887071063914995,
+            "final_het": 0.2439656658151535,
+            "min_atp": 0.887071063914995,
+            "mean_atp": 0.9434489786264959
           }
         },
         {
@@ -2078,15 +2078,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.001485475040693629,
-          "delta_het": 0.02326214531243989,
-          "sensitivity_atp": 0.005941900162774516,
-          "sensitivity_het": 0.09304858124975957,
+          "delta_atp": 0.0013905298628912321,
+          "delta_het": 0.026791378038395014,
+          "sensitivity_atp": 0.005562119451564929,
+          "sensitivity_het": 0.10716551215358006,
           "perturbed_metrics": {
-            "final_atp": 0.9235268628532415,
-            "final_het": 0.20744832442604982,
-            "min_atp": 0.9235268628532415,
-            "mean_atp": 0.960727239847957
+            "final_atp": 0.8892400595128941,
+            "final_het": 0.1621509009592151,
+            "min_atp": 0.8892400595128941,
+            "mean_atp": 0.944540545174013
           }
         },
         {
@@ -2095,15 +2095,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.001584187471886156,
-          "delta_het": 0.02294092468184436,
-          "sensitivity_atp": 0.006336749887544624,
-          "sensitivity_het": 0.09176369872737744,
+          "delta_atp": 0.0014651811320260943,
+          "delta_het": 0.026382902323390828,
+          "sensitivity_atp": 0.005860724528104377,
+          "sensitivity_het": 0.10553160929356331,
           "perturbed_metrics": {
-            "final_atp": 0.9204572003406617,
-            "final_het": 0.2536513944203341,
-            "min_atp": 0.9204572003406617,
-            "mean_atp": 0.9595219299913462
+            "final_atp": 0.8863843485179768,
+            "final_het": 0.21532518132100095,
+            "min_atp": 0.8863843485179768,
+            "mean_atp": 0.9429235497940551
           }
         },
         {
@@ -2112,15 +2112,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 6.805623755579138e-05,
-          "delta_het": 0.0009306653308320534,
-          "sensitivity_atp": 0.0006805623755579138,
-          "sensitivity_het": 0.009306653308320534,
+          "delta_atp": 4.7598823699646076e-05,
+          "delta_het": 0.000815080091438436,
+          "sensitivity_atp": 0.00047598823699646076,
+          "sensitivity_het": 0.00815080091438436,
           "perturbed_metrics": {
-            "final_atp": 0.9221094440501036,
-            "final_het": 0.22977980440765766,
-            "min_atp": 0.9221094440501036,
-            "mean_atp": 0.9601607193928006
+            "final_atp": 0.8878971284737025,
+            "final_het": 0.1881271989061717,
+            "min_atp": 0.8878971284737025,
+            "mean_atp": 0.9437682207320173
           }
         },
         {
@@ -2129,15 +2129,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.0001038780073914225,
-          "delta_het": 0.001413851803831273,
-          "sensitivity_atp": 0.0006925200492761501,
-          "sensitivity_het": 0.009425678692208488,
+          "delta_atp": 7.266835050301346e-05,
+          "delta_het": 0.0012392476584439927,
+          "sensitivity_atp": 0.0004844556700200897,
+          "sensitivity_het": 0.008261651056293284,
           "perturbed_metrics": {
-            "final_atp": 0.9219375098051564,
-            "final_het": 0.232124321542321,
-            "min_atp": 0.9219375098051564,
-            "mean_atp": 0.9601119528524005
+            "final_atp": 0.8877768612994998,
+            "final_het": 0.19018152665605412,
+            "min_atp": 0.8877768612994998,
+            "mean_atp": 0.943716176205959
           }
         }
       ]
@@ -2145,75 +2145,75 @@
     {
       "label": "yamanaka_aggressive",
       "center_metrics": {
-        "final_atp": 0.6408364921646877,
-        "final_het": 0.20825796059996451,
-        "min_atp": 0.6408364921646877,
-        "mean_atp": 0.6942995546793906
+        "final_atp": 0.600208138614121,
+        "final_het": 0.18789810908853694,
+        "min_atp": 0.600208138614121,
+        "mean_atp": 0.6595799571587875
       },
       "n_perturbations": 23,
-      "fragility_score": 1.5991678178158644,
+      "fragility_score": 1.9436251182892297,
       "most_sensitive_param": "yamanaka_intensity",
       "least_sensitive_param": "baseline_age",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.002632335977325188,
-          "sensitivity_het": 0.16481374242899927,
-          "combined": 0.16744607840632444
+          "sensitivity_atp": 0.002216274896566913,
+          "sensitivity_het": 0.1744589471984603,
+          "combined": 0.17667522209502723
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.1402980390616244,
-          "sensitivity_het": 0.08116778613122377,
-          "combined": 0.2214658251928482
+          "sensitivity_atp": 0.13032782470187,
+          "sensitivity_het": 0.10734312949623187,
+          "combined": 0.23767095419810186
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.04400025441602429,
-          "sensitivity_het": 0.001080531719848769,
-          "combined": 0.045080786135873054
+          "sensitivity_atp": 0.042779111610562914,
+          "sensitivity_het": 0.0020914634195500032,
+          "combined": 0.044870575030112915
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.4935491532312182,
-          "sensitivity_het": 0.0898364639154931,
-          "combined": 0.5833856171467113
+          "sensitivity_atp": 0.49399295158788115,
+          "sensitivity_het": 0.057623256879991425,
+          "combined": 0.5516162084678726
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.0016283159437113781,
-          "sensitivity_het": 0.10755725949177702,
-          "combined": 0.1091855754354884
+          "sensitivity_atp": 0.004712975106285766,
+          "sensitivity_het": 0.42126542228610453,
+          "combined": 0.4259783973923903
         },
         "exercise_level": {
-          "sensitivity_atp": 0.031009667668976393,
-          "sensitivity_het": 0.0063526665215478395,
-          "combined": 0.03736233419052423
+          "sensitivity_atp": 0.030991518795476236,
+          "sensitivity_het": 0.007349065369112821,
+          "combined": 0.038340584164589055
         },
         "baseline_age": {
-          "sensitivity_atp": 0.0042681795034015925,
-          "sensitivity_het": 0.0005237372748938291,
-          "combined": 0.004791916778295421
+          "sensitivity_atp": 0.004268750002952654,
+          "sensitivity_het": 0.001972041650512886,
+          "combined": 0.006240791653465539
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.0031066073429575334,
-          "sensitivity_het": 0.11394649873580655,
-          "combined": 0.11705310607876408
+          "sensitivity_atp": 0.0031469870859020706,
+          "sensitivity_het": 0.14825862178032345,
+          "combined": 0.15140560886622553
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.0005421451596428667,
-          "sensitivity_het": 0.0043817305062374586,
-          "combined": 0.004923875665880325
+          "sensitivity_atp": 0.000549938103481066,
+          "sensitivity_het": 0.006774931556389889,
+          "combined": 0.007324869659870954
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.0028431403567079627,
-          "sensitivity_het": 0.17947183686145673,
-          "combined": 0.1823149772181647
+          "sensitivity_atp": 0.0019754012796469045,
+          "sensitivity_het": 0.16194918939164965,
+          "combined": 0.16392459067129656
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.00634264547922303,
-          "sensitivity_het": 0.10187696727309997,
-          "combined": 0.108219612752323
+          "sensitivity_atp": 0.006246333036381113,
+          "sensitivity_het": 0.11586754911094282,
+          "combined": 0.12211388214732394
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.0010143733360457041,
-          "sensitivity_het": 0.01692373947862138,
-          "combined": 0.017938112814667083
+          "sensitivity_atp": 0.0008356008564569528,
+          "sensitivity_het": 0.016627833086496274,
+          "combined": 0.017463433942953226
         }
       },
       "perturbations": [
@@ -2223,15 +2223,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.0004957531884549615,
-          "delta_het": 0.027616234204923984,
-          "sensitivity_atp": 0.0033050212563664103,
-          "sensitivity_het": 0.18410822803282656,
+          "delta_atp": 0.0004262057174398981,
+          "delta_het": 0.030466885313281872,
+          "sensitivity_atp": 0.002841371449599321,
+          "sensitivity_het": 0.2031125687552125,
           "perturbed_metrics": {
-            "final_atp": 0.6403407389762328,
-            "final_het": 0.2358741948048885,
-            "min_atp": 0.6403407389762328,
-            "mean_atp": 0.6938323842175641
+            "final_atp": 0.5997819328966811,
+            "final_het": 0.2183649944018188,
+            "min_atp": 0.5997819328966811,
+            "mean_atp": 0.6591854600059045
           }
         },
         {
@@ -2240,15 +2240,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0004899126745709914,
-          "delta_het": 0.03637981420629299,
-          "sensitivity_atp": 0.0019596506982839657,
-          "sensitivity_het": 0.14551925682517197,
+          "delta_atp": 0.00039779458588362626,
+          "delta_het": 0.03645133141042703,
+          "sensitivity_atp": 0.001591178343534505,
+          "sensitivity_het": 0.14580532564170812,
           "perturbed_metrics": {
-            "final_atp": 0.6413264048392587,
-            "final_het": 0.17187814639367152,
-            "min_atp": 0.6413264048392587,
-            "mean_atp": 0.6948265018908704
+            "final_atp": 0.6006059332000047,
+            "final_het": 0.1514467776781099,
+            "min_atp": 0.6006059332000047,
+            "mean_atp": 0.6600242645555923
           }
         },
         {
@@ -2257,15 +2257,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.03511171823642867,
-          "delta_het": 0.021989936646944458,
-          "sensitivity_atp": 0.14044687294571467,
-          "sensitivity_het": 0.08795974658777783,
+          "delta_atp": 0.028883481583259707,
+          "delta_het": 0.02717137430342159,
+          "sensitivity_atp": 0.11553392633303883,
+          "sensitivity_het": 0.10868549721368637,
           "perturbed_metrics": {
-            "final_atp": 0.6057247739282591,
-            "final_het": 0.23024789724690897,
-            "min_atp": 0.6057247739282591,
-            "mean_atp": 0.6642616602114383
+            "final_atp": 0.5713246570308613,
+            "final_het": 0.21506948339195853,
+            "min_atp": 0.5713246570308613,
+            "mean_atp": 0.6348605387990538
           }
         },
         {
@@ -2274,15 +2274,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.03503730129438354,
-          "delta_het": 0.01859395641866743,
-          "sensitivity_atp": 0.14014920517753415,
-          "sensitivity_het": 0.07437582567466972,
+          "delta_atp": 0.03628043076767529,
+          "delta_het": 0.026500190444694344,
+          "sensitivity_atp": 0.14512172307070115,
+          "sensitivity_het": 0.10600076177877737,
           "perturbed_metrics": {
-            "final_atp": 0.6758737934590713,
-            "final_het": 0.18966400418129709,
-            "min_atp": 0.6758737934590713,
-            "mean_atp": 0.724285711237606
+            "final_atp": 0.6364885693817963,
+            "final_het": 0.1613979186438426,
+            "min_atp": 0.6364885693817963,
+            "mean_atp": 0.6906609563289798
           }
         },
         {
@@ -2291,15 +2291,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.008792363654494428,
-          "delta_het": 0.00020483389106551453,
-          "sensitivity_atp": 0.05861575769662952,
-          "sensitivity_het": 0.001365559273770097,
+          "delta_atp": 0.008540336723492414,
+          "delta_het": 0.0003951685245728309,
+          "sensitivity_atp": 0.056935578156616096,
+          "sensitivity_het": 0.0026344568304855396,
           "perturbed_metrics": {
-            "final_atp": 0.6320441285101933,
-            "final_het": 0.20846279449103003,
-            "min_atp": 0.6320441285101933,
-            "mean_atp": 0.6901991581050104
+            "final_atp": 0.5916678018906286,
+            "final_het": 0.18829327761310977,
+            "min_atp": 0.5916678018906286,
+            "mean_atp": 0.6556052726912202
           }
         },
         {
@@ -2308,15 +2308,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.007346187783854763,
-          "delta_het": 0.00019887604148186022,
-          "sensitivity_atp": 0.02938475113541905,
-          "sensitivity_het": 0.0007955041659274409,
+          "delta_atp": 0.007155661266127433,
+          "delta_het": 0.0003871175021536166,
+          "sensitivity_atp": 0.028622645064509733,
+          "sensitivity_het": 0.0015484700086144665,
           "perturbed_metrics": {
-            "final_atp": 0.6481826799485425,
-            "final_het": 0.20805908455848265,
-            "min_atp": 0.6481826799485425,
-            "mean_atp": 0.6984010722426042
+            "final_atp": 0.6073637998802485,
+            "final_het": 0.18751099158638332,
+            "min_atp": 0.6073637998802485,
+            "mean_atp": 0.663563148674291
           }
         },
         {
@@ -2325,15 +2325,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.11059932402701167,
-          "delta_het": 0.029165845781372685,
-          "sensitivity_atp": 0.4423972961080467,
-          "sensitivity_het": 0.11666338312549074,
+          "delta_atp": 0.11075610127788471,
+          "delta_het": 0.022536700028871814,
+          "sensitivity_atp": 0.44302440511153884,
+          "sensitivity_het": 0.09014680011548726,
           "perturbed_metrics": {
-            "final_atp": 0.7514358161916994,
-            "final_het": 0.2374238063813372,
-            "min_atp": 0.7514358161916994,
-            "mean_atp": 0.7995899606090898
+            "final_atp": 0.7109642398920057,
+            "final_het": 0.21043480911740875,
+            "min_atp": 0.7109642398920057,
+            "mean_atp": 0.7650226351180528
           }
         },
         {
@@ -2342,15 +2342,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.13617525258859742,
-          "delta_het": 0.015752386176373867,
-          "sensitivity_atp": 0.5447010103543897,
-          "sensitivity_het": 0.06300954470549547,
+          "delta_atp": 0.13624037451605586,
+          "delta_het": 0.006274928411123898,
+          "sensitivity_atp": 0.5449614980642234,
+          "sensitivity_het": 0.02509971364449559,
           "perturbed_metrics": {
-            "final_atp": 0.5046612395760903,
-            "final_het": 0.19250557442359065,
-            "min_atp": 0.5046612395760903,
-            "mean_atp": 0.5644034227833586
+            "final_atp": 0.46396776409806517,
+            "final_het": 0.18162318067741304,
+            "min_atp": 0.46396776409806517,
+            "mean_atp": 0.5296099085351474
           }
         },
         {
@@ -2359,15 +2359,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.0001628315943711378,
-          "delta_het": 0.010755725949177702,
-          "sensitivity_atp": 0.0016283159437113781,
-          "sensitivity_het": 0.10755725949177702,
+          "delta_atp": 0.0004712975106285766,
+          "delta_het": 0.04212654222861045,
+          "sensitivity_atp": 0.004712975106285766,
+          "sensitivity_het": 0.42126542228610453,
           "perturbed_metrics": {
-            "final_atp": 0.6409993237590589,
-            "final_het": 0.1975022346507868,
-            "min_atp": 0.6409993237590589,
-            "mean_atp": 0.6944652512917677
+            "final_atp": 0.6006794361247496,
+            "final_het": 0.14577156685992648,
+            "min_atp": 0.6006794361247496,
+            "mean_atp": 0.6601709357237019
           }
         },
         {
@@ -2376,15 +2376,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 0.0031021987765920134,
-          "delta_het": 0.0006444852707258308,
-          "sensitivity_atp": 0.031021987765920134,
-          "sensitivity_het": 0.006444852707258308,
+          "delta_atp": 0.0031003859470865036,
+          "delta_het": 0.000741926272540494,
+          "sensitivity_atp": 0.031003859470865036,
+          "sensitivity_het": 0.00741926272540494,
           "perturbed_metrics": {
-            "final_atp": 0.6439386909412798,
-            "final_het": 0.20761347532923868,
-            "min_atp": 0.6439386909412798,
-            "mean_atp": 0.6972657760500172
+            "final_atp": 0.6033085245612075,
+            "final_het": 0.18715618281599644,
+            "min_atp": 0.6033085245612075,
+            "mean_atp": 0.6625449685385733
           }
         },
         {
@@ -2393,15 +2393,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.004649602135804898,
-          "delta_het": 0.0009390720503756056,
-          "sensitivity_atp": 0.030997347572032652,
-          "sensitivity_het": 0.006260480335837371,
+          "delta_atp": 0.004646876718013115,
+          "delta_het": 0.0010918302019231052,
+          "sensitivity_atp": 0.030979178120087436,
+          "sensitivity_het": 0.007278868012820702,
           "perturbed_metrics": {
-            "final_atp": 0.6361868900288828,
-            "final_het": 0.20919703265034012,
-            "min_atp": 0.6361868900288828,
-            "mean_atp": 0.6898527382388625
+            "final_atp": 0.5955612618961079,
+            "final_het": 0.18898993929046004,
+            "min_atp": 0.5955612618961079,
+            "mean_atp": 0.6551349340635881
           }
         },
         {
@@ -2410,15 +2410,15 @@
           "original_value": 50.0,
           "perturbed_value": 40.0,
           "delta_param": 10.0,
-          "delta_atp": 0.04272403466584429,
-          "delta_het": 0.004986946225921246,
-          "sensitivity_atp": 0.004272403466584429,
-          "sensitivity_het": 0.0004986946225921246,
+          "delta_atp": 0.04265465292157222,
+          "delta_het": 0.014736251659072969,
+          "sensitivity_atp": 0.004265465292157222,
+          "sensitivity_het": 0.001473625165907297,
           "perturbed_metrics": {
-            "final_atp": 0.683560526830532,
-            "final_het": 0.20327101437404327,
-            "min_atp": 0.683560526830532,
-            "mean_atp": 0.732891960585626
+            "final_atp": 0.6428627915356933,
+            "final_het": 0.17316185742946397,
+            "min_atp": 0.6428627915356933,
+            "mean_atp": 0.6980397028855635
           }
         },
         {
@@ -2427,15 +2427,15 @@
           "original_value": 50.0,
           "perturbed_value": 60.0,
           "delta_param": 10.0,
-          "delta_atp": 0.04263955540218756,
-          "delta_het": 0.005487799271955335,
-          "sensitivity_atp": 0.004263955540218756,
-          "sensitivity_het": 0.0005487799271955335,
+          "delta_atp": 0.04272034713748085,
+          "delta_het": 0.02470458135118475,
+          "sensitivity_atp": 0.004272034713748085,
+          "sensitivity_het": 0.002470458135118475,
           "perturbed_metrics": {
-            "final_atp": 0.5981969367625002,
-            "final_het": 0.21374575987191985,
-            "min_atp": 0.5981969367625002,
-            "mean_atp": 0.6558879488096235
+            "final_atp": 0.5574877914766402,
+            "final_het": 0.2126026904397217,
+            "min_atp": 0.5574877914766402,
+            "mean_atp": 0.6212597345272018
           }
         },
         {
@@ -2444,15 +2444,15 @@
           "original_value": 0.35,
           "perturbed_value": 0.2,
           "delta_param": 0.14999999999999997,
-          "delta_atp": 0.0003884186365377129,
-          "delta_het": 0.015342615573986723,
-          "sensitivity_atp": 0.0025894575769180865,
-          "sensitivity_het": 0.10228410382657818,
+          "delta_atp": 0.00038701442559807564,
+          "delta_het": 0.019935989028601026,
+          "sensitivity_atp": 0.0025800961706538383,
+          "sensitivity_het": 0.13290659352400686,
           "perturbed_metrics": {
-            "final_atp": 0.6412249108012255,
-            "final_het": 0.1929153450259778,
-            "min_atp": 0.6412249108012255,
-            "mean_atp": 0.6958514192154334
+            "final_atp": 0.6005951530397191,
+            "final_het": 0.1679621200599359,
+            "min_atp": 0.6005951530397191,
+            "mean_atp": 0.6610379481155314
           }
         },
         {
@@ -2461,15 +2461,15 @@
           "original_value": 0.35,
           "perturbed_value": 0.4,
           "delta_param": 0.050000000000000044,
-          "delta_atp": 0.00018118785544984917,
-          "delta_het": 0.006280444682251751,
-          "sensitivity_atp": 0.0036237571089969803,
-          "sensitivity_het": 0.1256088936450349,
+          "delta_atp": 0.0001856939000575153,
+          "delta_het": 0.00818053250183201,
+          "sensitivity_atp": 0.0037138780011503024,
+          "sensitivity_het": 0.16361065003664008,
           "perturbed_metrics": {
-            "final_atp": 0.6406553043092379,
-            "final_het": 0.21453840528221627,
-            "min_atp": 0.6406553043092379,
-            "mean_atp": 0.6930507343561889
+            "final_atp": 0.6000224447140635,
+            "final_het": 0.19607864159036895,
+            "min_atp": 0.6000224447140635,
+            "mean_atp": 0.6583820365033323
           }
         },
         {
@@ -2478,15 +2478,15 @@
           "original_value": 0.7,
           "perturbed_value": 0.4,
           "delta_param": 0.29999999999999993,
-          "delta_atp": 0.00016446117757984435,
-          "delta_het": 0.0013565108942009962,
-          "sensitivity_atp": 0.0005482039252661479,
-          "sensitivity_het": 0.004521702980669989,
+          "delta_atp": 0.00016700837448369033,
+          "delta_het": 0.002090704636578622,
+          "sensitivity_atp": 0.0005566945816123012,
+          "sensitivity_het": 0.006969015455262075,
           "perturbed_metrics": {
-            "final_atp": 0.6406720309871079,
-            "final_het": 0.2096144714941655,
-            "min_atp": 0.6133719557535874,
-            "mean_atp": 0.6768002903953961
+            "final_atp": 0.6000411302396373,
+            "final_het": 0.18998881372511556,
+            "min_atp": 0.6000411302396373,
+            "mean_atp": 0.6420729567809882
           }
         },
         {
@@ -2495,15 +2495,15 @@
           "original_value": 0.7,
           "perturbed_value": 0.8,
           "delta_param": 0.10000000000000009,
-          "delta_atp": 5.360863940195859e-05,
-          "delta_het": 0.0004241758031804932,
-          "sensitivity_atp": 0.0005360863940195855,
-          "sensitivity_het": 0.0042417580318049285,
+          "delta_atp": 5.4318162534983117e-05,
+          "delta_het": 0.0006580847657517708,
+          "sensitivity_atp": 0.0005431816253498307,
+          "sensitivity_het": 0.006580847657517702,
           "perturbed_metrics": {
-            "final_atp": 0.6408901008040897,
-            "final_het": 0.20783378479678402,
-            "min_atp": 0.6408901008040897,
-            "mean_atp": 0.7001287452393481
+            "final_atp": 0.600262456776656,
+            "final_het": 0.18724002432278516,
+            "min_atp": 0.600262456776656,
+            "mean_atp": 0.6654114007074404
           }
         },
         {
@@ -2512,15 +2512,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.0005525448716036108,
-          "delta_het": 0.04467480745979688,
-          "sensitivity_atp": 0.002210179486414443,
-          "sensitivity_het": 0.1786992298391875,
+          "delta_atp": 0.0003941254024276697,
+          "delta_het": 0.039899973050063375,
+          "sensitivity_atp": 0.0015765016097106788,
+          "sensitivity_het": 0.1595998922002535,
           "perturbed_metrics": {
-            "final_atp": 0.6413890370362914,
-            "final_het": 0.16358315314016764,
-            "min_atp": 0.6413890370362914,
-            "mean_atp": 0.694812818999967
+            "final_atp": 0.6006022640165487,
+            "final_het": 0.14799813603847356,
+            "min_atp": 0.6006022640165487,
+            "mean_atp": 0.6599442037904776
           }
         },
         {
@@ -2529,15 +2529,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0008690253067503706,
-          "delta_het": 0.04506111097093149,
-          "sensitivity_atp": 0.0034761012270014824,
-          "sensitivity_het": 0.18024444388372596,
+          "delta_atp": 0.0005935752373957826,
+          "delta_het": 0.04107462164576145,
+          "sensitivity_atp": 0.00237430094958313,
+          "sensitivity_het": 0.1642984865830458,
           "perturbed_metrics": {
-            "final_atp": 0.6399674668579374,
-            "final_het": 0.253319071570896,
-            "min_atp": 0.6399674668579374,
-            "mean_atp": 0.6935713174108735
+            "final_atp": 0.5996145633767253,
+            "final_het": 0.22897273073429839,
+            "min_atp": 0.5996145633767253,
+            "mean_atp": 0.6590881455444987
           }
         },
         {
@@ -2546,15 +2546,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.0015401586633280173,
-          "delta_het": 0.025674191755239634,
-          "sensitivity_atp": 0.006160634653312069,
-          "sensitivity_het": 0.10269676702095853,
+          "delta_atp": 0.0015171244873245504,
+          "delta_het": 0.029209597500285706,
+          "sensitivity_atp": 0.006068497949298202,
+          "sensitivity_het": 0.11683839000114282,
           "perturbed_metrics": {
-            "final_atp": 0.6423766508280158,
-            "final_het": 0.18258376884472488,
-            "min_atp": 0.6423766508280158,
-            "mean_atp": 0.6954921070921601
+            "final_atp": 0.6017252631014456,
+            "final_het": 0.15868851158825123,
+            "min_atp": 0.6017252631014456,
+            "mean_atp": 0.6607481713450669
           }
         },
         {
@@ -2563,15 +2563,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.0016311640762834978,
-          "delta_het": 0.025264291881310352,
-          "sensitivity_atp": 0.006524656305133991,
-          "sensitivity_het": 0.10105716752524141,
+          "delta_atp": 0.0016060420308660062,
+          "delta_het": 0.028724177055185707,
+          "sensitivity_atp": 0.006424168123464025,
+          "sensitivity_het": 0.11489670822074283,
           "perturbed_metrics": {
-            "final_atp": 0.6392053280884042,
-            "final_het": 0.23352225248127487,
-            "min_atp": 0.6392053280884042,
-            "mean_atp": 0.6930481591290466
+            "final_atp": 0.598602096583255,
+            "final_het": 0.21662228614372264,
+            "min_atp": 0.598602096583255,
+            "mean_atp": 0.6583568186708998
           }
         },
         {
@@ -2580,15 +2580,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.0001473296621598008,
-          "delta_het": 0.002473932476075358,
-          "sensitivity_atp": 0.0009821977477320054,
-          "sensitivity_het": 0.01649288317383572,
+          "delta_atp": 0.00012107411264761225,
+          "delta_het": 0.0024257654546734897,
+          "sensitivity_atp": 0.0008071607509840817,
+          "sensitivity_het": 0.016171769697823267,
           "perturbed_metrics": {
-            "final_atp": 0.6409838218268475,
-            "final_het": 0.20578402812388916,
-            "min_atp": 0.6409838218268475,
-            "mean_atp": 0.6944513245045447
+            "final_atp": 0.6003292127267686,
+            "final_het": 0.18547234363386345,
+            "min_atp": 0.6003292127267686,
+            "mean_atp": 0.6597154119003641
           }
         },
         {
@@ -2597,15 +2597,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0002616372310898507,
-          "delta_het": 0.0043386489458517585,
-          "sensitivity_atp": 0.0010465489243594028,
-          "sensitivity_het": 0.017354595783407034,
+          "delta_atp": 0.00021601024048245598,
+          "delta_het": 0.00427097411879232,
+          "sensitivity_atp": 0.0008640409619298239,
+          "sensitivity_het": 0.01708389647516928,
           "perturbed_metrics": {
-            "final_atp": 0.6405748549335979,
-            "final_het": 0.21259660954581627,
-            "min_atp": 0.6405748549335979,
-            "mean_atp": 0.6940357919390789
+            "final_atp": 0.5999921283736386,
+            "final_het": 0.19216908320732926,
+            "min_atp": 0.5999921283736386,
+            "mean_atp": 0.6593443266182971
           }
         }
       ]
@@ -2613,75 +2613,75 @@
     {
       "label": "high_inflammation",
       "center_metrics": {
-        "final_atp": 0.637444412451343,
-        "final_het": 0.6120496697217018,
-        "min_atp": 0.637444412451343,
-        "mean_atp": 0.7646639606407177
+        "final_atp": 0.590424207932517,
+        "final_het": 0.6231627754118291,
+        "min_atp": 0.590424207932517,
+        "mean_atp": 0.7396820496076574
       },
       "n_perturbations": 22,
-      "fragility_score": 9.153250180028452,
+      "fragility_score": 11.582184216290203,
       "most_sensitive_param": "transplant_rate",
-      "least_sensitive_param": "baseline_age",
+      "least_sensitive_param": "senolytic_dose",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.9038101589231716,
-          "sensitivity_het": 0.48088163261269545,
-          "combined": 1.3846917915358672
+          "sensitivity_atp": 0.9308110493510532,
+          "sensitivity_het": 0.49619125266306185,
+          "combined": 1.427002302014115
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.5258714381499168,
-          "sensitivity_het": 0.21676173343788907,
-          "combined": 0.7426331715878058
+          "sensitivity_atp": 0.4842466144076113,
+          "sensitivity_het": 0.21692640350569414,
+          "combined": 0.7011730179133054
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.009497558945350315,
-          "sensitivity_het": 0.0006912707116681904,
-          "combined": 0.010188829657018506
+          "sensitivity_atp": 0.009432478984158221,
+          "sensitivity_het": 0.00039977451893036253,
+          "combined": 0.009832253503088584
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.5983523053732276,
-          "sensitivity_het": 0.5377654599632331,
-          "combined": 1.1361177653364607
+          "sensitivity_atp": 0.6289053989079185,
+          "sensitivity_het": 0.5255363505926014,
+          "combined": 1.15444174950052
         },
         "transplant_rate": {
-          "sensitivity_atp": 1.0743966674654493,
-          "sensitivity_het": 0.8384302352985973,
-          "combined": 1.9128269027640465
+          "sensitivity_atp": 1.6970513466819936,
+          "sensitivity_het": 2.1882962513832074,
+          "combined": 3.8853475980652012
         },
         "exercise_level": {
-          "sensitivity_atp": 0.21913595143346765,
-          "sensitivity_het": 0.13520736410635922,
-          "combined": 0.3543433155398269
+          "sensitivity_atp": 0.24078943529258406,
+          "sensitivity_het": 0.14137688664518494,
+          "combined": 0.382166321937769
         },
         "baseline_age": {
-          "sensitivity_atp": 0.004984342519781389,
-          "sensitivity_het": 0.0008939966216759002,
-          "combined": 0.005878339141457289
+          "sensitivity_atp": 0.008788187716168315,
+          "sensitivity_het": 0.0028720898857580333,
+          "combined": 0.01166027760192635
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.996518333140097,
-          "sensitivity_het": 0.5342239010313576,
-          "combined": 1.5307422341714547
+          "sensitivity_atp": 1.2058751631847895,
+          "sensitivity_het": 0.6318255746573154,
+          "combined": 1.8377007378421049
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.023106372898629712,
-          "sensitivity_het": 0.011264661239457907,
-          "combined": 0.03437103413808762
+          "sensitivity_atp": 0.03664624843632207,
+          "sensitivity_het": 0.017277427019772862,
+          "combined": 0.05392367545609493
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.6986377983938035,
-          "sensitivity_het": 0.37270835469623553,
-          "combined": 1.071346153090039
+          "sensitivity_atp": 0.6955034149301312,
+          "sensitivity_het": 0.37452300422771456,
+          "combined": 1.0700264191578457
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.3426300212273714,
-          "sensitivity_het": 0.17902998973408546,
-          "combined": 0.5216600109614569
+          "sensitivity_atp": 0.3786462798611957,
+          "sensitivity_het": 0.1916988236153998,
+          "combined": 0.5703451034765955
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.2961281230714572,
-          "sensitivity_het": 0.15232250903347433,
-          "combined": 0.4484506321049315
+          "sensitivity_atp": 0.31949260173593175,
+          "sensitivity_het": 0.15907215808570552,
+          "combined": 0.47856475982163726
         }
       },
       "perturbations": [
@@ -2691,15 +2691,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.3215884271720841,
-          "delta_het": 0.12200835730650195,
-          "sensitivity_atp": 1.2863537086883363,
-          "sensitivity_het": 0.4880334292260078,
+          "delta_atp": 0.32431473819389295,
+          "delta_het": 0.1253483492535481,
+          "sensitivity_atp": 1.2972589527755718,
+          "sensitivity_het": 0.5013933970141924,
           "perturbed_metrics": {
-            "final_atp": 0.3158559852792589,
-            "final_het": 0.7340580270282038,
-            "min_atp": 0.3158559852792589,
-            "mean_atp": 0.6473523462985836
+            "final_atp": 0.2661094697386241,
+            "final_het": 0.7485111246653772,
+            "min_atp": 0.2661094697386241,
+            "mean_atp": 0.6232790804474208
           }
         },
         {
@@ -2708,15 +2708,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.13031665228950173,
-          "delta_het": 0.11843245899984578,
-          "sensitivity_atp": 0.5212666091580069,
-          "sensitivity_het": 0.4737298359993831,
+          "delta_atp": 0.14109078648163365,
+          "delta_het": 0.12274727707798283,
+          "sensitivity_atp": 0.5643631459265346,
+          "sensitivity_het": 0.4909891083119313,
           "perturbed_metrics": {
-            "final_atp": 0.7677610647408447,
-            "final_het": 0.49361721072185605,
-            "min_atp": 0.7662764326183138,
-            "mean_atp": 0.8139054588027418
+            "final_atp": 0.7315149944141507,
+            "final_het": 0.5004154983338462,
+            "min_atp": 0.7315149944141507,
+            "mean_atp": 0.7875846083995529
           }
         },
         {
@@ -2725,15 +2725,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.25,
           "delta_param": 0.25,
-          "delta_atp": 0.15214890458848274,
-          "delta_het": 0.05544918699939594,
-          "sensitivity_atp": 0.608595618353931,
-          "sensitivity_het": 0.22179674799758375,
+          "delta_atp": 0.12281689199493645,
+          "delta_het": 0.046999388040268264,
+          "sensitivity_atp": 0.4912675679797458,
+          "sensitivity_het": 0.18799755216107306,
           "perturbed_metrics": {
-            "final_atp": 0.48529550786286024,
-            "final_het": 0.6674988567210978,
-            "min_atp": 0.48529550786286024,
-            "mean_atp": 0.6960980347335157
+            "final_atp": 0.4676073159375806,
+            "final_het": 0.6701621634520973,
+            "min_atp": 0.4676073159375806,
+            "mean_atp": 0.6895373703421653
           }
         },
         {
@@ -2742,15 +2742,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.11078681448647565,
-          "delta_het": 0.0529316797195486,
-          "sensitivity_atp": 0.4431472579459026,
-          "sensitivity_het": 0.2117267188781944,
+          "delta_atp": 0.1193064152088692,
+          "delta_het": 0.06146381371257881,
+          "sensitivity_atp": 0.4772256608354768,
+          "sensitivity_het": 0.24585525485031523,
           "perturbed_metrics": {
-            "final_atp": 0.7482312269378186,
-            "final_het": 0.5591179900021532,
-            "min_atp": 0.7482312269378186,
-            "mean_atp": 0.8207015135187647
+            "final_atp": 0.7097306231413862,
+            "final_het": 0.5616989616992503,
+            "min_atp": 0.7097306231413862,
+            "mean_atp": 0.7931576632193603
           }
         },
         {
@@ -2759,15 +2759,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.0031140434603400546,
-          "delta_het": 0.000208936663733561,
-          "sensitivity_atp": 0.012456173841360219,
-          "sensitivity_het": 0.000835746654934244,
+          "delta_atp": 0.0030731832766525136,
+          "delta_het": 0.00012239103491928915,
+          "sensitivity_atp": 0.012292733106610054,
+          "sensitivity_het": 0.0004895641396771566,
           "perturbed_metrics": {
-            "final_atp": 0.6343303689910029,
-            "final_het": 0.6118407330579683,
-            "min_atp": 0.6343303689910029,
-            "mean_atp": 0.7617442054213207
+            "final_atp": 0.5873510246558645,
+            "final_het": 0.6230403843769098,
+            "min_atp": 0.5873510246558645,
+            "mean_atp": 0.736775462478886
           }
         },
         {
@@ -2776,15 +2776,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.001634736012335103,
-          "delta_het": 0.0001366986921005342,
-          "sensitivity_atp": 0.006538944049340412,
-          "sensitivity_het": 0.0005467947684021368,
+          "delta_atp": 0.001643056215426597,
+          "delta_het": 7.749622454589211e-05,
+          "sensitivity_atp": 0.006572224861706388,
+          "sensitivity_het": 0.00030998489818356845,
           "perturbed_metrics": {
-            "final_atp": 0.6390791484636781,
-            "final_het": 0.6121863684138024,
-            "min_atp": 0.6390791484636781,
-            "mean_atp": 0.7664663754101142
+            "final_atp": 0.5920672641479436,
+            "final_het": 0.623240271636375,
+            "min_atp": 0.5920672641479436,
+            "mean_atp": 0.7414880120664477
           }
         },
         {
@@ -2793,15 +2793,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.05983523053732276,
-          "delta_het": 0.05377654599632331,
-          "sensitivity_atp": 0.5983523053732276,
-          "sensitivity_het": 0.5377654599632331,
+          "delta_atp": 0.06289053989079185,
+          "delta_het": 0.05255363505926014,
+          "sensitivity_atp": 0.6289053989079185,
+          "sensitivity_het": 0.5255363505926014,
           "perturbed_metrics": {
-            "final_atp": 0.6972796429886657,
-            "final_het": 0.5582731237253785,
-            "min_atp": 0.6972796429886657,
-            "mean_atp": 0.7739718343508191
+            "final_atp": 0.6533147478233089,
+            "final_het": 0.5706091403525689,
+            "min_atp": 0.6533147478233089,
+            "mean_atp": 0.7471999931339521
           }
         },
         {
@@ -2810,15 +2810,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.10743966674654493,
-          "delta_het": 0.08384302352985973,
-          "sensitivity_atp": 1.0743966674654493,
-          "sensitivity_het": 0.8384302352985973,
+          "delta_atp": 0.16970513466819936,
+          "delta_het": 0.21882962513832077,
+          "sensitivity_atp": 1.6970513466819936,
+          "sensitivity_het": 2.1882962513832074,
           "perturbed_metrics": {
-            "final_atp": 0.7448840791978879,
-            "final_het": 0.5282066461918421,
-            "min_atp": 0.7448840791978879,
-            "mean_atp": 0.7997460766009282
+            "final_atp": 0.7601293426007164,
+            "final_het": 0.4043331502735083,
+            "min_atp": 0.7601293426007164,
+            "mean_atp": 0.801996293360572
           }
         },
         {
@@ -2827,15 +2827,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.04009890647211567,
-          "delta_het": 0.0220560567723741,
-          "sensitivity_atp": 0.2673260431474378,
-          "sensitivity_het": 0.14704037848249402,
+          "delta_atp": 0.04383245638088917,
+          "delta_het": 0.023064839563790684,
+          "sensitivity_atp": 0.2922163758725945,
+          "sensitivity_het": 0.1537655970919379,
           "perturbed_metrics": {
-            "final_atp": 0.5973455059792273,
-            "final_het": 0.6341057264940759,
-            "min_atp": 0.5973455059792273,
-            "mean_atp": 0.7576540673738216
+            "final_atp": 0.5465917515516279,
+            "final_het": 0.6462276149756198,
+            "min_atp": 0.5465917515516279,
+            "mean_atp": 0.7323474047013094
           }
         },
         {
@@ -2844,15 +2844,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.042736464929874374,
-          "delta_het": 0.030843587432556108,
-          "sensitivity_atp": 0.1709458597194975,
-          "sensitivity_het": 0.12337434973022443,
+          "delta_atp": 0.0473406236781434,
+          "delta_het": 0.03224704404960799,
+          "sensitivity_atp": 0.1893624947125736,
+          "sensitivity_het": 0.12898817619843195,
           "perturbed_metrics": {
-            "final_atp": 0.6801808773812174,
-            "final_het": 0.5812060822891457,
-            "min_atp": 0.6801808773812174,
-            "mean_atp": 0.7714086348299434
+            "final_atp": 0.6377648316106604,
+            "final_het": 0.5909157313622211,
+            "min_atp": 0.6377648316106604,
+            "mean_atp": 0.7466452040538762
           }
         },
         {
@@ -2861,15 +2861,15 @@
           "original_value": 65.0,
           "perturbed_value": 50.0,
           "delta_param": 15.0,
-          "delta_atp": 0.07376806241502543,
-          "delta_het": 0.012733561860449827,
-          "sensitivity_atp": 0.004917870827668361,
-          "sensitivity_het": 0.0008489041240299885,
+          "delta_atp": 0.12274453838409993,
+          "delta_het": 0.041680053431305986,
+          "sensitivity_atp": 0.008182969225606662,
+          "sensitivity_het": 0.0027786702287537325,
           "perturbed_metrics": {
-            "final_atp": 0.7112124748663684,
-            "final_het": 0.599316107861252,
-            "min_atp": 0.7112124748663684,
-            "mean_atp": 0.8218027985565514
+            "final_atp": 0.713168746316617,
+            "final_het": 0.5814827219805231,
+            "min_atp": 0.713168746316617,
+            "mean_atp": 0.8098816554706522
           }
         },
         {
@@ -2878,15 +2878,15 @@
           "original_value": 65.0,
           "perturbed_value": 70.0,
           "delta_param": 5.0,
-          "delta_atp": 0.025254071059472083,
-          "delta_het": 0.00469544559660906,
-          "sensitivity_atp": 0.005050814211894417,
-          "sensitivity_het": 0.000939089119321812,
+          "delta_atp": 0.04696703103364985,
+          "delta_het": 0.014827547713811673,
+          "sensitivity_atp": 0.00939340620672997,
+          "sensitivity_het": 0.0029655095427623345,
           "perturbed_metrics": {
-            "final_atp": 0.6121903413918709,
-            "final_het": 0.6167451153183109,
-            "min_atp": 0.6121903413918709,
-            "mean_atp": 0.7454739762744361
+            "final_atp": 0.5434571768988672,
+            "final_het": 0.6379903231256407,
+            "min_atp": 0.5434571768988672,
+            "mean_atp": 0.7116921938184424
           }
         },
         {
@@ -2895,15 +2895,15 @@
           "original_value": 0.45,
           "perturbed_value": 0.3,
           "delta_param": 0.15000000000000002,
-          "delta_atp": 0.10461593572647243,
-          "delta_het": 0.07474359708246325,
-          "sensitivity_atp": 0.6974395715098161,
-          "sensitivity_het": 0.49829064721642163,
+          "delta_atp": 0.12263136378101869,
+          "delta_het": 0.08848404952515265,
+          "sensitivity_atp": 0.8175424252067911,
+          "sensitivity_het": 0.5898936635010176,
           "perturbed_metrics": {
-            "final_atp": 0.7420603481778154,
-            "final_het": 0.5373060726392386,
-            "min_atp": 0.7420603481778154,
-            "mean_atp": 0.8225246634866213
+            "final_atp": 0.7130555717135357,
+            "final_het": 0.5346787258866764,
+            "min_atp": 0.7130555717135357,
+            "mean_atp": 0.7975362252149104
           }
         },
         {
@@ -2912,15 +2912,15 @@
           "original_value": 0.45,
           "perturbed_value": 0.5,
           "delta_param": 0.04999999999999999,
-          "delta_atp": 0.06477985473851888,
-          "delta_het": 0.02850785774231468,
-          "sensitivity_atp": 1.2955970947703779,
-          "sensitivity_het": 0.5701571548462937,
+          "delta_atp": 0.07971039505813937,
+          "delta_het": 0.03368787429068065,
+          "sensitivity_atp": 1.5942079011627879,
+          "sensitivity_het": 0.6737574858136132,
           "perturbed_metrics": {
-            "final_atp": 0.5726645577128241,
-            "final_het": 0.6405575274640165,
-            "min_atp": 0.5726645577128241,
-            "mean_atp": 0.7183904946710676
+            "final_atp": 0.5107138128743777,
+            "final_het": 0.6568506497025097,
+            "min_atp": 0.5107138128743777,
+            "mean_atp": 0.6898492620708034
           }
         },
         {
@@ -2929,15 +2929,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.2,
           "delta_param": 0.3,
-          "delta_atp": 0.007438129103595981,
-          "delta_het": 0.0035928963887560394,
-          "sensitivity_atp": 0.02479376367865327,
-          "sensitivity_het": 0.011976321295853465,
+          "delta_atp": 0.011684276096718849,
+          "delta_het": 0.005435572826922863,
+          "sensitivity_atp": 0.03894758698906283,
+          "sensitivity_het": 0.018118576089742877,
           "perturbed_metrics": {
-            "final_atp": 0.630006283347747,
-            "final_het": 0.6156425661104579,
-            "min_atp": 0.630006283347747,
-            "mean_atp": 0.7431896644490956
+            "final_atp": 0.5787399318357982,
+            "final_het": 0.6285983482387519,
+            "min_atp": 0.5787399318357982,
+            "mean_atp": 0.7165457771835987
           }
         },
         {
@@ -2946,15 +2946,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.6,
           "delta_param": 0.09999999999999998,
-          "delta_atp": 0.0021418982118606156,
-          "delta_het": 0.001055300118306235,
-          "sensitivity_atp": 0.02141898211860616,
-          "sensitivity_het": 0.010553001183062351,
+          "delta_atp": 0.00343449098835813,
+          "delta_het": 0.0016436277949802847,
+          "sensitivity_atp": 0.034344909883581305,
+          "sensitivity_het": 0.01643627794980285,
           "perturbed_metrics": {
-            "final_atp": 0.6395863106632036,
-            "final_het": 0.6109943696033956,
-            "min_atp": 0.6395863106632036,
-            "mean_atp": 0.7715961928710475
+            "final_atp": 0.5938586989208752,
+            "final_het": 0.6215191476168488,
+            "min_atp": 0.5938586989208752,
+            "mean_atp": 0.747116104913456
           }
         },
         {
@@ -2963,15 +2963,15 @@
           "original_value": 1.5,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.11828658644530377,
-          "delta_het": 0.09733718506282452,
-          "sensitivity_atp": 0.47314634578121506,
-          "sensitivity_het": 0.38934874025129806,
+          "delta_atp": 0.12589555742511593,
+          "delta_het": 0.09776917592942524,
+          "sensitivity_atp": 0.5035822297004637,
+          "sensitivity_het": 0.391076703717701,
           "perturbed_metrics": {
-            "final_atp": 0.7557309988966467,
-            "final_het": 0.5147124846588773,
-            "min_atp": 0.7557309988966467,
-            "mean_atp": 0.8090381475198543
+            "final_atp": 0.716319765357633,
+            "final_het": 0.5253935994824038,
+            "min_atp": 0.716319765357633,
+            "mean_atp": 0.7814851854702782
           }
         },
         {
@@ -2980,15 +2980,15 @@
           "original_value": 1.5,
           "perturbed_value": 2.0,
           "delta_param": 0.5,
-          "delta_atp": 0.46206462550319594,
-          "delta_het": 0.1780339845705865,
-          "sensitivity_atp": 0.9241292510063919,
-          "sensitivity_het": 0.356067969141173,
+          "delta_atp": 0.44371230007989937,
+          "delta_het": 0.17898465236886407,
+          "sensitivity_atp": 0.8874246001597987,
+          "sensitivity_het": 0.35796930473772814,
           "perturbed_metrics": {
-            "final_atp": 0.17537978694814702,
-            "final_het": 0.7900836542922883,
-            "min_atp": 0.17537978694814702,
-            "mean_atp": 0.5676223968420624
+            "final_atp": 0.14671190785261765,
+            "final_het": 0.8021474277806931,
+            "min_atp": 0.14671190785261765,
+            "mean_atp": 0.5550498948067751
           }
         },
         {
@@ -2997,15 +2997,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.07346352995562999,
-          "delta_het": 0.04678411449492814,
-          "sensitivity_atp": 0.29385411982251997,
-          "sensitivity_het": 0.18713645797971257,
+          "delta_atp": 0.0818431430258918,
+          "delta_het": 0.050262474098820564,
+          "sensitivity_atp": 0.3273725721035672,
+          "sensitivity_het": 0.20104989639528226,
           "perturbed_metrics": {
-            "final_atp": 0.710907942406973,
-            "final_het": 0.5652655552267737,
-            "min_atp": 0.710907942406973,
-            "mean_atp": 0.7922679627336868
+            "final_atp": 0.6722673509584088,
+            "final_het": 0.5729003013130085,
+            "min_atp": 0.6722673509584088,
+            "mean_atp": 0.7677009419733273
           }
         },
         {
@@ -3014,15 +3014,15 @@
           "original_value": 1.25,
           "perturbed_value": 1.5,
           "delta_param": 0.25,
-          "delta_atp": 0.09785148065805571,
-          "delta_het": 0.04273088037211459,
-          "sensitivity_atp": 0.39140592263222285,
-          "sensitivity_het": 0.17092352148845835,
+          "delta_atp": 0.10747999690470605,
+          "delta_het": 0.04558693770887934,
+          "sensitivity_atp": 0.4299199876188242,
+          "sensitivity_het": 0.18234775083551735,
           "perturbed_metrics": {
-            "final_atp": 0.5395929317932873,
-            "final_het": 0.6547805500938164,
-            "min_atp": 0.5395929317932873,
-            "mean_atp": 0.7280452589794484
+            "final_atp": 0.482944211027811,
+            "final_het": 0.6687497131207084,
+            "min_atp": 0.482944211027811,
+            "mean_atp": 0.70178825639809
           }
         },
         {
@@ -3031,15 +3031,15 @@
           "original_value": 0.75,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.06019716126359931,
-          "delta_het": 0.03681264634206172,
-          "sensitivity_atp": 0.24078864505439723,
-          "sensitivity_het": 0.14725058536824687,
+          "delta_atp": 0.06550270022942495,
+          "delta_het": 0.03843472066891607,
+          "sensitivity_atp": 0.2620108009176998,
+          "sensitivity_het": 0.15373888267566427,
           "perturbed_metrics": {
-            "final_atp": 0.6976415737149423,
-            "final_het": 0.5752370233796401,
-            "min_atp": 0.6976415737149423,
-            "mean_atp": 0.7853018148996292
+            "final_atp": 0.655926908161942,
+            "final_het": 0.584728054742913,
+            "min_atp": 0.655926908161942,
+            "mean_atp": 0.7601804878277059
           }
         },
         {
@@ -3048,15 +3048,15 @@
           "original_value": 0.75,
           "perturbed_value": 1.0,
           "delta_param": 0.25,
-          "delta_atp": 0.08786690027212929,
-          "delta_het": 0.03934860817467545,
-          "sensitivity_atp": 0.35146760108851716,
-          "sensitivity_het": 0.1573944326987018,
+          "delta_atp": 0.09424360063854093,
+          "delta_het": 0.04110135837393669,
+          "sensitivity_atp": 0.3769744025541637,
+          "sensitivity_het": 0.16440543349574677,
           "perturbed_metrics": {
-            "final_atp": 0.5495775121792137,
-            "final_het": 0.6513982778963773,
-            "min_atp": 0.5495775121792137,
-            "mean_atp": 0.7361916189149011
+            "final_atp": 0.4961806072939761,
+            "final_het": 0.6642641337857658,
+            "min_atp": 0.4961806072939761,
+            "mean_atp": 0.7110532901431929
           }
         }
       ]
@@ -3064,75 +3064,75 @@
     {
       "label": "transplant_heavy",
       "center_metrics": {
-        "final_atp": 0.701855534082698,
-        "final_het": 0.4793652978863021,
-        "min_atp": 0.701855534082698,
-        "mean_atp": 0.7467733613739699
+        "final_atp": 0.7120990355699774,
+        "final_het": 0.15974827883654094,
+        "min_atp": 0.7073977233453558,
+        "mean_atp": 0.7636411614141422
       },
       "n_perturbations": 22,
-      "fragility_score": 2.913316530248744,
-      "most_sensitive_param": "rapamycin_dose",
+      "fragility_score": 1.0218934894269318,
+      "most_sensitive_param": "yamanaka_intensity",
       "least_sensitive_param": "baseline_nad_level",
       "param_sensitivities": {
         "rapamycin_dose": {
-          "sensitivity_atp": 0.2620372423878766,
-          "sensitivity_het": 0.6060622856170759,
-          "combined": 0.8680995280049525
+          "sensitivity_atp": 0.0014377472635396238,
+          "sensitivity_het": 0.10603503714893404,
+          "combined": 0.10747278441247367
         },
         "nad_supplement": {
-          "sensitivity_atp": 0.22534030838450478,
-          "sensitivity_het": 0.2394854881730913,
-          "combined": 0.46482579655759604
+          "sensitivity_atp": 0.07186710688621016,
+          "sensitivity_het": 0.04026368953530102,
+          "combined": 0.11213079642151118
         },
         "senolytic_dose": {
-          "sensitivity_atp": 0.10715954396745868,
-          "sensitivity_het": 0.005886275017754072,
-          "combined": 0.11304581898521275
+          "sensitivity_atp": 0.10521159461534868,
+          "sensitivity_het": 0.006189321516279489,
+          "combined": 0.11140091613162817
         },
         "yamanaka_intensity": {
-          "sensitivity_atp": 0.0995976499323914,
-          "sensitivity_het": 0.3575513019968113,
-          "combined": 0.4571489519292027
+          "sensitivity_atp": 0.21145255081487124,
+          "sensitivity_het": 0.03352759755651441,
+          "combined": 0.24498014837138565
         },
         "transplant_rate": {
-          "sensitivity_atp": 0.006544852115475397,
-          "sensitivity_het": 0.013722855741882478,
-          "combined": 0.020267707857357875
+          "sensitivity_atp": 0.002050811574692446,
+          "sensitivity_het": 0.1344554588556387,
+          "combined": 0.13650627043033114
         },
         "exercise_level": {
-          "sensitivity_atp": 0.027965174411176408,
-          "sensitivity_het": 0.006112547664412586,
-          "combined": 0.03407772207558899
+          "sensitivity_atp": 0.03123274126557089,
+          "sensitivity_het": 0.011085101115431753,
+          "combined": 0.04231784238100264
         },
         "baseline_age": {
-          "sensitivity_atp": 0.004375046604428962,
-          "sensitivity_het": 0.00027002218397750855,
-          "combined": 0.004645068788406471
+          "sensitivity_atp": 0.004407337963914198,
+          "sensitivity_het": 0.0009456879717200204,
+          "combined": 0.0053530259356342185
         },
         "baseline_heteroplasmy": {
-          "sensitivity_atp": 0.09333002987236455,
-          "sensitivity_het": 0.19225260898069618,
-          "combined": 0.28558263885306073
+          "sensitivity_atp": 0.0030896759828232443,
+          "sensitivity_het": 0.015671138727050282,
+          "combined": 0.018760814709873525
         },
         "baseline_nad_level": {
-          "sensitivity_atp": 0.0016220155211645513,
-          "sensitivity_het": 0.0015820104007399638,
-          "combined": 0.003204025921904515
+          "sensitivity_atp": 0.0010195700665562488,
+          "sensitivity_het": 0.002465080442155959,
+          "combined": 0.003484650508712208
         },
         "genetic_vulnerability": {
-          "sensitivity_atp": 0.11817859465251845,
-          "sensitivity_het": 0.28068087124911334,
-          "combined": 0.3988594659016318
+          "sensitivity_atp": 0.001531419059754402,
+          "sensitivity_het": 0.14334014068838646,
+          "combined": 0.14487155974814087
         },
         "metabolic_demand": {
-          "sensitivity_atp": 0.047103552314180286,
-          "sensitivity_het": 0.10620290838287516,
-          "combined": 0.15330646069705545
+          "sensitivity_atp": 0.00690802872329499,
+          "sensitivity_het": 0.07995659651292808,
+          "combined": 0.08686462523622307
         },
         "inflammation_level": {
-          "sensitivity_atp": 0.035171380555857654,
-          "sensitivity_het": 0.07508196412091675,
-          "combined": 0.1102533446767744
+          "sensitivity_atp": 0.0007528957555448193,
+          "sensitivity_het": 0.006997159384470649,
+          "combined": 0.0077500551400154685
         }
       },
       "perturbations": [
@@ -3142,15 +3142,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 0.03924462093217884,
-          "delta_het": 0.06526619440796966,
-          "sensitivity_atp": 0.3924462093217884,
-          "sensitivity_het": 0.6526619440796966,
+          "delta_atp": 0.00016331617902487494,
+          "delta_het": 0.011474079473311777,
+          "sensitivity_atp": 0.0016331617902487494,
+          "sensitivity_het": 0.11474079473311777,
           "perturbed_metrics": {
-            "final_atp": 0.6626109131505191,
-            "final_het": 0.5446314922942718,
-            "min_atp": 0.6626109131505191,
-            "mean_atp": 0.7263584414960245
+            "final_atp": 0.7119357193909526,
+            "final_het": 0.17122235830985272,
+            "min_atp": 0.70739667082679,
+            "mean_atp": 0.7633449659082691
           }
         },
         {
@@ -3159,15 +3159,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.019744241318094713,
-          "delta_het": 0.08391939407316829,
-          "sensitivity_atp": 0.13162827545396477,
-          "sensitivity_het": 0.5594626271544553,
+          "delta_atp": 0.00018634991052457472,
+          "delta_het": 0.014599391934712547,
+          "sensitivity_atp": 0.0012423327368304982,
+          "sensitivity_het": 0.09732927956475032,
           "perturbed_metrics": {
-            "final_atp": 0.7215997754007927,
-            "final_het": 0.3954459038131338,
-            "min_atp": 0.7073091765395808,
-            "mean_atp": 0.7612035126528277
+            "final_atp": 0.712285385480502,
+            "final_het": 0.1451488869018284,
+            "min_atp": 0.7073991362150978,
+            "mean_atp": 0.7639684512230834
           }
         },
         {
@@ -3176,15 +3176,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.1,
           "delta_param": 0.15,
-          "delta_atp": 0.038058199692490025,
-          "delta_het": 0.037748214851945905,
-          "sensitivity_atp": 0.25372133128326685,
-          "sensitivity_het": 0.2516547656796394,
+          "delta_atp": 0.00900954192859571,
+          "delta_het": 0.005302967244946333,
+          "sensitivity_atp": 0.060063612857304736,
+          "sensitivity_het": 0.035353114966308885,
           "perturbed_metrics": {
-            "final_atp": 0.6637973343902079,
-            "final_het": 0.517113512738248,
-            "min_atp": 0.6637973343902079,
-            "mean_atp": 0.7197932698066045
+            "final_atp": 0.7030894936413817,
+            "final_het": 0.16505124608148727,
+            "min_atp": 0.7030894936413817,
+            "mean_atp": 0.7558834958095676
           }
         },
         {
@@ -3193,15 +3193,15 @@
           "original_value": 0.25,
           "perturbed_value": 0.5,
           "delta_param": 0.25,
-          "delta_atp": 0.04923982137143568,
-          "delta_het": 0.05682905266663579,
-          "sensitivity_atp": 0.1969592854857427,
-          "sensitivity_het": 0.22731621066654317,
+          "delta_atp": 0.020917650228778895,
+          "delta_het": 0.011293566026073287,
+          "sensitivity_atp": 0.08367060091511558,
+          "sensitivity_het": 0.04517426410429315,
           "perturbed_metrics": {
-            "final_atp": 0.7510953554541336,
-            "final_het": 0.4225362452196663,
-            "min_atp": 0.707333072827384,
-            "mean_atp": 0.7860102001211512
+            "final_atp": 0.7330166857987563,
+            "final_het": 0.14845471281046765,
+            "min_atp": 0.7074010071225407,
+            "mean_atp": 0.7816324846548366
           }
         },
         {
@@ -3210,15 +3210,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 0.01359729796903475,
-          "delta_het": 0.0007053834688829363,
-          "sensitivity_atp": 0.1359729796903475,
-          "sensitivity_het": 0.0070538346888293635,
+          "delta_atp": 0.013366306182484688,
+          "delta_het": 0.0007611484789212253,
+          "sensitivity_atp": 0.13366306182484688,
+          "sensitivity_het": 0.007611484789212253,
           "perturbed_metrics": {
-            "final_atp": 0.6882582361136632,
-            "final_het": 0.4786599144174192,
-            "min_atp": 0.6882582361136632,
-            "mean_atp": 0.7405469596076698
+            "final_atp": 0.6987327293874928,
+            "final_het": 0.16050942731546217,
+            "min_atp": 0.6987327293874928,
+            "mean_atp": 0.757444075868297
           }
         },
         {
@@ -3227,15 +3227,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.011751916236685478,
-          "delta_het": 0.0007078073020018172,
-          "sensitivity_atp": 0.07834610824456986,
-          "sensitivity_het": 0.004718715346678781,
+          "delta_atp": 0.011514019110877571,
+          "delta_het": 0.0007150737365020088,
+          "sensitivity_atp": 0.07676012740585048,
+          "sensitivity_het": 0.004767158243346725,
           "perturbed_metrics": {
-            "final_atp": 0.7136074503193834,
-            "final_het": 0.48007310518830393,
-            "min_atp": 0.7072993344975314,
-            "mean_atp": 0.7530937751181456
+            "final_atp": 0.723613054680855,
+            "final_het": 0.15903320510003893,
+            "min_atp": 0.7073979416492207,
+            "mean_atp": 0.7699287942885811
           }
         },
         {
@@ -3244,15 +3244,15 @@
           "original_value": 0.0,
           "perturbed_value": 0.1,
           "delta_param": 0.1,
-          "delta_atp": 0.00995976499323914,
-          "delta_het": 0.03575513019968113,
-          "sensitivity_atp": 0.0995976499323914,
-          "sensitivity_het": 0.3575513019968113,
+          "delta_atp": 0.021145255081487124,
+          "delta_het": 0.003352759755651441,
+          "sensitivity_atp": 0.21145255081487124,
+          "sensitivity_het": 0.03352759755651441,
           "perturbed_metrics": {
-            "final_atp": 0.6918957690894588,
-            "final_het": 0.443610167686621,
-            "min_atp": 0.6918957690894588,
-            "mean_atp": 0.7351517905064134
+            "final_atp": 0.6909537804884903,
+            "final_het": 0.1563955190808895,
+            "min_atp": 0.6909537804884903,
+            "mean_atp": 0.7438173569132062
           }
         },
         {
@@ -3261,15 +3261,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.0016362130288688492,
-          "delta_het": 0.0034307139354706195,
-          "sensitivity_atp": 0.006544852115475397,
-          "sensitivity_het": 0.013722855741882478,
+          "delta_atp": 0.0005127028936731115,
+          "delta_het": 0.033613864713909675,
+          "sensitivity_atp": 0.002050811574692446,
+          "sensitivity_het": 0.1344554588556387,
           "perturbed_metrics": {
-            "final_atp": 0.7002193210538291,
-            "final_het": 0.48279601182177273,
-            "min_atp": 0.7002193210538291,
-            "mean_atp": 0.7424702770474115
+            "final_atp": 0.7115863326763043,
+            "final_het": 0.19336214355045062,
+            "min_atp": 0.7073863730728435,
+            "mean_atp": 0.762347501287867
           }
         },
         {
@@ -3278,15 +3278,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.0,
           "delta_param": 0.1,
-          "delta_atp": 0.002791162494495625,
-          "delta_het": 0.0006207636308283582,
-          "sensitivity_atp": 0.027911624944956248,
-          "sensitivity_het": 0.006207636308283582,
+          "delta_atp": 0.0031248413033121425,
+          "delta_het": 0.0011258269114381159,
+          "sensitivity_atp": 0.031248413033121425,
+          "sensitivity_het": 0.011258269114381159,
           "perturbed_metrics": {
-            "final_atp": 0.7046466965771936,
-            "final_het": 0.47998606151713047,
-            "min_atp": 0.7046466965771936,
-            "mean_atp": 0.7495360379128508
+            "final_atp": 0.7152238768732896,
+            "final_het": 0.15862245192510283,
+            "min_atp": 0.7074367184488963,
+            "mean_atp": 0.7666127693137755
           }
         },
         {
@@ -3295,15 +3295,15 @@
           "original_value": 0.1,
           "perturbed_value": 0.25,
           "delta_param": 0.15,
-          "delta_atp": 0.004202808581609485,
-          "delta_het": 0.0009026188530812385,
-          "sensitivity_atp": 0.028018723877396567,
-          "sensitivity_het": 0.00601745902054159,
+          "delta_atp": 0.004682560424703053,
+          "delta_het": 0.0016367899674723518,
+          "sensitivity_atp": 0.031217069498020354,
+          "sensitivity_het": 0.010911933116482347,
           "perturbed_metrics": {
-            "final_atp": 0.6976527255010885,
-            "final_het": 0.4784626790332209,
-            "min_atp": 0.6976527255010885,
-            "mean_atp": 0.7426204183449038
+            "final_atp": 0.7074164751452744,
+            "final_het": 0.1613850688040133,
+            "min_atp": 0.7071914296903361,
+            "mean_atp": 0.7591862857151906
           }
         },
         {
@@ -3312,15 +3312,15 @@
           "original_value": 70.0,
           "perturbed_value": 60.0,
           "delta_param": 10.0,
-          "delta_atp": 0.043825527832417555,
-          "delta_het": 0.00246655626376574,
-          "sensitivity_atp": 0.004382552783241756,
-          "sensitivity_het": 0.000246655626376574,
+          "delta_atp": 0.04423205875822156,
+          "delta_het": 0.011205580131207232,
+          "sensitivity_atp": 0.004423205875822156,
+          "sensitivity_het": 0.0011205580131207233,
           "perturbed_metrics": {
-            "final_atp": 0.7456810619151155,
-            "final_het": 0.47689874162253637,
-            "min_atp": 0.7127602581097672,
-            "mean_atp": 0.7850134780360855
+            "final_atp": 0.756331094328199,
+            "final_het": 0.1485426987053337,
+            "min_atp": 0.7128298435364544,
+            "mean_atp": 0.8028676132988002
           }
         },
         {
@@ -3329,15 +3329,15 @@
           "original_value": 70.0,
           "perturbed_value": 80.0,
           "delta_param": 10.0,
-          "delta_atp": 0.043675404256161676,
-          "delta_het": 0.002933887415784431,
-          "sensitivity_atp": 0.004367540425616168,
-          "sensitivity_het": 0.0002933887415784431,
+          "delta_atp": 0.04391470052006241,
+          "delta_het": 0.0077081793031931745,
+          "sensitivity_atp": 0.004391470052006241,
+          "sensitivity_het": 0.0007708179303193175,
           "perturbed_metrics": {
-            "final_atp": 0.6581801298265363,
-            "final_het": 0.48229918530208654,
-            "min_atp": 0.6581801298265363,
-            "mean_atp": 0.708797823671571
+            "final_atp": 0.668184335049915,
+            "final_het": 0.16745645813973412,
+            "min_atp": 0.668184335049915,
+            "mean_atp": 0.7247391759594353
           }
         },
         {
@@ -3346,15 +3346,15 @@
           "original_value": 0.55,
           "perturbed_value": 0.5,
           "delta_param": 0.050000000000000044,
-          "delta_atp": 0.0047216932376793475,
-          "delta_het": 0.011214610464920505,
-          "sensitivity_atp": 0.09443386475358687,
-          "sensitivity_het": 0.2242922092984099,
+          "delta_atp": 0.00010933465227369599,
+          "delta_het": 0.000667567496947824,
+          "sensitivity_atp": 0.002186693045473918,
+          "sensitivity_het": 0.013351349938956468,
           "perturbed_metrics": {
-            "final_atp": 0.7065772273203773,
-            "final_het": 0.4681506874213816,
-            "min_atp": 0.7065772273203773,
-            "mean_atp": 0.7604590159960802
+            "final_atp": 0.7122083702222511,
+            "final_het": 0.15908071133959312,
+            "min_atp": 0.7122083702222511,
+            "mean_atp": 0.7662699685860374
           }
         },
         {
@@ -3363,15 +3363,15 @@
           "original_value": 0.55,
           "perturbed_value": 0.7,
           "delta_param": 0.1499999999999999,
-          "delta_atp": 0.013833929248671328,
-          "delta_het": 0.02403195129944735,
-          "sensitivity_atp": 0.09222619499114225,
-          "sensitivity_het": 0.16021300866298244,
+          "delta_atp": 0.0005988988380258853,
+          "delta_het": 0.0026986391272716126,
+          "sensitivity_atp": 0.003992658920172571,
+          "sensitivity_het": 0.017990927515144094,
           "perturbed_metrics": {
-            "final_atp": 0.6880216048340266,
-            "final_het": 0.5033972491857495,
-            "min_atp": 0.39093261065466584,
-            "mean_atp": 0.6566868150031033
+            "final_atp": 0.7115001367319516,
+            "final_het": 0.16244691796381255,
+            "min_atp": 0.3909868003273711,
+            "mean_atp": 0.7394514848288037
           }
         },
         {
@@ -3380,15 +3380,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.2,
           "delta_param": 0.3,
-          "delta_atp": 0.000513113100195417,
-          "delta_het": 0.0005271704514455133,
-          "sensitivity_atp": 0.00171037700065139,
-          "sensitivity_het": 0.0017572348381517111,
+          "delta_atp": 0.00030977218830596787,
+          "delta_het": 0.0007580785738678653,
+          "sensitivity_atp": 0.001032573961019893,
+          "sensitivity_het": 0.002526928579559551,
           "perturbed_metrics": {
-            "final_atp": 0.7013424209825025,
-            "final_het": 0.4798924683377476,
-            "min_atp": 0.601247644388144,
-            "mean_atp": 0.7299644182950589
+            "final_atp": 0.7117892633816715,
+            "final_het": 0.1605063574104088,
+            "min_atp": 0.6012866204041873,
+            "mean_atp": 0.7467083178659178
           }
         },
         {
@@ -3397,15 +3397,15 @@
           "original_value": 0.5,
           "perturbed_value": 0.6,
           "delta_param": 0.09999999999999998,
-          "delta_atp": 0.00015336540416777122,
-          "delta_het": 0.00014067859633282165,
-          "sensitivity_atp": 0.0015336540416777127,
-          "sensitivity_het": 0.0014067859633282167,
+          "delta_atp": 0.00010065661720926045,
+          "delta_het": 0.00024032323047523674,
+          "sensitivity_atp": 0.0010065661720926047,
+          "sensitivity_het": 0.002403232304752368,
           "perturbed_metrics": {
-            "final_atp": 0.7020088994868657,
-            "final_het": 0.4792246192899693,
-            "min_atp": 0.7020088994868657,
-            "mean_atp": 0.7523377447848886
+            "final_atp": 0.7121996921871867,
+            "final_het": 0.1595079556060657,
+            "min_atp": 0.7121996921871867,
+            "mean_atp": 0.7692787871564545
           }
         },
         {
@@ -3414,15 +3414,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.018272627976531286,
-          "delta_het": 0.07368661172180957,
-          "sensitivity_atp": 0.07309051190612514,
-          "sensitivity_het": 0.2947464468872383,
+          "delta_atp": 0.0003285146617898471,
+          "delta_het": 0.036079178312262955,
+          "sensitivity_atp": 0.0013140586471593885,
+          "sensitivity_het": 0.14431671324905182,
           "perturbed_metrics": {
-            "final_atp": 0.7201281620592292,
-            "final_het": 0.40567868616449254,
-            "min_atp": 0.7073096439995623,
-            "mean_atp": 0.7598743264687257
+            "final_atp": 0.7124275502317673,
+            "final_het": 0.12366910052427799,
+            "min_atp": 0.7073989828173373,
+            "mean_atp": 0.7639850084372605
           }
         },
         {
@@ -3431,15 +3431,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.04081666934972794,
-          "delta_het": 0.0666538239027471,
-          "sensitivity_atp": 0.16326667739891176,
-          "sensitivity_het": 0.2666152956109884,
+          "delta_atp": 0.00043719486808735386,
+          "delta_het": 0.03559089203193028,
+          "sensitivity_atp": 0.0017487794723494154,
+          "sensitivity_het": 0.1423635681277211,
           "perturbed_metrics": {
-            "final_atp": 0.66103886473297,
-            "final_het": 0.5460191217890492,
-            "min_atp": 0.66103886473297,
-            "mean_atp": 0.7234750422552069
+            "final_atp": 0.7116618407018901,
+            "final_het": 0.19533917086847122,
+            "min_atp": 0.7073964631596198,
+            "mean_atp": 0.7632232655644698
           }
         },
         {
@@ -3448,15 +3448,15 @@
           "original_value": 1.0,
           "perturbed_value": 0.75,
           "delta_param": 0.25,
-          "delta_atp": 0.010452551486269668,
-          "delta_het": 0.027701601022234013,
-          "sensitivity_atp": 0.04181020594507867,
-          "sensitivity_het": 0.11080640408893605,
+          "delta_atp": 0.0017125933517269099,
+          "delta_het": 0.020290024104589965,
+          "sensitivity_atp": 0.006850373406907639,
+          "sensitivity_het": 0.08116009641835986,
           "perturbed_metrics": {
-            "final_atp": 0.7123080855689676,
-            "final_het": 0.4516636968640681,
-            "min_atp": 0.7073039270304158,
-            "mean_atp": 0.7537267592625353
+            "final_atp": 0.7138116289217044,
+            "final_het": 0.13945825473195098,
+            "min_atp": 0.7073984540297286,
+            "mean_atp": 0.7648810982519972
           }
         },
         {
@@ -3465,15 +3465,15 @@
           "original_value": 1.0,
           "perturbed_value": 1.25,
           "delta_param": 0.25,
-          "delta_atp": 0.013099224670820475,
-          "delta_het": 0.025399853169203568,
-          "sensitivity_atp": 0.0523968986832819,
-          "sensitivity_het": 0.10159941267681427,
+          "delta_atp": 0.0017414210099205851,
+          "delta_het": 0.019688274151874074,
+          "sensitivity_atp": 0.0069656840396823405,
+          "sensitivity_het": 0.0787530966074963,
           "perturbed_metrics": {
-            "final_atp": 0.6887563094118775,
-            "final_het": 0.5047651510555057,
-            "min_atp": 0.6887563094118775,
-            "mean_atp": 0.7385999476289585
+            "final_atp": 0.7103576145600569,
+            "final_het": 0.17943655298841502,
+            "min_atp": 0.7073969924955509,
+            "mean_atp": 0.7623828647363312
           }
         },
         {
@@ -3482,15 +3482,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.25,
           "delta_param": 0.15000000000000002,
-          "delta_atp": 0.004574871671638725,
-          "delta_het": 0.011025526718415779,
-          "sensitivity_atp": 0.030499144477591496,
-          "sensitivity_het": 0.07350351145610519,
+          "delta_atp": 0.00011048362836196812,
+          "delta_het": 0.0010262574834575267,
+          "sensitivity_atp": 0.0007365575224131207,
+          "sensitivity_het": 0.00684171655638351,
           "perturbed_metrics": {
-            "final_atp": 0.7064304057543367,
-            "final_het": 0.46833977116788633,
-            "min_atp": 0.7064304057543367,
-            "mean_atp": 0.7498087703097781
+            "final_atp": 0.7122095191983394,
+            "final_het": 0.15872202135308341,
+            "min_atp": 0.7073977272250996,
+            "mean_atp": 0.7637899182080464
           }
         },
         {
@@ -3499,15 +3499,15 @@
           "original_value": 0.4,
           "perturbed_value": 0.75,
           "delta_param": 0.35,
-          "delta_atp": 0.013945265821943331,
-          "delta_het": 0.026831145875004903,
-          "sensitivity_atp": 0.03984361663412381,
-          "sensitivity_het": 0.0766604167857283,
+          "delta_atp": 0.0002692318960367812,
+          "delta_het": 0.002503410774395226,
+          "sensitivity_atp": 0.0007692339886765179,
+          "sensitivity_het": 0.007152602212557789,
           "perturbed_metrics": {
-            "final_atp": 0.6879102682607546,
-            "final_het": 0.506196443761307,
-            "min_atp": 0.6879102682607546,
-            "mean_atp": 0.7382692037086046
+            "final_atp": 0.7118298036739407,
+            "final_het": 0.16225168961093617,
+            "min_atp": 0.7073977142925919,
+            "mean_atp": 0.7632824855987128
           }
         }
       ]

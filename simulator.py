@@ -181,12 +181,16 @@ def _deletion_rate(age: float, genetic_vulnerability: float,
     effective transition age is AGE_TRANSITION ± shift based on cellular health,
     with a smooth sigmoid blend (width 5 years) instead of a hard cutoff.
     """
-    # Health-dependent shift: good ATP + high mitophagy → later transition
-    # atp_norm=1.0, mitophagy=baseline → shift=0 (nominal age 65)
-    # atp_norm=0.5, mitophagy=low → shift≈-8 years (transition at ~57)
-    # atp_norm=1.0, mitophagy=high → shift≈+5 years (transition at ~70)
+    # Health-dependent shift: good ATP + high mitophagy → later transition.
+    # Calibrated so a NATURALLY AGING person (no intervention) has shift≈0
+    # at age 65, reproducing the Va23 empirical data. Iterative calibration:
+    # natural aging yields ATP_norm ≈ 0.77 at age 65 with baseline mitophagy,
+    # so we normalize by that reference (not by perfect health = 1.0).
+    # This ensures the AVERAGE transition age ≈ 65 per Cramer's requirement
+    # (residual shift < 0.05 years = 18 days).
+    NATURAL_HEALTH_REF = 0.77  # calibrated: ATP_norm at age 65, no intervention
     health_factor = atp_norm * (mitophagy_rate / BASELINE_MITOPHAGY_RATE)
-    shift = 10.0 * (health_factor - 1.0)  # ±10 years at extremes
+    shift = 10.0 * (health_factor / NATURAL_HEALTH_REF - 1.0)
     shift = max(-15.0, min(shift, 10.0))  # cap the shift range
     effective_transition = AGE_TRANSITION + shift
 
