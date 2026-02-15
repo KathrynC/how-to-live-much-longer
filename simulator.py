@@ -68,6 +68,16 @@ def _deletion_rate(age, genetic_vulnerability):
 def derivatives(state, t, intervention, patient):
     """Compute time derivatives of all 7 state variables.
 
+    Fixes applied 2026-02-15 per falsifier report:
+      C1: Cliff now feeds back into replication and apoptosis
+      C2: Total copy number (N_h + N_d) regulated toward 1.0
+      C3: NAD supplementation selectively benefits healthy mitochondria
+      C4: Damaged replication advantage creates bistability past cliff
+      M1: Yamanaka repair gated by available ATP
+      M2: Removed spurious 0.5 factor on damaged replication
+      M3: Strengthened ROS-damage vicious cycle coupling
+      M5: Exercise upregulates mitochondrial biogenesis (actual hormesis)
+
     Args:
         state: np.array of shape (7,) — current state.
         t: Current time in years from simulation start.
@@ -80,8 +90,8 @@ def derivatives(state, t, intervention, patient):
     n_h, n_d, atp, ros, nad, sen, psi = state
 
     # Prevent negative values in derivative computation
-    n_h = max(n_h, 0.0)
-    n_d = max(n_d, 0.0)
+    n_h = max(n_h, 1e-6)
+    n_d = max(n_d, 1e-6)
     atp = max(atp, 0.0)
     ros = max(ros, 0.0)
     nad = max(nad, 0.0)
@@ -102,101 +112,164 @@ def derivatives(state, t, intervention, patient):
     met_demand = patient["metabolic_demand"]
     inflammation = patient["inflammation_level"]
 
-    # ── Heteroplasmy and cliff ────────────────────────────────────────────
-    het = _heteroplasmy_fraction(n_h, n_d)
-    cliff = _cliff_factor(het)
+    # ── Derived quantities ────────────────────────────────────────────────
+    total = n_h + n_d
+    het = n_d / total                          # heteroplasmy fraction
+    cliff = _cliff_factor(het)                 # sigmoid efficiency factor
+    atp_norm = min(atp / BASELINE_ATP, 1.0)    # normalized ATP (0-1)
+    energy_available = max(atp_norm, 0.05)     # floor to prevent total shutdown
+
+    # ── Copy number regulation ────────────────────────────────────────────
+    # Total mtDNA copy number is homeostatically regulated. When total > 1,
+    # replication slows; when total < 1, replication speeds up. This prevents
+    # unbounded growth (fixes C2/M4).
+    copy_number_pressure = max(1.0 - total, -0.5)  # caps downward pressure
+
+    # ── Age-dependent deletion rate ───────────────────────────────────────
+    del_rate = _deletion_rate(age, gen_vuln)
 
     # ── 1. dN_healthy/dt ──────────────────────────────────────────────────
-    # Natural replication (homeostatic, targets ~1.0)
-    replication_h = 0.1 * (1.0 - n_h) * nad
-    # ROS-induced damage converts healthy → damaged
-    damage_rate = 0.05 * ros * gen_vuln * n_h
-    # Mitophagy doesn't remove healthy copies much
-    # Transplant adds healthy copies
-    transplant_add = transplant * 0.2  # up to 0.2 copies/year at max dose
-    # Yamanaka can repair some damaged back to healthy
-    repair_rate = yama * 0.08 * n_d
-    dn_h = replication_h - damage_rate + transplant_add + repair_rate
+    # Replication: gated by ATP (fix C1), NAD, and copy number pressure.
+    # Healthy copies replicate at the base rate.
+    base_replication_rate = 0.1
+    replication_h = (base_replication_rate * n_h * nad
+                     * energy_available * max(copy_number_pressure, 0.0))
+
+    # ROS-induced damage: converts healthy → damaged (the vicious cycle
+    # entry point). Coupling strength increased (fix M3).
+    damage_rate = 0.15 * ros * gen_vuln * n_h
+
+    # Transplant: adds healthy copies, capped by copy number regulation.
+    # Only effective while total < 1.2 (can't overfill).
+    transplant_headroom = max(1.2 - total, 0.0)
+    transplant_add = transplant * 0.15 * min(transplant_headroom, 1.0)
+
+    # Yamanaka repair: converts damaged → healthy. GATED BY ATP (fix M1).
+    # At ATP=0, no repair occurs regardless of intensity.
+    repair_rate = yama * 0.06 * n_d * energy_available
+
+    # Exercise hormesis: upregulates mitochondrial biogenesis (fix M5).
+    # Moderate exercise increases healthy copy replication via PGC-1α.
+    exercise_biogenesis = exercise * 0.03 * energy_available * max(copy_number_pressure, 0.0)
+
+    # Apoptosis of cells with severe damage (cliff feedback, fix C1):
+    # When ATP is very low, cells die, removing both healthy and damaged copies.
+    apoptosis_h = 0.02 * max(1.0 - energy_available, 0.0) * n_h * (1.0 - cliff)
+
+    dn_h = (replication_h - damage_rate + transplant_add + repair_rate
+            + exercise_biogenesis - apoptosis_h)
 
     # ── 2. dN_damaged/dt ──────────────────────────────────────────────────
-    # Damaged copies replicate faster (shorter, replication advantage)
-    replication_d = 0.1 * DAMAGED_REPLICATION_ADVANTAGE * n_d * nad * 0.5
-    # New damage from ROS
+    # Damaged copies replicate FASTER (survival of the smallest, Cramer Ch.4).
+    # No spurious 0.5 factor (fix M2). Replication advantage is real.
+    # Also gated by ATP and copy number pressure.
+    replication_d = (base_replication_rate * DAMAGED_REPLICATION_ADVANTAGE
+                     * n_d * nad * energy_available
+                     * max(copy_number_pressure, 0.0))
+
+    # New damage from ROS (arrives from healthy pool)
     new_damage = damage_rate
-    # Age-dependent deletion accumulation
-    del_rate = _deletion_rate(age, gen_vuln)
-    age_deletions = del_rate * 0.01  # small baseline accumulation
-    # Mitophagy clears damaged copies (enhanced by rapamycin)
-    mitophagy = (BASELINE_MITOPHAGY_RATE + rapa * 0.15) * n_d
-    # Yamanaka repair removes from damaged pool
-    dn_d = replication_d + new_damage + age_deletions - mitophagy - repair_rate
+
+    # Age-dependent de novo deletions (Cramer Ch. 4).
+    # Proportional to healthy pool (deletions occur during replication).
+    # Removed the 0.01 suppression factor (fix m6).
+    age_deletions = del_rate * 0.05 * n_h * energy_available
+
+    # Mitophagy: selective clearance of damaged copies.
+    # Enhanced by rapamycin. NAD+ supplementation improves mitochondrial
+    # quality control — it selectively enhances mitophagy of damaged copies
+    # rather than boosting damaged replication (fix C3).
+    mitophagy_rate = (BASELINE_MITOPHAGY_RATE
+                      + rapa * 0.08       # rapamycin: ~4x boost at max dose
+                      + nad_supp * 0.03)  # NAD: mild quality control boost
+    mitophagy = mitophagy_rate * n_d
+
+    # Apoptosis removes damaged copies too
+    apoptosis_d = 0.02 * max(1.0 - energy_available, 0.0) * n_d * (1.0 - cliff)
+
+    dn_d = (replication_d + new_damage + age_deletions
+            - mitophagy - repair_rate - apoptosis_d)
 
     # ── 3. dATP/dt ────────────────────────────────────────────────────────
-    # ATP modeled as relaxation toward an equilibrium set by mitochondrial
-    # health. The equilibrium is the production capacity; ATP tracks it with
-    # a relaxation time constant. This avoids the instability of
-    # production-minus-consumption accounting.
+    # ATP represents the cell's energy production capacity (normalized to
+    # 1.0 = healthy baseline). The cliff factor IS the primary driver:
+    # when het crosses the threshold, production capacity collapses.
+    # This then feeds back into replication shutdown (C1 fix).
     #
-    # Production capacity uses a softer formula: arithmetic mean of health
-    # indicators rather than multiplicative coupling.
-    health_score = (0.4 * cliff + 0.25 * min(nad, 1.0)
-                    + 0.2 * min(psi, 1.0) + 0.15 * n_h)
-    production_capacity = BASELINE_ATP * health_score * (1.0 - 0.1 * sen)
-    # Yamanaka energy cost (significant!)
-    yama_cost = yama * (YAMANAKA_ENERGY_COST_MIN +
-                        (YAMANAKA_ENERGY_COST_MAX - YAMANAKA_ENERGY_COST_MIN) * yama)
-    # Exercise: hormetic boost if below cliff, but costs some energy
-    exercise_boost = exercise * 0.1 * cliff
-    exercise_cost = exercise * 0.05
-    # Net ATP equilibrium target
-    atp_target = production_capacity + exercise_boost - yama_cost - exercise_cost
-    atp_target = max(atp_target, 0.0)
-    # Relaxation toward target (time constant ~2 years)
-    datp = 0.5 * (atp_target - atp)
+    # ATP = cliff × health_modifiers - intervention_costs
+    # A healthy person (cliff=1, NAD=1, sen=0) has ATP ≈ 1.0
+    # Past the cliff, ATP crashes toward 0.
+    atp_target = (BASELINE_ATP * cliff
+                  * (0.6 + 0.4 * min(nad, 1.0))    # NAD modulates ±40%
+                  * (1.0 - 0.15 * sen))              # senescence burden
+
+    # Yamanaka energy cost (rescaled: 0.15-0.35 MU at max; fix m5)
+    yama_cost = yama * (0.15 + 0.2 * yama)
+
+    # Exercise: modest acute energy cost
+    exercise_cost = exercise * 0.03
+
+    atp_target = max(atp_target - yama_cost - exercise_cost, 0.0)
+    # Relaxation time constant ~1 year
+    datp = 1.0 * (atp_target - atp)
 
     # ── 4. dROS/dt ────────────────────────────────────────────────────────
-    # ROS equilibrium determined by damage state and defenses.
-    # Baseline ROS production
+    # ROS production: baseline + damage-dependent (the vicious cycle).
+    # Coupling to heteroplasmy is stronger (fix M3): damaged mitochondria
+    # have electron transport chain defects that leak electrons → superoxide.
     ros_baseline = BASELINE_ROS * met_demand
-    # Damaged mitochondria produce excess ROS (vicious cycle!)
-    ros_from_damage = ROS_PER_DAMAGED * het * (1.0 + inflammation)
-    # Antioxidant defense scales with NAD availability
-    defense_factor = 1.0 + 0.3 * min(nad, 1.5)
-    # Exercise: mild hormetic ROS burst
-    exercise_ros = exercise * 0.05
-    # ROS equilibrium target
+    ros_from_damage = ROS_PER_DAMAGED * het * het * (1.0 + inflammation)
+    # ^^ quadratic in het: damage accelerates ROS production nonlinearly
+
+    # Antioxidant defense: NAD-dependent (via sirtuins → SOD2/catalase)
+    defense_factor = 1.0 + 0.4 * min(nad, 1.0)
+    # Exercise upregulates antioxidant defenses (hormesis: mild ROS → adaptation)
+    defense_factor += exercise * 0.2
+
+    # Exercise acute ROS burst
+    exercise_ros = exercise * 0.03
+
+    # ROS equilibrium
     ros_eq = (ros_baseline + ros_from_damage + exercise_ros) / defense_factor
-    ros_eq = max(ros_eq, 0.0)
-    # Relaxation toward equilibrium
-    dros = 0.8 * (ros_eq - ros)
+    # Relaxation
+    dros = 1.0 * (ros_eq - ros)
 
     # ── 5. dNAD/dt ────────────────────────────────────────────────────────
-    # NAD+ equilibrium target: base level minus age decline plus supplement
+    # NAD+ declines with age (Camacho-Pereira et al. 2016).
+    # Supplementation restores toward a higher target.
+    # NAD does NOT boost damaged replication (fix C3) — it's consumed
+    # by quality control processes (sirtuins, PARPs) that preferentially
+    # benefit healthy mitochondria.
     age_factor = max(1.0 - NAD_DECLINE_RATE * max(age - 30, 0), 0.2)
-    nad_target = BASELINE_NAD * age_factor + nad_supp * 0.4
-    nad_target = min(nad_target, 1.2)  # cap: supplements can't exceed ~120%
-    # Consumption by repair processes and ROS
-    repair_drain = yama * 0.05 + 0.01 * ros
+    nad_target = BASELINE_NAD * age_factor + nad_supp * 0.35
+    nad_target = min(nad_target, 1.2)
+    # ROS consumes NAD (via PARP activation from DNA damage)
+    ros_drain = 0.03 * ros
+    # Yamanaka consumes NAD
+    yama_drain = yama * 0.03
     # Relaxation toward target
-    dnad = 0.3 * (nad_target - nad) - repair_drain
+    dnad = 0.3 * (nad_target - nad) - ros_drain - yama_drain
 
     # ── 6. dSenescent/dt ─────────────────────────────────────────────────
-    # New senescence (driven by ROS and age)
-    new_sen = SENESCENCE_RATE * (1.0 + ros) * (1.0 + 0.01 * max(age - 40, 0))
+    # Senescence triggered by ROS, low ATP, and age.
+    # Low energy accelerates senescence (cliff feedback, fix C1).
+    energy_stress = max(1.0 - energy_available, 0.0)
+    new_sen = (SENESCENCE_RATE * (1.0 + 2.0 * ros + energy_stress)
+               * (1.0 + 0.01 * max(age - 40, 0)))
     # Senolytic clearance
     clearance = seno * 0.2 * sen
     # Natural immune clearance (declines with age)
     immune_clear = 0.01 * sen * max(1.0 - 0.01 * max(age - 50, 0), 0.1)
-    # Cap at 1.0
+    # Cap
     if sen >= 1.0:
         new_sen = 0.0
     dsen = new_sen - clearance - immune_clear
 
     # ── 7. dMembrane_potential/dt ────────────────────────────────────────
-    # ΔΨ depends on healthy mitochondrial function, capped at 1.0
+    # ΔΨ is maintained by the electron transport chain. Collapses with
+    # the cliff (healthy ETC function required).
     psi_eq = cliff * min(nad, 1.0) * (1.0 - 0.3 * sen)
     psi_eq = min(psi_eq, BASELINE_MEMBRANE_POTENTIAL)
-    # Relaxation toward equilibrium
     dpsi = 0.5 * (psi_eq - psi)
 
     return np.array([dn_h, dn_d, datp, dros, dnad, dsen, dpsi])
@@ -214,6 +287,10 @@ def _rk4_step(state, t, dt, intervention, patient):
 def initial_state(patient):
     """Compute initial state vector from patient parameters.
 
+    Total copy number N_h + N_d = 1.0 (normalized). Initial ATP computed
+    from the same formula used in the dynamics (cliff-based production
+    minus demand) to avoid transient jumps at t=0.
+
     Args:
         patient: Dict with patient parameter values.
 
@@ -222,15 +299,27 @@ def initial_state(patient):
     """
     het0 = patient["baseline_heteroplasmy"]
     nad0 = patient["baseline_nad_level"]
+    met_demand = patient["metabolic_demand"]
 
-    n_h0 = 1.0 - het0      # healthy fraction
+    n_h0 = 1.0 - het0      # healthy fraction (total = 1.0)
     n_d0 = het0             # damaged fraction
     cliff0 = _cliff_factor(het0)
-    atp0 = BASELINE_ATP * n_h0 * cliff0 * nad0
-    ros0 = BASELINE_ROS + ROS_PER_DAMAGED * het0
-    sen0 = BASELINE_SENESCENT + 0.01 * max(patient["baseline_age"] - 40, 0)
+
+    # Senescence: accumulates with age (compute before ATP, which depends on it)
+    sen0 = BASELINE_SENESCENT + 0.005 * max(patient["baseline_age"] - 40, 0)
     sen0 = min(sen0, 0.5)
-    psi0 = cliff0 * nad0
+
+    # ATP: consistent with dynamics equilibrium formula
+    atp0 = (BASELINE_ATP * cliff0
+            * (0.6 + 0.4 * min(nad0, 1.0))
+            * (1.0 - 0.15 * sen0))
+
+    # ROS: quadratic in het (matching dynamics)
+    ros0 = (BASELINE_ROS * met_demand + ROS_PER_DAMAGED * het0 * het0) / (1.0 + 0.4 * min(nad0, 1.0))
+
+    # Membrane potential
+    psi0 = cliff0 * min(nad0, 1.0) * (1.0 - 0.3 * sen0)
+    psi0 = min(psi0, BASELINE_MEMBRANE_POTENTIAL)
 
     return np.array([n_h0, n_d0, atp0, ros0, nad0, min(sen0, 1.0), psi0])
 
@@ -346,13 +435,63 @@ if __name__ == "__main__":
     print(f"  Final ATP:            {result3['states'][-1, 2]:.4f}")
 
     # Test 4: Heteroplasmy cliff verification
-    print("\n--- Test 4: Cliff verification (sweep 0→0.95) ---")
+    print("\n--- Test 4: Cliff verification (sweep 0→0.95, 30yr) ---")
     for het_start in [0.1, 0.3, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9]:
         p = dict(DEFAULT_PATIENT)
         p["baseline_heteroplasmy"] = het_start
-        r = simulate(patient=p, sim_years=5, dt=0.01)
+        r = simulate(patient=p, sim_years=30, dt=0.01)
         print(f"  het={het_start:.2f} → final_ATP={r['states'][-1, 2]:.4f}  "
-              f"final_het={r['heteroplasmy'][-1]:.4f}")
+              f"final_het={r['heteroplasmy'][-1]:.4f}  "
+              f"N_total={r['states'][-1, 0] + r['states'][-1, 1]:.3f}")
+
+    # Test 5: Falsifier edge cases
+    print("\n--- Test 5: Falsifier edge cases ---")
+
+    # 5a: No damage — should stay healthy
+    p5a = dict(DEFAULT_PATIENT)
+    p5a["baseline_heteroplasmy"] = 0.01
+    p5a["baseline_age"] = 30.0
+    p5a["baseline_nad_level"] = 1.0
+    r5a = simulate(patient=p5a, sim_years=30)
+    print(f"  [5a] het=0.01, age=30: final_het={r5a['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r5a['states'][-1, 2]:.4f}")
+
+    # 5b: Near-total damage — should collapse
+    p5b = dict(DEFAULT_PATIENT)
+    p5b["baseline_heteroplasmy"] = 0.90
+    r5b = simulate(patient=p5b, sim_years=30)
+    print(f"  [5b] het=0.90, age=70: final_het={r5b['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r5b['states'][-1, 2]:.4f}")
+
+    # 5c: Yamanaka at max — should drain ATP
+    i5c = dict(DEFAULT_INTERVENTION)
+    i5c["yamanaka_intensity"] = 1.0
+    r5c = simulate(intervention=i5c, sim_years=30)
+    print(f"  [5c] Yamanaka=1.0: final_ATP={r5c['states'][-1, 2]:.4f}  "
+          f"final_het={r5c['heteroplasmy'][-1]:.4f}")
+
+    # 5d: All interventions max
+    i5d = {k: 1.0 for k in DEFAULT_INTERVENTION}
+    r5d = simulate(intervention=i5d, sim_years=30)
+    print(f"  [5d] All max: final_ATP={r5d['states'][-1, 2]:.4f}  "
+          f"final_het={r5d['heteroplasmy'][-1]:.4f}  "
+          f"N_total={r5d['states'][-1, 0] + r5d['states'][-1, 1]:.3f}")
+
+    # 5e: NAD supplementation should REDUCE heteroplasmy (fix C3)
+    i_nad = dict(DEFAULT_INTERVENTION)
+    i_nad["nad_supplement"] = 1.0
+    r_nad = simulate(intervention=i_nad, sim_years=30)
+    r_none = simulate(sim_years=30)
+    print(f"  [5e] NAD=1.0: het={r_nad['heteroplasmy'][-1]:.4f}  "
+          f"vs no-treatment: het={r_none['heteroplasmy'][-1]:.4f}  "
+          f"({'PASS: reduced' if r_nad['heteroplasmy'][-1] < r_none['heteroplasmy'][-1] else 'FAIL: increased'})")
+
+    # 5f: Patient starting past cliff should NOT spontaneously recover (fix C4)
+    p5f = dict(DEFAULT_PATIENT)
+    p5f["baseline_heteroplasmy"] = 0.85
+    r5f = simulate(patient=p5f, sim_years=30)
+    print(f"  [5f] het=0.85 start: final_het={r5f['heteroplasmy'][-1]:.4f}  "
+          f"({'PASS: stayed high' if r5f['heteroplasmy'][-1] > 0.80 else 'FAIL: recovered'})")
 
     print("\n" + "=" * 70)
     print("All tests completed.")

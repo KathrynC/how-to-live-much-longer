@@ -1,5 +1,9 @@
 # CLAUDE.md — Claude Code Guidance
 
+## Action Items
+
+- **REPORT TO JOHN CRAMER:** The falsifier agent found 4 critical bugs in the ODE equations (2026-02-15). Full report: `artifacts/falsifier_report_2026-02-15.md`. Key issues: cliff was cosmetic not dynamical, mtDNA copy number unbounded, NAD supplementation inverted therapeutic sign, universal attractor prevented cliff crossing. Fixes were applied same day — Cramer should review the corrected dynamics for biological plausibility.
+
 ## Commands
 
 ```bash
