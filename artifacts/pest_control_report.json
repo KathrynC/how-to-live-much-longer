@@ -1,0 +1,450 @@
+{
+  "timestamp": "2026-02-15 11:46:39",
+  "llm_model": "llama3.1:latest",
+  "files_scanned": 18,
+  "total_issues": 55,
+  "errors": 0,
+  "warnings": 0,
+  "info": 55,
+  "cross_file_issues": [
+    {
+      "severity": "warning",
+      "type": "off_grid_default",
+      "message": "DEFAULT_PATIENT['inflammation_level'] = 0.3 is not on grid [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]"
+    }
+  ],
+  "files": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/analytics.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'BASELINE_ATP' appears unused",
+          "line": 21
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'SIM_YEARS' appears unused",
+          "line": 21
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 410
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/categorical_structure.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_NAMES' appears unused",
+          "line": 38
+        }
+      ],
+      "tier2_issues": [],
+      "total": 1
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/causal_surgery.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 30
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 30
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'N_STEPS' appears unused",
+          "line": 30
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/character_seed_experiment.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 38
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_NAMES' appears unused",
+          "line": 38
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 38
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/cliff_mapping.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 17
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'SIM_YEARS' appears unused",
+          "line": 17
+        }
+      ],
+      "tier2_issues": [],
+      "total": 2
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/clinical_consensus.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 37
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 37
+        }
+      ],
+      "tier2_issues": [],
+      "total": 2
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/constants.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'np' appears unused",
+          "line": 70
+        }
+      ],
+      "tier2_issues": [],
+      "total": 1
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/dark_matter.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_all' appears unused",
+          "line": 39
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'defaultdict' appears unused",
+          "line": 28
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 33
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_PARAMS' appears unused",
+          "line": 33
+        }
+      ],
+      "tier2_issues": [],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/fisher_metric.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_NAMES' appears unused",
+          "line": 36
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_INTERVENTION' appears unused",
+          "line": 36
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 36
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'split_vector' appears unused",
+          "line": 42
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 36
+        }
+      ],
+      "tier2_issues": [],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/llm_common.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 're' appears unused",
+          "line": 13
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_PARAMS' appears unused",
+          "line": 16
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_PARAMS' appears unused",
+          "line": 16
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/llm_seeded_evolution.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 33
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'ALL_PARAM_NAMES' appears unused",
+          "line": 33
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_all' appears unused",
+          "line": 40
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 33
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 33
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_PARAMS' appears unused",
+          "line": 33
+        }
+      ],
+      "tier2_issues": [],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/oeis_seed_experiment.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 35
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_NAMES' appears unused",
+          "line": 35
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 35
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/perturbation_probing.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 36
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 36
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_energy' appears unused",
+          "line": 43
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_damage' appears unused",
+          "line": 43
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 36
+        }
+      ],
+      "tier2_issues": [],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_interpolation.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DT' appears unused",
+          "line": 29
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'SIM_YEARS' appears unused",
+          "line": 29
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 29
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_energy' appears unused",
+          "line": 34
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'compute_damage' appears unused",
+          "line": 34
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "line": 29
+        }
+      ],
+      "tier2_issues": [],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/simulator.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'BASELINE_MTDNA_COPIES' appears unused",
+          "line": 44
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'YAMANAKA_ENERGY_COST_MAX' appears unused",
+          "line": 44
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'N_STEPS' appears unused",
+          "line": 44
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'YAMANAKA_ENERGY_COST_MIN' appears unused",
+          "line": 44
+        }
+      ],
+      "tier2_issues": [],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/tiqm_experiment.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'PATIENT_PARAMS' appears unused",
+          "line": 29
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'ALL_PARAM_NAMES' appears unused",
+          "line": 29
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_PARAMS' appears unused",
+          "line": 29
+        }
+      ],
+      "tier2_issues": [],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/visualize.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'DEFAULT_PATIENT' appears unused",
+          "line": 300
+        }
+      ],
+      "tier2_issues": [],
+      "total": 1
+    }
+  }
+}

@@ -67,6 +67,35 @@ The simulator integrates 7 coupled ordinary differential equations using a 4th-o
 - **Energy units:** 1 MU (Metabolic Unit) = 10^8 ATP energy releases. Normal cell = ~1 MU/day (Ch. VIII.A, Table 3, p.100)
 - **Interventions:** Rapamycin → mTOR → mitophagy (Ch. VI.A.1 pp.71-72), NAD+ via NMN/NR (Ch. VI.A.3 pp.72-73), senolytics D+Q+F (Ch. VII.A.2 p.91), Yamanaka reprogramming at 3-5 MU cost (Ch. VIII.A Table 3 p.100, Ch. VII.B p.95), transplant via mitlets (Ch. VIII.G pp.104-107), exercise (hormesis)
 
+## Model Predictions: Slowing and Reversing Aging
+
+Full report: [`artifacts/slowing_vs_reversing_aging_2026-02-15.md`](artifacts/slowing_vs_reversing_aging_2026-02-15.md)
+
+### Slowing Aging
+
+The model identifies **rapamycin** (mTOR inhibition → enhanced mitophagy) as the single most effective intervention for slowing the rate of mitochondrial DNA damage accumulation. At moderate dose, it cuts the 30-year heteroplasmy increase roughly in half. **NAD+ supplementation** (NMN/NR) is the best single intervention for maintaining ATP production — the only monotherapy that preserves or increases energy output over 30 years. Senolytics, exercise, and transplant have minimal standalone effect on heteroplasmy but contribute meaningfully in combination.
+
+### Reversing Aging
+
+**Reversal — actual reduction of heteroplasmy below starting values — requires combination therapy.** The minimum viable reversal cocktail is:
+
+| Intervention | Dose | Role |
+|---|---|---|
+| Rapamycin | 0.5 | Clears damaged mtDNA via enhanced mitophagy |
+| NAD+ (NMN/NR) | 0.75 | Restores cofactor, selectively supports healthy mito |
+| Senolytics (D+Q+F) | 0.5 | Frees energy budget from senescent cells |
+| Exercise | 0.5 | Biogenesis + antioxidant upregulation |
+
+Adding **mitochondrial transplant** (0.5) significantly accelerates reversal. Adding **Yamanaka reprogramming** (0.25) further accelerates it, but only if the cocktail maintains sufficient ATP to power the 3-5 MU reprogramming cost.
+
+### Cliff Rescue
+
+The model shows **no absolute point of no return**. Even starting at 90% heteroplasmy (deep past the 70% cliff, ATP collapsed to 0.04 MU/day), aggressive combination therapy can restore heteroplasmy to ~0.15 and ATP to ~0.85 MU/day over 30 years. The cocktail+transplant+rapamycin+NAD protocol is the most efficient cliff rescue strategy.
+
+### The Synergy Principle
+
+Each intervention attacks a different node in the ROS-damage vicious cycle: rapamycin *removes* damaged copies, NAD+ *supports* healthy ones, senolytics *free energy*, exercise *creates* new copies and reduces ROS, transplant *adds* copies from outside, and Yamanaka *converts* damaged to healthy. This confirms Cramer's core thesis: aging is a cellular energy crisis requiring multi-angle intervention.
+
 ## 4-Pillar Analytics
 
 | Pillar | Metrics |
