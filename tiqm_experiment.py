@@ -20,150 +20,32 @@ Usage:
 
 import json
 import os
-import subprocess
 import time as time_module
 from datetime import datetime
 
 import numpy as np
 
 from constants import (
-    OLLAMA_URL, OFFER_MODEL, CONFIRMATION_MODEL, REASONING_MODELS,
-    INTERVENTION_PARAMS, PATIENT_PARAMS,
-    INTERVENTION_NAMES, PATIENT_NAMES, ALL_PARAM_NAMES,
+    OFFER_MODEL, CONFIRMATION_MODEL,
+    INTERVENTION_NAMES, PATIENT_NAMES,
     CLINICAL_SEEDS, DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     SIM_YEARS, HETEROPLASMY_CLIFF,
     snap_all,
 )
 from simulator import simulate
 from analytics import compute_all, NumpyEncoder
+from llm_common import query_ollama_raw, parse_json_response
 
 
-# ── Ollama interface ─────────────────────────────────────────────────────────
+# ── Prompt templates ─────────────────────────────────────────────────────────
+# Import from prompt_templates.py for both numeric (original) and diegetic
+# (Zimmerman-informed) prompt styles. The style is selected at runtime
+# via the --style flag.
 
-def query_ollama(model, prompt, temperature=0.8, max_tokens=800, timeout=120):
-    """Send a prompt to local Ollama and return the response text.
+from prompt_templates import PROMPT_STYLES
 
-    Args:
-        model: Ollama model name.
-        prompt: The prompt string.
-        temperature: Sampling temperature.
-        max_tokens: Max tokens to generate.
-        timeout: Request timeout in seconds.
-
-    Returns:
-        Response string, or None on failure.
-    """
-    effective_max = 2000 if model in REASONING_MODELS else max_tokens
-    payload = json.dumps({
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": temperature, "num_predict": effective_max},
-    })
-    try:
-        r = subprocess.run(
-            ["curl", "-s", OLLAMA_URL, "-d", payload],
-            capture_output=True, text=True, timeout=timeout,
-        )
-        if r.returncode != 0:
-            return None
-        data = json.loads(r.stdout)
-        if "error" in data:
-            return None
-        return data["response"]
-    except Exception:
-        return None
-
-
-# ── Response parsing ─────────────────────────────────────────────────────────
-
-def parse_response(response):
-    """Parse a JSON object from an LLM response, handling common artifacts.
-
-    Strips markdown code fences, <think>...</think> tags, and finds the
-    outermost { ... } pair.
-
-    Args:
-        response: Raw string from LLM.
-
-    Returns:
-        Parsed dict, or None on failure.
-    """
-    if not response:
-        return None
-
-    text = response.strip()
-
-    # Strip think tags (reasoning models)
-    if "</think>" in text:
-        text = text.split("</think>")[-1].strip()
-
-    # Strip markdown code fences
-    if "```" in text:
-        parts = text.split("```")
-        for part in parts:
-            part = part.strip()
-            if part.startswith("json"):
-                part = part[4:].strip()
-            if part.startswith("{"):
-                text = part
-                break
-
-    # Find outermost JSON object
-    start = text.find("{")
-    end = text.rfind("}") + 1
-    if start == -1 or end == 0:
-        return None
-
-    try:
-        return json.loads(text[start:end])
-    except json.JSONDecodeError:
-        return None
-
-
-# ── Offer wave prompt ────────────────────────────────────────────────────────
-
-OFFER_PROMPT = """\
-You are a mitochondrial medicine specialist designing a personalized \
-intervention protocol. You must choose BOTH intervention parameters AND \
-characterize the patient based on the clinical scenario.
-
-INTERVENTION PARAMETERS (6 params, each 0.0 to 1.0):
-  rapamycin_dose: mTOR inhibition → enhanced mitophagy (0=none, 1=maximum)
-  nad_supplement: NAD+ precursor (NMN/NR) dose (0=none, 1=maximum)
-  senolytic_dose: Senolytic drug dose (dasatinib+quercetin) (0=none, 1=maximum)
-  yamanaka_intensity: Partial reprogramming (OSKM) intensity (0=none, 1=max) \
-WARNING: costs 3-5 MU of ATP — only use if patient can afford the energy
-  transplant_rate: Mitochondrial transplant rate via mitlets (0=none, 1=maximum)
-  exercise_level: Exercise intensity for hormetic adaptation (0=sedentary, 1=intense)
-
-PATIENT PARAMETERS (6 params):
-  baseline_age: Starting age in years (20-90)
-  baseline_heteroplasmy: Fraction of damaged mtDNA (0.0-0.95). \
-CRITICAL: the heteroplasmy cliff is at ~0.7 — above this, ATP collapses
-  baseline_nad_level: NAD+ level (0.2-1.0, declines with age)
-  genetic_vulnerability: Susceptibility to mtDNA damage (0.5-2.0, 1.0=normal)
-  metabolic_demand: Tissue energy need (0.5=skin, 1.0=normal, 2.0=brain)
-  inflammation_level: Chronic inflammation (0.0-1.0)
-
-CLINICAL SCENARIO:
-{scenario}
-
-Think carefully about this patient:
-- How close are they to the heteroplasmy cliff?
-- What is the most urgent intervention?
-- Can they afford Yamanaka's energy cost?
-- Would transplant help (adding healthy copies)?
-- Is exercise safe given their current energy reserves?
-
-Choose intervention values from: [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]
-Choose patient values within the ranges described above.
-
-Output a single JSON object with ALL 12 keys:
-{{"rapamycin_dose":_, "nad_supplement":_, "senolytic_dose":_, \
-"yamanaka_intensity":_, "transplant_rate":_, "exercise_level":_, \
-"baseline_age":_, "baseline_heteroplasmy":_, "baseline_nad_level":_, \
-"genetic_vulnerability":_, "metabolic_demand":_, "inflammation_level":_}}"""
+# Default offer prompt (numeric style, for backwards compatibility)
+OFFER_PROMPT = PROMPT_STYLES["numeric"]["offer"]
 
 
 # ── Confirmation wave prompt ─────────────────────────────────────────────────
@@ -243,15 +125,15 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
         print("  [1/3] Offer wave: generating intervention protocol...")
 
     offer_prompt = OFFER_PROMPT.format(scenario=scenario)
-    offer_response = query_ollama(offer_model, offer_prompt,
-                                   temperature=0.7, max_tokens=800)
+    offer_response = query_ollama_raw(offer_model, offer_prompt,
+                                      temperature=0.7, max_tokens=800)
 
     if offer_response is None:
         if verbose:
             print("  ERROR: Offer wave failed (Ollama unreachable?)")
         return None
 
-    raw_params = parse_response(offer_response)
+    raw_params = parse_json_response(offer_response)
     if raw_params is None:
         if verbose:
             print(f"  ERROR: Could not parse offer response")
@@ -326,12 +208,12 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
         scenario=scenario,
     )
 
-    confirm_response = query_ollama(confirm_model, confirm_prompt,
-                                     temperature=0.3, max_tokens=600)
+    confirm_response = query_ollama_raw(confirm_model, confirm_prompt,
+                                        temperature=0.3, max_tokens=600)
 
     confirmation = None
     if confirm_response:
-        confirmation = parse_response(confirm_response)
+        confirmation = parse_json_response(confirm_response)
 
     if verbose:
         if confirmation:
@@ -441,12 +323,56 @@ def run_all_experiments(seeds=None, output_dir="output"):
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) > 1 and sys.argv[1] == "--single":
+    args = sys.argv[1:]
+
+    # Parse --style flag
+    style = "numeric"
+    if "--style" in args:
+        idx = args.index("--style")
+        if idx + 1 < len(args):
+            style = args[idx + 1]
+            args = args[:idx] + args[idx + 2:]
+        if style not in PROMPT_STYLES:
+            print(f"Unknown style '{style}'. Available: {list(PROMPT_STYLES.keys())}")
+            sys.exit(1)
+        OFFER_PROMPT = PROMPT_STYLES[style]["offer"]
+        print(f"Using prompt style: {style}")
+
+    if "--single" in args:
         # Run just the first seed for quick testing
         seed = CLINICAL_SEEDS[0]
         artifact = run_experiment(seed)
         if artifact:
             print(json.dumps(artifact, cls=NumpyEncoder, indent=2))
+    elif "--contrastive" in args:
+        # Run contrastive mode: generate cautious vs bold protocols
+        contrastive_prompt = PROMPT_STYLES["contrastive"]["offer"]
+        seeds = CLINICAL_SEEDS[:3] if "--single" not in args else CLINICAL_SEEDS[:1]
+        print("=" * 60)
+        print("  CONTRASTIVE MODE: Dr. Cautious vs Dr. Bold")
+        print("=" * 60)
+        for seed in seeds:
+            scenario = seed["description"]
+            prompt = contrastive_prompt.format(scenario=scenario)
+            response = query_ollama_raw(OFFER_MODEL, prompt,
+                                         temperature=0.7, max_tokens=1200)
+            parsed = parse_json_response(response)
+            if parsed and "cautious" in parsed and "bold" in parsed:
+                print(f"\n  {seed['id']}:")
+                for approach in ["cautious", "bold"]:
+                    params = parsed[approach]
+                    snapped = snap_all(params)
+                    intervention = {k: snapped.get(k, DEFAULT_INTERVENTION[k])
+                                    for k in INTERVENTION_NAMES}
+                    patient = {k: snapped.get(k, DEFAULT_PATIENT[k])
+                               for k in PATIENT_NAMES}
+                    result = simulate(intervention=intervention, patient=patient)
+                    print(f"    {approach:10s}: het {result['heteroplasmy'][0]:.3f}"
+                          f"→{result['heteroplasmy'][-1]:.3f}  "
+                          f"ATP {result['states'][0,2]:.3f}"
+                          f"→{result['states'][-1,2]:.3f}")
+            else:
+                print(f"\n  {seed['id']}: could not parse contrastive response")
     else:
         # Run all 10 clinical scenarios
         run_all_experiments()

@@ -297,7 +297,7 @@ if __name__ == "__main__":
     import os
     from simulator import simulate
     from cliff_mapping import sweep_heteroplasmy, extract_cliff_features
-    from constants import DEFAULT_INTERVENTION, DEFAULT_PATIENT
+    from constants import DEFAULT_INTERVENTION
 
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)

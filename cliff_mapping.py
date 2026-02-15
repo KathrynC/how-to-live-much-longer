@@ -16,7 +16,6 @@ import numpy as np
 from simulator import simulate
 from constants import (
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
-    HETEROPLASMY_CLIFF, SIM_YEARS,
 )
 
 

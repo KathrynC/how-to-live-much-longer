@@ -19,7 +19,7 @@ import json
 import numpy as np
 
 from constants import (
-    HETEROPLASMY_CLIFF, SIM_YEARS, DT, BASELINE_ATP,
+    HETEROPLASMY_CLIFF, DT,
     YAMANAKA_ENERGY_COST_MIN, YAMANAKA_ENERGY_COST_MAX,
 )
 
@@ -407,7 +407,7 @@ def compute_all(result, baseline_result=None):
 
 if __name__ == "__main__":
     from simulator import simulate
-    from constants import DEFAULT_INTERVENTION, DEFAULT_PATIENT
+    from constants import DEFAULT_INTERVENTION
 
     print("=" * 70)
     print("4-Pillar Analytics — Standalone Test")

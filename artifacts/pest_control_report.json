@@ -1,179 +1,210 @@
 {
-  "timestamp": "2026-02-15 11:46:39",
+  "timestamp": "2026-02-15 13:06:51",
   "llm_model": "llama3.1:latest",
-  "files_scanned": 18,
-  "total_issues": 55,
-  "errors": 0,
-  "warnings": 0,
-  "info": 55,
-  "cross_file_issues": [
-    {
-      "severity": "warning",
-      "type": "off_grid_default",
-      "message": "DEFAULT_PATIENT['inflammation_level'] = 0.3 is not on grid [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]"
-    }
-  ],
+  "files_scanned": 23,
+  "total_issues": 67,
+  "errors": 31,
+  "warnings": 22,
+  "info": 14,
+  "cross_file_issues": [],
   "files": {
     "/Users/gardenofcomputation/how-to-live-much-longer/analytics.py": {
-      "tier1_issues": [
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'BASELINE_ATP' appears unused",
-          "line": 21
+          "severity": "error",
+          "type": "BUG",
+          "message": "compute_energy() does not handle the case where n_points is 0 or 1, leading to division by zero in psi_cv calculation.",
+          "line": 143
         },
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'SIM_YEARS' appears unused",
-          "line": 21
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 410
+          "severity": "warning",
+          "type": "STYLE",
+          "message": "The variable 'baseline_result' is used before it's checked for None in compute_intervention()",
+          "line": 266
         }
       ],
-      "tier2_issues": [],
-      "total": 3
+      "total": 2
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/categorical_structure.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'INTERVENTION_NAMES' appears unused",
-          "line": 38
-        }
-      ],
-      "tier2_issues": [],
-      "total": 1
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/causal_surgery.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 30
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
-          "line": 30
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'N_STEPS' appears unused",
-          "line": 30
-        }
-      ],
-      "tier2_issues": [],
-      "total": 3
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/character_seed_experiment.py": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/archetype_matchmaker.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
           "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 38
+          "line": 37
         },
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'INTERVENTION_NAMES' appears unused",
-          "line": 38
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 38
+          "message": "Import 'pds_to_patient' appears unused",
+          "line": 42
         }
       ],
-      "tier2_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "logic_error",
+          "message": "The `classify_outcome` function does not handle the case where `het_final` is exactly equal to `HETEROPLASMY_CLIFF`.",
+          "line": 54
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "The `load_experiment_results` function does not check if the loaded JSON data contains a key named 'results' or 'artifacts'.",
+          "line": 83
+        },
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "The `pds_bin` function does not handle the case where any of the PDS scores are NaN.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "The `run_matchmaker` function does not check if the 'character_seed_experiment.json' file exists before trying to load it.",
+          "line": 235
+        }
+      ],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/categorical_structure.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in sequence_correlation_distance function when n < 4",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for r['seq_terms'] in test_functoriality function",
+          "line": 234
+        }
+      ],
+      "total": 2
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/causal_surgery.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for patient['params'] in PATIENTS dictionary",
+          "line": 44
+        },
+        {
+          "severity": "warning",
+          "type": "numerical",
+          "message": "Potential division by zero in _rk4_step function when state[5] is close to 0.0",
+          "line": 143
+        },
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Index out of bounds error in simulate_with_surgery function when switch_year is equal to sim_years",
+          "line": 187
+        }
+      ],
       "total": 3
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/cliff_mapping.py": {
-      "tier1_issues": [
+    "/Users/gardenofcomputation/how-to-live-much-longer/character_seed_experiment.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
-          "line": 17
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for 'vector' before calling 'split_vector()'",
+          "line": 246
+        },
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for 'intervention' and 'patient' before passing to 'simulate()'",
+          "line": 264
+        },
+        {
+          "severity": "warning",
+          "type": "numerical",
+          "message": "Potential division by zero in 'compute_all()' when calculating 'atp_benefit_terminal'",
+          "line": 313
         },
         {
           "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'SIM_YEARS' appears unused",
-          "line": 17
+          "type": "consistency",
+          "message": "Parameter names do not match constants.py definitions for 'DEFAULT_INTERVENTION' and 'HETEROPLASMY_CLIFF'",
+          "line": 34
         }
       ],
-      "tier2_issues": [],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/cliff_mapping.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "logic error",
+          "message": "In find_cliff_edge(), if hi - lo < tol is never true because of floating point precision issues.",
+          "line": 123
+        },
+        {
+          "severity": "warning",
+          "type": "numerical instability",
+          "message": "In extract_cliff_features(), the numerical gradient calculation may lead to NaNs due to division by zero.",
+          "line": 246
+        }
+      ],
       "total": 2
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/clinical_consensus.py": {
-      "tier1_issues": [
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 37
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in cosine_similarity function when na or nb is close to 0",
+          "line": 24
         },
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
-          "line": 37
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for vector in query_ollama function",
+          "line": 143
         }
       ],
-      "tier2_issues": [],
       "total": 2
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/constants.py": {
-      "tier1_issues": [
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'np' appears unused",
-          "line": 70
+          "severity": "error",
+          "type": "BUGS",
+          "message": "mtDNA copy number per cell is not checked for being within a valid range.",
+          "line": 24
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "No null check on tissue profiles before accessing their values.",
+          "line": 134
+        },
+        {
+          "severity": "error",
+          "type": "NUMERICAL",
+          "message": "Division by zero in ATP production equation when N_damaged is zero.",
+          "line": 245
+        },
+        {
+          "severity": "warning",
+          "type": "DATA LOSS",
+          "message": "No checkpointing or saving of results implemented.",
+          "line": 0
         }
       ],
-      "tier2_issues": [],
-      "total": 1
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/dark_matter.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_all' appears unused",
-          "line": 39
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'defaultdict' appears unused",
-          "line": 28
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 33
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_PARAMS' appears unused",
-          "line": 33
-        }
-      ],
-      "tier2_issues": [],
       "total": 4
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/fisher_metric.py": {
@@ -181,59 +212,35 @@
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'INTERVENTION_NAMES' appears unused",
-          "line": 36
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
           "message": "Import 'DEFAULT_INTERVENTION' appears unused",
           "line": 36
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 36
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'split_vector' appears unused",
-          "line": 42
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 36
         }
       ],
       "tier2_issues": [],
-      "total": 5
+      "total": 1
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/llm_common.py": {
-      "tier1_issues": [
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 're' appears unused",
-          "line": 13
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for response in parse_json_response()",
+          "line": 63
         },
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_PARAMS' appears unused",
-          "line": 16
+          "severity": "error",
+          "type": "numerical",
+          "message": "Potential division by zero in detect_flattening() when age is exactly 1.0",
+          "line": 143
         },
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'INTERVENTION_PARAMS' appears unused",
-          "line": 16
+          "severity": "warning",
+          "type": "consistency",
+          "message": "snap_all() function not defined in this file, assuming it's imported from another module",
+          "line": 187
         }
       ],
-      "tier2_issues": [],
       "total": 3
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/llm_seeded_evolution.py": {
@@ -241,210 +248,286 @@
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
+          "message": "Import 'ALL_PARAM_NAMES' appears unused",
           "line": 33
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for _baseline_cache key existence before accessing it.",
+          "line": 73
+        },
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Potential division by zero in fitness function when calculating atp_benefit and het_benefit.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Index out of bounds error possible when accessing grid indices in mutate function.",
+          "line": 187
+        },
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "NaN propagation possible in simulate function due to unhandled edge cases in ODE equations.",
+          "line": 261
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Potential type mismatch when accessing intervention parameters in load_llm_seeds function.",
+          "line": 323
+        }
+      ],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/oeis_seed_experiment.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in ODE simulation",
+          "line": 123
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for 'seq' dictionary",
+          "line": 456
+        },
+        {
+          "severity": "info",
+          "type": "data_loss",
+          "message": "Checkpoint file not closed after save",
+          "line": 789
+        }
+      ],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/pds_mapping.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for `characters` in `load_characters()` function.",
+          "line": 64
+        },
+        {
+          "severity": "warning",
+          "type": "numerical",
+          "message": "Potential division by zero in `np.clip()` function calls.",
+          "line": 246,
+          "column": 10
+        },
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for `experiment_data` in `compare_predictions()` function.",
+          "line": 434
+        }
+      ],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/posiwid_audit.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'INTERVENTION_NAMES' appears unused",
+          "line": 44
         },
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'ALL_PARAM_NAMES' appears unused",
-          "line": 33
+          "message": "Import 'PATIENT_NAMES' appears unused",
+          "line": 44
         },
         {
           "severity": "info",
           "type": "unused_import",
           "message": "Import 'compute_all' appears unused",
-          "line": 40
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 33
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 33
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_PARAMS' appears unused",
-          "line": 33
+          "line": 49
         }
       ],
-      "tier2_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "logic_error",
+          "message": "In score_alignment function, 'exp_atp' and 'actual_atp_change' are not checked for NaN before comparison.",
+          "line": 246
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "In run_audit function, if intention or protocol response is None, the program continues without warning or error message.",
+          "line": 184
+        },
+        {
+          "severity": "info",
+          "type": "data_loss",
+          "message": "The output file path is hardcoded and may not be suitable for all environments.",
+          "line": 444
+        }
+      ],
       "total": 6
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/oeis_seed_experiment.py": {
-      "tier1_issues": [
+    "/Users/gardenofcomputation/how-to-live-much-longer/prompt_templates.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 35
+          "severity": "error",
+          "type": "logic_error",
+          "message": "OFFER_DIEGETIC has a hardcoded value for yamanaka_intensity (3-5 MU of ATP) without considering the actual energy cost.",
+          "line": 123
+        },
+        {
+          "severity": "warning",
+          "type": "data_loss",
+          "message": "The file is very long and may cause issues with code readability and maintainability.",
+          "line": 1
+        },
+        {
+          "severity": "error",
+          "type": "numerical_error",
+          "message": "OFFER_DIEGETIC has a hardcoded value for yamanaka_intensity (3-5 MU of ATP) which can lead to division by zero errors if not handled properly.",
+          "line": 123
         },
         {
           "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'INTERVENTION_NAMES' appears unused",
-          "line": 35
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 35
+          "type": "consistency",
+          "message": "The parameter names in OFFER_NUMERIC and OFFER_DIEGETIC do not match the constants.py definitions.",
+          "line": 10
         }
       ],
-      "tier2_issues": [],
-      "total": 3
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/perturbation_probing.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 36
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
-          "line": 36
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_energy' appears unused",
-          "line": 43
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_damage' appears unused",
-          "line": 43
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 36
-        }
-      ],
-      "tier2_issues": [],
-      "total": 5
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_interpolation.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DT' appears unused",
-          "line": 29
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'SIM_YEARS' appears unused",
-          "line": 29
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 29
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_energy' appears unused",
-          "line": 34
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_damage' appears unused",
-          "line": 34
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'HETEROPLASMY_CLIFF' appears unused",
-          "line": 29
-        }
-      ],
-      "tier2_issues": [],
-      "total": 6
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/simulator.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'BASELINE_MTDNA_COPIES' appears unused",
-          "line": 44
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'YAMANAKA_ENERGY_COST_MAX' appears unused",
-          "line": 44
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'N_STEPS' appears unused",
-          "line": 44
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'YAMANAKA_ENERGY_COST_MIN' appears unused",
-          "line": 44
-        }
-      ],
-      "tier2_issues": [],
       "total": 4
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/tiqm_experiment.py": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/simulator.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "logic error",
+          "message": "In function _deletion_rate, the condition for age < AGE_TRANSITION should be >= instead of <.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "In function derivatives, there is no null check for 'intervention' and 'patient' arguments.",
+          "line": 245
+        },
+        {
+          "severity": "error",
+          "type": "numerical instability",
+          "message": "In function _cliff_factor, the cliff steepness parameter (CLIFF_STEEPNESS) can cause numerical instability when heteroplasmy is close to HETEROPLASMY_CLIFF.",
+          "line": 123
+        },
+        {
+          "severity": "error",
+          "type": "data loss",
+          "message": "The file 'constants.py' is not imported, which may lead to data loss if the constants are modified externally.",
+          "line": 15
+        },
+        {
+          "severity": "warning",
+          "type": "numerical instability",
+          "message": "In function derivatives, the division by zero can occur when NAD_DECLINE_RATE is zero and NAD is close to its baseline value.",
+          "line": 313
+        }
+      ],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/sobol_sensitivity.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'PATIENT_PARAMS' appears unused",
-          "line": 29
+          "message": "Import 'DEFAULT_INTERVENTION' appears unused",
+          "line": 38
         },
         {
           "severity": "info",
           "type": "unused_import",
           "message": "Import 'ALL_PARAM_NAMES' appears unused",
-          "line": 29
+          "line": 38
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for 'result' in simulate function call.",
+          "line": 246
+        },
+        {
+          "severity": "warning",
+          "type": "numerical",
+          "message": "Potential division by zero in sobol_indices function when computing var_total.",
+          "line": 173
+        }
+      ],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/tiqm_experiment.py": {
+      "tier1_issues": [],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "logic_error",
+          "message": "The `simulate` function is called twice in the same experiment with different intervention parameters.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "The `query_ollama_raw` function does not handle cases where the Ollama API returns an error response.",
+          "line": 83
+        },
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "The `snap_all` function can return NaN values if the input parameters are invalid, which can cause issues in the simulation.",
+          "line": 96
         },
         {
           "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'INTERVENTION_PARAMS' appears unused",
-          "line": 29
+          "type": "consistency",
+          "message": "The `run_experiment` function does not check if the `offer_model` and `confirm_model` parameters match the expected model names defined in `constants.py`.",
+          "line": 64
         }
       ],
-      "tier2_issues": [],
-      "total": 3
+      "total": 4
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/visualize.py": {
-      "tier1_issues": [
+      "tier1_issues": [],
+      "tier2_issues": [
         {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'DEFAULT_PATIENT' appears unused",
-          "line": 300
+          "severity": "error",
+          "type": "crash",
+          "message": "Missing null check for 'result' in plot_trajectory function.",
+          "line": 63
+        },
+        {
+          "severity": "warning",
+          "type": "numerical",
+          "message": "Potential division by zero in simulate function (not shown) due to missing checks for state variables being zero.",
+          "line": 0
+        },
+        {
+          "severity": "error",
+          "type": "crash",
+          "message": "Index out of bounds error in plot_trajectory function when plotting heteroplasmy.",
+          "line": 83
         }
       ],
-      "tier2_issues": [],
-      "total": 1
+      "total": 3
     }
   }
 }

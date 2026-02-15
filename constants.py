@@ -67,7 +67,6 @@ Citation key (Cramer 2025 chapter/page references):
         to Cramer's data suggesting ≥1.21.
 """
 
-import numpy as np
 
 # ── Simulation parameters ────────────────────────────────────────────────────
 
@@ -286,7 +285,41 @@ DEFAULT_PATIENT = {
     "baseline_nad_level": 0.6,
     "genetic_vulnerability": 1.0,
     "metabolic_demand": 1.0,
-    "inflammation_level": 0.3,
+    "inflammation_level": 0.25,
+}
+
+# ── Tissue-specific profiles ──────────────────────────────────────────────
+# Each tissue has different mtDNA vulnerability characteristics.
+# Cramer Ch. V.J p.65: copy number varies by tissue; brain and muscle
+# are high-demand tissues most affected by mitochondrial dysfunction.
+# These profiles modify the patient's metabolic_demand, ROS sensitivity,
+# and biogenesis capacity when passed to simulate().
+
+TISSUE_PROFILES = {
+    "default": {
+        "metabolic_demand": 1.0,
+        "ros_sensitivity": 1.0,    # ROS damage multiplier
+        "biogenesis_rate": 1.0,    # exercise biogenesis multiplier
+        "description": "Generic somatic cell",
+    },
+    "brain": {
+        "metabolic_demand": 2.0,
+        "ros_sensitivity": 1.5,    # neurons are ROS-sensitive
+        "biogenesis_rate": 0.3,    # low mitochondrial biogenesis in post-mitotic neurons
+        "description": "Neuronal tissue (Cramer Ch. V.J p.65, high demand)",
+    },
+    "muscle": {
+        "metabolic_demand": 1.5,
+        "ros_sensitivity": 0.8,    # muscle has some antioxidant defense
+        "biogenesis_rate": 1.5,    # exercise-responsive PGC-1alpha
+        "description": "Skeletal muscle (sarcopenia, Cramer Ch. VII)",
+    },
+    "cardiac": {
+        "metabolic_demand": 1.8,
+        "ros_sensitivity": 1.2,    # heart is vulnerable
+        "biogenesis_rate": 0.5,    # limited regenerative capacity
+        "description": "Cardiac muscle (cardiomyopathy, Cramer Ch. VII)",
+    },
 }
 
 # ── Ollama configuration ────────────────────────────────────────────────────

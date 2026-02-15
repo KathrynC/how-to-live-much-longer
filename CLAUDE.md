@@ -44,14 +44,16 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 
 ```bash
 # Standalone tests (no Ollama needed)
-python simulator.py       # ODE integrator test with 6 scenarios + falsifier edge cases
+python simulator.py       # ODE integrator test with 8 scenarios (incl. tissue types + stochastic)
 python analytics.py       # 4-pillar analytics test
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 
 # TIQM experiments (requires Ollama)
-python tiqm_experiment.py           # All 10 clinical scenarios
-python tiqm_experiment.py --single  # Quick single test
+python tiqm_experiment.py                     # All 10 clinical scenarios
+python tiqm_experiment.py --single            # Quick single test
+python tiqm_experiment.py --style diegetic    # Zimmerman-informed narrative prompts
+python tiqm_experiment.py --contrastive       # Dr. Cautious vs Dr. Bold protocols
 
 # Protocol
 python protocol_mtdna_synthesis.py  # Print 9-step mtDNA synthesis protocol
@@ -73,6 +75,13 @@ python clinical_consensus.py  # Multi-model agreement (~15-20 min, 40 queries + 
 python perturbation_probing.py   # Intervention fragility mapping (~5 min, ~1250 sims)
 python categorical_structure.py  # Functor validation (needs seed data, ~5 sec)
 python llm_seeded_evolution.py   # Hill-climb from LLM seeds (~10 min, ~4000 sims)
+python llm_seeded_evolution.py --narrative  # Narrative feedback evolution (requires Ollama)
+
+# Zimmerman-informed experiments (2026-02-15 upgrade)
+python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
+python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman Ch. 4)
+python posiwid_audit.py          # POSIWID alignment audit (requires Ollama, ~15-20 min)
+python archetype_matchmaker.py   # Archetype→protocol matchmaker (needs character data)
 ```
 
 ## Architecture
@@ -104,6 +113,13 @@ perturbation_probing.py    ← Intervention fragility (no LLM, uses prior data)
 categorical_structure.py   ← Functor validation (no LLM, uses prior data)
 llm_seeded_evolution.py    ← LLM seeds vs random for optimization (optional LLM)
 
+# Zimmerman-informed additions (2026-02-15 upgrade)
+prompt_templates.py        ← Prompt styles: numeric, diegetic, contrastive (imports constants)
+sobol_sensitivity.py       ← Saltelli sampling + Sobol indices (imports simulator)
+pds_mapping.py             ← PDS→patient mapping (imports constants, analytics)
+posiwid_audit.py           ← POSIWID alignment audit (imports llm_common, simulator)
+archetype_matchmaker.py    ← Archetype→protocol matching (imports pds_mapping, analytics)
+
 protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ```
 
@@ -120,14 +136,14 @@ protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ### Core Pipeline
 
 1. **constants.py** — All biological constants (from Cramer 2025), 12D parameter space definitions with discrete grids, Ollama model config, 10 clinical scenario seeds
-2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient)` returns full 30-year trajectory of 7 state variables. `derivatives()` implements the coupled ODE system with 6 intervention mechanisms
+2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic)` returns full 30-year trajectory of 7 state variables. Supports tissue-specific profiles (brain/muscle/cardiac) and stochastic Euler-Maruyama mode
 3. **analytics.py** — 4-pillar metrics computed from simulation results. `compute_all(result)` returns energy/damage/dynamics/intervention pillars
-4. **llm_common.py** — Shared LLM utilities: `query_ollama()`, `parse_intervention_vector()`, `split_vector()`, `strip_think_tags()`. Handles markdown fence stripping, think-tag removal, grid snapping
+4. **llm_common.py** — Shared LLM utilities: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`, `split_vector()`. Handles markdown fence stripping, think-tag removal, flattening detection, grid snapping
 5. **tiqm_experiment.py** — Full TIQM pipeline: offer prompt → Ollama → parse 12D vector → snap to grid → simulate → compute analytics → confirmation prompt → parse resonance scores
 
 ### Simulator Details
 
-The ODE system models 7 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ≈ 3.65 days, 3000 steps over 30 years):
+The ODE system models 7 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ~ 3.65 days, 3000 steps over 30 years). Supports tissue-specific profiles (brain/muscle/cardiac/default from `constants.py:TISSUE_PROFILES`) and optional stochastic Euler-Maruyama integration for confidence intervals:
 
 - **N_healthy / N_damaged**: mtDNA copy counts with homeostatic regulation toward total ≈ 1.0
 - **ATP**: Energy production, driven by cliff factor × NAD × (1 - senescence)
@@ -170,7 +186,14 @@ Key dynamics post-falsifier fixes (2026-02-15):
 **Tier 4 — Synthesis:**
 - **perturbation_probing.py** — Perturbs each of 12 params ±1 grid step around probe vectors. Maps intervention fragility. ~1250 sims
 - **categorical_structure.py** — Formal functor validation: Sem→Vec→Beh distance correlations, faithfulness, sheaf consistency. Pure computation on prior experiment data
-- **llm_seeded_evolution.py** — Hill-climbing from 20 LLM seeds + 20 random seeds × 100 evaluations each. Tests "launchpad vs trap" hypothesis
+- **llm_seeded_evolution.py** — Hill-climbing from 20 LLM seeds + 20 random seeds × 100 evaluations each. Tests "launchpad vs trap" hypothesis. `--narrative` flag enables trajectory-feedback evolution (requires Ollama)
+
+**Zimmerman-Informed Experiments (2026-02-15 upgrade):**
+- **prompt_templates.py** — Prompt styles: numeric (original), diegetic (narrative), contrastive (Dr. Cautious vs Dr. Bold). Used by tiqm_experiment.py via `--style` flag
+- **sobol_sensitivity.py** — Saltelli sampling + Sobol first-order (S1) and total-order (ST) indices. Captures parameter interactions missed by one-at-a-time perturbation. N=256 base → 6656 sims
+- **pds_mapping.py** — Maps Zimmerman's Power/Danger/Structure dimensions from fictional character archetypes to the 6D patient parameter space. Compares PDS-predicted vs LLM-generated patient parameters
+- **posiwid_audit.py** — POSIWID alignment: measures gap between LLM-stated intentions and actual simulation outcomes. Two-phase query (intention + protocol) per scenario. Requires Ollama
+- **archetype_matchmaker.py** — Combines PDS mapping with character experiment data. Identifies which character archetypes produce the best protocols for which patient types. Tier 4 (needs prior character experiment data)
 
 ## 12D Parameter Space
 
@@ -250,6 +273,25 @@ snap_param("rapamycin_dose", 0.37)  # → 0.25 (nearest grid point)
 snap_all({"rapamycin_dose": 0.37, "baseline_age": 67})  # snaps all params
 ```
 
+### Tissue-specific simulation
+
+```python
+from simulator import simulate
+# Brain tissue: high demand, high ROS sensitivity, low biogenesis
+brain_result = simulate(tissue_type="brain")
+# Stochastic mode: 100 Euler-Maruyama trajectories
+stoch = simulate(stochastic=True, n_trajectories=100, noise_scale=0.02)
+# stoch["trajectories"] has shape (100, n_steps, 7)
+```
+
+### Prompt style selection
+
+```python
+from prompt_templates import PROMPT_STYLES, get_prompt
+offer = get_prompt("diegetic", "offer")   # Zimmerman-informed narrative style
+offer = get_prompt("contrastive", "offer")  # Dr. Cautious vs Dr. Bold
+```
+
 ## Key Data Files
 
 - `output/tiqm_*.json` — Per-scenario TIQM experiment results (offer + confirmation + analytics)
@@ -258,6 +300,10 @@ snap_all({"rapamycin_dose": 0.37, "baseline_age": 67})  # snaps all params
 - `artifacts/causal_surgery.json` — Treatment timing / point of no return results
 - `artifacts/perturbation_probing.json` — Intervention fragility data
 - `artifacts/falsifier_report_2026-02-15.md` — Critical ODE bug report and fixes
+- `artifacts/upgrade_plan_jgc_2026-02-15.md` — Zimmerman-informed upgrade plan (6 phases)
+- `artifacts/posiwid_audit.json` — POSIWID alignment audit results
+- `artifacts/pds_mapping.json` — PDS→patient mapping results
+- `artifacts/archetype_matchmaker.json` — Archetype→protocol matching results
 
 ## Conventions
 
@@ -270,7 +316,7 @@ snap_all({"rapamycin_dose": 0.37, "baseline_age": 67})  # snaps all params
 - Different models for offer vs confirmation wave to prevent self-confirmation bias
 - Output files: plots → `output/`, experiment JSON → `output/` or `artifacts/`
 - Analytics pipeline is numpy-only (no scipy, no sklearn), matching parent ER project constraint
-- `tiqm_experiment.py` has its own `query_ollama()` and `parse_response()`; `llm_common.py` has separate implementations used by seed experiments. Both follow the same pattern but are not shared.
+- All LLM query/parse utilities consolidated in `llm_common.py`: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

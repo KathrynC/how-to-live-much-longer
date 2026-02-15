@@ -42,16 +42,19 @@ Usage:
 import numpy as np
 
 from constants import (
-    SIM_YEARS, DT, N_STEPS, N_STATES,
-    BASELINE_MTDNA_COPIES, HETEROPLASMY_CLIFF, CLIFF_STEEPNESS,
+    SIM_YEARS, DT, N_STATES,
+    HETEROPLASMY_CLIFF, CLIFF_STEEPNESS,
     DOUBLING_TIME_YOUNG, DOUBLING_TIME_OLD, AGE_TRANSITION,
     BASELINE_ATP, BASELINE_ROS, ROS_PER_DAMAGED,
     BASELINE_NAD, NAD_DECLINE_RATE,
     BASELINE_MEMBRANE_POTENTIAL, BASELINE_SENESCENT, SENESCENCE_RATE,
-    YAMANAKA_ENERGY_COST_MIN, YAMANAKA_ENERGY_COST_MAX,
     BASELINE_MITOPHAGY_RATE, DAMAGED_REPLICATION_ADVANTAGE,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
+    TISSUE_PROFILES,
 )
+
+# Default tissue modifiers (no modification)
+_DEFAULT_TISSUE_MODS = {"ros_sensitivity": 1.0, "biogenesis_rate": 1.0}
 
 
 def _heteroplasmy_fraction(n_healthy, n_damaged):
@@ -87,7 +90,7 @@ def _deletion_rate(age, genetic_vulnerability):
     return (np.log(2) / doubling_time) * genetic_vulnerability
 
 
-def derivatives(state, t, intervention, patient):
+def derivatives(state, t, intervention, patient, tissue_mods=None):
     """Compute time derivatives of all 7 state variables.
 
     Fixes applied 2026-02-15 per falsifier report:
@@ -105,10 +108,15 @@ def derivatives(state, t, intervention, patient):
         t: Current time in years from simulation start.
         intervention: Dict with 6 intervention parameter values.
         patient: Dict with 6 patient parameter values.
+        tissue_mods: Optional dict with tissue-specific modifiers:
+            "ros_sensitivity" (float): ROS damage multiplier (default 1.0)
+            "biogenesis_rate" (float): exercise biogenesis multiplier (default 1.0)
 
     Returns:
         np.array of shape (7,) — derivatives (dstate/dt).
     """
+    if tissue_mods is None:
+        tissue_mods = _DEFAULT_TISSUE_MODS
     n_h, n_d, atp, ros, nad, sen, psi = state
 
     # Prevent negative values in derivative computation
@@ -160,7 +168,8 @@ def derivatives(state, t, intervention, patient):
     # ROS-induced damage: converts healthy → damaged (the vicious cycle
     # entry point). Cramer Ch. II.H p.14, Appendix 2 pp.152-153.
     # Coupling strength increased (fix M3).
-    damage_rate = 0.15 * ros * gen_vuln * n_h
+    # Tissue-specific ROS sensitivity (brain=1.5x, muscle=0.8x, etc.)
+    damage_rate = 0.15 * ros * gen_vuln * n_h * tissue_mods["ros_sensitivity"]
 
     # Transplant: adds healthy copies, capped by copy number regulation.
     # Cramer Ch. VIII.G pp.104-107: high-volume mitochondrial transplant
@@ -176,7 +185,10 @@ def derivatives(state, t, intervention, patient):
 
     # Exercise hormesis: upregulates mitochondrial biogenesis (fix M5).
     # Moderate exercise increases healthy copy replication via PGC-1α.
-    exercise_biogenesis = exercise * 0.03 * energy_available * max(copy_number_pressure, 0.0)
+    # Tissue-specific biogenesis rate (muscle=1.5x, brain=0.3x, etc.)
+    exercise_biogenesis = (exercise * 0.03 * energy_available
+                           * max(copy_number_pressure, 0.0)
+                           * tissue_mods["biogenesis_rate"])
 
     # Apoptosis of cells with severe damage (cliff feedback, fix C1):
     # When ATP is very low, cells die, removing both healthy and damaged copies.
@@ -311,12 +323,12 @@ def derivatives(state, t, intervention, patient):
     return np.array([dn_h, dn_d, datp, dros, dnad, dsen, dpsi])
 
 
-def _rk4_step(state, t, dt, intervention, patient):
+def _rk4_step(state, t, dt, intervention, patient, tissue_mods=None):
     """Single 4th-order Runge-Kutta step."""
-    k1 = derivatives(state, t, intervention, patient)
-    k2 = derivatives(state + 0.5 * dt * k1, t + 0.5 * dt, intervention, patient)
-    k3 = derivatives(state + 0.5 * dt * k2, t + 0.5 * dt, intervention, patient)
-    k4 = derivatives(state + dt * k3, t + dt, intervention, patient)
+    k1 = derivatives(state, t, intervention, patient, tissue_mods)
+    k2 = derivatives(state + 0.5 * dt * k1, t + 0.5 * dt, intervention, patient, tissue_mods)
+    k3 = derivatives(state + 0.5 * dt * k2, t + 0.5 * dt, intervention, patient, tissue_mods)
+    k4 = derivatives(state + dt * k3, t + dt, intervention, patient, tissue_mods)
     return state + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
 
 
@@ -360,7 +372,9 @@ def initial_state(patient):
     return np.array([n_h0, n_d0, atp0, ros0, nad0, min(sen0, 1.0), psi0])
 
 
-def simulate(intervention=None, patient=None, sim_years=None, dt=None):
+def simulate(intervention=None, patient=None, sim_years=None, dt=None,
+             tissue_type=None, stochastic=False, noise_scale=0.01,
+             n_trajectories=1, rng_seed=None):
     """Run the full mitochondrial aging simulation.
 
     Args:
@@ -368,14 +382,29 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None):
         patient: Dict of 6 patient params (defaults to typical 70yo).
         sim_years: Override simulation horizon (default: constants.SIM_YEARS).
         dt: Override timestep (default: constants.DT).
+        tissue_type: Optional tissue type ("brain", "muscle", "cardiac",
+            "default"). Overrides metabolic_demand from TISSUE_PROFILES
+            and passes tissue-specific ROS sensitivity and biogenesis
+            rate to the ODE. Default None = no tissue modification.
+        stochastic: If True, use Euler-Maruyama with additive noise on
+            ROS generation and damage accumulation. Default False.
+        noise_scale: Standard deviation of Wiener process increments
+            (only used if stochastic=True). Default 0.01.
+        n_trajectories: Number of stochastic trajectories to run
+            (only used if stochastic=True). Default 1.
+        rng_seed: Optional RNG seed for reproducibility.
 
     Returns:
         Dict with:
             "time": np.array of time points (years from start)
             "states": np.array of shape (n_steps+1, 7) — full trajectory
+                (or (n_trajectories, n_steps+1, 7) if stochastic with
+                n_trajectories > 1)
             "heteroplasmy": np.array — heteroplasmy fraction at each step
+                (or (n_trajectories, n_steps+1) if stochastic)
             "intervention": the intervention dict used
             "patient": the patient dict used
+            "tissue_type": tissue type used (or None)
     """
     if intervention is None:
         intervention = dict(DEFAULT_INTERVENTION)
@@ -386,7 +415,24 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None):
     if dt is None:
         dt = DT
 
+    # Apply tissue profile
+    tissue_mods = None
+    if tissue_type is not None:
+        profile = TISSUE_PROFILES[tissue_type]
+        patient = dict(patient)  # copy to avoid mutating caller's dict
+        patient["metabolic_demand"] = profile["metabolic_demand"]
+        tissue_mods = {
+            "ros_sensitivity": profile["ros_sensitivity"],
+            "biogenesis_rate": profile["biogenesis_rate"],
+        }
+
     n_steps = int(sim_years / dt)
+
+    if stochastic and n_trajectories > 1:
+        return _simulate_stochastic(
+            intervention, patient, n_steps, dt, tissue_mods,
+            noise_scale, n_trajectories, rng_seed)
+
     state = initial_state(patient)
 
     # Pre-allocate output arrays
@@ -398,9 +444,23 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None):
     states[0] = state
     het_arr[0] = _heteroplasmy_fraction(state[0], state[1])
 
+    if stochastic:
+        rng = np.random.default_rng(rng_seed)
+
     for i in range(n_steps):
         t = i * dt
-        state = _rk4_step(state, t, dt, intervention, patient)
+        if stochastic:
+            # Euler-Maruyama: deterministic step + noise
+            deriv = derivatives(state, t, intervention, patient, tissue_mods)
+            # Additive noise on ROS (index 3) and damage rate (index 1)
+            dW = rng.normal(0, np.sqrt(dt), N_STATES)
+            noise = np.zeros(N_STATES)
+            noise[1] = noise_scale * state[1] * dW[1]  # damage noise
+            noise[3] = noise_scale * state[3] * dW[3]  # ROS noise
+            state = state + dt * deriv + noise
+        else:
+            state = _rk4_step(state, t, dt, intervention, patient, tissue_mods)
+
         # Enforce non-negativity (biological constraint)
         state = np.maximum(state, 0.0)
         # Cap senescent fraction at 1.0
@@ -416,6 +476,52 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None):
         "heteroplasmy": het_arr,
         "intervention": intervention,
         "patient": patient,
+        "tissue_type": tissue_type,
+    }
+
+
+def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
+                          noise_scale, n_trajectories, rng_seed):
+    """Run multiple stochastic trajectories for confidence intervals.
+
+    Uses Euler-Maruyama integration with multiplicative noise on ROS
+    and damage accumulation.
+
+    Returns dict with arrays of shape (n_trajectories, n_steps+1, ...).
+    """
+    rng = np.random.default_rng(rng_seed)
+    state0 = initial_state(patient)
+
+    time_arr = np.arange(n_steps + 1) * dt
+    all_states = np.zeros((n_trajectories, n_steps + 1, N_STATES))
+    all_het = np.zeros((n_trajectories, n_steps + 1))
+
+    for traj in range(n_trajectories):
+        state = state0.copy()
+        all_states[traj, 0] = state
+        all_het[traj, 0] = _heteroplasmy_fraction(state[0], state[1])
+
+        for i in range(n_steps):
+            t = i * dt
+            deriv = derivatives(state, t, intervention, patient, tissue_mods)
+            dW = rng.normal(0, np.sqrt(dt), N_STATES)
+            noise = np.zeros(N_STATES)
+            noise[1] = noise_scale * state[1] * dW[1]
+            noise[3] = noise_scale * state[3] * dW[3]
+            state = state + dt * deriv + noise
+            state = np.maximum(state, 0.0)
+            state[5] = min(state[5], 1.0)
+
+            all_states[traj, i + 1] = state
+            all_het[traj, i + 1] = _heteroplasmy_fraction(state[0], state[1])
+
+    return {
+        "time": time_arr,
+        "states": all_states,
+        "heteroplasmy": all_het,
+        "intervention": intervention,
+        "patient": patient,
+        "n_trajectories": n_trajectories,
     }
 
 
@@ -528,6 +634,35 @@ if __name__ == "__main__":
     r5f = simulate(patient=p5f, sim_years=30)
     print(f"  [5f] het=0.85 start: final_het={r5f['heteroplasmy'][-1]:.4f}  "
           f"({'PASS: stayed high' if r5f['heteroplasmy'][-1] > 0.80 else 'FAIL: recovered'})")
+
+    # Test 6: Tissue-specific simulations
+    print("\n--- Test 6: Tissue-specific simulations ---")
+    for tissue in ["default", "brain", "muscle", "cardiac"]:
+        r6 = simulate(tissue_type=tissue, sim_years=30)
+        print(f"  {tissue:8s}: final_het={r6['heteroplasmy'][-1]:.4f}  "
+              f"final_ATP={r6['states'][-1, 2]:.4f}")
+
+    # Test 7: Stochastic mode (single trajectory)
+    print("\n--- Test 7: Stochastic mode ---")
+    r7 = simulate(stochastic=True, noise_scale=0.01, rng_seed=42, sim_years=30)
+    r7d = simulate(stochastic=False, sim_years=30)
+    print(f"  Deterministic: final_het={r7d['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r7d['states'][-1, 2]:.4f}")
+    print(f"  Stochastic:    final_het={r7['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r7['states'][-1, 2]:.4f}")
+
+    # Test 8: Multi-trajectory stochastic
+    print("\n--- Test 8: Multi-trajectory stochastic (10 runs) ---")
+    r8 = simulate(stochastic=True, noise_scale=0.02, n_trajectories=10,
+                  rng_seed=42, sim_years=30)
+    final_hets = r8["heteroplasmy"][:, -1]
+    final_atps = r8["states"][:, -1, 2]
+    print(f"  Het: mean={np.mean(final_hets):.4f}  "
+          f"std={np.std(final_hets):.4f}  "
+          f"range=[{np.min(final_hets):.4f}, {np.max(final_hets):.4f}]")
+    print(f"  ATP: mean={np.mean(final_atps):.4f}  "
+          f"std={np.std(final_atps):.4f}  "
+          f"range=[{np.min(final_atps):.4f}, {np.max(final_atps):.4f}]")
 
     print("\n" + "=" * 70)
     print("All tests completed.")
