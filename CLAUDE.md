@@ -65,6 +65,25 @@ Integrated via RK4 with dt=0.01 years over 30 years (3000 steps).
 - Different models for offer vs confirmation wave (anti-self-confirmation)
 - Output files go to `output/` directory
 
+## Agents (.claude/agents/)
+
+| Agent | Model | Role |
+|---|---|---|
+| `cliff-cartographer` | sonnet | Maps heteroplasmy cliff landscape, recommends simulation budget allocation |
+| `intervention-surgeon` | sonnet | Designs minimal intervention modifications to test causal hypotheses |
+| `trajectory-analyst` | sonnet | Analyzes trajectories across 4 pillars, compares patients/interventions |
+| `clinical-matchmaker` | sonnet | Matches patient descriptions to intervention protocols from existing runs |
+| `falsifier` | opus | Adversarial reviewer — attacks claims, checks model validity |
+| `ollama-delegator` | sonnet | Composes Ollama prompts, parses responses, manages offer/confirmation waves |
+| `preflight-validator` | haiku | Environment and config validation before running simulations |
+| `paper-drafter` | opus | Drafts academic paper sections from findings |
+| `wolfram-engine` | sonnet | Symbolic ODE analysis via wolframscript (equilibria, bifurcations, Jacobian) |
+| `cross-project-weaver` | opus | Structural parallels with parent Evolutionary-Robotics project |
+| `protocol-auditor` | opus | Reviews 9-step mtDNA protocol for safety, plausibility, costs |
+| `patient-generator` | sonnet | Synthesizes realistic patient profiles from clinical correlations |
+| `llm-panel` | sonnet | Multi-model consensus from local Ollama LLMs |
+| `cloud-llm-panel` | sonnet | Frontier cloud LLM panel for hard questions |
+
 ## Ollama Models
 
 - Offer wave: `qwen3-coder:30b` (or any model in constants.OFFER_MODEL)
