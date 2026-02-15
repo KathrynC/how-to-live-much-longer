@@ -1,0 +1,3516 @@
+{
+  "experiment": "perturbation_probing",
+  "date": "2026-02-15 10:51:23",
+  "elapsed_seconds": 15.986516237258911,
+  "n_probes": 8,
+  "n_builtin": 8,
+  "n_llm": 0,
+  "results": [
+    {
+      "label": "no_treatment_moderate",
+      "center_metrics": {
+        "final_atp": 0.4849800183062739,
+        "final_het": 0.6611656915327817,
+        "min_atp": 0.4849800183062739,
+        "mean_atp": 0.71587731001233
+      },
+      "n_perturbations": 18,
+      "fragility_score": 9.589941296663726,
+      "most_sensitive_param": "baseline_heteroplasmy",
+      "least_sensitive_param": "baseline_age",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 1.0056037485659697,
+          "sensitivity_het": 0.4909894535402737,
+          "combined": 1.4965932021062434
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.5596023367532088,
+          "sensitivity_het": 0.20500495640068395,
+          "combined": 0.7646072931538928
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.07006446304908209,
+          "sensitivity_het": 0.002177876419968694,
+          "combined": 0.07224233946905079
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.9094346106336992,
+          "sensitivity_het": 0.5566641914575676,
+          "combined": 1.4660988020912669
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.9428135069867116,
+          "sensitivity_het": 0.4634013815313376,
+          "combined": 1.4062148885180492
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.0316999784394173,
+          "sensitivity_het": 0.027544877963828762,
+          "combined": 0.05924485640324606
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.004577081675290903,
+          "sensitivity_het": 0.0006258826686882102,
+          "combined": 0.0052029643439791134
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 1.656698129644385,
+          "sensitivity_het": 0.7132187011520807,
+          "combined": 2.3699168307964658
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.01861541380926382,
+          "sensitivity_het": 0.007171308688708744,
+          "combined": 0.025786722497972564
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.7228546103517116,
+          "sensitivity_het": 0.3360563878941265,
+          "combined": 1.058910998245838
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.3339632086837898,
+          "sensitivity_het": 0.14104182471284532,
+          "combined": 0.47500503339663513
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.27450720895423525,
+          "sensitivity_het": 0.11561015668685198,
+          "combined": 0.39011736564108723
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.10056037485659697,
+          "delta_het": 0.04909894535402737,
+          "sensitivity_atp": 1.0056037485659697,
+          "sensitivity_het": 0.4909894535402737,
+          "perturbed_metrics": {
+            "final_atp": 0.5855403931628709,
+            "final_het": 0.6120667461787543,
+            "min_atp": 0.5855403931628709,
+            "mean_atp": 0.7452028944099051
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.05596023367532088,
+          "delta_het": 0.020500495640068395,
+          "sensitivity_atp": 0.5596023367532088,
+          "sensitivity_het": 0.20500495640068395,
+          "perturbed_metrics": {
+            "final_atp": 0.5409402519815948,
+            "final_het": 0.6406651958927133,
+            "min_atp": 0.5409402519815948,
+            "mean_atp": 0.7398625676339607
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.007006446304908209,
+          "delta_het": 0.0002177876419968694,
+          "sensitivity_atp": 0.07006446304908209,
+          "sensitivity_het": 0.002177876419968694,
+          "perturbed_metrics": {
+            "final_atp": 0.4919864646111821,
+            "final_het": 0.6613834791747786,
+            "min_atp": 0.4919864646111821,
+            "mean_atp": 0.7198392963756832
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.09094346106336992,
+          "delta_het": 0.05566641914575676,
+          "sensitivity_atp": 0.9094346106336992,
+          "sensitivity_het": 0.5566641914575676,
+          "perturbed_metrics": {
+            "final_atp": 0.5759234793696438,
+            "final_het": 0.605499272387025,
+            "min_atp": 0.5759234793696438,
+            "mean_atp": 0.7284919443209473
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.09428135069867116,
+          "delta_het": 0.04634013815313376,
+          "sensitivity_atp": 0.9428135069867116,
+          "sensitivity_het": 0.4634013815313376,
+          "perturbed_metrics": {
+            "final_atp": 0.5792613690049451,
+            "final_het": 0.614825553379648,
+            "min_atp": 0.5792613690049451,
+            "mean_atp": 0.740883196309045
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.00316999784394173,
+          "delta_het": 0.0027544877963828762,
+          "sensitivity_atp": 0.0316999784394173,
+          "sensitivity_het": 0.027544877963828762,
+          "perturbed_metrics": {
+            "final_atp": 0.48815001615021564,
+            "final_het": 0.6584112037363988,
+            "min_atp": 0.48815001615021564,
+            "mean_atp": 0.7142174790681561
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 60.0,
+          "perturbed_value": 50.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.04595229548734958,
+          "delta_het": 0.005975688436899218,
+          "sensitivity_atp": 0.004595229548734958,
+          "sensitivity_het": 0.0005975688436899218,
+          "perturbed_metrics": {
+            "final_atp": 0.5309323137936235,
+            "final_het": 0.6551900030958825,
+            "min_atp": 0.5309323137936235,
+            "mean_atp": 0.7555493382935895
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 60.0,
+          "perturbed_value": 70.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.045589338018468484,
+          "delta_het": 0.006541964936864986,
+          "sensitivity_atp": 0.004558933801846849,
+          "sensitivity_het": 0.0006541964936864986,
+          "perturbed_metrics": {
+            "final_atp": 0.4393906802878054,
+            "final_het": 0.6677076564696467,
+            "min_atp": 0.4393906802878054,
+            "mean_atp": 0.6765194007971137
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.4,
+          "perturbed_value": 0.3,
+          "delta_param": 0.10000000000000003,
+          "delta_atp": 0.13904802320677645,
+          "delta_het": 0.0713816535372862,
+          "sensitivity_atp": 1.390480232067764,
+          "sensitivity_het": 0.7138165353728618,
+          "perturbed_metrics": {
+            "final_atp": 0.6240280415130504,
+            "final_het": 0.5897840379954955,
+            "min_atp": 0.6240280415130504,
+            "mean_atp": 0.7696478115851597
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.4,
+          "perturbed_value": 0.5,
+          "delta_param": 0.09999999999999998,
+          "delta_atp": 0.19229160272210055,
+          "delta_het": 0.07126208669312994,
+          "sensitivity_atp": 1.922916027221006,
+          "sensitivity_het": 0.7126208669312996,
+          "perturbed_metrics": {
+            "final_atp": 0.29268841558417336,
+            "final_het": 0.7324277782259117,
+            "min_atp": 0.29268841558417336,
+            "mean_atp": 0.5970982692166278
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.6,
+          "perturbed_value": 0.4,
+          "delta_param": 0.19999999999999996,
+          "delta_atp": 0.003962029667823108,
+          "delta_het": 0.0015257780781151586,
+          "sensitivity_atp": 0.019810148339115544,
+          "sensitivity_het": 0.007628890390575795,
+          "perturbed_metrics": {
+            "final_atp": 0.4810179886384508,
+            "final_het": 0.6626914696108969,
+            "min_atp": 0.4810179886384508,
+            "mean_atp": 0.7028077498947528
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.6,
+          "perturbed_value": 0.8,
+          "delta_param": 0.20000000000000007,
+          "delta_atp": 0.00348413585588242,
+          "delta_het": 0.001342745397368339,
+          "sensitivity_atp": 0.017420679279412092,
+          "sensitivity_het": 0.006713726986841692,
+          "perturbed_metrics": {
+            "final_atp": 0.4884641541621563,
+            "final_het": 0.6598229461354134,
+            "min_atp": 0.4884641541621563,
+            "mean_atp": 0.7287234917402828
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.1571429892852988,
+          "delta_het": 0.08924888096758044,
+          "sensitivity_atp": 0.6285719571411952,
+          "sensitivity_het": 0.35699552387032174,
+          "perturbed_metrics": {
+            "final_atp": 0.6421230075915727,
+            "final_het": 0.5719168105652013,
+            "min_atp": 0.6421230075915727,
+            "mean_atp": 0.7619110765634953
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.204284315890557,
+          "delta_het": 0.07877931297948282,
+          "sensitivity_atp": 0.817137263562228,
+          "sensitivity_het": 0.3151172519179313,
+          "perturbed_metrics": {
+            "final_atp": 0.2806957024157169,
+            "final_het": 0.7399450045122645,
+            "min_atp": 0.2806957024157169,
+            "mean_atp": 0.6433629846232982
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.08064160519708397,
+          "delta_het": 0.03699584237467379,
+          "sensitivity_atp": 0.32256642078833586,
+          "sensitivity_het": 0.14798336949869517,
+          "perturbed_metrics": {
+            "final_atp": 0.5656216235033579,
+            "final_het": 0.6241698491581079,
+            "min_atp": 0.5656216235033579,
+            "mean_atp": 0.7409224062342376
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.08633999914481094,
+          "delta_het": 0.03352506998174887,
+          "sensitivity_atp": 0.34535999657924377,
+          "sensitivity_het": 0.13410027992699547,
+          "perturbed_metrics": {
+            "final_atp": 0.39864001916146297,
+            "final_het": 0.6946907615145306,
+            "min_atp": 0.39864001916146297,
+            "mean_atp": 0.6864120978735919
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.3,
+          "perturbed_value": 0.1,
+          "delta_param": 0.19999999999999998,
+          "delta_atp": 0.05159088651177823,
+          "delta_het": 0.02293084957833358,
+          "sensitivity_atp": 0.25795443255889117,
+          "sensitivity_het": 0.11465424789166791,
+          "perturbed_metrics": {
+            "final_atp": 0.5365709048180521,
+            "final_het": 0.6382348419544481,
+            "min_atp": 0.5365709048180521,
+            "mean_atp": 0.7302979669441716
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.3,
+          "perturbed_value": 0.5,
+          "delta_param": 0.2,
+          "delta_atp": 0.058211997069915866,
+          "delta_het": 0.023313213096407215,
+          "sensitivity_atp": 0.29105998534957933,
+          "sensitivity_het": 0.11656606548203607,
+          "perturbed_metrics": {
+            "final_atp": 0.42676802123635804,
+            "final_het": 0.6844789046291889,
+            "min_atp": 0.42676802123635804,
+            "mean_atp": 0.6991140772267793
+          }
+        }
+      ]
+    },
+    {
+      "label": "full_cocktail_moderate",
+      "center_metrics": {
+        "final_atp": 0.812918080445073,
+        "final_het": 0.3252986095961589,
+        "min_atp": 0.812918080445073,
+        "mean_atp": 0.8532589554958806
+      },
+      "n_perturbations": 22,
+      "fragility_score": 2.2964057932840394,
+      "most_sensitive_param": "yamanaka_intensity",
+      "least_sensitive_param": "baseline_nad_level",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.026501882274030164,
+          "sensitivity_het": 0.33658672142987556,
+          "combined": 0.3630886037039057
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.1467355014522873,
+          "sensitivity_het": 0.12946293628710326,
+          "combined": 0.27619843773939057
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.02304926763212678,
+          "sensitivity_het": 0.0014349749583755234,
+          "combined": 0.024484242590502303
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.19766253252652133,
+          "sensitivity_het": 0.28847176713856393,
+          "combined": 0.48613429966508526
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.012724768147405197,
+          "sensitivity_het": 0.2708465767712198,
+          "combined": 0.283571344918625
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.029214119304856734,
+          "sensitivity_het": 0.023962530580925234,
+          "combined": 0.05317664988578197
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.004101327058281573,
+          "sensitivity_het": 8.440698542738211e-05,
+          "combined": 0.004185734043708956
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.021762807991978494,
+          "sensitivity_het": 0.3130817354838922,
+          "combined": 0.33484454347587067
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.0002920060635122623,
+          "sensitivity_het": 0.0015095109357993186,
+          "combined": 0.001801516999311581
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.017125793303980563,
+          "sensitivity_het": 0.27176548877554263,
+          "combined": 0.2888912820795232
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.0108472658521519,
+          "sensitivity_het": 0.12112476093075475,
+          "combined": 0.13197202678290665
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.003856993935642261,
+          "sensitivity_het": 0.04420011746378502,
+          "combined": 0.04805711139942728
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.01060049133057217,
+          "delta_het": 0.09699260726791742,
+          "sensitivity_atp": 0.04240196532228868,
+          "sensitivity_het": 0.3879704290716697,
+          "perturbed_metrics": {
+            "final_atp": 0.8023175891145008,
+            "final_het": 0.42229121686407634,
+            "min_atp": 0.8023175891145008,
+            "mean_atp": 0.8467191135564698
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.0026504498064429116,
+          "delta_het": 0.07130075344702036,
+          "sensitivity_atp": 0.010601799225771646,
+          "sensitivity_het": 0.28520301378808144,
+          "perturbed_metrics": {
+            "final_atp": 0.8155685302515159,
+            "final_het": 0.25399785614913856,
+            "min_atp": 0.815528548687575,
+            "mean_atp": 0.8558129477340191
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.03711065064728303,
+          "delta_het": 0.03461297166741789,
+          "sensitivity_atp": 0.1484426025891321,
+          "sensitivity_het": 0.13845188666967156,
+          "perturbed_metrics": {
+            "final_atp": 0.7758074297977899,
+            "final_het": 0.3599115812635768,
+            "min_atp": 0.7758074297977899,
+            "mean_atp": 0.8219027389769044
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.03625710007886063,
+          "delta_het": 0.030118496476133738,
+          "sensitivity_atp": 0.1450284003154425,
+          "sensitivity_het": 0.12047398590453495,
+          "perturbed_metrics": {
+            "final_atp": 0.8491751805239336,
+            "final_het": 0.2951801131200252,
+            "min_atp": 0.8160742061329794,
+            "mean_atp": 0.8841707394724524
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.007975189675766492,
+          "delta_het": 0.0004672916896858448,
+          "sensitivity_atp": 0.03190075870306597,
+          "sensitivity_het": 0.0018691667587433791,
+          "perturbed_metrics": {
+            "final_atp": 0.8049428907693065,
+            "final_het": 0.32483131790647307,
+            "min_atp": 0.8049428907693065,
+            "mean_atp": 0.8481624336795546
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.003549444140296898,
+          "delta_het": 0.0002501957895019169,
+          "sensitivity_atp": 0.014197776561187592,
+          "sensitivity_het": 0.0010007831580076676,
+          "perturbed_metrics": {
+            "final_atp": 0.8164675245853699,
+            "final_het": 0.32554880538566083,
+            "min_atp": 0.8155270501262603,
+            "mean_atp": 0.8560884910429668
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.019766253252652133,
+          "delta_het": 0.028847176713856393,
+          "sensitivity_atp": 0.19766253252652133,
+          "sensitivity_het": 0.28847176713856393,
+          "perturbed_metrics": {
+            "final_atp": 0.7931518271924208,
+            "final_het": 0.2964514328823025,
+            "min_atp": 0.7931518271924208,
+            "mean_atp": 0.8346023789004918
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.0012724768147405197,
+          "delta_het": 0.02708465767712198,
+          "sensitivity_atp": 0.012724768147405197,
+          "sensitivity_het": 0.2708465767712198,
+          "perturbed_metrics": {
+            "final_atp": 0.8141905572598135,
+            "final_het": 0.29821395191903693,
+            "min_atp": 0.8141905572598135,
+            "mean_atp": 0.8543444224589596
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0072610632015903676,
+          "delta_het": 0.006604009152646029,
+          "sensitivity_atp": 0.02904425280636147,
+          "sensitivity_het": 0.026416036610584115,
+          "perturbed_metrics": {
+            "final_atp": 0.8201791436466633,
+            "final_het": 0.33190261874880495,
+            "min_atp": 0.8175216646103154,
+            "mean_atp": 0.8603870831294389
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.007345996450837999,
+          "delta_het": 0.005377256137816588,
+          "sensitivity_atp": 0.029383985803351997,
+          "sensitivity_het": 0.021509024551266354,
+          "perturbed_metrics": {
+            "final_atp": 0.805572083994235,
+            "final_het": 0.31992135345834233,
+            "min_atp": 0.805572083994235,
+            "mean_atp": 0.8461006853929491
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 60.0,
+          "perturbed_value": 50.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.04103096194946654,
+          "delta_het": 0.0007103373663123747,
+          "sensitivity_atp": 0.004103096194946654,
+          "sensitivity_het": 7.103373663123746e-05,
+          "perturbed_metrics": {
+            "final_atp": 0.8539490423945395,
+            "final_het": 0.32458827222984654,
+            "min_atp": 0.8223462978630552,
+            "mean_atp": 0.8900509758295978
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 60.0,
+          "perturbed_value": 70.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.040995579216164924,
+          "delta_het": 0.0009778023422352677,
+          "sensitivity_atp": 0.0040995579216164925,
+          "sensitivity_het": 9.778023422352678e-05,
+          "perturbed_metrics": {
+            "final_atp": 0.771922501228908,
+            "final_het": 0.3262764119383942,
+            "min_atp": 0.771922501228908,
+            "mean_atp": 0.8165820834188391
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.4,
+          "perturbed_value": 0.3,
+          "delta_param": 0.10000000000000003,
+          "delta_atp": 0.0014967786103478042,
+          "delta_het": 0.027563841854296445,
+          "sensitivity_atp": 0.014967786103478037,
+          "sensitivity_het": 0.27563841854296434,
+          "perturbed_metrics": {
+            "final_atp": 0.8144148590554208,
+            "final_het": 0.29773476774186247,
+            "min_atp": 0.8144148590554208,
+            "mean_atp": 0.8573346491606691
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.4,
+          "perturbed_value": 0.5,
+          "delta_param": 0.09999999999999998,
+          "delta_atp": 0.0028557829880478947,
+          "delta_het": 0.03505250524248199,
+          "sensitivity_atp": 0.028557829880478953,
+          "sensitivity_het": 0.35052505242481996,
+          "perturbed_metrics": {
+            "final_atp": 0.8100622974570251,
+            "final_het": 0.3603511148386409,
+            "min_atp": 0.7854287927860552,
+            "mean_atp": 0.8403314235122835
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.6,
+          "perturbed_value": 0.4,
+          "delta_param": 0.19999999999999996,
+          "delta_atp": 6.090392780722098e-05,
+          "delta_het": 0.00033817220584952956,
+          "sensitivity_atp": 0.00030451963903610496,
+          "sensitivity_het": 0.0016908610292476482,
+          "perturbed_metrics": {
+            "final_atp": 0.8128571765172657,
+            "final_het": 0.32563678180200845,
+            "min_atp": 0.7385892537293999,
+            "mean_atp": 0.8417601599094434
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.6,
+          "perturbed_value": 0.8,
+          "delta_param": 0.20000000000000007,
+          "delta_atp": 5.589849759768395e-05,
+          "delta_het": 0.0002656321684701979,
+          "sensitivity_atp": 0.00027949248798841964,
+          "sensitivity_het": 0.001328160842350989,
+          "perturbed_metrics": {
+            "final_atp": 0.8129739789426706,
+            "final_het": 0.3250329774276887,
+            "min_atp": 0.8129739789426706,
+            "mean_atp": 0.864743456320946
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.002517675871433367,
+          "delta_het": 0.06717976854262975,
+          "sensitivity_atp": 0.010070703485733468,
+          "sensitivity_het": 0.268719074170519,
+          "perturbed_metrics": {
+            "final_atp": 0.8154357563165063,
+            "final_het": 0.25811884105352917,
+            "min_atp": 0.8154357563165063,
+            "mean_atp": 0.85551397973641
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.006045220780556915,
+          "delta_het": 0.06870297584514157,
+          "sensitivity_atp": 0.02418088312222766,
+          "sensitivity_het": 0.27481190338056627,
+          "perturbed_metrics": {
+            "final_atp": 0.806872859664516,
+            "final_het": 0.3940015854413005,
+            "min_atp": 0.806872859664516,
+            "mean_atp": 0.849116988414536
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.002415015275022636,
+          "delta_het": 0.030639562883912896,
+          "sensitivity_atp": 0.009660061100090545,
+          "sensitivity_het": 0.12255825153565159,
+          "perturbed_metrics": {
+            "final_atp": 0.8153330957200956,
+            "final_het": 0.294659046712246,
+            "min_atp": 0.8153330957200956,
+            "mean_atp": 0.8552305502507216
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0030086176510533136,
+          "delta_het": 0.029922817581464478,
+          "sensitivity_atp": 0.012034470604213254,
+          "sensitivity_het": 0.11969127032585791,
+          "perturbed_metrics": {
+            "final_atp": 0.8099094627940197,
+            "final_het": 0.3552214271776234,
+            "min_atp": 0.8099094627940197,
+            "mean_atp": 0.8509609909801921
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.3,
+          "perturbed_value": 0.1,
+          "delta_param": 0.19999999999999998,
+          "delta_atp": 0.0007165207190822365,
+          "delta_het": 0.008557172989195116,
+          "sensitivity_atp": 0.0035826035954111828,
+          "sensitivity_het": 0.04278586494597559,
+          "perturbed_metrics": {
+            "final_atp": 0.8136346011641552,
+            "final_het": 0.3167414366069638,
+            "min_atp": 0.8136346011641552,
+            "mean_atp": 0.8538810139871096
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.3,
+          "perturbed_value": 0.5,
+          "delta_param": 0.2,
+          "delta_atp": 0.000826276855174668,
+          "delta_het": 0.009122873996318892,
+          "sensitivity_atp": 0.00413138427587334,
+          "sensitivity_het": 0.04561436998159446,
+          "perturbed_metrics": {
+            "final_atp": 0.8120918035898983,
+            "final_het": 0.3344214835924778,
+            "min_atp": 0.8120918035898983,
+            "mean_atp": 0.8525773589728569
+          }
+        }
+      ]
+    },
+    {
+      "label": "near_cliff_no_treatment",
+      "center_metrics": {
+        "final_atp": 0.026686733050638727,
+        "final_het": 0.91414916348013,
+        "min_atp": 0.026686733050638727,
+        "mean_atp": 0.1939153561562118
+      },
+      "n_perturbations": 18,
+      "fragility_score": 3.9725004070824226,
+      "most_sensitive_param": "transplant_rate",
+      "least_sensitive_param": "baseline_age",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.10302434965758944,
+          "sensitivity_het": 0.2245815288021391,
+          "combined": 0.32760587845972855
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.04855066501798844,
+          "sensitivity_het": 0.1005179322918448,
+          "combined": 0.14906859730983324
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.007543171641889446,
+          "sensitivity_het": 9.580570364486896e-05,
+          "combined": 0.007638977345534315
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.11571206207698848,
+          "sensitivity_het": 0.12832316054694815,
+          "combined": 0.24403522262393662
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.9998139345522874,
+          "sensitivity_het": 1.211497800450152,
+          "combined": 2.2113117350024396
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.01543118315564914,
+          "sensitivity_het": 0.03722539252977164,
+          "combined": 0.05265657568542078
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.0004307518371713682,
+          "sensitivity_het": 0.0005738850641392678,
+          "combined": 0.001004636901310636
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.15056641588215106,
+          "sensitivity_het": 0.37723360074342305,
+          "combined": 0.5278000166255741
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.0034710141634906274,
+          "sensitivity_het": 0.008348193893401301,
+          "combined": 0.011819208056891928
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.07226238009560014,
+          "sensitivity_het": 0.15994011850612444,
+          "combined": 0.2322024986017246
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.02154224299983918,
+          "sensitivity_het": 0.0527464453164308,
+          "combined": 0.07428868831626997
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.039046764279389974,
+          "sensitivity_het": 0.09402160787436808,
+          "combined": 0.13306837215375805
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.010302434965758944,
+          "delta_het": 0.02245815288021391,
+          "sensitivity_atp": 0.10302434965758944,
+          "sensitivity_het": 0.2245815288021391,
+          "perturbed_metrics": {
+            "final_atp": 0.03698916801639767,
+            "final_het": 0.8916910105999161,
+            "min_atp": 0.03698916801639767,
+            "mean_atp": 0.21654623969816822
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.004855066501798844,
+          "delta_het": 0.01005179322918448,
+          "sensitivity_atp": 0.04855066501798844,
+          "sensitivity_het": 0.1005179322918448,
+          "perturbed_metrics": {
+            "final_atp": 0.03154179955243757,
+            "final_het": 0.9040973702509455,
+            "min_atp": 0.03154179955243757,
+            "mean_atp": 0.2058485500195536
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.0007543171641889446,
+          "delta_het": 9.580570364486896e-06,
+          "sensitivity_atp": 0.007543171641889446,
+          "sensitivity_het": 9.580570364486896e-05,
+          "perturbed_metrics": {
+            "final_atp": 0.02744105021482767,
+            "final_het": 0.9141587440504945,
+            "min_atp": 0.02744105021482767,
+            "mean_atp": 0.19494292726857995
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.011571206207698848,
+          "delta_het": 0.012832316054694815,
+          "sensitivity_atp": 0.11571206207698848,
+          "sensitivity_het": 0.12832316054694815,
+          "perturbed_metrics": {
+            "final_atp": 0.015115526842939878,
+            "final_het": 0.9013168474254352,
+            "min_atp": 0.015115526842939878,
+            "mean_atp": 0.19598693278789117
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.09998139345522875,
+          "delta_het": 0.1211497800450152,
+          "sensitivity_atp": 0.9998139345522874,
+          "sensitivity_het": 1.211497800450152,
+          "perturbed_metrics": {
+            "final_atp": 0.12666812650586748,
+            "final_het": 0.7929993834351148,
+            "min_atp": 0.12666812650586748,
+            "mean_atp": 0.2599105540240071
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.001543118315564914,
+          "delta_het": 0.003722539252977164,
+          "sensitivity_atp": 0.01543118315564914,
+          "sensitivity_het": 0.03722539252977164,
+          "perturbed_metrics": {
+            "final_atp": 0.025143614735073812,
+            "final_het": 0.9104266242271528,
+            "min_atp": 0.025143614735073812,
+            "mean_atp": 0.19334528838700582
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 75.0,
+          "perturbed_value": 60.0,
+          "delta_param": 15.0,
+          "delta_atp": 0.006834059756536011,
+          "delta_het": 0.008544414083772489,
+          "sensitivity_atp": 0.0004556039837690674,
+          "sensitivity_het": 0.0005696276055848326,
+          "perturbed_metrics": {
+            "final_atp": 0.03352079280717474,
+            "final_het": 0.9056047493963575,
+            "min_atp": 0.03352079280717474,
+            "mean_atp": 0.21308128611607277
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 75.0,
+          "perturbed_value": 80.0,
+          "delta_param": 5.0,
+          "delta_atp": 0.0020294984528683446,
+          "delta_het": 0.0028907126134685157,
+          "sensitivity_atp": 0.0004058996905736689,
+          "sensitivity_het": 0.0005781425226937031,
+          "perturbed_metrics": {
+            "final_atp": 0.024657234597770382,
+            "final_het": 0.9170398760935985,
+            "min_atp": 0.024657234597770382,
+            "mean_atp": 0.18780454807372038
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.65,
+          "perturbed_value": 0.6,
+          "delta_param": 0.050000000000000044,
+          "delta_atp": 0.010275154634592595,
+          "delta_het": 0.021362656759374654,
+          "sensitivity_atp": 0.2055030926918517,
+          "sensitivity_het": 0.4272531351874927,
+          "perturbed_metrics": {
+            "final_atp": 0.03696188768523132,
+            "final_het": 0.8927865067207553,
+            "min_atp": 0.03696188768523132,
+            "mean_atp": 0.26655539025647407
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.65,
+          "perturbed_value": 0.8,
+          "delta_param": 0.15000000000000002,
+          "delta_atp": 0.014344460860867561,
+          "delta_het": 0.04908210994490303,
+          "sensitivity_atp": 0.0956297390724504,
+          "sensitivity_het": 0.32721406629935346,
+          "perturbed_metrics": {
+            "final_atp": 0.012342272189771165,
+            "final_het": 0.963231273425033,
+            "min_atp": 0.012342272189771165,
+            "mean_atp": 0.04895330963631477
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.4,
+          "perturbed_value": 0.2,
+          "delta_param": 0.2,
+          "delta_atp": 0.0007110260460051511,
+          "delta_het": 0.0017310367403573501,
+          "sensitivity_atp": 0.0035551302300257555,
+          "sensitivity_het": 0.00865518370178675,
+          "perturbed_metrics": {
+            "final_atp": 0.025975707004633575,
+            "final_het": 0.9158802002204873,
+            "min_atp": 0.025975707004633575,
+            "mean_atp": 0.18309010928100652
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.4,
+          "perturbed_value": 0.6,
+          "delta_param": 0.19999999999999996,
+          "delta_atp": 0.0006773796193910997,
+          "delta_het": 0.0016082408170031703,
+          "sensitivity_atp": 0.0033868980969554994,
+          "sensitivity_het": 0.008041204085015853,
+          "perturbed_metrics": {
+            "final_atp": 0.027364112670029826,
+            "final_het": 0.9125409226631268,
+            "min_atp": 0.027364112670029826,
+            "mean_atp": 0.204527611096036
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.25,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.025885863513023986,
+          "delta_het": 0.04766217948571061,
+          "sensitivity_atp": 0.10354345405209595,
+          "sensitivity_het": 0.19064871794284244,
+          "perturbed_metrics": {
+            "final_atp": 0.05257259656366271,
+            "final_het": 0.8664869839944194,
+            "min_atp": 0.05257259656366271,
+            "mean_atp": 0.23998842292669942
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.25,
+          "perturbed_value": 1.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.010245326534776084,
+          "delta_het": 0.03230787976735161,
+          "sensitivity_atp": 0.040981306139104334,
+          "sensitivity_het": 0.12923151906940644,
+          "perturbed_metrics": {
+            "final_atp": 0.016441406515862643,
+            "final_het": 0.9464570432474816,
+            "min_atp": 0.016441406515862643,
+            "mean_atp": 0.16311904389231152
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.006299471497783815,
+          "delta_het": 0.01426081833092252,
+          "sensitivity_atp": 0.02519788599113526,
+          "sensitivity_het": 0.05704327332369008,
+          "perturbed_metrics": {
+            "final_atp": 0.03298620454842254,
+            "final_het": 0.8998883451492075,
+            "min_atp": 0.03298620454842254,
+            "mean_atp": 0.20955066373055847
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.004471650002135775,
+          "delta_het": 0.01211240432729288,
+          "sensitivity_atp": 0.0178866000085431,
+          "sensitivity_het": 0.04844961730917152,
+          "perturbed_metrics": {
+            "final_atp": 0.02221508304850295,
+            "final_het": 0.9262615678074229,
+            "min_atp": 0.02221508304850295,
+            "mean_atp": 0.1805840592577057
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.012248925380853586,
+          "delta_het": 0.025928248350287286,
+          "sensitivity_atp": 0.04899570152341434,
+          "sensitivity_het": 0.10371299340114915,
+          "perturbed_metrics": {
+            "final_atp": 0.03893565843149231,
+            "final_het": 0.8882209151298427,
+            "min_atp": 0.03893565843149231,
+            "mean_atp": 0.21591661390369424
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.0072744567588414015,
+          "delta_het": 0.021082555586896756,
+          "sensitivity_atp": 0.029097827035365606,
+          "sensitivity_het": 0.08433022234758702,
+          "perturbed_metrics": {
+            "final_atp": 0.019412276291797325,
+            "final_het": 0.9352317190670267,
+            "min_atp": 0.019412276291797325,
+            "mean_atp": 0.1762700487257638
+          }
+        }
+      ]
+    },
+    {
+      "label": "near_cliff_with_treatment",
+      "center_metrics": {
+        "final_atp": 0.7960528427326903,
+        "final_het": 0.2509853257348188,
+        "min_atp": 0.5022879985168212,
+        "mean_atp": 0.7863508809669684
+      },
+      "n_perturbations": 23,
+      "fragility_score": 1.3050440086090636,
+      "most_sensitive_param": "yamanaka_intensity",
+      "least_sensitive_param": "baseline_nad_level",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.007348337010850692,
+          "sensitivity_het": 0.22348157264635615,
+          "combined": 0.23082990965720684
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.14163159194802732,
+          "sensitivity_het": 0.07964825934219705,
+          "combined": 0.22127985129022437
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.03001147167971685,
+          "sensitivity_het": 0.0026773342855566096,
+          "combined": 0.03268880596527346
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.20724935176090642,
+          "sensitivity_het": 0.15312596851148774,
+          "combined": 0.36037532027239416
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.002387925179267114,
+          "sensitivity_het": 0.06333092095992277,
+          "combined": 0.06571884613918988
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.03054503692962718,
+          "sensitivity_het": 0.001444804647264153,
+          "combined": 0.03198984157689133
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.004102389088201075,
+          "sensitivity_het": 9.598386605268831e-05,
+          "combined": 0.0041983729542537625
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.0033150817380674545,
+          "sensitivity_het": 0.03699019242892822,
+          "combined": 0.04030527416699567
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.000194166770881854,
+          "sensitivity_het": 0.0007421848841963897,
+          "combined": 0.0009363516550782437
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.004709770340715069,
+          "sensitivity_het": 0.17507879950632532,
+          "combined": 0.1797885698470404
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.0069202179814342735,
+          "sensitivity_het": 0.09873467660181129,
+          "combined": 0.10565489458324556
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.0020224012502048083,
+          "sensitivity_het": 0.02925556925106515,
+          "combined": 0.03127797050126996
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0026293891669849634,
+          "delta_het": 0.06629969911169742,
+          "sensitivity_atp": 0.010517556667939854,
+          "sensitivity_het": 0.2651987964467897,
+          "perturbed_metrics": {
+            "final_atp": 0.7934234535657053,
+            "final_het": 0.3172850248465162,
+            "min_atp": 0.5022361530783,
+            "mean_atp": 0.7739062341335553
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.0010447793384403825,
+          "delta_het": 0.04544108721148066,
+          "sensitivity_atp": 0.00417911735376153,
+          "sensitivity_het": 0.18176434884592263,
+          "perturbed_metrics": {
+            "final_atp": 0.7970976220711307,
+            "final_het": 0.20554423852333814,
+            "min_atp": 0.5023276600402846,
+            "mean_atp": 0.7937398272668972
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.03548312371489337,
+          "delta_het": 0.021476974695656625,
+          "sensitivity_atp": 0.1419324948595735,
+          "sensitivity_het": 0.0859078987826265,
+          "perturbed_metrics": {
+            "final_atp": 0.7605697190177969,
+            "final_het": 0.2724623004304754,
+            "min_atp": 0.502236125881582,
+            "mean_atp": 0.7535614089873998
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.03533267225912029,
+          "delta_het": 0.0183471549754419,
+          "sensitivity_atp": 0.14133068903648116,
+          "sensitivity_het": 0.0733886199017676,
+          "perturbed_metrics": {
+            "final_atp": 0.8313855149918106,
+            "final_het": 0.2326381707593769,
+            "min_atp": 0.5023277752453977,
+            "mean_atp": 0.8186380384463144
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.010623313608990714,
+          "delta_het": 0.0009005112662821002,
+          "sensitivity_atp": 0.04249325443596286,
+          "sensitivity_het": 0.003602045065128401,
+          "perturbed_metrics": {
+            "final_atp": 0.7854295291236996,
+            "final_het": 0.2500848144685367,
+            "min_atp": 0.5022853178165668,
+            "mean_atp": 0.778933166947723
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.004382422230867711,
+          "delta_het": 0.0004381558764962046,
+          "sensitivity_atp": 0.017529688923470843,
+          "sensitivity_het": 0.0017526235059848183,
+          "perturbed_metrics": {
+            "final_atp": 0.800435264963558,
+            "final_het": 0.251423481611315,
+            "min_atp": 0.5022906711290608,
+            "mean_atp": 0.790337361134655
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.020724935176090642,
+          "delta_het": 0.015312596851148774,
+          "sensitivity_atp": 0.20724935176090642,
+          "sensitivity_het": 0.15312596851148774,
+          "perturbed_metrics": {
+            "final_atp": 0.7753279075565996,
+            "final_het": 0.23567272888367002,
+            "min_atp": 0.49954573704508526,
+            "mean_atp": 0.7693942849861489
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0008752785221540771,
+          "delta_het": 0.022747211540359524,
+          "sensitivity_atp": 0.0035011140886163084,
+          "sensitivity_het": 0.0909888461614381,
+          "perturbed_metrics": {
+            "final_atp": 0.7951775642105362,
+            "final_het": 0.2737325372751783,
+            "min_atp": 0.5022314196987316,
+            "mean_atp": 0.7753872791113252
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.00031868406747947997,
+          "delta_het": 0.008918248939601858,
+          "sensitivity_atp": 0.0012747362699179199,
+          "sensitivity_het": 0.03567299575840743,
+          "perturbed_metrics": {
+            "final_atp": 0.7963715268001698,
+            "final_het": 0.24206707679521694,
+            "min_atp": 0.5023300456271214,
+            "mean_atp": 0.7920861541334825
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.004582604688741387,
+          "delta_het": 0.0002182389007671648,
+          "sensitivity_atp": 0.030550697924942583,
+          "sensitivity_het": 0.001454926005114432,
+          "perturbed_metrics": {
+            "final_atp": 0.8006354474214317,
+            "final_het": 0.25076708683405163,
+            "min_atp": 0.5025704167800825,
+            "mean_atp": 0.790403174821218
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.007634843983577944,
+          "delta_het": 0.0003586708223534685,
+          "sensitivity_atp": 0.030539375934311774,
+          "sensitivity_het": 0.001434683289413874,
+          "perturbed_metrics": {
+            "final_atp": 0.7884179987491123,
+            "final_het": 0.25134399655717227,
+            "min_atp": 0.5013448756236225,
+            "mean_atp": 0.7795584580603491
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 75.0,
+          "perturbed_value": 60.0,
+          "delta_param": 15.0,
+          "delta_atp": 0.06157271459645797,
+          "delta_het": 0.0015251433123417701,
+          "sensitivity_atp": 0.004104847639763864,
+          "sensitivity_het": 0.00010167622082278468,
+          "perturbed_metrics": {
+            "final_atp": 0.8576255573291482,
+            "final_het": 0.25251046904716057,
+            "min_atp": 0.5081388462384727,
+            "mean_atp": 0.8400820241958188
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 75.0,
+          "perturbed_value": 80.0,
+          "delta_param": 5.0,
+          "delta_atp": 0.020499652683191427,
+          "delta_het": 0.0004514575564129597,
+          "sensitivity_atp": 0.004099930536638286,
+          "sensitivity_het": 9.029151128259194e-05,
+          "perturbed_metrics": {
+            "final_atp": 0.7755531900494989,
+            "final_het": 0.25053386817840584,
+            "min_atp": 0.5003351383627846,
+            "mean_atp": 0.7684972414347733
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.65,
+          "perturbed_value": 0.6,
+          "delta_param": 0.050000000000000044,
+          "delta_atp": 0.00017016970495442596,
+          "delta_het": 0.0024096061641230015,
+          "sensitivity_atp": 0.003403394099088516,
+          "sensitivity_het": 0.04819212328245999,
+          "perturbed_metrics": {
+            "final_atp": 0.7962230124376447,
+            "final_het": 0.2485757195706958,
+            "min_atp": 0.604665506343242,
+            "mean_atp": 0.8042925335700599
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.65,
+          "perturbed_value": 0.8,
+          "delta_param": 0.15000000000000002,
+          "delta_atp": 0.00048401540655695907,
+          "delta_het": 0.0038682392363094675,
+          "sensitivity_atp": 0.0032267693770463932,
+          "sensitivity_het": 0.025788261575396446,
+          "perturbed_metrics": {
+            "final_atp": 0.7955688273261333,
+            "final_het": 0.25485356497112827,
+            "min_atp": 0.13438175410374298,
+            "mean_atp": 0.6954127170375314
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.4,
+          "perturbed_value": 0.2,
+          "delta_param": 0.2,
+          "delta_atp": 3.9763951613980275e-05,
+          "delta_het": 0.0001380014195596635,
+          "sensitivity_atp": 0.00019881975806990138,
+          "sensitivity_het": 0.0006900070977983175,
+          "perturbed_metrics": {
+            "final_atp": 0.7960130787810763,
+            "final_het": 0.25084732431525913,
+            "min_atp": 0.4494128284154849,
+            "mean_atp": 0.7767072433828794
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.4,
+          "perturbed_value": 0.6,
+          "delta_param": 0.19999999999999996,
+          "delta_atp": 3.790275673876131e-05,
+          "delta_het": 0.00015887253411889235,
+          "sensitivity_atp": 0.0001895137836938066,
+          "sensitivity_het": 0.000794362670594462,
+          "perturbed_metrics": {
+            "final_atp": 0.796090745489429,
+            "final_het": 0.2511441982689377,
+            "min_atp": 0.555156215475701,
+            "mean_atp": 0.7959294450563044
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.25,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.0009194956155380574,
+          "delta_het": 0.043654941158874416,
+          "sensitivity_atp": 0.0036779824621522295,
+          "sensitivity_het": 0.17461976463549767,
+          "perturbed_metrics": {
+            "final_atp": 0.7969723383482283,
+            "final_het": 0.20733038457594438,
+            "min_atp": 0.502314057256242,
+            "mean_atp": 0.7910922278714749
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.25,
+          "perturbed_value": 1.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0014353895548194773,
+          "delta_het": 0.043884458594288245,
+          "sensitivity_atp": 0.005741558219277909,
+          "sensitivity_het": 0.17553783437715298,
+          "perturbed_metrics": {
+            "final_atp": 0.7946174531778708,
+            "final_het": 0.29486978432910704,
+            "min_atp": 0.5022581919354688,
+            "mean_atp": 0.7803107249874868
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.001664759109102576,
+          "delta_het": 0.025161375466563135,
+          "sensitivity_atp": 0.006659036436410304,
+          "sensitivity_het": 0.10064550186625254,
+          "perturbed_metrics": {
+            "final_atp": 0.7977176018417929,
+            "final_het": 0.22582395026825566,
+            "min_atp": 0.5023021641382114,
+            "mean_atp": 0.7894664472123791
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0017953498816145608,
+          "delta_het": 0.02420596283434251,
+          "sensitivity_atp": 0.007181399526458243,
+          "sensitivity_het": 0.09682385133737004,
+          "perturbed_metrics": {
+            "final_atp": 0.7942574928510757,
+            "final_het": 0.2751912885691613,
+            "min_atp": 0.5022730349862049,
+            "mean_atp": 0.7829976795858489
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.00047201363389126616,
+          "delta_het": 0.006982563408005543,
+          "sensitivity_atp": 0.0018880545355650646,
+          "sensitivity_het": 0.027930253632022173,
+          "perturbed_metrics": {
+            "final_atp": 0.7965248563665815,
+            "final_het": 0.24400276232681326,
+            "min_atp": 0.5022885071538448,
+            "mean_atp": 0.7885057033740127
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.000539186991211138,
+          "delta_het": 0.007645221217527032,
+          "sensitivity_atp": 0.002156747964844552,
+          "sensitivity_het": 0.030580884870108127,
+          "perturbed_metrics": {
+            "final_atp": 0.7955136557414791,
+            "final_het": 0.25863054695234583,
+            "min_atp": 0.5022874898733172,
+            "mean_atp": 0.7839890012711164
+          }
+        }
+      ]
+    },
+    {
+      "label": "young_biohacker",
+      "center_metrics": {
+        "final_atp": 0.9220413878125479,
+        "final_het": 0.23071046973848972,
+        "min_atp": 0.9220413878125479,
+        "mean_atp": 0.9601413685597565
+      },
+      "n_perturbations": 22,
+      "fragility_score": 1.5415767135072094,
+      "most_sensitive_param": "yamanaka_intensity",
+      "least_sensitive_param": "baseline_nad_level",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.0030944840167948704,
+          "sensitivity_het": 0.18767072774117327,
+          "combined": 0.19076521175796815
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.1373510131664264,
+          "sensitivity_het": 0.07170584949142272,
+          "combined": 0.20905686265784912
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.04341215787369457,
+          "sensitivity_het": 0.0018037199954116143,
+          "combined": 0.045215877869106184
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.20968548616706717,
+          "sensitivity_het": 0.16474951544393518,
+          "combined": 0.37443500161100235
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.001154630976533122,
+          "sensitivity_het": 0.07551431151947785,
+          "combined": 0.07666894249601097
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.03113077482589599,
+          "sensitivity_het": 0.007021888339859839,
+          "combined": 0.03815266316575583
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.0039346904929832335,
+          "sensitivity_het": 0.00171940368129843,
+          "combined": 0.005654094174281664
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.005122909753595417,
+          "sensitivity_het": 0.22007548897893456,
+          "combined": 0.22519839873252998
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.000435959078542251,
+          "sensitivity_het": 0.0007752829556153622,
+          "combined": 0.0012112420341576133
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.0047517321920622635,
+          "sensitivity_het": 0.2618685145900757,
+          "combined": 0.26662024678213797
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.00613932502515957,
+          "sensitivity_het": 0.0924061399885685,
+          "combined": 0.09854546501372807
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.0006865412124170319,
+          "sensitivity_het": 0.009366166000264511,
+          "combined": 0.010052707212681544
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.0006076161411195935,
+          "delta_het": 0.031458157421749317,
+          "sensitivity_atp": 0.004050774274130624,
+          "sensitivity_het": 0.20972104947832879,
+          "perturbed_metrics": {
+            "final_atp": 0.9214337716714283,
+            "final_het": 0.26216862716023903,
+            "min_atp": 0.9214337716714283,
+            "mean_atp": 0.959972191868172
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0005345484398647793,
+          "delta_het": 0.04140510150100443,
+          "sensitivity_atp": 0.002138193759459117,
+          "sensitivity_het": 0.16562040600401773,
+          "perturbed_metrics": {
+            "final_atp": 0.9225759362524126,
+            "final_het": 0.18930536823748528,
+            "min_atp": 0.9225759362524126,
+            "mean_atp": 0.9603085800935263
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.03503524459669016,
+          "delta_het": 0.01896673576752081,
+          "sensitivity_atp": 0.14014097838676065,
+          "sensitivity_het": 0.07586694307008324,
+          "perturbed_metrics": {
+            "final_atp": 0.8870061432158577,
+            "final_het": 0.24967720550601052,
+            "min_atp": 0.8870061432158577,
+            "mean_atp": 0.9435113987776869
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.033640261986523035,
+          "delta_het": 0.016886188978190553,
+          "sensitivity_atp": 0.13456104794609214,
+          "sensitivity_het": 0.06754475591276221,
+          "perturbed_metrics": {
+            "final_atp": 0.9556816497990709,
+            "final_het": 0.21382428076029916,
+            "min_atp": 0.9544582489566737,
+            "mean_atp": 0.9657547635321944
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 0.00525984073569985,
+          "delta_het": 0.00021101713410862089,
+          "sensitivity_atp": 0.0525984073569985,
+          "sensitivity_het": 0.002110171341086209,
+          "perturbed_metrics": {
+            "final_atp": 0.916781547076848,
+            "final_het": 0.2304994526043811,
+            "min_atp": 0.916781547076848,
+            "mean_atp": 0.9582798975192671
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.005133886258558595,
+          "delta_het": 0.00022459029746055292,
+          "sensitivity_atp": 0.034225908390390636,
+          "sensitivity_het": 0.0014972686497370196,
+          "perturbed_metrics": {
+            "final_atp": 0.9271752740711064,
+            "final_het": 0.23093506003595027,
+            "min_atp": 0.9271752740711064,
+            "mean_atp": 0.9621627764831724
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.020968548616706717,
+          "delta_het": 0.016474951544393518,
+          "sensitivity_atp": 0.20968548616706717,
+          "sensitivity_het": 0.16474951544393518,
+          "perturbed_metrics": {
+            "final_atp": 0.9010728391958411,
+            "final_het": 0.2142355181940962,
+            "min_atp": 0.9010728391958411,
+            "mean_atp": 0.9423386952362763
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.0001154630976533122,
+          "delta_het": 0.007551431151947785,
+          "sensitivity_atp": 0.001154630976533122,
+          "sensitivity_het": 0.07551431151947785,
+          "perturbed_metrics": {
+            "final_atp": 0.9221568509102012,
+            "final_het": 0.22315903858654193,
+            "min_atp": 0.9221568509102012,
+            "mean_atp": 0.9601755287392078
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.007788891428611833,
+          "delta_het": 0.0018522218192125461,
+          "sensitivity_atp": 0.03115556571444733,
+          "sensitivity_het": 0.0074088872768501846,
+          "perturbed_metrics": {
+            "final_atp": 0.9298302792411597,
+            "final_het": 0.22885824791927717,
+            "min_atp": 0.9298302792411597,
+            "mean_atp": 0.9675204748893447
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.0077764959843361625,
+          "delta_het": 0.0016587223507173732,
+          "sensitivity_atp": 0.03110598393734465,
+          "sensitivity_het": 0.006634889402869493,
+          "perturbed_metrics": {
+            "final_atp": 0.9142648918282117,
+            "final_het": 0.2323691920892071,
+            "min_atp": 0.9142648918282117,
+            "mean_atp": 0.9527669837849203
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 30.0,
+          "perturbed_value": 20.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.03705065858538947,
+          "delta_het": 0.02093651836245533,
+          "sensitivity_atp": 0.0037050658585389474,
+          "sensitivity_het": 0.002093651836245533,
+          "perturbed_metrics": {
+            "final_atp": 0.9590920463979373,
+            "final_het": 0.20977395137603438,
+            "min_atp": 0.9540828262269613,
+            "mean_atp": 0.9660144907095212
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 30.0,
+          "perturbed_value": 40.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.0416431512742752,
+          "delta_het": 0.01345155526351327,
+          "sensitivity_atp": 0.00416431512742752,
+          "sensitivity_het": 0.0013451555263513271,
+          "perturbed_metrics": {
+            "final_atp": 0.8803982365382726,
+            "final_het": 0.24416202500200299,
+            "min_atp": 0.8803982365382726,
+            "mean_atp": 0.9392246946839407
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.05,
+          "delta_param": 0.05,
+          "delta_atp": 0.0002084504445113433,
+          "delta_het": 0.010154955606237442,
+          "sensitivity_atp": 0.004169008890226866,
+          "sensitivity_het": 0.20309911212474885,
+          "perturbed_metrics": {
+            "final_atp": 0.9222498382570592,
+            "final_het": 0.22055551413225227,
+            "min_atp": 0.9222498382570592,
+            "mean_atp": 0.9602788006919943
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.2,
+          "delta_param": 0.1,
+          "delta_atp": 0.0006076810616963968,
+          "delta_het": 0.023705186583312027,
+          "sensitivity_atp": 0.006076810616963968,
+          "sensitivity_het": 0.23705186583312027,
+          "perturbed_metrics": {
+            "final_atp": 0.9214337067508515,
+            "final_het": 0.25441565632180174,
+            "min_atp": 0.9214337067508515,
+            "mean_atp": 0.9596268245501347
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.9,
+          "perturbed_value": 0.6,
+          "delta_param": 0.30000000000000004,
+          "delta_atp": 0.00016212921323299767,
+          "delta_het": 0.00031484338403250933,
+          "sensitivity_atp": 0.0005404307107766588,
+          "sensitivity_het": 0.001049477946775031,
+          "perturbed_metrics": {
+            "final_atp": 0.9218792585993149,
+            "final_het": 0.23102531312252222,
+            "min_atp": 0.8367166254857455,
+            "mean_atp": 0.9477884985571731
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.9,
+          "perturbed_value": 1.0,
+          "delta_param": 0.09999999999999998,
+          "delta_atp": 3.314874463078432e-05,
+          "delta_het": 5.0108796445569315e-05,
+          "sensitivity_atp": 0.00033148744630784327,
+          "sensitivity_het": 0.0005010879644556933,
+          "perturbed_metrics": {
+            "final_atp": 0.9220745365571786,
+            "final_het": 0.23066036094204415,
+            "min_atp": 0.9220745365571786,
+            "mean_atp": 0.9625125231596723
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0007726673908563519,
+          "delta_het": 0.06651807684357597,
+          "sensitivity_atp": 0.0030906695634254078,
+          "sensitivity_het": 0.2660723073743039,
+          "perturbed_metrics": {
+            "final_atp": 0.9228140552034042,
+            "final_het": 0.16419239289491375,
+            "min_atp": 0.9228140552034042,
+            "mean_atp": 0.9603954787235981
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.0016031987051747798,
+          "delta_het": 0.06441618045146189,
+          "sensitivity_atp": 0.006412794820699119,
+          "sensitivity_het": 0.25766472180584754,
+          "perturbed_metrics": {
+            "final_atp": 0.9204381891073731,
+            "final_het": 0.2951266501899516,
+            "min_atp": 0.9204381891073731,
+            "mean_atp": 0.9596700414847105
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.001485475040693629,
+          "delta_het": 0.02326214531243989,
+          "sensitivity_atp": 0.005941900162774516,
+          "sensitivity_het": 0.09304858124975957,
+          "perturbed_metrics": {
+            "final_atp": 0.9235268628532415,
+            "final_het": 0.20744832442604982,
+            "min_atp": 0.9235268628532415,
+            "mean_atp": 0.960727239847957
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.001584187471886156,
+          "delta_het": 0.02294092468184436,
+          "sensitivity_atp": 0.006336749887544624,
+          "sensitivity_het": 0.09176369872737744,
+          "perturbed_metrics": {
+            "final_atp": 0.9204572003406617,
+            "final_het": 0.2536513944203341,
+            "min_atp": 0.9204572003406617,
+            "mean_atp": 0.9595219299913462
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 6.805623755579138e-05,
+          "delta_het": 0.0009306653308320534,
+          "sensitivity_atp": 0.0006805623755579138,
+          "sensitivity_het": 0.009306653308320534,
+          "perturbed_metrics": {
+            "final_atp": 0.9221094440501036,
+            "final_het": 0.22977980440765766,
+            "min_atp": 0.9221094440501036,
+            "mean_atp": 0.9601607193928006
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.0001038780073914225,
+          "delta_het": 0.001413851803831273,
+          "sensitivity_atp": 0.0006925200492761501,
+          "sensitivity_het": 0.009425678692208488,
+          "perturbed_metrics": {
+            "final_atp": 0.9219375098051564,
+            "final_het": 0.232124321542321,
+            "min_atp": 0.9219375098051564,
+            "mean_atp": 0.9601119528524005
+          }
+        }
+      ]
+    },
+    {
+      "label": "yamanaka_aggressive",
+      "center_metrics": {
+        "final_atp": 0.6408364921646877,
+        "final_het": 0.20825796059996451,
+        "min_atp": 0.6408364921646877,
+        "mean_atp": 0.6942995546793906
+      },
+      "n_perturbations": 23,
+      "fragility_score": 1.5991678178158644,
+      "most_sensitive_param": "yamanaka_intensity",
+      "least_sensitive_param": "baseline_age",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.002632335977325188,
+          "sensitivity_het": 0.16481374242899927,
+          "combined": 0.16744607840632444
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.1402980390616244,
+          "sensitivity_het": 0.08116778613122377,
+          "combined": 0.2214658251928482
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.04400025441602429,
+          "sensitivity_het": 0.001080531719848769,
+          "combined": 0.045080786135873054
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.4935491532312182,
+          "sensitivity_het": 0.0898364639154931,
+          "combined": 0.5833856171467113
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.0016283159437113781,
+          "sensitivity_het": 0.10755725949177702,
+          "combined": 0.1091855754354884
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.031009667668976393,
+          "sensitivity_het": 0.0063526665215478395,
+          "combined": 0.03736233419052423
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.0042681795034015925,
+          "sensitivity_het": 0.0005237372748938291,
+          "combined": 0.004791916778295421
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.0031066073429575334,
+          "sensitivity_het": 0.11394649873580655,
+          "combined": 0.11705310607876408
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.0005421451596428667,
+          "sensitivity_het": 0.0043817305062374586,
+          "combined": 0.004923875665880325
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.0028431403567079627,
+          "sensitivity_het": 0.17947183686145673,
+          "combined": 0.1823149772181647
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.00634264547922303,
+          "sensitivity_het": 0.10187696727309997,
+          "combined": 0.108219612752323
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.0010143733360457041,
+          "sensitivity_het": 0.01692373947862138,
+          "combined": 0.017938112814667083
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.0004957531884549615,
+          "delta_het": 0.027616234204923984,
+          "sensitivity_atp": 0.0033050212563664103,
+          "sensitivity_het": 0.18410822803282656,
+          "perturbed_metrics": {
+            "final_atp": 0.6403407389762328,
+            "final_het": 0.2358741948048885,
+            "min_atp": 0.6403407389762328,
+            "mean_atp": 0.6938323842175641
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0004899126745709914,
+          "delta_het": 0.03637981420629299,
+          "sensitivity_atp": 0.0019596506982839657,
+          "sensitivity_het": 0.14551925682517197,
+          "perturbed_metrics": {
+            "final_atp": 0.6413264048392587,
+            "final_het": 0.17187814639367152,
+            "min_atp": 0.6413264048392587,
+            "mean_atp": 0.6948265018908704
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.03511171823642867,
+          "delta_het": 0.021989936646944458,
+          "sensitivity_atp": 0.14044687294571467,
+          "sensitivity_het": 0.08795974658777783,
+          "perturbed_metrics": {
+            "final_atp": 0.6057247739282591,
+            "final_het": 0.23024789724690897,
+            "min_atp": 0.6057247739282591,
+            "mean_atp": 0.6642616602114383
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.03503730129438354,
+          "delta_het": 0.01859395641866743,
+          "sensitivity_atp": 0.14014920517753415,
+          "sensitivity_het": 0.07437582567466972,
+          "perturbed_metrics": {
+            "final_atp": 0.6758737934590713,
+            "final_het": 0.18966400418129709,
+            "min_atp": 0.6758737934590713,
+            "mean_atp": 0.724285711237606
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.008792363654494428,
+          "delta_het": 0.00020483389106551453,
+          "sensitivity_atp": 0.05861575769662952,
+          "sensitivity_het": 0.001365559273770097,
+          "perturbed_metrics": {
+            "final_atp": 0.6320441285101933,
+            "final_het": 0.20846279449103003,
+            "min_atp": 0.6320441285101933,
+            "mean_atp": 0.6901991581050104
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.007346187783854763,
+          "delta_het": 0.00019887604148186022,
+          "sensitivity_atp": 0.02938475113541905,
+          "sensitivity_het": 0.0007955041659274409,
+          "perturbed_metrics": {
+            "final_atp": 0.6481826799485425,
+            "final_het": 0.20805908455848265,
+            "min_atp": 0.6481826799485425,
+            "mean_atp": 0.6984010722426042
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.11059932402701167,
+          "delta_het": 0.029165845781372685,
+          "sensitivity_atp": 0.4423972961080467,
+          "sensitivity_het": 0.11666338312549074,
+          "perturbed_metrics": {
+            "final_atp": 0.7514358161916994,
+            "final_het": 0.2374238063813372,
+            "min_atp": 0.7514358161916994,
+            "mean_atp": 0.7995899606090898
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.13617525258859742,
+          "delta_het": 0.015752386176373867,
+          "sensitivity_atp": 0.5447010103543897,
+          "sensitivity_het": 0.06300954470549547,
+          "perturbed_metrics": {
+            "final_atp": 0.5046612395760903,
+            "final_het": 0.19250557442359065,
+            "min_atp": 0.5046612395760903,
+            "mean_atp": 0.5644034227833586
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.0001628315943711378,
+          "delta_het": 0.010755725949177702,
+          "sensitivity_atp": 0.0016283159437113781,
+          "sensitivity_het": 0.10755725949177702,
+          "perturbed_metrics": {
+            "final_atp": 0.6409993237590589,
+            "final_het": 0.1975022346507868,
+            "min_atp": 0.6409993237590589,
+            "mean_atp": 0.6944652512917677
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 0.0031021987765920134,
+          "delta_het": 0.0006444852707258308,
+          "sensitivity_atp": 0.031021987765920134,
+          "sensitivity_het": 0.006444852707258308,
+          "perturbed_metrics": {
+            "final_atp": 0.6439386909412798,
+            "final_het": 0.20761347532923868,
+            "min_atp": 0.6439386909412798,
+            "mean_atp": 0.6972657760500172
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.004649602135804898,
+          "delta_het": 0.0009390720503756056,
+          "sensitivity_atp": 0.030997347572032652,
+          "sensitivity_het": 0.006260480335837371,
+          "perturbed_metrics": {
+            "final_atp": 0.6361868900288828,
+            "final_het": 0.20919703265034012,
+            "min_atp": 0.6361868900288828,
+            "mean_atp": 0.6898527382388625
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 50.0,
+          "perturbed_value": 40.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.04272403466584429,
+          "delta_het": 0.004986946225921246,
+          "sensitivity_atp": 0.004272403466584429,
+          "sensitivity_het": 0.0004986946225921246,
+          "perturbed_metrics": {
+            "final_atp": 0.683560526830532,
+            "final_het": 0.20327101437404327,
+            "min_atp": 0.683560526830532,
+            "mean_atp": 0.732891960585626
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 50.0,
+          "perturbed_value": 60.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.04263955540218756,
+          "delta_het": 0.005487799271955335,
+          "sensitivity_atp": 0.004263955540218756,
+          "sensitivity_het": 0.0005487799271955335,
+          "perturbed_metrics": {
+            "final_atp": 0.5981969367625002,
+            "final_het": 0.21374575987191985,
+            "min_atp": 0.5981969367625002,
+            "mean_atp": 0.6558879488096235
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.35,
+          "perturbed_value": 0.2,
+          "delta_param": 0.14999999999999997,
+          "delta_atp": 0.0003884186365377129,
+          "delta_het": 0.015342615573986723,
+          "sensitivity_atp": 0.0025894575769180865,
+          "sensitivity_het": 0.10228410382657818,
+          "perturbed_metrics": {
+            "final_atp": 0.6412249108012255,
+            "final_het": 0.1929153450259778,
+            "min_atp": 0.6412249108012255,
+            "mean_atp": 0.6958514192154334
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.35,
+          "perturbed_value": 0.4,
+          "delta_param": 0.050000000000000044,
+          "delta_atp": 0.00018118785544984917,
+          "delta_het": 0.006280444682251751,
+          "sensitivity_atp": 0.0036237571089969803,
+          "sensitivity_het": 0.1256088936450349,
+          "perturbed_metrics": {
+            "final_atp": 0.6406553043092379,
+            "final_het": 0.21453840528221627,
+            "min_atp": 0.6406553043092379,
+            "mean_atp": 0.6930507343561889
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.7,
+          "perturbed_value": 0.4,
+          "delta_param": 0.29999999999999993,
+          "delta_atp": 0.00016446117757984435,
+          "delta_het": 0.0013565108942009962,
+          "sensitivity_atp": 0.0005482039252661479,
+          "sensitivity_het": 0.004521702980669989,
+          "perturbed_metrics": {
+            "final_atp": 0.6406720309871079,
+            "final_het": 0.2096144714941655,
+            "min_atp": 0.6133719557535874,
+            "mean_atp": 0.6768002903953961
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.7,
+          "perturbed_value": 0.8,
+          "delta_param": 0.10000000000000009,
+          "delta_atp": 5.360863940195859e-05,
+          "delta_het": 0.0004241758031804932,
+          "sensitivity_atp": 0.0005360863940195855,
+          "sensitivity_het": 0.0042417580318049285,
+          "perturbed_metrics": {
+            "final_atp": 0.6408901008040897,
+            "final_het": 0.20783378479678402,
+            "min_atp": 0.6408901008040897,
+            "mean_atp": 0.7001287452393481
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.0005525448716036108,
+          "delta_het": 0.04467480745979688,
+          "sensitivity_atp": 0.002210179486414443,
+          "sensitivity_het": 0.1786992298391875,
+          "perturbed_metrics": {
+            "final_atp": 0.6413890370362914,
+            "final_het": 0.16358315314016764,
+            "min_atp": 0.6413890370362914,
+            "mean_atp": 0.694812818999967
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0008690253067503706,
+          "delta_het": 0.04506111097093149,
+          "sensitivity_atp": 0.0034761012270014824,
+          "sensitivity_het": 0.18024444388372596,
+          "perturbed_metrics": {
+            "final_atp": 0.6399674668579374,
+            "final_het": 0.253319071570896,
+            "min_atp": 0.6399674668579374,
+            "mean_atp": 0.6935713174108735
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.0015401586633280173,
+          "delta_het": 0.025674191755239634,
+          "sensitivity_atp": 0.006160634653312069,
+          "sensitivity_het": 0.10269676702095853,
+          "perturbed_metrics": {
+            "final_atp": 0.6423766508280158,
+            "final_het": 0.18258376884472488,
+            "min_atp": 0.6423766508280158,
+            "mean_atp": 0.6954921070921601
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.0016311640762834978,
+          "delta_het": 0.025264291881310352,
+          "sensitivity_atp": 0.006524656305133991,
+          "sensitivity_het": 0.10105716752524141,
+          "perturbed_metrics": {
+            "final_atp": 0.6392053280884042,
+            "final_het": 0.23352225248127487,
+            "min_atp": 0.6392053280884042,
+            "mean_atp": 0.6930481591290466
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.0001473296621598008,
+          "delta_het": 0.002473932476075358,
+          "sensitivity_atp": 0.0009821977477320054,
+          "sensitivity_het": 0.01649288317383572,
+          "perturbed_metrics": {
+            "final_atp": 0.6409838218268475,
+            "final_het": 0.20578402812388916,
+            "min_atp": 0.6409838218268475,
+            "mean_atp": 0.6944513245045447
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0002616372310898507,
+          "delta_het": 0.0043386489458517585,
+          "sensitivity_atp": 0.0010465489243594028,
+          "sensitivity_het": 0.017354595783407034,
+          "perturbed_metrics": {
+            "final_atp": 0.6405748549335979,
+            "final_het": 0.21259660954581627,
+            "min_atp": 0.6405748549335979,
+            "mean_atp": 0.6940357919390789
+          }
+        }
+      ]
+    },
+    {
+      "label": "high_inflammation",
+      "center_metrics": {
+        "final_atp": 0.637444412451343,
+        "final_het": 0.6120496697217018,
+        "min_atp": 0.637444412451343,
+        "mean_atp": 0.7646639606407177
+      },
+      "n_perturbations": 22,
+      "fragility_score": 9.153250180028452,
+      "most_sensitive_param": "transplant_rate",
+      "least_sensitive_param": "baseline_age",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.9038101589231716,
+          "sensitivity_het": 0.48088163261269545,
+          "combined": 1.3846917915358672
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.5258714381499168,
+          "sensitivity_het": 0.21676173343788907,
+          "combined": 0.7426331715878058
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.009497558945350315,
+          "sensitivity_het": 0.0006912707116681904,
+          "combined": 0.010188829657018506
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.5983523053732276,
+          "sensitivity_het": 0.5377654599632331,
+          "combined": 1.1361177653364607
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 1.0743966674654493,
+          "sensitivity_het": 0.8384302352985973,
+          "combined": 1.9128269027640465
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.21913595143346765,
+          "sensitivity_het": 0.13520736410635922,
+          "combined": 0.3543433155398269
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.004984342519781389,
+          "sensitivity_het": 0.0008939966216759002,
+          "combined": 0.005878339141457289
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.996518333140097,
+          "sensitivity_het": 0.5342239010313576,
+          "combined": 1.5307422341714547
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.023106372898629712,
+          "sensitivity_het": 0.011264661239457907,
+          "combined": 0.03437103413808762
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.6986377983938035,
+          "sensitivity_het": 0.37270835469623553,
+          "combined": 1.071346153090039
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.3426300212273714,
+          "sensitivity_het": 0.17902998973408546,
+          "combined": 0.5216600109614569
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.2961281230714572,
+          "sensitivity_het": 0.15232250903347433,
+          "combined": 0.4484506321049315
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.3215884271720841,
+          "delta_het": 0.12200835730650195,
+          "sensitivity_atp": 1.2863537086883363,
+          "sensitivity_het": 0.4880334292260078,
+          "perturbed_metrics": {
+            "final_atp": 0.3158559852792589,
+            "final_het": 0.7340580270282038,
+            "min_atp": 0.3158559852792589,
+            "mean_atp": 0.6473523462985836
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.13031665228950173,
+          "delta_het": 0.11843245899984578,
+          "sensitivity_atp": 0.5212666091580069,
+          "sensitivity_het": 0.4737298359993831,
+          "perturbed_metrics": {
+            "final_atp": 0.7677610647408447,
+            "final_het": 0.49361721072185605,
+            "min_atp": 0.7662764326183138,
+            "mean_atp": 0.8139054588027418
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.15214890458848274,
+          "delta_het": 0.05544918699939594,
+          "sensitivity_atp": 0.608595618353931,
+          "sensitivity_het": 0.22179674799758375,
+          "perturbed_metrics": {
+            "final_atp": 0.48529550786286024,
+            "final_het": 0.6674988567210978,
+            "min_atp": 0.48529550786286024,
+            "mean_atp": 0.6960980347335157
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.11078681448647565,
+          "delta_het": 0.0529316797195486,
+          "sensitivity_atp": 0.4431472579459026,
+          "sensitivity_het": 0.2117267188781944,
+          "perturbed_metrics": {
+            "final_atp": 0.7482312269378186,
+            "final_het": 0.5591179900021532,
+            "min_atp": 0.7482312269378186,
+            "mean_atp": 0.8207015135187647
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.0031140434603400546,
+          "delta_het": 0.000208936663733561,
+          "sensitivity_atp": 0.012456173841360219,
+          "sensitivity_het": 0.000835746654934244,
+          "perturbed_metrics": {
+            "final_atp": 0.6343303689910029,
+            "final_het": 0.6118407330579683,
+            "min_atp": 0.6343303689910029,
+            "mean_atp": 0.7617442054213207
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.001634736012335103,
+          "delta_het": 0.0001366986921005342,
+          "sensitivity_atp": 0.006538944049340412,
+          "sensitivity_het": 0.0005467947684021368,
+          "perturbed_metrics": {
+            "final_atp": 0.6390791484636781,
+            "final_het": 0.6121863684138024,
+            "min_atp": 0.6390791484636781,
+            "mean_atp": 0.7664663754101142
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.05983523053732276,
+          "delta_het": 0.05377654599632331,
+          "sensitivity_atp": 0.5983523053732276,
+          "sensitivity_het": 0.5377654599632331,
+          "perturbed_metrics": {
+            "final_atp": 0.6972796429886657,
+            "final_het": 0.5582731237253785,
+            "min_atp": 0.6972796429886657,
+            "mean_atp": 0.7739718343508191
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.10743966674654493,
+          "delta_het": 0.08384302352985973,
+          "sensitivity_atp": 1.0743966674654493,
+          "sensitivity_het": 0.8384302352985973,
+          "perturbed_metrics": {
+            "final_atp": 0.7448840791978879,
+            "final_het": 0.5282066461918421,
+            "min_atp": 0.7448840791978879,
+            "mean_atp": 0.7997460766009282
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.04009890647211567,
+          "delta_het": 0.0220560567723741,
+          "sensitivity_atp": 0.2673260431474378,
+          "sensitivity_het": 0.14704037848249402,
+          "perturbed_metrics": {
+            "final_atp": 0.5973455059792273,
+            "final_het": 0.6341057264940759,
+            "min_atp": 0.5973455059792273,
+            "mean_atp": 0.7576540673738216
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.042736464929874374,
+          "delta_het": 0.030843587432556108,
+          "sensitivity_atp": 0.1709458597194975,
+          "sensitivity_het": 0.12337434973022443,
+          "perturbed_metrics": {
+            "final_atp": 0.6801808773812174,
+            "final_het": 0.5812060822891457,
+            "min_atp": 0.6801808773812174,
+            "mean_atp": 0.7714086348299434
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 65.0,
+          "perturbed_value": 50.0,
+          "delta_param": 15.0,
+          "delta_atp": 0.07376806241502543,
+          "delta_het": 0.012733561860449827,
+          "sensitivity_atp": 0.004917870827668361,
+          "sensitivity_het": 0.0008489041240299885,
+          "perturbed_metrics": {
+            "final_atp": 0.7112124748663684,
+            "final_het": 0.599316107861252,
+            "min_atp": 0.7112124748663684,
+            "mean_atp": 0.8218027985565514
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 65.0,
+          "perturbed_value": 70.0,
+          "delta_param": 5.0,
+          "delta_atp": 0.025254071059472083,
+          "delta_het": 0.00469544559660906,
+          "sensitivity_atp": 0.005050814211894417,
+          "sensitivity_het": 0.000939089119321812,
+          "perturbed_metrics": {
+            "final_atp": 0.6121903413918709,
+            "final_het": 0.6167451153183109,
+            "min_atp": 0.6121903413918709,
+            "mean_atp": 0.7454739762744361
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.45,
+          "perturbed_value": 0.3,
+          "delta_param": 0.15000000000000002,
+          "delta_atp": 0.10461593572647243,
+          "delta_het": 0.07474359708246325,
+          "sensitivity_atp": 0.6974395715098161,
+          "sensitivity_het": 0.49829064721642163,
+          "perturbed_metrics": {
+            "final_atp": 0.7420603481778154,
+            "final_het": 0.5373060726392386,
+            "min_atp": 0.7420603481778154,
+            "mean_atp": 0.8225246634866213
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.45,
+          "perturbed_value": 0.5,
+          "delta_param": 0.04999999999999999,
+          "delta_atp": 0.06477985473851888,
+          "delta_het": 0.02850785774231468,
+          "sensitivity_atp": 1.2955970947703779,
+          "sensitivity_het": 0.5701571548462937,
+          "perturbed_metrics": {
+            "final_atp": 0.5726645577128241,
+            "final_het": 0.6405575274640165,
+            "min_atp": 0.5726645577128241,
+            "mean_atp": 0.7183904946710676
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.2,
+          "delta_param": 0.3,
+          "delta_atp": 0.007438129103595981,
+          "delta_het": 0.0035928963887560394,
+          "sensitivity_atp": 0.02479376367865327,
+          "sensitivity_het": 0.011976321295853465,
+          "perturbed_metrics": {
+            "final_atp": 0.630006283347747,
+            "final_het": 0.6156425661104579,
+            "min_atp": 0.630006283347747,
+            "mean_atp": 0.7431896644490956
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.6,
+          "delta_param": 0.09999999999999998,
+          "delta_atp": 0.0021418982118606156,
+          "delta_het": 0.001055300118306235,
+          "sensitivity_atp": 0.02141898211860616,
+          "sensitivity_het": 0.010553001183062351,
+          "perturbed_metrics": {
+            "final_atp": 0.6395863106632036,
+            "final_het": 0.6109943696033956,
+            "min_atp": 0.6395863106632036,
+            "mean_atp": 0.7715961928710475
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.5,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.11828658644530377,
+          "delta_het": 0.09733718506282452,
+          "sensitivity_atp": 0.47314634578121506,
+          "sensitivity_het": 0.38934874025129806,
+          "perturbed_metrics": {
+            "final_atp": 0.7557309988966467,
+            "final_het": 0.5147124846588773,
+            "min_atp": 0.7557309988966467,
+            "mean_atp": 0.8090381475198543
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.5,
+          "perturbed_value": 2.0,
+          "delta_param": 0.5,
+          "delta_atp": 0.46206462550319594,
+          "delta_het": 0.1780339845705865,
+          "sensitivity_atp": 0.9241292510063919,
+          "sensitivity_het": 0.356067969141173,
+          "perturbed_metrics": {
+            "final_atp": 0.17537978694814702,
+            "final_het": 0.7900836542922883,
+            "min_atp": 0.17537978694814702,
+            "mean_atp": 0.5676223968420624
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.25,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.07346352995562999,
+          "delta_het": 0.04678411449492814,
+          "sensitivity_atp": 0.29385411982251997,
+          "sensitivity_het": 0.18713645797971257,
+          "perturbed_metrics": {
+            "final_atp": 0.710907942406973,
+            "final_het": 0.5652655552267737,
+            "min_atp": 0.710907942406973,
+            "mean_atp": 0.7922679627336868
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.25,
+          "perturbed_value": 1.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.09785148065805571,
+          "delta_het": 0.04273088037211459,
+          "sensitivity_atp": 0.39140592263222285,
+          "sensitivity_het": 0.17092352148845835,
+          "perturbed_metrics": {
+            "final_atp": 0.5395929317932873,
+            "final_het": 0.6547805500938164,
+            "min_atp": 0.5395929317932873,
+            "mean_atp": 0.7280452589794484
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.75,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.06019716126359931,
+          "delta_het": 0.03681264634206172,
+          "sensitivity_atp": 0.24078864505439723,
+          "sensitivity_het": 0.14725058536824687,
+          "perturbed_metrics": {
+            "final_atp": 0.6976415737149423,
+            "final_het": 0.5752370233796401,
+            "min_atp": 0.6976415737149423,
+            "mean_atp": 0.7853018148996292
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.75,
+          "perturbed_value": 1.0,
+          "delta_param": 0.25,
+          "delta_atp": 0.08786690027212929,
+          "delta_het": 0.03934860817467545,
+          "sensitivity_atp": 0.35146760108851716,
+          "sensitivity_het": 0.1573944326987018,
+          "perturbed_metrics": {
+            "final_atp": 0.5495775121792137,
+            "final_het": 0.6513982778963773,
+            "min_atp": 0.5495775121792137,
+            "mean_atp": 0.7361916189149011
+          }
+        }
+      ]
+    },
+    {
+      "label": "transplant_heavy",
+      "center_metrics": {
+        "final_atp": 0.701855534082698,
+        "final_het": 0.4793652978863021,
+        "min_atp": 0.701855534082698,
+        "mean_atp": 0.7467733613739699
+      },
+      "n_perturbations": 22,
+      "fragility_score": 2.913316530248744,
+      "most_sensitive_param": "rapamycin_dose",
+      "least_sensitive_param": "baseline_nad_level",
+      "param_sensitivities": {
+        "rapamycin_dose": {
+          "sensitivity_atp": 0.2620372423878766,
+          "sensitivity_het": 0.6060622856170759,
+          "combined": 0.8680995280049525
+        },
+        "nad_supplement": {
+          "sensitivity_atp": 0.22534030838450478,
+          "sensitivity_het": 0.2394854881730913,
+          "combined": 0.46482579655759604
+        },
+        "senolytic_dose": {
+          "sensitivity_atp": 0.10715954396745868,
+          "sensitivity_het": 0.005886275017754072,
+          "combined": 0.11304581898521275
+        },
+        "yamanaka_intensity": {
+          "sensitivity_atp": 0.0995976499323914,
+          "sensitivity_het": 0.3575513019968113,
+          "combined": 0.4571489519292027
+        },
+        "transplant_rate": {
+          "sensitivity_atp": 0.006544852115475397,
+          "sensitivity_het": 0.013722855741882478,
+          "combined": 0.020267707857357875
+        },
+        "exercise_level": {
+          "sensitivity_atp": 0.027965174411176408,
+          "sensitivity_het": 0.006112547664412586,
+          "combined": 0.03407772207558899
+        },
+        "baseline_age": {
+          "sensitivity_atp": 0.004375046604428962,
+          "sensitivity_het": 0.00027002218397750855,
+          "combined": 0.004645068788406471
+        },
+        "baseline_heteroplasmy": {
+          "sensitivity_atp": 0.09333002987236455,
+          "sensitivity_het": 0.19225260898069618,
+          "combined": 0.28558263885306073
+        },
+        "baseline_nad_level": {
+          "sensitivity_atp": 0.0016220155211645513,
+          "sensitivity_het": 0.0015820104007399638,
+          "combined": 0.003204025921904515
+        },
+        "genetic_vulnerability": {
+          "sensitivity_atp": 0.11817859465251845,
+          "sensitivity_het": 0.28068087124911334,
+          "combined": 0.3988594659016318
+        },
+        "metabolic_demand": {
+          "sensitivity_atp": 0.047103552314180286,
+          "sensitivity_het": 0.10620290838287516,
+          "combined": 0.15330646069705545
+        },
+        "inflammation_level": {
+          "sensitivity_atp": 0.035171380555857654,
+          "sensitivity_het": 0.07508196412091675,
+          "combined": 0.1102533446767744
+        }
+      },
+      "perturbations": [
+        {
+          "param": "rapamycin_dose",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 0.03924462093217884,
+          "delta_het": 0.06526619440796966,
+          "sensitivity_atp": 0.3924462093217884,
+          "sensitivity_het": 0.6526619440796966,
+          "perturbed_metrics": {
+            "final_atp": 0.6626109131505191,
+            "final_het": 0.5446314922942718,
+            "min_atp": 0.6626109131505191,
+            "mean_atp": 0.7263584414960245
+          }
+        },
+        {
+          "param": "rapamycin_dose",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.019744241318094713,
+          "delta_het": 0.08391939407316829,
+          "sensitivity_atp": 0.13162827545396477,
+          "sensitivity_het": 0.5594626271544553,
+          "perturbed_metrics": {
+            "final_atp": 0.7215997754007927,
+            "final_het": 0.3954459038131338,
+            "min_atp": 0.7073091765395808,
+            "mean_atp": 0.7612035126528277
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "lower",
+          "original_value": 0.25,
+          "perturbed_value": 0.1,
+          "delta_param": 0.15,
+          "delta_atp": 0.038058199692490025,
+          "delta_het": 0.037748214851945905,
+          "sensitivity_atp": 0.25372133128326685,
+          "sensitivity_het": 0.2516547656796394,
+          "perturbed_metrics": {
+            "final_atp": 0.6637973343902079,
+            "final_het": 0.517113512738248,
+            "min_atp": 0.6637973343902079,
+            "mean_atp": 0.7197932698066045
+          }
+        },
+        {
+          "param": "nad_supplement",
+          "direction": "upper",
+          "original_value": 0.25,
+          "perturbed_value": 0.5,
+          "delta_param": 0.25,
+          "delta_atp": 0.04923982137143568,
+          "delta_het": 0.05682905266663579,
+          "sensitivity_atp": 0.1969592854857427,
+          "sensitivity_het": 0.22731621066654317,
+          "perturbed_metrics": {
+            "final_atp": 0.7510953554541336,
+            "final_het": 0.4225362452196663,
+            "min_atp": 0.707333072827384,
+            "mean_atp": 0.7860102001211512
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 0.01359729796903475,
+          "delta_het": 0.0007053834688829363,
+          "sensitivity_atp": 0.1359729796903475,
+          "sensitivity_het": 0.0070538346888293635,
+          "perturbed_metrics": {
+            "final_atp": 0.6882582361136632,
+            "final_het": 0.4786599144174192,
+            "min_atp": 0.6882582361136632,
+            "mean_atp": 0.7405469596076698
+          }
+        },
+        {
+          "param": "senolytic_dose",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.011751916236685478,
+          "delta_het": 0.0007078073020018172,
+          "sensitivity_atp": 0.07834610824456986,
+          "sensitivity_het": 0.004718715346678781,
+          "perturbed_metrics": {
+            "final_atp": 0.7136074503193834,
+            "final_het": 0.48007310518830393,
+            "min_atp": 0.7072993344975314,
+            "mean_atp": 0.7530937751181456
+          }
+        },
+        {
+          "param": "yamanaka_intensity",
+          "direction": "upper",
+          "original_value": 0.0,
+          "perturbed_value": 0.1,
+          "delta_param": 0.1,
+          "delta_atp": 0.00995976499323914,
+          "delta_het": 0.03575513019968113,
+          "sensitivity_atp": 0.0995976499323914,
+          "sensitivity_het": 0.3575513019968113,
+          "perturbed_metrics": {
+            "final_atp": 0.6918957690894588,
+            "final_het": 0.443610167686621,
+            "min_atp": 0.6918957690894588,
+            "mean_atp": 0.7351517905064134
+          }
+        },
+        {
+          "param": "transplant_rate",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.0016362130288688492,
+          "delta_het": 0.0034307139354706195,
+          "sensitivity_atp": 0.006544852115475397,
+          "sensitivity_het": 0.013722855741882478,
+          "perturbed_metrics": {
+            "final_atp": 0.7002193210538291,
+            "final_het": 0.48279601182177273,
+            "min_atp": 0.7002193210538291,
+            "mean_atp": 0.7424702770474115
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "lower",
+          "original_value": 0.1,
+          "perturbed_value": 0.0,
+          "delta_param": 0.1,
+          "delta_atp": 0.002791162494495625,
+          "delta_het": 0.0006207636308283582,
+          "sensitivity_atp": 0.027911624944956248,
+          "sensitivity_het": 0.006207636308283582,
+          "perturbed_metrics": {
+            "final_atp": 0.7046466965771936,
+            "final_het": 0.47998606151713047,
+            "min_atp": 0.7046466965771936,
+            "mean_atp": 0.7495360379128508
+          }
+        },
+        {
+          "param": "exercise_level",
+          "direction": "upper",
+          "original_value": 0.1,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15,
+          "delta_atp": 0.004202808581609485,
+          "delta_het": 0.0009026188530812385,
+          "sensitivity_atp": 0.028018723877396567,
+          "sensitivity_het": 0.00601745902054159,
+          "perturbed_metrics": {
+            "final_atp": 0.6976527255010885,
+            "final_het": 0.4784626790332209,
+            "min_atp": 0.6976527255010885,
+            "mean_atp": 0.7426204183449038
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "lower",
+          "original_value": 70.0,
+          "perturbed_value": 60.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.043825527832417555,
+          "delta_het": 0.00246655626376574,
+          "sensitivity_atp": 0.004382552783241756,
+          "sensitivity_het": 0.000246655626376574,
+          "perturbed_metrics": {
+            "final_atp": 0.7456810619151155,
+            "final_het": 0.47689874162253637,
+            "min_atp": 0.7127602581097672,
+            "mean_atp": 0.7850134780360855
+          }
+        },
+        {
+          "param": "baseline_age",
+          "direction": "upper",
+          "original_value": 70.0,
+          "perturbed_value": 80.0,
+          "delta_param": 10.0,
+          "delta_atp": 0.043675404256161676,
+          "delta_het": 0.002933887415784431,
+          "sensitivity_atp": 0.004367540425616168,
+          "sensitivity_het": 0.0002933887415784431,
+          "perturbed_metrics": {
+            "final_atp": 0.6581801298265363,
+            "final_het": 0.48229918530208654,
+            "min_atp": 0.6581801298265363,
+            "mean_atp": 0.708797823671571
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "lower",
+          "original_value": 0.55,
+          "perturbed_value": 0.5,
+          "delta_param": 0.050000000000000044,
+          "delta_atp": 0.0047216932376793475,
+          "delta_het": 0.011214610464920505,
+          "sensitivity_atp": 0.09443386475358687,
+          "sensitivity_het": 0.2242922092984099,
+          "perturbed_metrics": {
+            "final_atp": 0.7065772273203773,
+            "final_het": 0.4681506874213816,
+            "min_atp": 0.7065772273203773,
+            "mean_atp": 0.7604590159960802
+          }
+        },
+        {
+          "param": "baseline_heteroplasmy",
+          "direction": "upper",
+          "original_value": 0.55,
+          "perturbed_value": 0.7,
+          "delta_param": 0.1499999999999999,
+          "delta_atp": 0.013833929248671328,
+          "delta_het": 0.02403195129944735,
+          "sensitivity_atp": 0.09222619499114225,
+          "sensitivity_het": 0.16021300866298244,
+          "perturbed_metrics": {
+            "final_atp": 0.6880216048340266,
+            "final_het": 0.5033972491857495,
+            "min_atp": 0.39093261065466584,
+            "mean_atp": 0.6566868150031033
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "lower",
+          "original_value": 0.5,
+          "perturbed_value": 0.2,
+          "delta_param": 0.3,
+          "delta_atp": 0.000513113100195417,
+          "delta_het": 0.0005271704514455133,
+          "sensitivity_atp": 0.00171037700065139,
+          "sensitivity_het": 0.0017572348381517111,
+          "perturbed_metrics": {
+            "final_atp": 0.7013424209825025,
+            "final_het": 0.4798924683377476,
+            "min_atp": 0.601247644388144,
+            "mean_atp": 0.7299644182950589
+          }
+        },
+        {
+          "param": "baseline_nad_level",
+          "direction": "upper",
+          "original_value": 0.5,
+          "perturbed_value": 0.6,
+          "delta_param": 0.09999999999999998,
+          "delta_atp": 0.00015336540416777122,
+          "delta_het": 0.00014067859633282165,
+          "sensitivity_atp": 0.0015336540416777127,
+          "sensitivity_het": 0.0014067859633282167,
+          "perturbed_metrics": {
+            "final_atp": 0.7020088994868657,
+            "final_het": 0.4792246192899693,
+            "min_atp": 0.7020088994868657,
+            "mean_atp": 0.7523377447848886
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.018272627976531286,
+          "delta_het": 0.07368661172180957,
+          "sensitivity_atp": 0.07309051190612514,
+          "sensitivity_het": 0.2947464468872383,
+          "perturbed_metrics": {
+            "final_atp": 0.7201281620592292,
+            "final_het": 0.40567868616449254,
+            "min_atp": 0.7073096439995623,
+            "mean_atp": 0.7598743264687257
+          }
+        },
+        {
+          "param": "genetic_vulnerability",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.04081666934972794,
+          "delta_het": 0.0666538239027471,
+          "sensitivity_atp": 0.16326667739891176,
+          "sensitivity_het": 0.2666152956109884,
+          "perturbed_metrics": {
+            "final_atp": 0.66103886473297,
+            "final_het": 0.5460191217890492,
+            "min_atp": 0.66103886473297,
+            "mean_atp": 0.7234750422552069
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "lower",
+          "original_value": 1.0,
+          "perturbed_value": 0.75,
+          "delta_param": 0.25,
+          "delta_atp": 0.010452551486269668,
+          "delta_het": 0.027701601022234013,
+          "sensitivity_atp": 0.04181020594507867,
+          "sensitivity_het": 0.11080640408893605,
+          "perturbed_metrics": {
+            "final_atp": 0.7123080855689676,
+            "final_het": 0.4516636968640681,
+            "min_atp": 0.7073039270304158,
+            "mean_atp": 0.7537267592625353
+          }
+        },
+        {
+          "param": "metabolic_demand",
+          "direction": "upper",
+          "original_value": 1.0,
+          "perturbed_value": 1.25,
+          "delta_param": 0.25,
+          "delta_atp": 0.013099224670820475,
+          "delta_het": 0.025399853169203568,
+          "sensitivity_atp": 0.0523968986832819,
+          "sensitivity_het": 0.10159941267681427,
+          "perturbed_metrics": {
+            "final_atp": 0.6887563094118775,
+            "final_het": 0.5047651510555057,
+            "min_atp": 0.6887563094118775,
+            "mean_atp": 0.7385999476289585
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "lower",
+          "original_value": 0.4,
+          "perturbed_value": 0.25,
+          "delta_param": 0.15000000000000002,
+          "delta_atp": 0.004574871671638725,
+          "delta_het": 0.011025526718415779,
+          "sensitivity_atp": 0.030499144477591496,
+          "sensitivity_het": 0.07350351145610519,
+          "perturbed_metrics": {
+            "final_atp": 0.7064304057543367,
+            "final_het": 0.46833977116788633,
+            "min_atp": 0.7064304057543367,
+            "mean_atp": 0.7498087703097781
+          }
+        },
+        {
+          "param": "inflammation_level",
+          "direction": "upper",
+          "original_value": 0.4,
+          "perturbed_value": 0.75,
+          "delta_param": 0.35,
+          "delta_atp": 0.013945265821943331,
+          "delta_het": 0.026831145875004903,
+          "sensitivity_atp": 0.03984361663412381,
+          "sensitivity_het": 0.0766604167857283,
+          "perturbed_metrics": {
+            "final_atp": 0.6879102682607546,
+            "final_het": 0.506196443761307,
+            "min_atp": 0.6879102682607546,
+            "mean_atp": 0.7382692037086046
+          }
+        }
+      ]
+    }
+  ]
+}

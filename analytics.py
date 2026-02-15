@@ -15,6 +15,8 @@ Usage:
     analytics = compute_all(result)
 """
 
+from __future__ import annotations
+
 import json
 import numpy as np
 
@@ -58,7 +60,7 @@ class NumpyEncoder(json.JSONEncoder):
 
 # ── Pillar 1: Energy ─────────────────────────────────────────────────────────
 
-def compute_energy(result):
+def compute_energy(result: dict) -> dict[str, float]:
     """Compute energy pillar metrics from simulation result.
 
     Analyzes the ATP trajectory to characterize the cell's energy state
@@ -125,7 +127,7 @@ def compute_energy(result):
 
 # ── Pillar 2: Damage ─────────────────────────────────────────────────────────
 
-def compute_damage(result):
+def compute_damage(result: dict) -> dict[str, float]:
     """Compute damage pillar metrics from simulation result.
 
     Analyzes heteroplasmy trajectory and proximity to the cliff.
@@ -192,7 +194,7 @@ def compute_damage(result):
 
 # ── Pillar 3: Dynamics ──────────────────────────────────────────────────────
 
-def _fft_peak(signal, dt):
+def _fft_peak(signal: np.ndarray, dt: float) -> tuple[float, float]:
     """Find dominant frequency and amplitude via FFT.
 
     Args:
@@ -218,7 +220,7 @@ def _fft_peak(signal, dt):
     return float(freqs[peak_idx]), float(magnitudes[peak_idx] / n)
 
 
-def compute_dynamics(result):
+def compute_dynamics(result: dict) -> dict[str, float]:
     """Compute dynamics pillar metrics from simulation result.
 
     Analyzes oscillatory behavior, stability, and cross-variable
@@ -297,7 +299,7 @@ def compute_dynamics(result):
 
 # ── Pillar 4: Intervention ──────────────────────────────────────────────────
 
-def compute_intervention(result, baseline_result=None):
+def compute_intervention(result: dict, baseline_result: dict | None = None) -> dict[str, float]:
     """Compute intervention pillar metrics.
 
     Evaluates the cost-effectiveness of the intervention by comparing
@@ -385,7 +387,7 @@ def compute_intervention(result, baseline_result=None):
 
 # ── Combined analytics ──────────────────────────────────────────────────────
 
-def compute_all(result, baseline_result=None):
+def compute_all(result: dict, baseline_result: dict | None = None) -> dict[str, dict[str, float]]:
     """Compute all 4 pillars and return as a single analytics dict.
 
     Args:

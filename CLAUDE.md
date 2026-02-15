@@ -5,6 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Action Items
 
 - **REPORT TO JOHN CRAMER:** The falsifier agent found 4 critical bugs in the ODE equations (2026-02-15). Full report: `artifacts/falsifier_report_2026-02-15.md`. Key issues: cliff was cosmetic not dynamical, mtDNA copy number unbounded, NAD supplementation inverted therapeutic sign, universal attractor prevented cliff crossing. Fixes were applied same day — Cramer should review the corrected dynamics for biological plausibility.
+- **CRAMER CORRECTIONS APPLIED (2026-02-15):** Per John Cramer's email review:
+  - **C7: CD38 degrades NMN/NR** — NAD+ boost now gated by CD38 survival factor (p.73). Low-dose supplementation is largely futile (CD38 destroys most precursor). High doses imply CD38 suppression via apigenin, improving delivery. Coefficient reduced from 0.35 → 0.25 * cd38_survival.
+  - **C8: Transplant is primary rejuvenation** — Addition rate doubled (0.15 → 0.30), headroom raised (1.2 → 1.5), and competitive displacement of damaged copies added (0.12 * n_d). Transplant now clearly outperforms NAD supplementation and can rescue near-cliff patients.
+- **CRAMER CORRECTION APPLIED (2026-02-15):** Per John Cramer's second email:
+  - **C9: AGE_TRANSITION restored to 65** — The mtDNA deletion doubling time transition was incorrectly set to age 40. Book data (Appendix 2 p.155, Va23) places it at age 65. Corrected in constants.py and simulator.py.
 
 ## Project Overview
 
@@ -44,8 +49,9 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 
 ```bash
 # Standalone tests (no Ollama needed)
-python simulator.py       # ODE integrator test with 8 scenarios (incl. tissue types + stochastic)
+python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
+pytest tests/ -v          # Full pytest suite (85 tests: simulator, analytics, LLM parsing, schemas)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 
@@ -82,6 +88,13 @@ python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6
 python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman Ch. 4)
 python posiwid_audit.py          # POSIWID alignment audit (requires Ollama, ~15-20 min)
 python archetype_matchmaker.py   # Archetype→protocol matchmaker (needs character data)
+
+# Tier 5 — Discovery Tools (no Ollama needed, standalone)
+python interaction_mapper.py     # D4: Synergy/antagonism between intervention pairs (~3 min, ~2160 sims)
+python reachable_set.py          # D1: Reachable outcome space + Pareto frontiers (~5 min, ~2400 sims)
+python competing_evaluators.py   # D5: Multi-criteria robust protocols (~2 min, ~1000 sims)
+python temporal_optimizer.py     # D2: Optimal intervention timelines via ES (~7 min, ~3000 sims)
+python multi_tissue_sim.py       # D3: Coupled brain+muscle+cardiac simulation (~2 min, ~30 sims)
 ```
 
 ## Architecture
@@ -89,13 +102,15 @@ python archetype_matchmaker.py   # Archetype→protocol matchmaker (needs charac
 ### Dependency Graph
 
 ```
-constants.py          ← Central config (no dependencies)
+constants.py          ← Central config, type aliases (no dependencies)
     ↓
-simulator.py          ← RK4 ODE integrator (imports constants)
+schemas.py            ← Pydantic validation models (imports nothing from project)
+    ↓
+simulator.py          ← RK4 ODE integrator + InterventionSchedule (imports constants)
     ↓
 analytics.py          ← 4-pillar metrics (imports constants, simulator)
     ↓
-llm_common.py         ← Shared LLM utilities (imports constants)
+llm_common.py         ← Shared LLM utilities (imports constants, schemas)
     ↓
 cliff_mapping.py      ← Cliff analysis (imports simulator, constants)
 visualize.py          ← Matplotlib plots (imports simulator, analytics, cliff_mapping)
@@ -120,6 +135,13 @@ pds_mapping.py             ← PDS→patient mapping (imports constants, analyti
 posiwid_audit.py           ← POSIWID alignment audit (imports llm_common, simulator)
 archetype_matchmaker.py    ← Archetype→protocol matching (imports pds_mapping, analytics)
 
+# Discovery tools (Tier 5, no LLM, imports simulator + analytics/constants)
+interaction_mapper.py      ← D4: Synergy/antagonism 2D grid sweeps (imports simulator, constants)
+reachable_set.py           ← D1: Reachable outcome space + Pareto (imports simulator, constants)
+competing_evaluators.py    ← D5: Multi-criteria protocol search (imports simulator, analytics)
+temporal_optimizer.py      ← D2: Temporal schedule optimization (imports simulator, analytics)
+multi_tissue_sim.py        ← D3: Coupled multi-tissue simulation (imports simulator.derivatives, constants)
+
 protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ```
 
@@ -143,7 +165,7 @@ protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 
 ### Simulator Details
 
-The ODE system models 7 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ~ 3.65 days, 3000 steps over 30 years). Supports tissue-specific profiles (brain/muscle/cardiac/default from `constants.py:TISSUE_PROFILES`) and optional stochastic Euler-Maruyama integration for confidence intervals:
+The ODE system models 7 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ~ 3.65 days, 3000 steps over 30 years). Supports tissue-specific profiles (brain/muscle/cardiac/default from `constants.py:TISSUE_PROFILES`), optional stochastic Euler-Maruyama integration for confidence intervals, and time-varying intervention schedules via `InterventionSchedule`:
 
 - **N_healthy / N_damaged**: mtDNA copy counts with homeostatic regulation toward total ≈ 1.0
 - **ATP**: Energy production, driven by cliff factor × NAD × (1 - senescence)
@@ -158,6 +180,10 @@ Key dynamics post-falsifier fixes (2026-02-15):
 - **NAD selectively benefits healthy mitochondria** (fix C3) — quality control, not damaged boost
 - **Bistability past cliff** (fix C4) — damaged replication advantage creates irreversible collapse
 - **Yamanaka gated by ATP** (fix M1) — no energy → no repair
+
+Cramer email corrections (2026-02-15):
+- **CD38 degrades NMN/NR** (fix C7) — NAD+ boost gated by CD38 survival factor; low dose mostly destroyed, high dose includes apigenin CD38 suppression
+- **Transplant is primary rejuvenation** (fix C8) — doubled addition rate, competitive displacement of damaged copies, the only method for reversing accumulated mtDNA damage
 
 ### 4-Pillar Analytics
 
@@ -195,6 +221,13 @@ Key dynamics post-falsifier fixes (2026-02-15):
 - **posiwid_audit.py** — POSIWID alignment: measures gap between LLM-stated intentions and actual simulation outcomes. Two-phase query (intention + protocol) per scenario. Requires Ollama
 - **archetype_matchmaker.py** — Combines PDS mapping with character experiment data. Identifies which character archetypes produce the best protocols for which patient types. Tier 4 (needs prior character experiment data)
 
+**Tier 5 — Discovery Tools (no LLM, exploit simulation for novel biology):**
+- **interaction_mapper.py** (D4) — 2D grid sweeps of all 15 intervention pairs × 3 patient types. Measures super-additivity (synergy) and sub-additivity (antagonism). Compares with Sobol interaction indices if available. ~2160 sims
+- **reachable_set.py** (D1) — Latin hypercube sampling of 6D intervention space. Maps achievable (het, ATP) region, Pareto frontier, minimum-intervention paths to health targets (maintain_health, significant_reversal, aggressive_reversal, cliff_escape). ~2400 sims
+- **competing_evaluators.py** (D5) — 4 evaluator functions (ATP_Guardian, Het_Hunter, Crisis_Delayer, Efficiency_Auditor) score ~500 candidate protocols. Finds "transaction" protocols in top-25% for ALL evaluators. 4D Pareto frontier, evaluator agreement matrix. Optionally ingests Pareto/synergy data from D1/D4. ~1000 sims
+- **temporal_optimizer.py** (D2) — (1+lambda) ES over phased InterventionSchedule genotypes (3 phases × 6 params + 2 boundaries = 20D). Compares optimal phased schedule to constant equivalent; timing_importance = relative improvement. ~3000 sims
+- **multi_tissue_sim.py** (D3) — Wraps derivatives() to simulate brain+muscle+cardiac coupled by shared NAD+ pool, systemic inflammation, and cardiac blood flow. Tests 5 protocols × 4 allocation strategies + brain allocation sweep. Discovers cardiac cascade, worst-first allocation benefits. ~30 sims
+
 ## 12D Parameter Space
 
 The LLM generates a 12-dimensional vector for each clinical scenario:
@@ -224,7 +257,7 @@ All values snapped to discrete grids via `snap_param()` / `snap_all()` in `const
 | Heteroplasmy cliff | 0.70 | Mitochondrial genetics literature (Rossignol 2003); Cramer discusses different metric (MitoClock ~25%, Ch. V.K p.66) |
 | Cliff steepness (sigmoid) | 15.0 | Simulation calibration (not from book) |
 | Deletion doubling (young) | 11.8 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); also Ch. II.H p.15 |
-| Deletion doubling (old) | 3.06 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); book says age 65 transition, sim uses 40 |
+| Deletion doubling (old) | 3.06 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); transition at age 65 (corrected from 40) |
 | Damaged replication advantage | 1.05x | Cramer Appendix 2 pp.154-155: book says "at least 21% faster" (Va23); code uses conservative 5% |
 | Yamanaka energy cost | 3-5 MU/day | Cramer Ch. VIII.A Table 3 p.100; Ch. VII.B p.95 says 3-10x (Ci24, Fo18) |
 | Baseline ATP | 1.0 MU/day | Cramer Ch. VIII.A Table 3 p.100 (1 MU = 10^8 ATP releases) |
@@ -232,6 +265,11 @@ All values snapped to discrete grids via `snap_param()` / `snap_all()` in `const
 | NAD decline rate | 0.01/year | Cramer Ch. VI.A.3 pp.72-73 (Ca16 = Camacho-Pereira 2016, Ch. VI refs p.87) |
 | Senescence rate | 0.005/year | Cramer Ch. VII.A pp.89-92, Ch. VIII.F p.103; rate is sim param |
 | Membrane potential | 1.0 (norm) | Cramer Ch. IV pp.46-47 (~180mV healthy); Ch. VI.B p.75 (low = PINK1 trigger) |
+| CD38 base survival | 0.4 | Cramer Ch. VI.A.3 p.73: CD38 destroys NMN/NR; 40% survives at min dose |
+| CD38 suppression gain | 0.6 | Apigenin suppresses CD38, raising survival to 100% at max dose |
+| Transplant addition rate | 0.30 | Cramer Ch. VIII.G pp.104-107: primary rejuvenation (doubled from 0.15) |
+| Transplant displacement | 0.12 | Competitive displacement of damaged copies by transplanted healthy mitos |
+| Transplant headroom | 1.5 | Max total copies with transplant (raised from 1.2) |
 
 ## Common Code Patterns
 
@@ -292,6 +330,39 @@ offer = get_prompt("diegetic", "offer")   # Zimmerman-informed narrative style
 offer = get_prompt("contrastive", "offer")  # Dr. Cautious vs Dr. Bold
 ```
 
+### Time-varying intervention schedules
+
+```python
+from simulator import simulate, phased_schedule, pulsed_schedule
+from constants import DEFAULT_INTERVENTION
+
+no_treatment = dict(DEFAULT_INTERVENTION)
+cocktail = {"rapamycin_dose": 0.5, "nad_supplement": 0.75,
+            "senolytic_dose": 0.5, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.5}
+
+# Phased: no treatment years 0-10, then full cocktail years 10-30
+schedule = phased_schedule([(0, no_treatment), (10, cocktail)])
+result = simulate(intervention=schedule, sim_years=30)
+
+# Pulsed: 5-year on/off cycles
+schedule = pulsed_schedule(cocktail, no_treatment, period=5.0, duty_cycle=0.5)
+result = simulate(intervention=schedule, sim_years=30)
+```
+
+### Schema validation
+
+```python
+from schemas import FullProtocol, InterventionVector
+from llm_common import validate_llm_output
+
+# Direct validation
+protocol = FullProtocol(rapamycin_dose=0.5, baseline_age=70)
+
+# Validate raw LLM output dict
+snapped, warnings = validate_llm_output(raw_dict)
+```
+
 ## Key Data Files
 
 - `output/tiqm_*.json` — Per-scenario TIQM experiment results (offer + confirmation + analytics)
@@ -316,7 +387,12 @@ offer = get_prompt("contrastive", "offer")  # Dr. Cautious vs Dr. Bold
 - Different models for offer vs confirmation wave to prevent self-confirmation bias
 - Output files: plots → `output/`, experiment JSON → `output/` or `artifacts/`
 - Analytics pipeline is numpy-only (no scipy, no sklearn), matching parent ER project constraint
-- All LLM query/parse utilities consolidated in `llm_common.py`: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`
+- All LLM query/parse utilities consolidated in `llm_common.py`: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`, `validate_llm_output()`
+- LLM outputs validated via pydantic schemas (`schemas.py`) before grid snapping — `InterventionVector`, `PatientProfile`, `FullProtocol` models with per-field range constraints
+- Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
+- Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
+- Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
+- Formal test suite: `pytest tests/ -v` runs 85 tests across 4 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

@@ -131,11 +131,22 @@ def sobol_indices(y_A, y_B, y_AB, y_BA):
     ST = np.zeros(d)
 
     for i in range(d):
-        # First-order: Jansen (1999) estimator
+        # First-order (S1): Jansen (1999) estimator.
+        # S1_i = V_i / Var(Y) where V_i = E[Y_B * (Y_AB_i - Y_A)].
+        # Measures the fraction of output variance explained by parameter i
+        # ALONE (main effect). High S1 means this parameter independently
+        # drives the outcome — e.g., baseline_heteroplasmy likely has high S1
+        # for het_final because it directly sets the initial condition.
         V_i = np.mean(y_B * (y_AB[i] - y_A))
         S1[i] = V_i / var_total
 
-        # Total-order: Jansen (1999) estimator
+        # Total-order (ST): Jansen (1999) estimator.
+        # ST_i = VT_i / Var(Y) where VT_i = 0.5 * E[(Y_A - Y_BA_i)^2].
+        # Measures the fraction of output variance due to parameter i AND all
+        # its interactions with other parameters. ST_i - S1_i = interaction
+        # contribution. High interaction means the parameter's effect depends
+        # on other parameter values — e.g., NAD supplement effect depends on
+        # inflammation_level because inflammation depletes NAD (Cramer Ch. VI.A.3).
         VT_i = 0.5 * np.mean((y_A - y_BA[i]) ** 2)
         ST[i] = VT_i / var_total
 
@@ -212,7 +223,14 @@ def run_sobol(n_base=256, sim_years=30, rng_seed=42):
     S1_het, ST_het = sobol_indices(y_A_het, y_B_het, y_AB_het, y_BA_het)
     S1_atp, ST_atp = sobol_indices(y_A_atp, y_B_atp, y_AB_atp, y_BA_atp)
 
-    # Interaction indices: ST - S1 = higher-order contributions
+    # Interaction indices: ST - S1 = higher-order contributions.
+    # These capture parameter interactions that one-at-a-time perturbation
+    # (perturbation_probing.py) cannot detect. High interaction indices
+    # indicate nonlinear coupling in the ODE — e.g., the CD38 gating of
+    # NAD supplementation (Cramer Ch. VI.A.3 p.73) creates an interaction
+    # between nad_supplement and any parameter affecting CD38 expression.
+    # Similarly, the heteroplasmy cliff (sigmoid with steepness 15.0)
+    # creates strong interactions near het=0.70 that vanish elsewhere.
     interaction_het = ST_het - S1_het
     interaction_atp = ST_atp - S1_atp
 

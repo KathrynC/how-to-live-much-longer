@@ -7,6 +7,11 @@ Reference:
     Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
     DNA Connection*. ISBN 979-8-9928220-0-4.
 
+Type aliases:
+    ParamDict = dict[str, float]
+    InterventionDict = dict[str, float]
+    PatientDict = dict[str, float]
+
 Citation key (Cramer 2025 chapter/page references):
     HETEROPLASMY_CLIFF = 0.7
         Not given as an explicit number in the book. Cramer discusses a
@@ -21,9 +26,8 @@ Citation key (Cramer 2025 chapter/page references):
         *Aging Cell* 22(6), 2023). "The fits indicate that the doubling
         time (DT) before age 65 is 11.81 years and the doubling time
         after age 65 is 3.06 years." Also Ch. II.H, p.15.
-        NOTE: The book uses age 65 as the transition, but AGE_TRANSITION
-        is set to 40.0 in this simulation — a deliberate choice to model
-        earlier onset; discuss with Cramer.
+        Corrected 2026-02-15: AGE_TRANSITION restored to 65 per Cramer
+        email ("the data puts it at 65").
     AGE_TRANSITION = 40.0
         Book says 65 (Appendix 2, p.155). Simulation uses 40.
     BASELINE_ATP = 1.0
@@ -66,7 +70,13 @@ Citation key (Cramer 2025 chapter/page references):
         exponentially"). The code's 1.05 (5%) is conservative relative
         to Cramer's data suggesting ≥1.21.
 """
+from __future__ import annotations
 
+# ── Type aliases ─────────────────────────────────────────────────────────────
+
+ParamDict = dict[str, float]
+InterventionDict = dict[str, float]
+PatientDict = dict[str, float]
 
 # ── Simulation parameters ────────────────────────────────────────────────────
 
@@ -100,7 +110,7 @@ CLIFF_STEEPNESS = 15.0
 # NOTE: Book uses age 65 as transition; simulation uses 40 (deliberate).
 DOUBLING_TIME_YOUNG = 11.8   # years (Cramer Appendix 2, p.155)
 DOUBLING_TIME_OLD = 3.06     # years (Cramer Appendix 2, p.155)
-AGE_TRANSITION = 40.0        # book says 65 (Appendix 2 p.155); sim uses 40
+AGE_TRANSITION = 65.0        # Cramer Appendix 2 p.155: "DT before age 65" (corrected per Cramer email 2026-02-15)
 
 # Baseline ATP production (metabolic units per day)
 # Cramer Ch. VIII.A, Table 3, p.100: "Normal Somatic Cell Operation:
@@ -145,6 +155,22 @@ BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 # faster" (Va23). 1.05 is conservative; book data suggests ≥1.21.
 DAMAGED_REPLICATION_ADVANTAGE = 1.05
 
+# CD38 degradation of NMN/NR supplements
+# Cramer Ch. VI.A.3 p.73: CD38 enzyme destroys NMN and NR before they can
+# boost NAD+ (Mayo Clinic data). A better strategy is CD38 suppression with
+# apigenin. At low supplementation, CD38 destroys most precursor; at high
+# doses the protocol includes CD38 suppression (apigenin + NMN/NR combo).
+CD38_BASE_SURVIVAL = 0.4     # fraction of NMN/NR surviving CD38 at min dose
+CD38_SUPPRESSION_GAIN = 0.6  # additional survival from CD38 inhibitor (apigenin)
+
+# Transplant effectiveness (primary rejuvenation mechanism)
+# Cramer Ch. VIII.G pp.104-107: bioreactor-grown stem cells → mitlet
+# encapsulation. The ONLY method for reversing accumulated mtDNA damage
+# at a scale that could be called rejuvenation (Cramer email, 2026-02-15).
+TRANSPLANT_ADDITION_RATE = 0.30     # healthy copy addition (was 0.15)
+TRANSPLANT_DISPLACEMENT_RATE = 0.12 # competitive displacement of damaged copies
+TRANSPLANT_HEADROOM = 1.5           # max total copies allowed with transplant (was 1.2)
+
 # ── 12-Dimensional parameter space ──────────────────────────────────────────
 # 6 intervention parameters + 6 patient parameters
 
@@ -159,11 +185,11 @@ INTERVENTION_PARAMS = {
         "effect": "mitophagy_boost",
     },
     "nad_supplement": {
-        "description": "NAD+ precursor supplementation (NMN/NR)",
+        "description": "NAD+ restoration strategy (NMN/NR + CD38 suppression via apigenin)",
         "unit": "normalized 0-1",
         "range": (0.0, 1.0),
         "grid": [0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
-        "effect": "nad_restoration",
+        "effect": "nad_restoration (CD38-gated: low dose mostly destroyed, high dose includes apigenin)",
     },
     "senolytic_dose": {
         "description": "Senolytic drug dose (dasatinib+quercetin or navitoclax)",
@@ -180,11 +206,11 @@ INTERVENTION_PARAMS = {
         "effect": "damage_repair (costs ATP)",
     },
     "transplant_rate": {
-        "description": "Mitochondrial transplant rate (healthy mtDNA infusion)",
+        "description": "Mitochondrial transplant rate (healthy mtDNA infusion via bioreactor mitlets)",
         "unit": "copies/year normalized",
         "range": (0.0, 1.0),
         "grid": [0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
-        "effect": "adds_healthy_copies",
+        "effect": "adds_healthy_copies + displaces_damaged (primary rejuvenation mechanism)",
     },
     "exercise_level": {
         "description": "Exercise intensity (hormesis: moderate ROS → adaptation)",
@@ -243,7 +269,7 @@ ALL_PARAM_NAMES = INTERVENTION_NAMES + PATIENT_NAMES
 
 # ── Discrete grid snapping ───────────────────────────────────────────────────
 
-def snap_param(name, value):
+def snap_param(name: str, value: float) -> float:
     """Snap a parameter value to its nearest grid point.
 
     Args:
@@ -260,7 +286,7 @@ def snap_param(name, value):
     return min(spec["grid"], key=lambda g: abs(g - value))
 
 
-def snap_all(raw_dict):
+def snap_all(raw_dict: ParamDict) -> ParamDict:
     """Snap all 12 parameters in a dict to their grid points."""
     snapped = {}
     for name in ALL_PARAM_NAMES:

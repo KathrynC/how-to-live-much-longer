@@ -11,10 +11,22 @@ on LLM meaning construction:
 - Anti-flattening measures separate qualitatively different parameters
   with semantic context (Ch. 3: LLMs collapse qualitative distinctions)
 
-Reference:
+Biological constants embedded in prompts (Cramer 2025):
+- Heteroplasmy cliff at ~0.70 (Ch. V.K p.66, Rossignol 2003)
+- Yamanaka energy cost 3-5 MU/day (Ch. VIII.A Table 3 p.100)
+- Baseline ATP = 1.0 MU/day (Ch. VIII.A Table 3 p.100)
+- CD38 destroys low-dose NMN/NR (Ch. VI.A.3 p.73) — prompts warn LLMs
+- Transplant as only true rejuvenation (Ch. VIII.G pp.104-107)
+- NAD+ declines with age (Ch. VI.A.3 pp.72-73, Ca16)
+- Senescent cells produce SASP (Ch. VII.A pp.89-92)
+
+References:
     Zimmerman, J.W. (2025). "Locality, Relation, and Meaning
     Construction in Language, as Implemented in Humans and Large
     Language Models (LLMs)." PhD dissertation, University of Vermont.
+
+    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." ISBN 979-8-9928220-0-4.
 """
 
 
@@ -27,11 +39,13 @@ characterize the patient based on the clinical scenario.
 
 INTERVENTION PARAMETERS (6 params, each 0.0 to 1.0):
   rapamycin_dose: mTOR inhibition -> enhanced mitophagy (0=none, 1=maximum)
-  nad_supplement: NAD+ precursor (NMN/NR) dose (0=none, 1=maximum)
+  nad_supplement: NAD+ restoration (NMN/NR + CD38 suppression via apigenin) \
+(0=none, 1=max with CD38 inhibitor). NOTE: low doses are mostly destroyed by CD38 enzyme
   senolytic_dose: Senolytic drug dose (dasatinib+quercetin) (0=none, 1=maximum)
   yamanaka_intensity: Partial reprogramming (OSKM) intensity (0=none, 1=max) \
 WARNING: costs 3-5 MU of ATP -- only use if patient can afford the energy
-  transplant_rate: Mitochondrial transplant rate via mitlets (0=none, 1=maximum)
+  transplant_rate: Mitochondrial transplant via bioreactor mitlets (0=none, 1=maximum). \
+This is the ONLY method for true rejuvenation — it reverses accumulated mtDNA damage
   exercise_level: Exercise intensity for hormetic adaptation (0=sedentary, 1=intense)
 
 PATIENT PARAMETERS (6 params):
@@ -50,11 +64,30 @@ Think carefully about this patient:
 - How close are they to the heteroplasmy cliff?
 - What is the most urgent intervention?
 - Can they afford Yamanaka's energy cost?
-- Would transplant help (adding healthy copies)?
+- Would transplant help? (the only true rejuvenation — adds healthy copies AND displaces damaged ones)
+- Is NAD+ supplementation worthwhile? (CD38 destroys low-dose NMN/NR; needs high dose + apigenin)
 - Is exercise safe given their current energy reserves?
 
 Choose intervention values from: [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]
 Choose patient values within the ranges described above.
+
+=== EXAMPLES ===
+
+Example 1 — Young prevention case:
+Scenario: "25-year-old biohacker, low damage, wants longevity optimization."
+{{"rapamycin_dose": 0.1, "nad_supplement": 0.25, "senolytic_dose": 0.0, \
+"yamanaka_intensity": 0.0, "transplant_rate": 0.0, "exercise_level": 0.75, \
+"baseline_age": 30, "baseline_heteroplasmy": 0.1, "baseline_nad_level": 0.8, \
+"genetic_vulnerability": 1.0, "metabolic_demand": 1.0, "inflammation_level": 0.1}}
+
+Example 2 — Near-cliff emergency:
+Scenario: "80-year-old with 65% heteroplasmy, approaching the cliff."
+{{"rapamycin_dose": 0.75, "nad_supplement": 0.5, "senolytic_dose": 0.5, \
+"yamanaka_intensity": 0.0, "transplant_rate": 0.75, "exercise_level": 0.1, \
+"baseline_age": 80, "baseline_heteroplasmy": 0.6, "baseline_nad_level": 0.4, \
+"genetic_vulnerability": 1.0, "metabolic_demand": 1.0, "inflammation_level": 0.5}}
+
+=== YOUR TURN ===
 
 Output a single JSON object with ALL 12 keys:
 {{"rapamycin_dose":_, "nad_supplement":_, "senolytic_dose":_, \
@@ -85,8 +118,9 @@ Think through each treatment decision as a clinical judgment:
    How aggressively should we clear damaged mitochondria?
    Options: none / minimal / moderate / substantial / aggressive / maximum
 
-2. NAD+ RESTORATION (NMN or NR supplementation)
+2. NAD+ RESTORATION (NMN/NR + CD38 suppression via apigenin)
    How much cofactor support does this patient need?
+   NOTE: CD38 enzyme destroys low-dose NMN/NR. Needs high dose + apigenin.
    Options: none / minimal / moderate / substantial / aggressive / maximum
 
 3. SENESCENT CELL CLEARANCE (dasatinib + quercetin + fisetin)
@@ -98,8 +132,9 @@ Think through each treatment decision as a clinical judgment:
    Only prescribe if the patient has enough energy reserves.
    Options: none / minimal / moderate / substantial / aggressive / maximum
 
-5. MITOCHONDRIAL TRANSPLANT (healthy mtDNA infusion via platelet-derived mitlets)
-   How much fresh healthy mitochondrial DNA should we inject?
+5. MITOCHONDRIAL TRANSPLANT (healthy mtDNA via bioreactor-grown mitlets)
+   The ONLY method for true rejuvenation — adds healthy copies AND displaces \
+damaged ones. How aggressively should we pursue transplant?
    Options: none / minimal / moderate / substantial / aggressive / maximum
 
 6. EXERCISE PRESCRIPTION (hormetic adaptation)
@@ -145,7 +180,30 @@ For intervention keys, map your word choice to a number:
 aggressive=0.75, maximum=1.0
 For patient keys, use the numeric ranges: age (20-90), \
 heteroplasmy (0.0-0.95), NAD (0.2-1.0), vulnerability (0.5-2.0), \
-demand (0.5-2.0), inflammation (0.0-1.0)."""
+demand (0.5-2.0), inflammation (0.0-1.0).
+
+=== EXAMPLES ===
+
+Example 1 — Young prevention case:
+"A 25-year-old biohacker with minimal damage wants longevity optimization."
+Reasoning: Young, healthy, low urgency. Gentle mitophagy, moderate NAD+ \
+support, strong exercise prescription. No need for aggressive intervention.
+{{"rapamycin_dose": 0.1, "nad_supplement": 0.25, "senolytic_dose": 0.0, \
+"yamanaka_intensity": 0.0, "transplant_rate": 0.0, "exercise_level": 0.75, \
+"baseline_age": 30, "baseline_heteroplasmy": 0.1, "baseline_nad_level": 0.8, \
+"genetic_vulnerability": 1.0, "metabolic_demand": 1.0, "inflammation_level": 0.1}}
+
+Example 2 — Near-cliff emergency:
+"An 80-year-old with 65% heteroplasmy is approaching the cliff."
+Reasoning: Urgent — near the 70% cliff. Aggressive mitophagy to clear damage. \
+Transplant is key — the only true rejuvenation, displaces damaged copies. \
+Moderate NAD+ (needs high dose + apigenin to overcome CD38). Minimal exercise.
+{{"rapamycin_dose": 0.75, "nad_supplement": 0.5, "senolytic_dose": 0.5, \
+"yamanaka_intensity": 0.0, "transplant_rate": 0.75, "exercise_level": 0.1, \
+"baseline_age": 80, "baseline_heteroplasmy": 0.6, "baseline_nad_level": 0.4, \
+"genetic_vulnerability": 1.0, "metabolic_demand": 1.0, "inflammation_level": 0.5}}
+
+=== YOUR TURN ==="""
 
 
 # ── Contrastive prompts (TALOT/OTTITT) ──────────────────────────────────────

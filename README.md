@@ -62,10 +62,30 @@ The simulator integrates 7 coupled ordinary differential equations using a 4th-o
 
 - **ROS-damage vicious cycle:** Damaged mitochondria → excess ROS → more mtDNA damage (Ch. II.H pp.14-15, Appendix 2 pp.152-154)
 - **Heteroplasmy cliff:** Steep sigmoid at ~70% — ATP collapses above this threshold (from mitochondrial genetics literature; Cramer's MitoClock uses a different ~25% metric, Ch. V.K p.66)
-- **Age-dependent deletion doubling:** 11.8 years (young) → 3.06 years (old), from Va23 nanopore sequencing data (Appendix 2, p.155, Fig. 23). Book transition age is 65; simulation uses 40.
+- **Age-dependent deletion doubling:** 11.8 years (young) → 3.06 years (old), from Va23 nanopore sequencing data (Appendix 2, p.155, Fig. 23). Transition at age 65 (corrected from earlier value of 40 per Cramer's email review).
 - **Replication advantage:** Shorter damaged mtDNA replicates faster — book says "at least 21%" for deletions >3kbp (Appendix 2, pp.154-155); simulation conservatively uses 5%
 - **Energy units:** 1 MU (Metabolic Unit) = 10^8 ATP energy releases. Normal cell = ~1 MU/day (Ch. VIII.A, Table 3, p.100)
-- **Interventions:** Rapamycin → mTOR → mitophagy (Ch. VI.A.1 pp.71-72), NAD+ via NMN/NR (Ch. VI.A.3 pp.72-73), senolytics D+Q+F (Ch. VII.A.2 p.91), Yamanaka reprogramming at 3-5 MU cost (Ch. VIII.A Table 3 p.100, Ch. VII.B p.95), transplant via mitlets (Ch. VIII.G pp.104-107), exercise (hormesis)
+- **Interventions:** Rapamycin → mTOR → mitophagy (Ch. VI.A.1 pp.71-72), NAD+ via NMN/NR gated by CD38 degradation (Ch. VI.A.3 pp.72-73), senolytics D+Q+F (Ch. VII.A.2 p.91), Yamanaka reprogramming at 3-5 MU cost (Ch. VIII.A Table 3 p.100, Ch. VII.B p.95), transplant as primary rejuvenation with competitive displacement of damaged copies (Ch. VIII.G pp.104-107), exercise (hormesis)
+
+### ODE Corrections Applied
+
+**Falsifier audit (2026-02-15)** found 4 critical bugs in the original ODE equations. Full report: [`artifacts/falsifier_report_2026-02-15.md`](artifacts/falsifier_report_2026-02-15.md).
+
+| Fix | Issue | Resolution |
+|---|---|---|
+| C1 | Cliff was cosmetic — didn't feed back into replication/apoptosis | ATP collapse now halts replication |
+| C2 | mtDNA copy number unbounded | Homeostatic regulation toward total ~ 1.0 |
+| C3 | NAD supplementation boosted damaged mito equally | NAD now selectively benefits healthy mito (quality control) |
+| C4 | No bistability past cliff | Damaged replication advantage creates irreversible collapse |
+| M1 | Yamanaka worked without energy | Yamanaka gated by ATP availability |
+
+**Cramer email corrections (2026-02-15):**
+
+| Fix | Change | Source |
+|---|---|---|
+| C7 | NAD+ boost gated by CD38 survival factor (40% at min dose, 100% at max with apigenin) | Ch. VI.A.3 p.73 |
+| C8 | Transplant rate doubled (0.15→0.30), competitive displacement added, headroom raised (1.2→1.5) | Ch. VIII.G pp.104-107 |
+| C9 | AGE_TRANSITION restored from 40 to 65 | Appendix 2 p.155 |
 
 ## Model Predictions: Slowing and Reversing Aging
 
@@ -114,9 +134,13 @@ All biological constants in `constants.py` have been traced to specific chapters
 | Baseline ATP | 1.0 MU/day | Ch. VIII.A, Table 3, p.100 (1 MU = 10^8 ATP releases) |
 | Yamanaka energy cost | 3-5 MU | Ch. VIII.A, Table 3, p.100; Ch. VII.B p.95: "3 to 10 times" (Ci24, Fo18) |
 | Deletion doubling (young) | 11.81 yr | Appendix 2, p.155, Fig. 23 (Va23: Vandiver et al., *Aging Cell* 22(6), 2023) |
-| Deletion doubling (old) | 3.06 yr | Appendix 2, p.155, Fig. 23 (book transition at age 65; sim uses 40) |
+| Deletion doubling (old) | 3.06 yr | Appendix 2, p.155, Fig. 23 (transition at age 65, corrected from 40) |
 | Replication advantage | 1.05x (sim) | Appendix 2, pp.154-155: "at least 21% faster" for >3kbp deletions |
 | NAD+ decline | 0.01/yr | Ch. VI.A.3, pp.72-73 (Ca16: Camacho-Pereira et al., 2016) |
+| CD38 base survival | 0.4 | Ch. VI.A.3 p.73: CD38 destroys NMN/NR; 40% survives at min dose |
+| CD38 suppression gain | 0.6 | Apigenin suppresses CD38, raising survival to 100% at max dose |
+| Transplant addition rate | 0.30 | Ch. VIII.G pp.104-107: primary rejuvenation (doubled from original 0.15) |
+| Transplant displacement | 0.12 | Competitive displacement of damaged copies by healthy transplants |
 | Mitophagy (PINK1/Parkin) | 0.02/yr | Ch. VI.B, p.75: mechanism described, rate is simulation parameter |
 | Senescence rate | 0.005/yr | Ch. VII.A, pp.89-92; Ch. VIII.F, p.103: ~2x energy, SASP |
 | Membrane potential (ΔΨ) | 1.0 (norm) | Ch. IV, pp.46-47: proton gradient; Ch. VI.B, p.75: low ΔΨ → PINK1 |
@@ -130,10 +154,12 @@ See the citation key at the top of `constants.py` for full details on each const
 
 | File | Description |
 |---|---|
-| `constants.py` | Central configuration, 12D parameter space, biological constants |
-| `simulator.py` | RK4 ODE integrator for 7 state variables |
+| `constants.py` | Central configuration, 12D parameter space, biological constants, type aliases |
+| `schemas.py` | Pydantic validation models (`InterventionVector`, `PatientProfile`, `FullProtocol`) |
+| `simulator.py` | RK4 ODE integrator for 7 state variables; supports tissue types, stochastic mode, `InterventionSchedule` |
 | `analytics.py` | 4-pillar health analytics computation |
-| `llm_common.py` | Shared LLM utilities (Ollama query, response parsing, grid snapping) |
+| `llm_common.py` | Shared LLM utilities (Ollama query, response parsing, grid snapping, flattening detection) |
+| `prompt_templates.py` | Prompt styles: numeric, diegetic, contrastive (used by `tiqm_experiment.py --style`) |
 | `cliff_mapping.py` | Heteroplasmy threshold mapping and cliff characterization |
 | `visualize.py` | Matplotlib plots (Agg backend) |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
@@ -173,6 +199,52 @@ Adapted from the parent Evolutionary-Robotics project's research campaign infras
 | `categorical_structure.py` | Formal functor validation: Sem→Vec→Beh distance correlations | Pure computation, ~5 sec |
 | `llm_seeded_evolution.py` | Hill-climbing from LLM-generated vs random starting points | ~4000 sims, ~10 min |
 
+**Zimmerman-Informed Experiments (requires Ollama for some)**
+
+Based on Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction in Language, as Implemented in Humans and Large Language Models (LLMs)." PhD dissertation, University of Vermont.
+
+| File | Description | Scale |
+|---|---|---|
+| `prompt_templates.py` | Prompt styles: numeric (original), diegetic (narrative), contrastive (Dr. Cautious vs Dr. Bold) | Library (no sims) |
+| `sobol_sensitivity.py` | Saltelli sampling + Sobol first/total-order indices; captures parameter interactions | ~6656 sims, ~3 min |
+| `pds_mapping.py` | Maps Zimmerman's Power/Danger/Structure character dimensions to 6D patient space | No sims |
+| `posiwid_audit.py` | POSIWID alignment: gap between LLM-stated intentions and actual simulation outcomes | Requires Ollama, ~15-20 min |
+| `archetype_matchmaker.py` | Identifies which character archetypes produce best protocols per patient type | Needs character experiment data |
+
+**Tier 5 — Discovery Tools (no LLM needed, exploit simulation for novel biology)**
+
+| File | Description | Scale |
+|---|---|---|
+| `interaction_mapper.py` | 2D grid sweeps of all 15 intervention pairs; measures synergy/antagonism per patient type | ~2160 sims, ~3 min |
+| `reachable_set.py` | Latin hypercube sampling of 6D intervention space; Pareto frontier, reachable region, minimum-intervention paths | ~2400 sims, ~5 min |
+| `competing_evaluators.py` | 4 evaluator functions score ~500 candidates; finds "transaction" protocols robust across all criteria | ~1000 sims, ~2 min |
+| `temporal_optimizer.py` | (1+lambda) ES over phased intervention schedules; optimal timelines vs constant dosing | ~3000 sims, ~7 min |
+| `multi_tissue_sim.py` | Coupled brain+muscle+cardiac simulation with shared NAD, systemic inflammation, cardiac blood flow | ~30 sims, ~2 min |
+
+## Landscape Characterization
+
+Full analysis: [`artifacts/landscape_characterization.md`](artifacts/landscape_characterization.md)
+Cross-project comparison: [`artifacts/cross_project_gnarliness_comparison.md`](artifacts/cross_project_gnarliness_comparison.md)
+
+The 12D parameter space has been partially characterized (~400 simulations). Key findings:
+
+- **Patient-stratified topology**: Healthy patients (het < 0.3) can't fail; near-cliff patients (het > 0.6) mostly fail (68.8%). The landscape is a patchwork of computational classes, not uniformly rough.
+- **Intervention hierarchy**: Transplant (0.76) >> rapamycin (0.63) >> NAD (0.38) >> exercise (0.08) >> senolytics (0.04). Strongly anisotropic — 17.4x potency range.
+- **Moderate roughness**: CV(ATP) = 0.503. For comparison, the ER project's landscape is fractal everywhere (sign flip rate 0.58-0.72). Hill-climbing works here; it fails there.
+- **No timing critical point**: For near-cliff patients, switch-time has r=0.007 with outcome — the bistable attractor has already captured the trajectory.
+- **Robustness paradox**: Successful protocols are 7.4x more robust than failing ones.
+
+## Testing
+
+```bash
+# Full test suite (85 tests across 4 modules)
+pytest tests/ -v
+
+# Standalone self-tests
+python simulator.py    # 10 ODE scenarios
+python analytics.py    # 4-pillar analytics
+```
+
 ## Setup
 
 ```bash
@@ -186,18 +258,16 @@ python simulator.py
 # Run analytics test
 python analytics.py
 
-# Run cliff mapping
-python cliff_mapping.py
-
-# Generate visualizations
-python visualize.py
-
 # Run TIQM experiments (requires Ollama running locally)
 ollama serve &
 python tiqm_experiment.py
 
 # Quick single-scenario test
 python tiqm_experiment.py --single
+
+# Zimmerman prompt styles
+python tiqm_experiment.py --style diegetic
+python tiqm_experiment.py --contrastive
 
 # Print the mtDNA synthesis protocol
 python protocol_mtdna_synthesis.py
@@ -215,6 +285,19 @@ python clinical_consensus.py
 python perturbation_probing.py
 python categorical_structure.py    # needs seed experiment data
 python llm_seeded_evolution.py     # optionally loads seed experiment data
+
+# Zimmerman-informed experiments
+python sobol_sensitivity.py        # ~3 min, no Ollama
+python pds_mapping.py              # no Ollama
+python posiwid_audit.py            # requires Ollama, ~15-20 min
+python archetype_matchmaker.py     # needs character experiment data
+
+# Discovery tools (Tier 5 — no Ollama needed)
+python interaction_mapper.py       # ~3 min
+python reachable_set.py            # ~5 min
+python competing_evaluators.py     # ~2 min
+python temporal_optimizer.py       # ~7 min
+python multi_tissue_sim.py         # ~2 min
 ```
 
 ## Requirements
@@ -237,3 +320,4 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 - Rossignol, R. et al. (2003). "Mitochondrial threshold effects." *Biochemical Journal*, 370(3), 751–762.
 - Vandiver, A.R. et al. (2023). "Nanopore sequencing identifies a higher frequency and expanded spectrum of mitochondrial DNA deletion mutations in human aging." *Aging Cell*, 22(6). doi:10.1111/acel.13842.
 - Wallace, D.C. (2005). "A mitochondrial paradigm of metabolic and degenerative diseases, aging, and cancer." *Genetics*, 163(4), 1215–1241.
+- Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction in Language, as Implemented in Humans and Large Language Models (LLMs)." PhD dissertation, University of Vermont. [PDS mapping, prompt engineering, POSIWID audit]

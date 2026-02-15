@@ -39,7 +39,10 @@ Usage:
     result = simulate(intervention, patient)
 """
 
+from __future__ import annotations
+
 import numpy as np
+import numpy.typing as npt
 
 from constants import (
     SIM_YEARS, DT, N_STATES,
@@ -49,6 +52,8 @@ from constants import (
     BASELINE_NAD, NAD_DECLINE_RATE,
     BASELINE_MEMBRANE_POTENTIAL, BASELINE_SENESCENT, SENESCENCE_RATE,
     BASELINE_MITOPHAGY_RATE, DAMAGED_REPLICATION_ADVANTAGE,
+    CD38_BASE_SURVIVAL, CD38_SUPPRESSION_GAIN,
+    TRANSPLANT_ADDITION_RATE, TRANSPLANT_DISPLACEMENT_RATE, TRANSPLANT_HEADROOM,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     TISSUE_PROFILES,
 )
@@ -57,7 +62,92 @@ from constants import (
 _DEFAULT_TISSUE_MODS = {"ros_sensitivity": 1.0, "biogenesis_rate": 1.0}
 
 
-def _heteroplasmy_fraction(n_healthy, n_damaged):
+# ── Time-varying intervention schedules ─────────────────────────────────────
+
+class InterventionSchedule:
+    """Allow interventions to change over the simulation horizon.
+
+    Holds a sorted list of (start_year, intervention_dict) phases.
+    At any time t, returns the intervention dict of the most recent phase.
+
+    Usage:
+        schedule = InterventionSchedule([
+            (0, no_treatment),
+            (10, full_cocktail),
+        ])
+        schedule.at(5)   # → no_treatment
+        schedule.at(15)  # → full_cocktail
+    """
+
+    def __init__(self, phases: list[tuple[float, dict[str, float]]]) -> None:
+        self.phases = sorted(phases, key=lambda x: x[0])
+
+    def at(self, t: float) -> dict[str, float]:
+        """Return the intervention dict active at time t."""
+        active = self.phases[0][1]
+        for start, intervention in self.phases:
+            if t >= start:
+                active = intervention
+            else:
+                break
+        return active
+
+
+def phased_schedule(
+    phases: list[tuple[float, dict[str, float]]],
+) -> InterventionSchedule:
+    """Convenience constructor for multi-phase intervention schedules.
+
+    Args:
+        phases: List of (start_year, intervention_dict) tuples.
+
+    Returns:
+        InterventionSchedule instance.
+    """
+    return InterventionSchedule(phases)
+
+
+def pulsed_schedule(
+    on_intervention: dict[str, float],
+    off_intervention: dict[str, float],
+    period: float,
+    duty_cycle: float = 0.5,
+    total_years: float = 30.0,
+) -> InterventionSchedule:
+    """Create a pulsed on/off intervention schedule.
+
+    Args:
+        on_intervention: Intervention dict during "on" phases.
+        off_intervention: Intervention dict during "off" phases.
+        period: Cycle length in years.
+        duty_cycle: Fraction of each period that is "on" (0.0-1.0).
+        total_years: Total schedule duration.
+
+    Returns:
+        InterventionSchedule with alternating on/off phases.
+    """
+    phases: list[tuple[float, dict[str, float]]] = []
+    t = 0.0
+    while t < total_years:
+        phases.append((t, on_intervention))
+        t_off = t + period * duty_cycle
+        if t_off < total_years:
+            phases.append((t_off, off_intervention))
+        t += period
+    return InterventionSchedule(phases)
+
+
+def _resolve_intervention(
+    intervention: dict[str, float] | InterventionSchedule,
+    t: float,
+) -> dict[str, float]:
+    """Resolve intervention at time t (handles both dict and schedule)."""
+    if isinstance(intervention, InterventionSchedule):
+        return intervention.at(t)
+    return intervention
+
+
+def _heteroplasmy_fraction(n_healthy: float, n_damaged: float) -> float:
     """Compute heteroplasmy as fraction of damaged copies."""
     total = n_healthy + n_damaged
     if total < 1e-12:
@@ -65,7 +155,7 @@ def _heteroplasmy_fraction(n_healthy, n_damaged):
     return n_damaged / total
 
 
-def _cliff_factor(heteroplasmy):
+def _cliff_factor(heteroplasmy: float) -> float:
     """Sigmoid cliff function: ATP efficiency drops steeply at the threshold.
 
     Returns a value in (0, 1) where 1.0 = fully healthy and ~0 = collapsed.
@@ -74,13 +164,13 @@ def _cliff_factor(heteroplasmy):
     return 1.0 / (1.0 + np.exp(CLIFF_STEEPNESS * (heteroplasmy - HETEROPLASMY_CLIFF)))
 
 
-def _deletion_rate(age, genetic_vulnerability):
+def _deletion_rate(age: float, genetic_vulnerability: float) -> float:
     """Age-dependent mtDNA deletion rate.
 
     Cramer Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
     Aging Cell 22(6), 2023): DT = 11.81 yr before age 65, 3.06 yr after.
     Also Ch. II.H, p.15: "deletion damage builds exponentially."
-    NOTE: Book transition is age 65; simulation uses AGE_TRANSITION=40.
+    Corrected 2026-02-15: AGE_TRANSITION=65 per Cramer email.
     """
     if age < AGE_TRANSITION:
         doubling_time = DOUBLING_TIME_YOUNG
@@ -90,7 +180,13 @@ def _deletion_rate(age, genetic_vulnerability):
     return (np.log(2) / doubling_time) * genetic_vulnerability
 
 
-def derivatives(state, t, intervention, patient, tissue_mods=None):
+def derivatives(
+    state: npt.NDArray[np.float64],
+    t: float,
+    intervention: dict[str, float],
+    patient: dict[str, float],
+    tissue_mods: dict[str, float] | None = None,
+) -> npt.NDArray[np.float64]:
     """Compute time derivatives of all 7 state variables.
 
     Fixes applied 2026-02-15 per falsifier report:
@@ -102,6 +198,10 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
       M2: Removed spurious 0.5 factor on damaged replication
       M3: Strengthened ROS-damage vicious cycle coupling
       M5: Exercise upregulates mitochondrial biogenesis (actual hormesis)
+
+    Corrections applied 2026-02-15 per Cramer email:
+      C7: CD38 degrades NMN/NR — NAD+ boost is CD38-gated and reduced
+      C8: Transplant is primary rejuvenation — doubled rate + displacement
 
     Args:
         state: np.array of shape (7,) — current state.
@@ -135,6 +235,12 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
     yama = intervention["yamanaka_intensity"]
     transplant = intervention["transplant_rate"]
     exercise = intervention["exercise_level"]
+
+    # CD38 survival factor (Cramer Ch. VI.A.3 p.73, email 2026-02-15):
+    # CD38 enzyme destroys NMN/NR precursors. At low supplementation,
+    # only ~40% survives. High doses imply CD38 suppression via apigenin,
+    # raising survival toward 100%.
+    cd38_survival = CD38_BASE_SURVIVAL + CD38_SUPPRESSION_GAIN * nad_supp
 
     # Unpack patient
     age = patient["baseline_age"] + t
@@ -171,11 +277,17 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
     # Tissue-specific ROS sensitivity (brain=1.5x, muscle=0.8x, etc.)
     damage_rate = 0.15 * ros * gen_vuln * n_h * tissue_mods["ros_sensitivity"]
 
-    # Transplant: adds healthy copies, capped by copy number regulation.
+    # Transplant: adds healthy copies AND displaces damaged ones.
     # Cramer Ch. VIII.G pp.104-107: high-volume mitochondrial transplant
     # via bioreactor-grown stem cells → mitlet encapsulation.
-    transplant_headroom = max(1.2 - total, 0.0)
-    transplant_add = transplant * 0.15 * min(transplant_headroom, 1.0)
+    # This is the ONLY method for actual rejuvenation — reversing
+    # accumulated mtDNA damage at scale (Cramer email, 2026-02-15).
+    transplant_headroom = max(TRANSPLANT_HEADROOM - total, 0.0)
+    transplant_add = transplant * TRANSPLANT_ADDITION_RATE * min(transplant_headroom, 1.0)
+
+    # Competitive displacement: transplanted healthy mitochondria with
+    # intact ETC and high ΔΨ outcompete damaged copies for cellular resources.
+    transplant_displace = transplant * TRANSPLANT_DISPLACEMENT_RATE * n_d * energy_available
 
     # Yamanaka repair: converts damaged → healthy. GATED BY ATP (fix M1).
     # Cramer Ch. VII.B pp.92-95: epigenetic reprogramming (OSKMLN).
@@ -224,15 +336,15 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
     # selectively enhances mitophagy of damaged copies rather than
     # boosting damaged replication (fix C3).
     mitophagy_rate = (BASELINE_MITOPHAGY_RATE
-                      + rapa * 0.08       # rapamycin: ~4x boost at max dose
-                      + nad_supp * 0.03)  # NAD: mild quality control boost
+                      + rapa * 0.08                    # rapamycin: ~4x boost at max dose
+                      + nad_supp * 0.03 * cd38_survival)  # NAD: CD38-gated quality control
     mitophagy = mitophagy_rate * n_d
 
     # Apoptosis removes damaged copies too
     apoptosis_d = 0.02 * max(1.0 - energy_available, 0.0) * n_d * (1.0 - cliff)
 
     dn_d = (replication_d + new_damage + age_deletions
-            - mitophagy - repair_rate - apoptosis_d)
+            - mitophagy - repair_rate - apoptosis_d - transplant_displace)
 
     # ── 3. dATP/dt ────────────────────────────────────────────────────────
     # ATP represents the cell's energy production capacity (normalized to
@@ -284,8 +396,15 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
     # NAD does NOT boost damaged replication (fix C3) — it's consumed
     # by quality control processes (sirtuins, PARPs) that preferentially
     # benefit healthy mitochondria.
+    #
+    # CD38 degradation (fix C7, Cramer p.73, email 2026-02-15):
+    # CD38 enzyme destroys NMN/NR before absorption. Low-dose NMN/NR
+    # supplementation is largely futile. High doses imply combined
+    # NMN/NR + CD38 suppression (apigenin), improving delivery.
+    # Coefficient reduced from 0.35 → 0.25 and gated by cd38_survival.
     age_factor = max(1.0 - NAD_DECLINE_RATE * max(age - 30, 0), 0.2)
-    nad_target = BASELINE_NAD * age_factor + nad_supp * 0.35
+    nad_boost = nad_supp * 0.25 * cd38_survival
+    nad_target = BASELINE_NAD * age_factor + nad_boost
     nad_target = min(nad_target, 1.2)
     # ROS consumes NAD (via PARP activation from DNA damage)
     ros_drain = 0.03 * ros
@@ -323,7 +442,14 @@ def derivatives(state, t, intervention, patient, tissue_mods=None):
     return np.array([dn_h, dn_d, datp, dros, dnad, dsen, dpsi])
 
 
-def _rk4_step(state, t, dt, intervention, patient, tissue_mods=None):
+def _rk4_step(
+    state: npt.NDArray[np.float64],
+    t: float,
+    dt: float,
+    intervention: dict[str, float],
+    patient: dict[str, float],
+    tissue_mods: dict[str, float] | None = None,
+) -> npt.NDArray[np.float64]:
     """Single 4th-order Runge-Kutta step."""
     k1 = derivatives(state, t, intervention, patient, tissue_mods)
     k2 = derivatives(state + 0.5 * dt * k1, t + 0.5 * dt, intervention, patient, tissue_mods)
@@ -332,7 +458,7 @@ def _rk4_step(state, t, dt, intervention, patient, tissue_mods=None):
     return state + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
 
 
-def initial_state(patient):
+def initial_state(patient: dict[str, float]) -> npt.NDArray[np.float64]:
     """Compute initial state vector from patient parameters.
 
     Total copy number N_h + N_d = 1.0 (normalized). Initial ATP computed
@@ -372,9 +498,17 @@ def initial_state(patient):
     return np.array([n_h0, n_d0, atp0, ros0, nad0, min(sen0, 1.0), psi0])
 
 
-def simulate(intervention=None, patient=None, sim_years=None, dt=None,
-             tissue_type=None, stochastic=False, noise_scale=0.01,
-             n_trajectories=1, rng_seed=None):
+def simulate(
+    intervention: dict[str, float] | InterventionSchedule | None = None,
+    patient: dict[str, float] | None = None,
+    sim_years: float | None = None,
+    dt: float | None = None,
+    tissue_type: str | None = None,
+    stochastic: bool = False,
+    noise_scale: float = 0.01,
+    n_trajectories: int = 1,
+    rng_seed: int | None = None,
+) -> dict:
     """Run the full mitochondrial aging simulation.
 
     Args:
@@ -449,9 +583,10 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None,
 
     for i in range(n_steps):
         t = i * dt
+        current_intervention = _resolve_intervention(intervention, t)
         if stochastic:
             # Euler-Maruyama: deterministic step + noise
-            deriv = derivatives(state, t, intervention, patient, tissue_mods)
+            deriv = derivatives(state, t, current_intervention, patient, tissue_mods)
             # Additive noise on ROS (index 3) and damage rate (index 1)
             dW = rng.normal(0, np.sqrt(dt), N_STATES)
             noise = np.zeros(N_STATES)
@@ -459,7 +594,7 @@ def simulate(intervention=None, patient=None, sim_years=None, dt=None,
             noise[3] = noise_scale * state[3] * dW[3]  # ROS noise
             state = state + dt * deriv + noise
         else:
-            state = _rk4_step(state, t, dt, intervention, patient, tissue_mods)
+            state = _rk4_step(state, t, dt, current_intervention, patient, tissue_mods)
 
         # Enforce non-negativity (biological constraint)
         state = np.maximum(state, 0.0)
@@ -503,7 +638,8 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
 
         for i in range(n_steps):
             t = i * dt
-            deriv = derivatives(state, t, intervention, patient, tissue_mods)
+            current_intervention = _resolve_intervention(intervention, t)
+            deriv = derivatives(state, t, current_intervention, patient, tissue_mods)
             dW = rng.normal(0, np.sqrt(dt), N_STATES)
             noise = np.zeros(N_STATES)
             noise[1] = noise_scale * state[1] * dW[1]
@@ -663,6 +799,79 @@ if __name__ == "__main__":
     print(f"  ATP: mean={np.mean(final_atps):.4f}  "
           f"std={np.std(final_atps):.4f}  "
           f"range=[{np.min(final_atps):.4f}, {np.max(final_atps):.4f}]")
+
+    # Test 9: Phased intervention schedule (time-varying)
+    print("\n--- Test 9: Phased intervention schedule ---")
+    no_treatment = dict(DEFAULT_INTERVENTION)
+    full_cocktail = {
+        "rapamycin_dose": 0.5,
+        "nad_supplement": 0.75,
+        "senolytic_dose": 0.5,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.5,
+    }
+    # No treatment years 0-10, full treatment years 10-30
+    schedule = phased_schedule([(0, no_treatment), (10, full_cocktail)])
+    r9_phased = simulate(intervention=schedule, sim_years=30)
+    r9_constant = simulate(intervention=full_cocktail, sim_years=30)
+    r9_none = simulate(sim_years=30)
+    print(f"  No treatment:     final_het={r9_none['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r9_none['states'][-1, 2]:.4f}")
+    print(f"  Phased (0→10→30): final_het={r9_phased['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r9_phased['states'][-1, 2]:.4f}")
+    print(f"  Constant cocktail: final_het={r9_constant['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r9_constant['states'][-1, 2]:.4f}")
+    phased_differs = (abs(r9_phased['heteroplasmy'][-1]
+                         - r9_constant['heteroplasmy'][-1]) > 0.001)
+    print(f"  Phased differs from constant: "
+          f"{'PASS' if phased_differs else 'FAIL'}")
+
+    # Test 10: Cramer corrections — CD38 and transplant (C7, C8)
+    print("\n--- Test 10: Cramer corrections (CD38 + transplant) ---")
+
+    # 10a: NAD-only at low dose should have LESS effect than at high dose
+    # (CD38 destroys more at low dose)
+    i_nad_low = dict(DEFAULT_INTERVENTION)
+    i_nad_low["nad_supplement"] = 0.25
+    i_nad_high = dict(DEFAULT_INTERVENTION)
+    i_nad_high["nad_supplement"] = 1.0
+    r_nad_low = simulate(intervention=i_nad_low, sim_years=30)
+    r_nad_high = simulate(intervention=i_nad_high, sim_years=30)
+    # Benefit ratio: high dose should give >2x the het reduction of low dose
+    # (due to CD38 nonlinearity, not just linear dose scaling)
+    het_base = r_none['heteroplasmy'][-1]
+    benefit_low = het_base - r_nad_low['heteroplasmy'][-1]
+    benefit_high = het_base - r_nad_high['heteroplasmy'][-1]
+    ratio = benefit_high / max(benefit_low, 1e-6)
+    print(f"  [10a] NAD low=0.25: het_benefit={benefit_low:.4f}  "
+          f"NAD high=1.0: het_benefit={benefit_high:.4f}  "
+          f"ratio={ratio:.1f}x ({'PASS: >2x' if ratio > 2 else 'MARGINAL'})")
+
+    # 10b: Transplant should be highly effective at reducing heteroplasmy
+    i_transplant = dict(DEFAULT_INTERVENTION)
+    i_transplant["transplant_rate"] = 1.0
+    r_transplant = simulate(intervention=i_transplant, sim_years=30)
+    transplant_benefit = het_base - r_transplant['heteroplasmy'][-1]
+    print(f"  [10b] Transplant=1.0: final_het={r_transplant['heteroplasmy'][-1]:.4f}  "
+          f"het_benefit={transplant_benefit:.4f}  "
+          f"({'PASS: strong' if transplant_benefit > 0.20 else 'FAIL: weak'})")
+
+    # 10c: Transplant should outperform NAD supplementation for rejuvenation
+    nad_benefit = benefit_high  # NAD at max dose
+    print(f"  [10c] Transplant benefit={transplant_benefit:.4f} vs "
+          f"NAD benefit={nad_benefit:.4f}  "
+          f"({'PASS: transplant > NAD' if transplant_benefit > nad_benefit else 'FAIL: NAD > transplant'})")
+
+    # 10d: Transplant should help even near-cliff patients
+    i_rescue = dict(DEFAULT_INTERVENTION)
+    i_rescue["transplant_rate"] = 1.0
+    i_rescue["rapamycin_dose"] = 0.5
+    r_rescue = simulate(intervention=i_rescue, patient=near_cliff_patient, sim_years=30)
+    print(f"  [10d] Near-cliff + transplant: final_het={r_rescue['heteroplasmy'][-1]:.4f}  "
+          f"final_ATP={r_rescue['states'][-1, 2]:.4f}  "
+          f"(vs untreated: het={result3['heteroplasmy'][-1]:.4f}  "
+          f"ATP={result3['states'][-1, 2]:.4f})")
 
     print("\n" + "=" * 70)
     print("All tests completed.")

@@ -8,6 +8,7 @@ Usage:
     from llm_common import query_ollama, parse_intervention_vector
     vector, raw = query_ollama("qwen3-coder:30b", prompt)
 """
+from __future__ import annotations
 
 import json
 import subprocess
@@ -18,6 +19,7 @@ from constants import (
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     snap_all,
 )
+from schemas import FullProtocol
 
 
 # ── Models ──────────────────────────────────────────────────────────────────
@@ -135,11 +137,45 @@ def detect_flattening(params):
     return corrected, fixes
 
 
-def parse_intervention_vector(response):
+def validate_llm_output(raw_dict: dict) -> tuple[dict, list[str]]:
+    """Validate a raw parameter dict using pydantic schema.
+
+    Applies FullProtocol validation, then detect_flattening(), then snap_all().
+    Warns on out-of-range values but does not reject if at least 6 intervention
+    params are present.
+
+    Args:
+        raw_dict: Raw parameter dict from JSON parsing.
+
+    Returns:
+        (validated_and_snapped_dict, list_of_warnings)
+    """
+    warnings: list[str] = []
+    recognized = {k: v for k, v in raw_dict.items() if k in ALL_PARAM_NAMES}
+
+    # Try pydantic validation — collect errors but don't reject
+    try:
+        validated = FullProtocol(**recognized)
+        # Use only non-None validated values
+        recognized = {k: v for k, v in validated.model_dump().items()
+                      if v is not None}
+    except Exception as e:
+        warnings.append(f"pydantic validation: {e}")
+        # Fall through with recognized dict as-is (backwards compatible)
+
+    # Detect and fix flattening errors (Zimmerman Ch. 3)
+    recognized, fixes = detect_flattening(recognized)
+    warnings.extend(fixes)
+
+    return snap_all(recognized), warnings
+
+
+def parse_intervention_vector(response: str) -> dict | None:
     """Parse a 12D intervention+patient vector from LLM response.
 
     Handles think tags, markdown fences, extracts the outermost JSON
-    object, detects flattening errors, and snaps to grid.
+    object, validates via pydantic schema, detects flattening errors,
+    and snaps to grid.
 
     Args:
         response: Raw string from LLM.
@@ -156,10 +192,8 @@ def parse_intervention_vector(response):
     if len(recognized) < 6:
         return None
 
-    # Detect and fix flattening errors (Zimmerman Ch. 3)
-    recognized, _ = detect_flattening(recognized)
-
-    return snap_all(recognized)
+    snapped, _ = validate_llm_output(recognized)
+    return snapped
 
 
 def split_vector(snapped):

@@ -45,7 +45,27 @@ from pds_mapping import load_characters, compute_pds, pds_to_patient
 # ── Outcome classification ─────────────────────────────────────────────────
 
 def classify_outcome(analytics):
-    """Classify a simulation outcome into tiers.
+    """Classify a simulation outcome into clinically meaningful tiers.
+
+    Tier definitions grounded in Cramer's biological model:
+
+      "collapsed": het >= 0.70 (the heteroplasmy cliff; Cramer Ch. V.K p.66).
+        Past this threshold, ATP production drops catastrophically via the
+        sigmoid cliff factor. Essentially irreversible due to bistability (fix C4).
+
+      "declining": atp_final < 0.5 OR het_final > 0.6.
+        ATP below 0.5 MU/day (half baseline; Cramer Ch. VIII.A Table 3 p.100)
+        means severe energy deficit — symptomatic and progressive. het > 0.6
+        means dangerously close to the cliff (within 14%).
+
+      "thriving": atp_benefit > 0.05 AND het_final < 0.4.
+        Active improvement: the intervention is working (positive ATP benefit
+        beyond noise threshold of 0.05) and damage is well-controlled (het < 0.4
+        = comfortable 43% margin below cliff). The 0.05 threshold filters out
+        trivially small improvements that might be simulation noise.
+
+      "stable": everything else — not collapsed or declining, but not
+        demonstrably improving either. Maintenance-level outcome.
 
     Args:
         analytics: Dict from compute_all() with energy/damage/intervention keys.
@@ -108,11 +128,21 @@ def build_character_pds_lookup(characters):
 # ── PDS binning ─────────────────────────────────────────────────────────────
 
 def pds_bin(pds, n_bins=3):
-    """Bin PDS scores into discrete categories.
+    """Bin PDS scores into discrete categories for aggregation.
+
+    Boundaries at ±0.33 divide the [-1, +1] PDS range into equal thirds:
+      low  = [-1.0, -0.33): strongly negative on this dimension
+      mid  = [-0.33, +0.33]: neutral / ambiguous
+      high = (+0.33, +1.0]: strongly positive on this dimension
+
+    Equal-width bins are chosen over quantile bins because PDS dimensions
+    have interpretable zero points (e.g., Power=0 means neither powerful
+    nor weak; Zimmerman 2025 Ch. 4). Tercile boundaries at ±1/3 of the
+    range are the simplest symmetric partition.
 
     Args:
         pds: Dict with power, danger, structure (each -1 to +1).
-        n_bins: 3 = low/mid/high.
+        n_bins: 3 = low/mid/high (only 3 supported).
 
     Returns:
         Tuple of (power_bin, danger_bin, structure_bin) as strings.

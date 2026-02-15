@@ -99,36 +99,65 @@ Brief reasoning (1-2 sentences), then ONLY the JSON object."""
 
 def score_alignment(intention, actual_het_change, actual_atp_change,
                     actual_final_het, actual_final_atp):
-    """Score how well actual outcomes match stated intentions.
+    """Score how well actual simulation outcomes match LLM's stated intentions.
+
+    POSIWID principle (Stafford Beer, 1974): "The Purpose Of a System Is What
+    It Does" — not what it claims to intend. This function quantifies the gap
+    between what the LLM SAYS it expects and what the simulation ACTUALLY
+    produces. Low alignment reveals that the LLM generates "plausible-sounding"
+    parameters without understanding the ODE dynamics (Zimmerman 2025 Ch. 5:
+    LLM objective = plausible text, not accurate parameter generation).
+
+    Scoring components:
+
+    Direction alignment (binary 0/1):
+      Did the metric move in the expected direction? This is the most basic
+      test — an LLM that says "heteroplasmy will decrease" but produces
+      parameters that increase it has fundamentally misunderstood the model.
+
+    Magnitude alignment (continuous 0-1):
+      How close was the predicted final value? The × 2 scaling factor means
+      an error of 0.5 in final heteroplasmy (e.g., predicted 0.3, actual 0.8)
+      scores zero. This is calibrated to the biologically meaningful range:
+      the difference between "healthy" (het=0.2) and "cliff" (het=0.7) is 0.5,
+      so errors of that magnitude deserve a zero score.
+
+    The × 5 scaling for "expected no change" means a change of 0.2 in
+    heteroplasmy scores zero — reflecting that stability prediction should be
+    fairly precise (0.2 change over 30yr is clinically significant).
 
     Args:
-        intention: Dict from LLM intention query.
+        intention: Dict from LLM intention query with expected_het_change,
+            expected_final_het, expected_atp_change, expected_final_atp.
         actual_het_change: Float, actual heteroplasmy change over 30yr.
         actual_atp_change: Float, actual ATP change over 30yr.
         actual_final_het: Float, final heteroplasmy.
         actual_final_atp: Float, final ATP.
 
     Returns:
-        Dict with alignment scores (0-1, higher = better alignment).
+        Dict with alignment scores (0-1, higher = better alignment):
+        het_direction, het_magnitude, atp_direction, atp_magnitude, overall.
     """
     scores = {}
 
     # Direction alignment: did het move in the expected direction?
     exp_het = intention.get("expected_het_change", 0)
     if exp_het != 0:
-        # Same sign = correct direction
+        # Same sign = correct direction (binary: got it right or wrong)
         direction_match = 1.0 if (exp_het * actual_het_change > 0) else 0.0
     else:
-        # Expected no change — score by magnitude
+        # Expected no change — score by magnitude of unexpected change.
+        # ×5: an unexpected change of 0.2 over 30yr scores zero (clinically significant)
         direction_match = max(0.0, 1.0 - abs(actual_het_change) * 5)
     scores["het_direction"] = direction_match
 
-    # Magnitude alignment: how close was the magnitude?
+    # Magnitude alignment: how close was the predicted final value?
+    # ×2: error of 0.5 (= full healthy-to-cliff range) scores zero
     exp_final_het = intention.get("expected_final_het", 0.3)
     het_mag_error = abs(actual_final_het - exp_final_het)
     scores["het_magnitude"] = max(0.0, 1.0 - het_mag_error * 2)
 
-    # ATP direction
+    # ATP direction (same logic as het)
     exp_atp = intention.get("expected_atp_change", 0)
     if exp_atp != 0:
         direction_match_atp = 1.0 if (exp_atp * actual_atp_change > 0) else 0.0
@@ -136,12 +165,13 @@ def score_alignment(intention, actual_het_change, actual_atp_change,
         direction_match_atp = max(0.0, 1.0 - abs(actual_atp_change) * 5)
     scores["atp_direction"] = direction_match_atp
 
-    # ATP magnitude
+    # ATP magnitude: ×2 scaling same rationale (ATP range ~0-1.5 MU/day;
+    # Cramer Ch. VIII.A Table 3 p.100: baseline = 1.0 MU/day)
     exp_final_atp = intention.get("expected_final_atp", 0.8)
     atp_mag_error = abs(actual_final_atp - exp_final_atp)
     scores["atp_magnitude"] = max(0.0, 1.0 - atp_mag_error * 2)
 
-    # Overall alignment
+    # Overall: unweighted mean of all 4 components
     scores["overall"] = np.mean([
         scores["het_direction"],
         scores["het_magnitude"],
