@@ -1,0 +1,1030 @@
+{
+  "metadata": {
+    "n_patients": 100,
+    "seed": 42,
+    "generator": "generate_patients.py",
+    "description": "100 sample patients with biologically plausible correlations"
+  },
+  "patients": [
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 0
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 1
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 2
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 2.0,
+      "inflammation_level": 0.25,
+      "_id": 3
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 4
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 5
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 6
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 7
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 8
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 9
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 10
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.0,
+      "_id": 11
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 12
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.25,
+      "_id": 13
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 14
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 15
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 16
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 17
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 18
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 19
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 20
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.0,
+      "_id": 21
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.25,
+      "_id": 22
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.6,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 23
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.25,
+      "_id": 24
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 25
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 26
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 27
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 28
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.25,
+      "_id": 29
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 30
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.5,
+      "_id": 31
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 32
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 33
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 34
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.5,
+      "_id": 35
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 2.0,
+      "inflammation_level": 0.25,
+      "_id": 36
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.5,
+      "_id": 37
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 38
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 39
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 40
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.5,
+      "_id": 41
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 42
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.5,
+      "_id": 43
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 44
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.1,
+      "_id": 45
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 46
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 47
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 48
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 49
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 50
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 51
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.6,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 52
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 53
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 54
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.25,
+      "_id": 55
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 56
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 57
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.5,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.5,
+      "_id": 58
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.25,
+      "_id": 59
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 60
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 61
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 62
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 2.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 63
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 64
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 65
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.5,
+      "_id": 66
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.1,
+      "_id": 67
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.25,
+      "_id": 68
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.5,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 69
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.5,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.25,
+      "_id": 70
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.0,
+      "_id": 71
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 2.0,
+      "inflammation_level": 0.25,
+      "_id": 72
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 73
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 74
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 75
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.5,
+      "_id": 76
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 77
+    },
+    {
+      "baseline_age": 60.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 78
+    },
+    {
+      "baseline_age": 20.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.1,
+      "_id": 79
+    },
+    {
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.5,
+      "_id": 80
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 81
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 82
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.25,
+      "_id": 83
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.0,
+      "_id": 84
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.6,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.1,
+      "_id": 85
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.8,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 86
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 87
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.25,
+      "_id": 88
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.5,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.1,
+      "_id": 89
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 0.5,
+      "inflammation_level": 0.1,
+      "_id": 90
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.1,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 0.5,
+      "metabolic_demand": 0.75,
+      "inflammation_level": 0.0,
+      "_id": 91
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.25,
+      "inflammation_level": 0.5,
+      "_id": 92
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 93
+    },
+    {
+      "baseline_age": 80.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 0.75,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.25,
+      "_id": 94
+    },
+    {
+      "baseline_age": 50.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.25,
+      "_id": 95
+    },
+    {
+      "baseline_age": 30.0,
+      "baseline_heteroplasmy": 0.2,
+      "baseline_nad_level": 1.0,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.25,
+      "_id": 96
+    },
+    {
+      "baseline_age": 40.0,
+      "baseline_heteroplasmy": 0.05,
+      "baseline_nad_level": 0.8,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 97
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.7,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.5,
+      "inflammation_level": 0.25,
+      "_id": 98
+    },
+    {
+      "baseline_age": 90.0,
+      "baseline_heteroplasmy": 0.4,
+      "baseline_nad_level": 0.4,
+      "genetic_vulnerability": 1.25,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25,
+      "_id": 99
+    }
+  ],
+  "evaluation": {
+    "n_patients": 100,
+    "distribution": {
+      "baseline_age": {
+        "mean": 54.1,
+        "std": 20.400735280866716,
+        "min": 20.0,
+        "max": 90.0
+      },
+      "baseline_heteroplasmy": {
+        "mean": 0.257,
+        "std": 0.172049411507276,
+        "min": 0.05,
+        "max": 0.8
+      },
+      "baseline_nad_level": {
+        "mean": 0.7120000000000001,
+        "std": 0.1818130908378162,
+        "min": 0.4,
+        "max": 1.0
+      },
+      "genetic_vulnerability": {
+        "mean": 1.0125,
+        "std": 0.2654595072699413,
+        "min": 0.5,
+        "max": 2.0
+      },
+      "metabolic_demand": {
+        "mean": 1.04,
+        "std": 0.2844292530665578,
+        "min": 0.5,
+        "max": 2.0
+      },
+      "inflammation_level": {
+        "mean": 0.25050000000000006,
+        "std": 0.152232552366437,
+        "min": 0.0,
+        "max": 0.5
+      }
+    },
+    "correlations": {
+      "age-het": 0.8044269695079865,
+      "age-nad": -0.920940157036412,
+      "age-gv": -0.08093309009964944,
+      "age-md": -0.030320296295989008,
+      "age-infl": 0.6640885871743135,
+      "het-nad": -0.7002393741567524,
+      "het-gv": -0.09133682449666303,
+      "het-md": -0.03533273047865308,
+      "het-infl": 0.5776962479278958,
+      "nad-gv": 0.09788134475277188,
+      "nad-md": 0.05785923567958445,
+      "nad-infl": -0.662002236351586,
+      "gv-md": 0.04877425870977633,
+      "gv-infl": -0.06936927324744221,
+      "md-infl": -0.0459050474886375
+    },
+    "coverage": {
+      "baseline_age": {
+        "grid_size": 8,
+        "grid_points_used": 8,
+        "coverage": 1.0,
+        "unused": []
+      },
+      "baseline_heteroplasmy": {
+        "grid_size": 10,
+        "grid_points_used": 9,
+        "coverage": 0.9,
+        "unused": [
+          0.9
+        ]
+      },
+      "baseline_nad_level": {
+        "grid_size": 5,
+        "grid_points_used": 4,
+        "coverage": 0.8,
+        "unused": [
+          0.2
+        ]
+      },
+      "genetic_vulnerability": {
+        "grid_size": 6,
+        "grid_points_used": 6,
+        "coverage": 1.0,
+        "unused": []
+      },
+      "metabolic_demand": {
+        "grid_size": 6,
+        "grid_points_used": 6,
+        "coverage": 1.0,
+        "unused": []
+      },
+      "inflammation_level": {
+        "grid_size": 6,
+        "grid_points_used": 4,
+        "coverage": 0.6666666666666666,
+        "unused": [
+          0.75,
+          1.0
+        ]
+      }
+    },
+    "outcomes": {
+      "atp_final_mean": 0.6197413471422117,
+      "atp_final_std": 0.2479646110271429,
+      "het_final_mean": 0.5287159768021319,
+      "collapsed": 9,
+      "declining": 19,
+      "stable": 39,
+      "healthy": 33,
+      "cliff_crossed": 17
+    },
+    "quality_scores": {
+      "grid_coverage": 0.9024390243902439,
+      "correlation_plausibility": 1.0,
+      "outcome_diversity": 0.912749893670149,
+      "clinical_plausibility": 1.0
+    },
+    "overall_score": 0.9537972295150983
+  }
+}

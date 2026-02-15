@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **C9: AGE_TRANSITION restored to 65** — The mtDNA deletion doubling time transition was incorrectly set to age 40. Book data (Appendix 2 p.155, Va23) places it at age 65. Corrected in constants.py and simulator.py.
 - **CRAMER CORRECTION APPLIED (2026-02-15):** Per John Cramer's third email:
   - **C10: AGE_TRANSITION coupled to ATP and mitophagy** — The deletion-damage slope change should not be a fixed age. It is now dynamically coupled to ATP energy level and mitophagy efficiency. High ATP + effective mitophagy → transition shifts later (up to +10 years). Low ATP + poor mitophagy → transition shifts earlier (up to -15 years). Hard cutoff replaced with smooth sigmoid blend (width ~5 years).
+  - **C10 calibration (2026-02-15):** `NATURAL_HEALTH_REF = 0.77` iteratively calibrated so that a naturally aging person (no intervention) has shift ≈ 0 at age 65, satisfying Cramer's requirement that the *average* transition age is 65. Natural aging yields ATP ≈ 0.774 at age 65 with baseline mitophagy; normalizing by 0.77 gives residual shift < 0.05 years (18 days). See `simulator.py:_deletion_rate()`.
 
 ## Project Overview
 
@@ -56,6 +57,9 @@ python analytics.py       # 4-pillar analytics test
 pytest tests/ -v          # Full pytest suite (85 tests: simulator, analytics, LLM parsing, schemas)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
+python generate_patients.py           # Normal population (100 patients, ~30s)
+python generate_patients.py --edge    # Edge-case population (82 patients, ~25s)
+python generate_patients.py --both    # Both populations
 
 # TIQM experiments (requires Ollama)
 python tiqm_experiment.py                     # All 10 clinical scenarios
@@ -143,6 +147,8 @@ reachable_set.py           ← D1: Reachable outcome space + Pareto (imports sim
 competing_evaluators.py    ← D5: Multi-criteria protocol search (imports simulator, analytics)
 temporal_optimizer.py      ← D2: Temporal schedule optimization (imports simulator, analytics)
 multi_tissue_sim.py        ← D3: Coupled multi-tissue simulation (imports simulator.derivatives, constants)
+
+generate_patients.py       ← Patient population generator + evaluator (imports simulator, analytics, constants)
 
 protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ```
@@ -352,6 +358,43 @@ schedule = pulsed_schedule(cocktail, no_treatment, period=5.0, duty_cycle=0.5)
 result = simulate(intervention=schedule, sim_years=30)
 ```
 
+### Loading and using sample patients
+
+```python
+import json
+from constants import PATIENT_NAMES
+from simulator import simulate
+from analytics import compute_all
+
+# Load normal population
+with open("artifacts/sample_patients_100.json") as f:
+    data = json.load(f)
+patients = data["patients"]
+
+# Simulate a patient
+p = patients[0]
+patient_dict = {k: p[k] for k in PATIENT_NAMES}
+result = simulate(patient=patient_dict)
+print(f"Patient {p['_id']}: ATP={result['states'][-1, 2]:.3f}")
+
+# Load edge cases and filter by category
+with open("artifacts/sample_patients_edge.json") as f:
+    edge_data = json.load(f)
+cliff_patients = [p for p in edge_data["patients"] if p.get("_category") == "cliff_boundary"]
+```
+
+### Generating fresh patient populations
+
+```python
+from generate_patients import generate_patients, generate_edge_patients
+
+# Custom population with different seed/size
+patients = generate_patients(n=200, seed=99)
+
+# Edge cases (fixed set, no randomness)
+edge = generate_edge_patients()
+```
+
 ### Schema validation
 
 ```python
@@ -377,6 +420,94 @@ snapped, warnings = validate_llm_output(raw_dict)
 - `artifacts/posiwid_audit.json` — POSIWID alignment audit results
 - `artifacts/pds_mapping.json` — PDS→patient mapping results
 - `artifacts/archetype_matchmaker.json` — Archetype→protocol matching results
+- `artifacts/sample_patients_100.json` — 100 biologically correlated patients + evaluation metrics
+- `artifacts/sample_patients_edge.json` — 82 edge-case patients for robustness testing + evaluation
+
+## Patient Population Generator (`generate_patients.py`)
+
+Generates two complementary patient populations for testing and experiment seeding.
+
+### Usage
+
+```python
+from generate_patients import generate_patients, generate_edge_patients
+from generate_patients import evaluate_population, evaluate_edge_population
+
+# Normal population: biologically correlated, realistic distribution
+patients = generate_patients(n=100, seed=42)
+evaluation = evaluate_population(patients)
+
+# Edge-case population: boundary conditions, stress tests
+edge_patients = generate_edge_patients()
+edge_evaluation = evaluate_edge_population(edge_patients)
+```
+
+### Normal Population (`generate_patients`, 100 patients)
+
+Biology-informed correlation structure ensures realistic co-occurrence of parameter values:
+
+| Parameter | Generation Method | Expected Range |
+|---|---|---|
+| `baseline_age` | Uniform 20–90 | Full lifespan |
+| `baseline_heteroplasmy` | Age-driven: `0.05 + 0.45 * age_frac^1.3` + noise | Young ~0.05, old ~0.50 |
+| `baseline_nad_level` | Age-driven: `0.95 - 0.50 * age_frac` + noise | Young ~0.95, old ~0.45 |
+| `genetic_vulnerability` | Lognormal(0, 0.25), clipped [0.5, 2.0] | Most ~1.0, rare outliers |
+| `metabolic_demand` | Weighted discrete choice | Most 1.0, rare 0.5 or 2.0 |
+| `inflammation_level` | Age-driven: `0.05 + 0.40 * age_frac` + noise | Young ~0.05, old ~0.45 |
+
+All values snapped to grid after generation. Key correlations verified:
+
+| Pair | Expected | Measured | Biology |
+|---|---|---|---|
+| age ↔ het | positive | r = +0.80 | Older → more mtDNA damage |
+| age ↔ NAD | negative | r = -0.92 | Older → lower NAD+ (Ca16) |
+| age ↔ inflammation | positive | r = +0.66 | Inflammaging |
+| het ↔ NAD | negative | r = -0.70 | Damage → worse NAD state |
+| genetic_vuln ↔ metabolic_demand | ~zero | r = +0.05 | Independent (haplogroup vs tissue) |
+
+Population quality score: **0.95/1.00** (grid coverage 90%, correlation plausibility 100%, outcome diversity 91%, clinical plausibility 100%).
+
+Outcome distribution under no-treatment simulation: 9% collapsed, 19% declining, 39% stable, 33% healthy. 17% cross the heteroplasmy cliff.
+
+### Edge-Case Population (`generate_edge_patients`, 82 patients)
+
+Systematically constructed to test simulator robustness at boundary conditions. Eight categories:
+
+| Category | N | Purpose | Examples |
+|---|---|---|---|
+| `single_extreme` | 12 | One param at min or max, rest default | `baseline_age_min` (20), `inflammation_level_max` (1.0) |
+| `corner` | 10 | Multiple params at extremes simultaneously | `all_min` (healthiest), `all_max` (sickest), `checkerboard_A/B` (alternating) |
+| `cliff_boundary` | 14 | Het sweep across the 0.70 cliff threshold | het = 0.55, 0.60, 0.65, 0.68, 0.70, 0.72, 0.75, 0.80, 0.85, 0.90 + young/old/vulnerable/resilient at cliff |
+| `contradictory` | 12 | Biologically unlikely but must not crash | `young_melas` (20yo, het=0.80), `old_superager` (90yo, het=0.05), `zero_het`, `max_het`, `nad_vs_infl` (competing signals) |
+| `max_stress` | 10 | Worst-case parameter combinations | `triple_threat` (old+damaged+inflamed), `brain_on_fire`, `post_cliff_collapse`, `young_max_stress` |
+| `tissue_vuln_cross` | 8 | 2×2×2 factorial: demand × vulnerability × age | All combinations of {low,high} demand × {resilient,fragile} × {young,old} |
+| `age_at_cliff` | 8 | Every decade at het=0.70 | Ages 20, 30, 40, 50, 60, 70, 80, 90 all starting at the cliff |
+| `near_limits` | 8 | Values at or near hard parameter boundaries | `het_epsilon` (0.01), `het_near_max` (0.94), `nad_barely_alive` (0.21), `exact_cliff` (0.70) |
+
+Each patient has `_label` (human-readable name) and `_category` tags for filtering.
+
+Robustness score: **1.00/1.00** — 0 crashes, 0 NaN/Inf, 0 negative states, 0 out-of-range heteroplasmy across all 82 edge cases.
+
+Outcome distribution: 56% collapsed, 10% declining, 26% stable, 9% healthy (skewed toward collapse because edge cases are deliberately pathological). 59% cross the cliff.
+
+Notable extremes:
+- Lowest final ATP: 0.0061 (`all_max` — 90yo, het=0.95, NAD=0.2, vuln=2.0, demand=2.0, infl=1.0)
+- Highest final ATP: 0.9157 (`all_min` — 20yo, het=0.02, NAD=1.0, vuln=0.5, demand=0.5, infl=0.0)
+- Highest final het: 0.9997 (`all_max`)
+- Lowest final het: 0.1164 (`all_min`)
+
+### Quality Evaluation Metrics
+
+`evaluate_population()` computes 4 scores for the normal population:
+- **grid_coverage**: fraction of all grid points (across 6 params) that appear in the population
+- **correlation_plausibility**: fraction of 5 expected biological correlations with correct sign and magnitude
+- **outcome_diversity**: entropy of the 4 outcome categories (collapsed/declining/stable/healthy) normalized to [0,1]
+- **clinical_plausibility**: penalized by implausible combinations (young+high_het, old+perfect_NAD, etc.)
+
+`evaluate_edge_population()` computes 3 robustness scores:
+- **crash_rate**: 1.0 - (crashes / total patients)
+- **issue_rate**: 1.0 - (patients with NaN/Inf/negative/out-of-range / successful patients)
+- **state_validity**: clean runs (no issues at all) / successful runs
 
 ## Conventions
 
