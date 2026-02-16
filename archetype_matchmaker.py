@@ -5,7 +5,7 @@ archetype_matchmaker.py
 Which character archetypes produce the best intervention protocols
 for which patient types?
 
-Combines PDS mapping (Zimmerman 2025 Ch. 4) with character seed
+Combines PDS mapping (Zimmerman 2025 §4.6.4) with character seed
 experiment data to identify archetype→outcome patterns.
 
 Pipeline:
@@ -137,7 +137,7 @@ def pds_bin(pds, n_bins=3):
 
     Equal-width bins are chosen over quantile bins because PDS dimensions
     have interpretable zero points (e.g., Power=0 means neither powerful
-    nor weak; Zimmerman 2025 Ch. 4). Tercile boundaries at ±1/3 of the
+    nor weak; Zimmerman 2025 §4.6.4). Tercile boundaries at ±1/3 of the
     range are the simplest symmetric partition.
 
     Args:

@@ -91,7 +91,7 @@ python llm_seeded_evolution.py --narrative  # Narrative feedback evolution (requ
 
 # Zimmerman-informed experiments (2026-02-15 upgrade)
 python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
-python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman Ch. 4)
+python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman §4.6.4)
 python posiwid_audit.py          # POSIWID alignment audit (requires Ollama, ~15-20 min)
 python archetype_matchmaker.py   # Archetype→protocol matchmaker (needs character data)
 

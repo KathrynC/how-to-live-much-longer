@@ -5,9 +5,11 @@ posiwid_audit.py
 POSIWID alignment audit: "The Purpose Of a System Is What It Does."
 
 Measures the gap between LLM-intended outcomes and actual simulation
-outcomes. Zimmerman (2025) Ch. 5 discusses how LLMs' objective
-(plausible text generation) competes with the user's objective
-(accurate parameter generation). This script quantifies that gap.
+outcomes. Zimmerman (2025) §3.5.2 discusses how the tokenizer's objective
+(compress orthographically) competes with the model's objective (learn
+semantics), and how system purposes are revealed by what systems actually
+do, not what they claim. This script quantifies the gap between what
+an LLM says it intends and what the simulation actually produces.
 
 Pipeline per scenario:
   1. Ask LLM: "What outcome do you INTEND for this patient?"
@@ -105,8 +107,8 @@ def score_alignment(intention, actual_het_change, actual_atp_change,
     It Does" — not what it claims to intend. This function quantifies the gap
     between what the LLM SAYS it expects and what the simulation ACTUALLY
     produces. Low alignment reveals that the LLM generates "plausible-sounding"
-    parameters without understanding the ODE dynamics (Zimmerman 2025 Ch. 5:
-    LLM objective = plausible text, not accurate parameter generation).
+    parameters without understanding the ODE dynamics (Zimmerman 2025 §3.5.2:
+    system purpose = what it does, not what it claims).
 
     Scoring components:
 

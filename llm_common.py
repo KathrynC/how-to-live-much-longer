@@ -91,7 +91,8 @@ def parse_json_response(response):
 def detect_flattening(params):
     """Detect and fix common LLM flattening errors.
 
-    Zimmerman (2025) Ch. 3: LLMs collapse qualitative distinctions.
+    Zimmerman (2025) §3.5.3: tokenization-induced flattening collapses
+    qualitative distinctions.
     A common failure mode is treating all parameters as 0-1 normalized,
     producing baseline_age=0.5 instead of 50.
 
@@ -163,7 +164,7 @@ def validate_llm_output(raw_dict: dict) -> tuple[dict, list[str]]:
         warnings.append(f"pydantic validation: {e}")
         # Fall through with recognized dict as-is (backwards compatible)
 
-    # Detect and fix flattening errors (Zimmerman Ch. 3)
+    # Detect and fix flattening errors (Zimmerman §3.5.3)
     recognized, fixes = detect_flattening(recognized)
     warnings.extend(fixes)
 

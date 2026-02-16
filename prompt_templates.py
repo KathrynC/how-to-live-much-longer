@@ -4,12 +4,13 @@ Provides both numeric (original) and diegetic (narrative) prompt styles
 for A/B comparison. Informed by Zimmerman (2025) dissertation findings
 on LLM meaning construction:
 
-- Diegetic prompts embed parameters in clinical narrative (Ch. 2-3:
-  LLMs handle semantic content better than structural/numeric)
+- Diegetic prompts embed parameters in clinical narrative (§2.2.3:
+  LLMs handle diegetic content better than supradiegetic/numeric form)
 - Contrastive prompts generate opposing protocols to exploit
-  TALOT/OTTITT meaning-from-contrast (Ch. 5)
+  TALOT/OTTITT meaning-from-contrast (§4.7.6)
 - Anti-flattening measures separate qualitatively different parameters
-  with semantic context (Ch. 3: LLMs collapse qualitative distinctions)
+  with semantic context (§3.5.3: tokenization-induced flattening
+  collapses qualitative distinctions)
 
 Biological constants embedded in prompts (Cramer 2025):
 - Heteroplasmy cliff at ~0.70 (Ch. V.K p.66, Rossignol 2003)
@@ -25,8 +26,8 @@ References:
     Construction in Language, as Implemented in Humans and Large
     Language Models (LLMs)." PhD dissertation, University of Vermont.
 
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (2026, forthcoming). "How to Live Much Longer."
+    Springer Verlag.
 """
 
 

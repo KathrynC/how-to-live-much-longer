@@ -5,7 +5,7 @@ pds_mapping.py
 Map Zimmerman's PDS (Power, Danger, Structure) dimensions from
 fictional character archetypes to patient parameters.
 
-Based on Zimmerman (2025) Ch. 4: the 6D SVD of 2000 Open Psychometrics
+Based on Zimmerman (2025) §4.6.4: the 6D SVD of 2000 Open Psychometrics
 characters yields 3 bipolar dimensions:
   - Power (Fool↔Hero): maps to metabolic_demand + genetic_resilience
   - Danger (Angel↔Demon): maps to inflammation_level + genetic_vulnerability
@@ -136,7 +136,7 @@ def compute_pds(character, available_columns):
 def pds_to_patient(pds_scores):
     """Map PDS dimensions to patient parameters.
 
-    Mapping rationale (Zimmerman 2025 Ch. 4):
+    Mapping rationale (Zimmerman 2025 §4.6.4):
       The PDS dimensions capture distinct biological risk factors:
 
       Power → metabolic_demand: powerful characters (heroes, leaders) map to
