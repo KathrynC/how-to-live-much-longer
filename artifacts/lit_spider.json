@@ -1,0 +1,142 @@
+{
+  "experiment": "lit_spider",
+  "date": "2026-02-16 13:12:32 UTC",
+  "elapsed_seconds": 4.4,
+  "n_parameters": 2,
+  "n_pubmed_queries": 2,
+  "n_abstracts_fetched": 9,
+  "n_llm_extractions": 0,
+  "ollama_model": "keyword-only",
+  "parameters": {
+    "heteroplasmy_cliff": {
+      "parameter": "heteroplasmy_cliff",
+      "current_value": 0.7,
+      "current_unit": "fraction",
+      "location": "constants.py:HETEROPLASMY_CLIFF",
+      "current_citation": "Rossignol et al. 2003",
+      "priority": "medium",
+      "n_papers_searched": 4,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 1,
+      "literature_values": [
+        {
+          "value": 75.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40068680",
+          "paper_title": "Engineering mtDNA deletions by reconstituting end joining in human mitochondria."
+        }
+      ],
+      "literature_range": {
+        "min": 75.0,
+        "max": 75.0,
+        "median": 75.0,
+        "n": 1
+      },
+      "assessment": "sparse",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "40068680",
+          "title": "Engineering mtDNA deletions by reconstituting end joining in human mitochondria.",
+          "year": "2025",
+          "doi": "10.1016/j.cell.2025.02.009",
+          "authors": [
+            "Fu Y",
+            "Land M",
+            "Kavlashvili T"
+          ]
+        }
+      ]
+    },
+    "doubling_time_young": {
+      "parameter": "doubling_time_young",
+      "current_value": 11.8,
+      "current_unit": "years",
+      "location": "constants.py:DOUBLING_TIME_YOUNG",
+      "current_citation": "Vandiver et al. 2023 (Cramer Appendix 2 p.155)",
+      "priority": "low",
+      "n_papers_searched": 5,
+      "n_papers_relevant": 2,
+      "n_values_extracted": 4,
+      "literature_values": [
+        {
+          "value": 10.0,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "37815936",
+          "paper_title": "CHCHD10 mutations induce tissue-specific mitochondrial DNA deletions with a distinct signature."
+        },
+        {
+          "value": 10.0,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "37815936",
+          "paper_title": "CHCHD10 mutations induce tissue-specific mitochondrial DNA deletions with a distinct signature."
+        },
+        {
+          "value": 10.0,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "37815936",
+          "paper_title": "CHCHD10 mutations induce tissue-specific mitochondrial DNA deletions with a distinct signature."
+        },
+        {
+          "value": 81.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "37132288",
+          "paper_title": "Nanopore sequencing identifies a higher frequency and expanded spectrum of mitochondrial DNA deletion mutations in human aging."
+        }
+      ],
+      "literature_range": {
+        "min": 10.0,
+        "max": 81.0,
+        "median": 10.0,
+        "n": 4
+      },
+      "assessment": "conflicting",
+      "discrepancy": "none",
+      "key_papers": [
+        {
+          "pmid": "37815936",
+          "title": "CHCHD10 mutations induce tissue-specific mitochondrial DNA deletions with a distinct signature.",
+          "year": "2023",
+          "doi": "10.1093/hmg/ddad161",
+          "authors": [
+            "Shammas MK",
+            "Nie Y",
+            "Gilsrud A"
+          ]
+        },
+        {
+          "pmid": "37132288",
+          "title": "Nanopore sequencing identifies a higher frequency and expanded spectrum of mitochondrial DNA deletion mutations in human aging.",
+          "year": "2023",
+          "doi": "10.1111/acel.13842",
+          "authors": [
+            "Vandiver AR",
+            "Hoang AN",
+            "Herbst A"
+          ]
+        }
+      ]
+    }
+  },
+  "summary": {
+    "well_supported": [],
+    "sparse_evidence": [
+      "heteroplasmy_cliff"
+    ],
+    "no_data": [],
+    "major_discrepancies": [],
+    "conflicting": [
+      "doubling_time_young"
+    ]
+  }
+}

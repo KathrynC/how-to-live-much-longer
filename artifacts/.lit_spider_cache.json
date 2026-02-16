@@ -1,0 +1,22 @@
+{
+  "(mitochondrial heteroplasmy threshold) OR (biochemical threshold heteroplasmy) OR (mitochondrial DNA mutation threshold cellular dysfunction)|5": {
+    "pmids": [
+      "32906214",
+      "35220898",
+      "40068680",
+      "20301352",
+      "12475550"
+    ],
+    "_cached_at": 1771247553.41574
+  },
+  "(mitochondrial DNA deletion accumulation rate age) OR (mtDNA deletion doubling time human aging) OR (Vandiver 2023 mitochondrial deletion aging cell)|5": {
+    "pmids": [
+      "9928425",
+      "12729587",
+      "37815936",
+      "37132288",
+      "37808212"
+    ],
+    "_cached_at": 1771247556.034483
+  }
+}
