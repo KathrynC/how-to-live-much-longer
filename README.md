@@ -221,6 +221,12 @@ Based on Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction i
 | `temporal_optimizer.py` | (1+lambda) ES over phased intervention schedules; optimal timelines vs constant dosing | ~3000 sims, ~7 min |
 | `multi_tissue_sim.py` | Coupled brain+muscle+cardiac simulation with shared NAD, systemic inflammation, cardiac blood flow | ~30 sims, ~2 min |
 
+## Questions from John G. Cramer (2026-02-16)
+
+Full Q&A: [`artifacts/cramer_questions_2026-02-16.md`](artifacts/cramer_questions_2026-02-16.md)
+
+John Cramer reviewed the simulation and raised five questions about its scope and limitations: (1) individual vs. population modeling, (2) tissue-specific cliff thresholds, (3) mutation type granularity, (4) whether the simulation verifies the mtDNA energy hypothesis, and (5) testable predictions. The answers document what the simulator currently does, what it doesn't, and six specific predictions that could be experimentally tested.
+
 ## Landscape Characterization
 
 Full analysis: [`artifacts/landscape_characterization.md`](artifacts/landscape_characterization.md)
