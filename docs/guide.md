@@ -125,10 +125,48 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 
 ### Core Infrastructure
 
-- `simulator.py` — RK4 ODE integrator with 7 state variables
-- `analytics.py` — 4-pillar metrics (energy, damage, dynamics, intervention)
-- `llm_common.py` — LLM query, response parsing, flattening detection
-- `constants.py` — All biological constants, parameter space definitions
+- **[`simulator`](simulator.md)** — RK4 ODE integrator, 7 state variables, tissue types, time-varying schedules
+- **[`analytics`](analytics.md)** — 4-pillar metrics (energy, damage, dynamics, intervention)
+- **[`llm_common`](llm_common.md)** — LLM query, response parsing, flattening detection, grid snapping
+- **[`constants`](constants.md)** — Biological constants, parameter space definitions, clinical seeds
+- **[`schemas`](schemas.md)** — Pydantic validation models for LLM output
+
+### TIQM Pipeline & Utilities
+
+- **[`tiqm_experiment`](tiqm_experiment.md)** — Full TIQM pipeline: offer wave → simulation → confirmation wave
+- **[`cliff_mapping`](cliff_mapping.md)** — Heteroplasmy cliff characterization, bisection search, 2D heatmaps
+- **[`visualize`](visualize.md)** — Matplotlib trajectory plots, cliff curves, intervention comparisons
+- **[`generate_patients`](generate_patients.md)** — Patient population generator (100 normal + 82 edge-case)
+
+### Tier 1 — Pure Simulation Experiments
+
+- **[`causal_surgery`](causal_surgery.md)** — Treatment timing / point of no return (~192 sims)
+- **[`dark_matter`](dark_matter.md)** — Futile intervention taxonomy (~700 sims)
+- **[`protocol_interpolation`](protocol_interpolation.md)** — Fitness landscape between protocols (~1325 sims)
+
+### Tier 2 — LLM Seed Experiments
+
+- **[`oeis_seed_experiment`](oeis_seed_experiment.md)** — OEIS sequences → intervention vectors (~396 trials)
+- **[`character_seed_experiment`](character_seed_experiment.md)** — Fictional characters → protocols (~8000 trials)
+
+### Tier 3 — LLM Meta-Analysis
+
+- **[`fisher_metric`](fisher_metric.md)** — LLM output variance / clinical certainty (400 queries)
+- **[`clinical_consensus`](clinical_consensus.md)** — Multi-model agreement (40 queries + 40 sims)
+
+### Tier 4 — Synthesis
+
+- **[`perturbation_probing`](perturbation_probing.md)** — Intervention fragility mapping (~1250 sims)
+- **[`categorical_structure`](categorical_structure.md)** — Functor validation: Sem → Vec → Beh
+- **[`llm_seeded_evolution`](llm_seeded_evolution.md)** — Hill-climbing from LLM vs random seeds (~4000 sims)
+
+### Tier 5 — Discovery Tools
+
+- **[`interaction_mapper`](interaction_mapper.md)** — D4: Synergy/antagonism between intervention pairs (~2160 sims)
+- **[`reachable_set`](reachable_set.md)** — D1: Achievable outcome space + Pareto frontiers (~2400 sims)
+- **[`competing_evaluators`](competing_evaluators.md)** — D5: Multi-criteria robust protocol search (~1000 sims)
+- **[`temporal_optimizer`](temporal_optimizer.md)** — D2: Optimal intervention timelines via ES (~3000 sims)
+- **[`multi_tissue_sim`](multi_tissue_sim.md)** — D3: Coupled brain + muscle + cardiac simulation (~30 sims)
 
 ---
 
