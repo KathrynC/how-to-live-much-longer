@@ -162,6 +162,9 @@ See the citation key at the top of `constants.py` for full details on each const
 | `prompt_templates.py` | Prompt styles: numeric, diegetic, contrastive (used by `tiqm_experiment.py --style`) |
 | `cliff_mapping.py` | Heteroplasmy threshold mapping and cliff characterization |
 | `visualize.py` | Matplotlib plots (Agg backend) |
+| `disturbances.py` | 4 disturbance types + `simulate_with_disturbances()` with custom RK4 loop |
+| `resilience_metrics.py` | Resistance, recovery time, regime retention, elasticity, composite score |
+| `resilience_viz.py` | 5 visualization functions + CLI for resilience analysis plots |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
 | `protocol_mtdna_synthesis.py` | 9-step mtDNA synthesis and transplant protocol |
 
@@ -229,6 +232,51 @@ Full Q&A: [`artifacts/cramer_questions_2026-02-16.md`](artifacts/cramer_question
 
 John Cramer reviewed the simulation and raised five questions about its scope and limitations: (1) individual vs. population modeling, (2) tissue-specific cliff thresholds, (3) mutation type granularity, (4) whether the simulation verifies the mtDNA energy hypothesis, and (5) testable predictions. The answers document what the simulator currently does, what it doesn't, and six specific predictions that could be experimentally tested.
 
+## Resilience Analysis
+
+Inspired by agroecology and ecological resilience theory (Holling 1973, Scheffer 2009), the simulator includes a disturbance framework that treats the mitochondrial network as an ecosystem subject to external shocks. The heteroplasmy cliff at ~70% serves as the ecological tipping point.
+
+### Disturbance Types
+
+| Disturbance | Primary Effect | Severity |
+|---|---|---|
+| `IonizingRadiation` | Healthy → damaged mtDNA transfer, ROS spike | Moderate |
+| `ToxinExposure` | Membrane potential drop, NAD depletion | Moderate |
+| `ChemotherapyBurst` | Severe mtDNA damage + ROS + senescence | High |
+| `InflammationBurst` | Senescence spike, mild mtDNA damage | Low–Moderate |
+
+Each disturbance uses a two-channel injection pattern: an **impulse** (one-shot state modification at shock onset) and **ongoing parameter perturbation** (elevated genetic vulnerability during shock window).
+
+### Resilience Metrics
+
+| Metric | Measures | Ecological Analog |
+|---|---|---|
+| **Resistance** | Peak state deviation during shock | Engineering resilience (Pimm 1984) |
+| **Recovery time** | Years to return within tolerance of baseline | Return time (Pimm 1984) |
+| **Regime retention** | Whether heteroplasmy stays below cliff | Regime shift detection (Scheffer 2009) |
+| **Elasticity** | Post-shock trajectory slope toward/away from baseline | Ecological elasticity (Holling 1973) |
+| **Composite score** | Weighted 0.25R + 0.30T + 0.30G + 0.15E | Overall system resilience [0–1] |
+
+### Usage
+
+```bash
+# Generate resilience visualizations
+python resilience_viz.py                                    # Default: radiation at year 10
+python resilience_viz.py --disturbance chemo --magnitude 0.8  # Chemotherapy shock
+python resilience_viz.py --disturbance inflammation           # Inflammation burst
+
+# From Python
+from disturbances import IonizingRadiation, simulate_with_disturbances
+from resilience_metrics import compute_resilience
+from simulator import simulate
+
+shock = IonizingRadiation(start_year=10.0, magnitude=0.8)
+result = simulate_with_disturbances(disturbances=[shock])
+baseline = simulate()
+metrics = compute_resilience(result, baseline)
+print(f"Resilience score: {metrics['summary_score']:.3f}")
+```
+
 ## Landscape Characterization
 
 Full analysis: [`artifacts/landscape_characterization.md`](artifacts/landscape_characterization.md)
@@ -246,7 +294,7 @@ The 12D parameter space has been partially characterized (~400 simulations). Key
 ## Testing
 
 ```bash
-# Full test suite (85 tests across 4 modules)
+# Full test suite (139 tests across 7 modules)
 pytest tests/ -v
 
 # Standalone self-tests
@@ -280,6 +328,11 @@ python tiqm_experiment.py --contrastive
 
 # Print the mtDNA synthesis protocol
 python protocol_mtdna_synthesis.py
+
+# Resilience analysis (no Ollama needed)
+python resilience_viz.py                                      # Default radiation shock
+python resilience_viz.py --disturbance chemo --magnitude 0.8  # Chemotherapy
+python resilience_viz.py --disturbance inflammation            # Inflammation burst
 
 # Research campaigns (Tier 1 — no Ollama needed)
 python causal_surgery.py
@@ -329,4 +382,7 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 - Rossignol, R. et al. (2003). "Mitochondrial threshold effects." *Biochemical Journal*, 370(3), 751–762.
 - Vandiver, A.R. et al. (2023). "Nanopore sequencing identifies a higher frequency and expanded spectrum of mitochondrial DNA deletion mutations in human aging." *Aging Cell*, 22(6). doi:10.1111/acel.13842.
 - Wallace, D.C. (2005). "A mitochondrial paradigm of metabolic and degenerative diseases, aging, and cancer." *Genetics*, 163(4), 1215–1241.
+- Holling, C.S. (1973). "Resilience and stability of ecological systems." *Annual Review of Ecology and Systematics*, 4(1), 1–23.
+- Pimm, S.L. (1984). "The complexity and stability of ecosystems." *Nature*, 307(5949), 321–326.
+- Scheffer, M. et al. (2009). "Early-warning signals for critical transitions." *Nature*, 461(7260), 53–59.
 - Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction in Language, as Implemented in Humans and Large Language Models (LLMs)." PhD dissertation, University of Vermont. [PDS mapping, prompt engineering, POSIWID audit]

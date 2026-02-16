@@ -54,7 +54,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (85 tests: simulator, analytics, LLM parsing, schemas)
+pytest tests/ -v          # Full pytest suite (139 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -88,6 +88,12 @@ python perturbation_probing.py   # Intervention fragility mapping (~5 min, ~1250
 python categorical_structure.py  # Functor validation (needs seed data, ~5 sec)
 python llm_seeded_evolution.py   # Hill-climb from LLM seeds (~10 min, ~4000 sims)
 python llm_seeded_evolution.py --narrative  # Narrative feedback evolution (requires Ollama)
+
+# Resilience analysis (no Ollama needed)
+python resilience_viz.py                                      # Default radiation shock at year 10
+python resilience_viz.py --disturbance chemo --magnitude 0.8  # Chemotherapy burst
+python resilience_viz.py --disturbance toxin                  # Toxin exposure
+python resilience_viz.py --disturbance inflammation            # Inflammation burst
 
 # Zimmerman-informed experiments (2026-02-15 upgrade)
 python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
@@ -184,6 +190,11 @@ zimmerman_bridge.py        ← MitoSimulator: Zimmerman Simulator protocol adapt
 zimmerman_analysis.py      ← Full 14-tool analysis runner + CLI (imports zimmerman_bridge, all 14 zimmerman modules)
 zimmerman_viz.py           ← Matplotlib visualizations for Zimmerman reports (imports constants)
 
+# Resilience suite (agroecology-inspired, no LLM, imports simulator + constants)
+disturbances.py            ← 4 disturbance types + simulate_with_disturbances() custom RK4 loop (imports simulator, constants)
+resilience_metrics.py      ← Resistance, recovery time, regime retention, elasticity, composite score (imports numpy)
+resilience_viz.py          ← 5 visualization functions + CLI (imports disturbances, resilience_metrics, simulator, constants)
+
 protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ```
 
@@ -269,6 +280,12 @@ Cramer email corrections (2026-02-15):
 - **competing_evaluators.py** (D5) — 4 evaluator functions (ATP_Guardian, Het_Hunter, Crisis_Delayer, Efficiency_Auditor) score ~500 candidate protocols. Finds "transaction" protocols in top-25% for ALL evaluators. 4D Pareto frontier, evaluator agreement matrix. Optionally ingests Pareto/synergy data from D1/D4. ~1000 sims
 - **temporal_optimizer.py** (D2) — (1+lambda) ES over phased InterventionSchedule genotypes (3 phases × 6 params + 2 boundaries = 20D). Compares optimal phased schedule to constant equivalent; timing_importance = relative improvement. ~3000 sims
 - **multi_tissue_sim.py** (D3) — Wraps derivatives() to simulate brain+muscle+cardiac coupled by shared NAD+ pool, systemic inflammation, and cardiac blood flow. Tests 5 protocols × 4 allocation strategies + brain allocation sweep. Discovers cardiac cascade, worst-first allocation benefits. ~30 sims
+
+**Resilience Suite (agroecology-inspired, no LLM):**
+- **disturbances.py** — 4 disturbance types (IonizingRadiation, ToxinExposure, ChemotherapyBurst, InflammationBurst) with two-channel injection: impulse (one-shot state modification) + ongoing (parameter perturbation during shock window). Custom RK4 loop with 4-phase per-step logic (impulse, param modification, RK4, constraints). Each disturbance calibrated against actual ODE dynamics.
+- **resilience_metrics.py** — 4 ecological resilience metrics: resistance (peak deviation during shock), recovery time (sustained return to tolerance, 10-step window ≈ 1 mitochondrial turnover cycle), regime retention (cliff-crossing detection), elasticity (2-year post-shock deviation slope). Composite score: 0.25 resistance + 0.30 recovery + 0.30 regime + 0.15 elasticity. Based on Holling (1973), Pimm (1984), Scheffer (2009).
+- **resilience_viz.py** — 5 visualization functions: `plot_shock_response()` (4-panel ATP/het/ROS/ΔΨ with shock window shading), `plot_resilience_comparison()` (multi-trajectory overlay), `plot_resilience_summary()` (bar chart with traffic-light recovery time colors), `plot_recovery_landscape()` (magnitude × timing heatmap), `generate_all_plots()` (10-plot suite). CLI: `python resilience_viz.py [--disturbance radiation --magnitude 0.8]`.
+- **tests/test_resilience.py** — 28 tests across 3 classes (disturbance classes, simulate_with_disturbances, resilience metrics). Module-scoped fixtures for baseline, radiation, and chemo results.
 
 **Tier 6 — Zimmerman Toolkit Integration (no LLM, requires ~/zimmerman-toolkit):**
 - **zimmerman_bridge.py** — `MitoSimulator` class satisfying the Zimmerman `Simulator` protocol (`run(params) -> dict`, `param_spec() -> bounds`). Accepts flat 12D param dict, splits into intervention + patient, runs 30-year simulation, computes 4-pillar analytics, returns flat dict of ~40 scalar metrics. Supports full 12D mode and intervention-only 6D mode with fixed patient override. Caches baseline simulation. Caps inf values to 999.0.
@@ -447,6 +464,28 @@ protocol = FullProtocol(rapamycin_dose=0.5, baseline_age=70)
 snapped, warnings = validate_llm_output(raw_dict)
 ```
 
+### Resilience analysis
+
+```python
+from disturbances import IonizingRadiation, ChemotherapyBurst, simulate_with_disturbances
+from resilience_metrics import compute_resilience
+from simulator import simulate
+
+# Single shock
+shock = IonizingRadiation(start_year=10.0, magnitude=0.8)
+result = simulate_with_disturbances(disturbances=[shock])
+baseline = simulate()
+metrics = compute_resilience(result, baseline)
+print(f"Resilience: {metrics['summary_score']:.3f}")
+
+# Multiple shocks
+shocks = [
+    IonizingRadiation(start_year=5.0, magnitude=0.5),
+    ChemotherapyBurst(start_year=15.0, magnitude=0.6),
+]
+result = simulate_with_disturbances(disturbances=shocks)
+```
+
 ### Zimmerman toolkit analysis
 
 ```python
@@ -494,6 +533,7 @@ report = falsifier.falsify(n_random=100, n_boundary=50)
 - `artifacts/zimmerman/dashboard.json` — Unified dashboard aggregating all tools
 - `artifacts/zimmerman/dashboard.md` — Markdown summary report
 - `output/zimmerman/*.png` — Sobol bars, contrastive sensitivity, locality curves, relation graph, POSIWID alignment, dashboard radar
+- `output/resilience_*.png` — Shock response, comparison, summary, recovery landscape plots
 
 ## Patient Population Generator (`generate_patients.py`)
 
@@ -597,7 +637,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs 85 tests across 4 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas)
+- Formal test suite: `pytest tests/ -v` runs 139 tests across 7 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)
