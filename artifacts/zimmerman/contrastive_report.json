@@ -1,0 +1,148 @@
+{
+  "n_pairs": 2,
+  "pairs": [
+    {
+      "found": true,
+      "original_params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.0,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.0,
+        "baseline_age": 70.0,
+        "baseline_heteroplasmy": 0.3,
+        "baseline_nad_level": 0.6,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.25
+      },
+      "contrastive_params": {
+        "rapamycin_dose": 0.0035896893319515674,
+        "nad_supplement": 0.009967876174846308,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.01428093067314102,
+        "baseline_age": 70.01713804957241,
+        "baseline_heteroplasmy": 0.3028726505779517,
+        "baseline_nad_level": 0.5907861676270114,
+        "genetic_vulnerability": 1.0270406325061983,
+        "metabolic_demand": 1.0207947665561872,
+        "inflammation_level": 0.2482094305732639
+      },
+      "delta": {
+        "rapamycin_dose": 0.0035896893319515674,
+        "nad_supplement": 0.009967876174846308,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.01428093067314102,
+        "baseline_age": 0.017138049572409386,
+        "baseline_heteroplasmy": 0.0028726505779517186,
+        "baseline_nad_level": -0.009213832372988562,
+        "genetic_vulnerability": 0.02704063250619826,
+        "metabolic_demand": 0.020794766556187172,
+        "inflammation_level": -0.0017905694267361105
+      },
+      "outcome_original": "healthy",
+      "outcome_flipped": "near_cliff",
+      "perturbation_magnitude": 0.0456939697265625,
+      "n_sims": 69
+    },
+    {
+      "found": true,
+      "original_params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.0,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.0,
+        "baseline_age": 70.0,
+        "baseline_heteroplasmy": 0.6,
+        "baseline_nad_level": 0.6,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.25
+      },
+      "contrastive_params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.015865264524998757,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.02558958803996895,
+        "exercise_level": 0.004598471677700216,
+        "baseline_age": 70.56516402237702,
+        "baseline_heteroplasmy": 0.5994947909909577,
+        "baseline_nad_level": 0.5904480516610925,
+        "genetic_vulnerability": 0.9890735302902263,
+        "metabolic_demand": 1.005751100656037,
+        "inflammation_level": 0.2388572630136404
+      },
+      "delta": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.015865264524998757,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.02558958803996895,
+        "exercise_level": 0.004598471677700216,
+        "baseline_age": 0.5651640223770187,
+        "baseline_heteroplasmy": -0.0005052090090422734,
+        "baseline_nad_level": -0.00955194833890749,
+        "genetic_vulnerability": -0.010926469709773734,
+        "metabolic_demand": 0.0057511006560369005,
+        "inflammation_level": -0.011142736986359592
+      },
+      "outcome_original": "collapsed",
+      "outcome_flipped": "near_cliff",
+      "perturbation_magnitude": 0.04267730712890626,
+      "n_sims": 101
+    }
+  ],
+  "sensitivity": {
+    "param_importance": {
+      "baseline_age": 0.29115103597471403,
+      "baseline_heteroplasmy": 0.001688929793496996,
+      "baseline_nad_level": 0.009382890355948026,
+      "exercise_level": 0.009439701175420617,
+      "genetic_vulnerability": 0.018983551107985996,
+      "inflammation_level": 0.006466653206547851,
+      "metabolic_demand": 0.013272933606112036,
+      "nad_supplement": 0.012916570349922532,
+      "rapamycin_dose": 0.0017948446659757837,
+      "senolytic_dose": 0.0,
+      "transplant_rate": 0.012794794019984476,
+      "yamanaka_intensity": 0.0
+    },
+    "param_flip_frequency": {
+      "baseline_age": 0.5,
+      "baseline_heteroplasmy": 0.0,
+      "baseline_nad_level": 0.0,
+      "exercise_level": 0.0,
+      "genetic_vulnerability": 0.5,
+      "inflammation_level": 0.0,
+      "metabolic_demand": 0.0,
+      "nad_supplement": 0.0,
+      "rapamycin_dose": 0.0,
+      "senolytic_dose": 0.0,
+      "transplant_rate": 0.0,
+      "yamanaka_intensity": 0.0
+    },
+    "n_pairs": 2,
+    "rankings": [
+      "baseline_age",
+      "genetic_vulnerability",
+      "metabolic_demand",
+      "nad_supplement",
+      "transplant_rate",
+      "exercise_level",
+      "baseline_nad_level",
+      "inflammation_level",
+      "rapamycin_dose",
+      "baseline_heteroplasmy",
+      "senolytic_dose",
+      "yamanaka_intensity"
+    ]
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "individual_results": [
+    {
+      "intended": {
+        "final_heteroplasmy": 0.25,
+        "final_atp": 0.85
+      },
+      "actual": {
+        "energy_atp_initial": 0.8190697291260872,
+        "energy_atp_final": 0.6702351134268495,
+        "energy_atp_min": 0.6702351134268495,
+        "energy_atp_max": 0.8190697291260872,
+        "energy_atp_mean": 0.7528374209319658,
+        "energy_atp_cv": 0.05968458583759856,
+        "energy_reserve_ratio": 0.10972130928728252,
+        "energy_atp_slope": -0.00517527197824384,
+        "energy_terminal_slope": -0.005903435944454949,
+        "energy_time_to_crisis_years": 999.0,
+        "damage_het_initial": 0.3,
+        "damage_het_final": 0.454951983164084,
+        "damage_het_max": 0.454951983164084,
+        "damage_delta_het": 0.15495198316408398,
+        "damage_het_slope": 0.0053556755642355175,
+        "damage_het_acceleration": 3.379816638482129e-05,
+        "damage_cliff_distance_initial": 0.39999999999999997,
+        "damage_cliff_distance_final": 0.24504801683591598,
+        "damage_time_to_cliff_years": 999.0,
+        "damage_frac_above_cliff": 0.0,
+        "dynamics_ros_dominant_freq": 0.033322225924691765,
+        "dynamics_ros_amplitude": 0.008128574019739872,
+        "dynamics_membrane_potential_cv": 0.19449690455913826,
+        "dynamics_membrane_potential_slope": -0.00999758687058393,
+        "dynamics_nad_slope": -0.00975650412807884,
+        "dynamics_ros_het_correlation": 0.9978982465228335,
+        "dynamics_ros_atp_correlation": -0.9990714459916286,
+        "dynamics_senescent_final": 0.4253531055649651,
+        "dynamics_senescent_slope": 0.009132196380494598,
+        "intervention_atp_benefit_terminal": 0.08289808807907062,
+        "intervention_atp_benefit_mean": 0.020655764897050455,
+        "intervention_het_benefit_terminal": 0.1326727291839635,
+        "intervention_energy_cost_per_year": 0.0,
+        "intervention_benefit_cost_ratio": 999.0,
+        "intervention_total_dose": 0.25,
+        "intervention_crisis_delay_years": 0.0,
+        "final_heteroplasmy": 0.454951983164084,
+        "final_atp": 0.6702351134268495,
+        "final_ros": 0.15545839061356062,
+        "final_nad": 0.318457244512121,
+        "final_senescent": 0.4253531055649651,
+        "final_membrane_potential": 0.2915789742910548
+      },
+      "params": {
+        "rapamycin_dose": 0.25,
+        "nad_supplement": 0.0,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.0,
+        "baseline_age": 70.0,
+        "baseline_heteroplasmy": 0.3,
+        "baseline_nad_level": 0.6,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.25
+      },
+      "alignment": {
+        "per_key": {
+          "final_heteroplasmy": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.1801920673436641,
+            "combined": 0.590096033671832
+          },
+          "final_atp": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.7885118981492347,
+            "combined": 0.8942559490746174
+          }
+        },
+        "overall": 0.7421759913732247,
+        "n_keys_matched": 2,
+        "n_keys_missing": 0
+      }
+    },
+    {
+      "intended": {
+        "final_heteroplasmy": 0.3,
+        "final_atp": 0.8
+      },
+      "actual": {
+        "energy_atp_initial": 0.5006905370320995,
+        "energy_atp_final": 0.7286961865561549,
+        "energy_atp_min": 0.5000636660526766,
+        "energy_atp_max": 0.7927791178346524,
+        "energy_atp_mean": 0.7484267616802163,
+        "energy_atp_cv": 0.08146805941184444,
+        "energy_reserve_ratio": 0.3318468931682308,
+        "energy_atp_slope": 0.0023238372620889413,
+        "energy_terminal_slope": -0.003911086309800522,
+        "energy_time_to_crisis_years": 999.0,
+        "damage_het_initial": 0.65,
+        "damage_het_final": 0.15894830969464946,
+        "damage_het_max": 0.65,
+        "damage_delta_het": -0.49105169030535056,
+        "damage_het_slope": -0.013200045177120041,
+        "damage_het_acceleration": 0.0017939229147400382,
+        "damage_cliff_distance_initial": 0.04999999999999993,
+        "damage_cliff_distance_final": 0.5410516903053505,
+        "damage_time_to_cliff_years": 999.0,
+        "damage_frac_above_cliff": 0.0,
+        "dynamics_ros_dominant_freq": 0.033322225924691765,
+        "dynamics_ros_amplitude": 0.017446631484486528,
+        "dynamics_membrane_potential_cv": 0.14926323414744494,
+        "dynamics_membrane_potential_slope": 0.0006642009588136221,
+        "dynamics_nad_slope": -0.004885133342051338,
+        "dynamics_ros_het_correlation": 0.9873166660505576,
+        "dynamics_ros_atp_correlation": -0.7660122201022109,
+        "dynamics_senescent_final": 0.11609253293780743,
+        "dynamics_senescent_slope": -0.0025697568093480316,
+        "intervention_atp_benefit_terminal": 0.6802355101838179,
+        "intervention_atp_benefit_mean": 0.5164763012398892,
+        "intervention_het_benefit_terminal": 0.7108098974042456,
+        "intervention_energy_cost_per_year": 0.025,
+        "intervention_benefit_cost_ratio": 27.209420407352713,
+        "intervention_total_dose": 2.75,
+        "intervention_crisis_delay_years": 999.0,
+        "final_heteroplasmy": 0.15894830969464946,
+        "final_atp": 0.7286961865561549,
+        "final_ros": 0.10056872991952699,
+        "final_nad": 0.38266227881267534,
+        "final_senescent": 0.11609253293780743,
+        "final_membrane_potential": 0.3885316919637725
+      },
+      "params": {
+        "rapamycin_dose": 0.5,
+        "nad_supplement": 0.75,
+        "senolytic_dose": 0.5,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.5,
+        "exercise_level": 0.5,
+        "baseline_age": 80.0,
+        "baseline_heteroplasmy": 0.65,
+        "baseline_nad_level": 0.4,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.5
+      },
+      "alignment": {
+        "per_key": {
+          "final_heteroplasmy": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.5298276989821649,
+            "combined": 0.7649138494910824
+          },
+          "final_atp": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.9108702331951936,
+            "combined": 0.9554351165975967
+          }
+        },
+        "overall": 0.8601744830443396,
+        "n_keys_matched": 2,
+        "n_keys_missing": 0
+      }
+    },
+    {
+      "intended": {
+        "final_heteroplasmy": 0.15,
+        "final_atp": 0.9
+      },
+      "actual": {
+        "energy_atp_initial": 0.8190697291260872,
+        "energy_atp_final": 0.6892369034266341,
+        "energy_atp_min": 0.6892369034266341,
+        "energy_atp_max": 0.8190697291260872,
+        "energy_atp_mean": 0.7604356514337631,
+        "energy_atp_cv": 0.052391827410036944,
+        "energy_reserve_ratio": 0.09362889269182388,
+        "energy_atp_slope": -0.004591343589969091,
+        "energy_terminal_slope": -0.004862505934467954,
+        "energy_time_to_crisis_years": 999.0,
+        "damage_het_initial": 0.3,
+        "damage_het_final": 0.17378219495532757,
+        "damage_het_max": 0.3,
+        "damage_delta_het": -0.12621780504467242,
+        "damage_het_slope": -0.0016936729424371286,
+        "damage_het_acceleration": 0.0004883599208966975,
+        "damage_cliff_distance_initial": 0.39999999999999997,
+        "damage_cliff_distance_final": 0.5262178050446724,
+        "damage_time_to_cliff_years": 999.0,
+        "damage_frac_above_cliff": 0.0,
+        "dynamics_ros_dominant_freq": 0.033322225924691765,
+        "dynamics_ros_amplitude": 0.0017622900895351349,
+        "dynamics_membrane_potential_cv": 0.18439891749044263,
+        "dynamics_membrane_potential_slope": -0.009598232907330148,
+        "dynamics_nad_slope": -0.009582285976554208,
+        "dynamics_ros_het_correlation": 0.7656981927231897,
+        "dynamics_ros_atp_correlation": -0.09464210379072668,
+        "dynamics_senescent_final": 0.40974907253700055,
+        "dynamics_senescent_slope": 0.008611155925963546,
+        "intervention_atp_benefit_terminal": 0.10189987807885525,
+        "intervention_atp_benefit_mean": 0.028253995398847764,
+        "intervention_het_benefit_terminal": 0.41384251739271993,
+        "intervention_energy_cost_per_year": 0.0,
+        "intervention_benefit_cost_ratio": 999.0,
+        "intervention_total_dose": 1.0,
+        "intervention_crisis_delay_years": 0.0,
+        "final_heteroplasmy": 0.17378219495532757,
+        "final_atp": 0.6892369034266341,
+        "final_ros": 0.09813016625188434,
+        "final_nad": 0.32365493958410774,
+        "final_senescent": 0.40974907253700055,
+        "final_membrane_potential": 0.3035009717087005
+      },
+      "params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.0,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 1.0,
+        "exercise_level": 0.0,
+        "baseline_age": 70.0,
+        "baseline_heteroplasmy": 0.3,
+        "baseline_nad_level": 0.6,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.25
+      },
+      "alignment": {
+        "per_key": {
+          "final_heteroplasmy": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.8414520336311495,
+            "combined": 0.9207260168155748
+          },
+          "final_atp": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.765818781585149,
+            "combined": 0.8829093907925745
+          }
+        },
+        "overall": 0.9018177038040747,
+        "n_keys_matched": 2,
+        "n_keys_missing": 0
+      }
+    },
+    {
+      "intended": {
+        "final_heteroplasmy": 0.05,
+        "final_atp": 0.95
+      },
+      "actual": {
+        "energy_atp_initial": 0.979942874559652,
+        "energy_atp_final": 0.9016469621816326,
+        "energy_atp_min": 0.9016469621816326,
+        "energy_atp_max": 0.979942874559652,
+        "energy_atp_mean": 0.9539918545561089,
+        "energy_atp_cv": 0.023075514674109857,
+        "energy_reserve_ratio": 0.05486932841667948,
+        "energy_atp_slope": -0.002331169270557361,
+        "energy_terminal_slope": -0.00485217186748457,
+        "energy_time_to_crisis_years": 999.0,
+        "damage_het_initial": 0.05,
+        "damage_het_final": 0.2863224532734894,
+        "damage_het_max": 0.2863224532734894,
+        "damage_delta_het": 0.23632245327348939,
+        "damage_het_slope": 0.007707974801016154,
+        "damage_het_acceleration": -0.0002179370255287853,
+        "damage_cliff_distance_initial": 0.6499999999999999,
+        "damage_cliff_distance_final": 0.4136775467265106,
+        "damage_time_to_cliff_years": 999.0,
+        "damage_frac_above_cliff": 0.0,
+        "dynamics_ros_dominant_freq": 0.033322225924691765,
+        "dynamics_ros_amplitude": 0.0030070798704937146,
+        "dynamics_membrane_potential_cv": 0.04634264489277482,
+        "dynamics_membrane_potential_slope": -0.004198207557036792,
+        "dynamics_nad_slope": -0.005816012074388723,
+        "dynamics_ros_het_correlation": 0.9769759030344891,
+        "dynamics_ros_atp_correlation": -0.9471582148206608,
+        "dynamics_senescent_final": 0.16527262330759276,
+        "dynamics_senescent_slope": 0.0054217953654118215,
+        "intervention_atp_benefit_terminal": 0.012106228819558362,
+        "intervention_atp_benefit_mean": 0.0005211792445902752,
+        "intervention_het_benefit_terminal": 0.025358475492571142,
+        "intervention_energy_cost_per_year": 0.037500000000000006,
+        "intervention_benefit_cost_ratio": 0.3228327685215563,
+        "intervention_total_dose": 1.25,
+        "intervention_crisis_delay_years": 0.0,
+        "final_heteroplasmy": 0.2863224532734894,
+        "final_atp": 0.9016469621816326,
+        "final_ros": 0.09754975712573484,
+        "final_nad": 0.8613261681330513,
+        "final_senescent": 0.16527262330759276,
+        "final_membrane_potential": 0.8393799827247194
+      },
+      "params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.5,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.75,
+        "baseline_age": 25.0,
+        "baseline_heteroplasmy": 0.05,
+        "baseline_nad_level": 0.95,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.0
+      },
+      "alignment": {
+        "per_key": {
+          "final_heteroplasmy": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.0,
+            "combined": 0.5
+          },
+          "final_atp": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.9491020654543502,
+            "combined": 0.9745510327271751
+          }
+        },
+        "overall": 0.7372755163635876,
+        "n_keys_matched": 2,
+        "n_keys_missing": 0
+      }
+    },
+    {
+      "intended": {
+        "final_heteroplasmy": 0.2,
+        "final_atp": 0.5
+      },
+      "actual": {
+        "energy_atp_initial": 0.8190697291260872,
+        "energy_atp_final": 0.4238927223421907,
+        "energy_atp_min": 0.4238927223421907,
+        "energy_atp_max": 0.8190697291260872,
+        "energy_atp_mean": 0.5120158927515167,
+        "energy_atp_cv": 0.12988537716333082,
+        "energy_reserve_ratio": 0.17211022481306554,
+        "energy_atp_slope": -0.006992124412495361,
+        "energy_terminal_slope": -0.005218926878913575,
+        "energy_time_to_crisis_years": 999.0,
+        "damage_het_initial": 0.3,
+        "damage_het_final": 0.37602786432132257,
+        "damage_het_max": 0.37602786432132257,
+        "damage_delta_het": 0.07602786432132258,
+        "damage_het_slope": 0.0026294198800132515,
+        "damage_het_acceleration": 1.9403628941922564e-05,
+        "damage_cliff_distance_initial": 0.39999999999999997,
+        "damage_cliff_distance_final": 0.3239721356786774,
+        "damage_time_to_cliff_years": 999.0,
+        "damage_frac_above_cliff": 0.0,
+        "dynamics_ros_dominant_freq": 0.033322225924691765,
+        "dynamics_ros_amplitude": 0.004885980289703293,
+        "dynamics_membrane_potential_cv": 0.25808550573052197,
+        "dynamics_membrane_potential_slope": -0.01158351227624875,
+        "dynamics_nad_slope": -0.011003076366866645,
+        "dynamics_ros_het_correlation": 0.9972171552044697,
+        "dynamics_ros_atp_correlation": -0.9271915831122489,
+        "dynamics_senescent_final": 0.471111442354365,
+        "dynamics_senescent_slope": 0.010717949506696568,
+        "intervention_atp_benefit_terminal": -0.16344430300558815,
+        "intervention_atp_benefit_mean": -0.22016576328339865,
+        "intervention_het_benefit_terminal": 0.2115968480267249,
+        "intervention_energy_cost_per_year": 3.375,
+        "intervention_benefit_cost_ratio": -0.04842794163128538,
+        "intervention_total_dose": 0.75,
+        "intervention_crisis_delay_years": 0.0,
+        "final_heteroplasmy": 0.37602786432132257,
+        "final_atp": 0.4238927223421907,
+        "final_ros": 0.13812388876920856,
+        "final_nad": 0.2449204435607445,
+        "final_senescent": 0.471111442354365,
+        "final_membrane_potential": 0.22815113068067078
+      },
+      "params": {
+        "rapamycin_dose": 0.0,
+        "nad_supplement": 0.0,
+        "senolytic_dose": 0.0,
+        "yamanaka_intensity": 0.75,
+        "transplant_rate": 0.0,
+        "exercise_level": 0.0,
+        "baseline_age": 70.0,
+        "baseline_heteroplasmy": 0.3,
+        "baseline_nad_level": 0.6,
+        "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0,
+        "inflammation_level": 0.25
+      },
+      "alignment": {
+        "per_key": {
+          "final_heteroplasmy": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.11986067839338721,
+            "combined": 0.5599303391966937
+          },
+          "final_atp": {
+            "direction_match": 1.0,
+            "magnitude_match": 0.8477854446843814,
+            "combined": 0.9238927223421907
+          }
+        },
+        "overall": 0.7419115307694422,
+        "n_keys_matched": 2,
+        "n_keys_missing": 0
+      }
+    }
+  ],
+  "aggregate": {
+    "mean_overall": 0.7966710450709338,
+    "std_overall": 0.0701208251401286,
+    "min_overall": 0.7372755163635876,
+    "max_overall": 0.9018177038040747,
+    "mean_direction_accuracy": 1.0,
+    "mean_magnitude_accuracy": 0.5933420901418675,
+    "n_scenarios": 5,
+    "per_key_mean": {
+      "final_heteroplasmy": {
+        "direction": 1.0,
+        "magnitude": 0.3342664956700731,
+        "combined": 0.6671332478350365
+      },
+      "final_atp": {
+        "direction": 1.0,
+        "magnitude": 0.8524176846136617,
+        "combined": 0.9262088423068308
+      }
+    }
+  }
+}

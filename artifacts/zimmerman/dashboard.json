@@ -1,0 +1,121 @@
+{
+  "simulator_info": {
+    "n_params": 12,
+    "param_names": [
+      "baseline_age",
+      "baseline_heteroplasmy",
+      "baseline_nad_level",
+      "exercise_level",
+      "genetic_vulnerability",
+      "inflammation_level",
+      "metabolic_demand",
+      "nad_supplement",
+      "rapamycin_dose",
+      "senolytic_dose",
+      "transplant_rate",
+      "yamanaka_intensity"
+    ],
+    "param_ranges": {
+      "baseline_age": [
+        20.0,
+        90.0
+      ],
+      "baseline_heteroplasmy": [
+        0.0,
+        0.95
+      ],
+      "baseline_nad_level": [
+        0.2,
+        1.0
+      ],
+      "exercise_level": [
+        0.0,
+        1.0
+      ],
+      "genetic_vulnerability": [
+        0.5,
+        2.0
+      ],
+      "inflammation_level": [
+        0.0,
+        1.0
+      ],
+      "metabolic_demand": [
+        0.5,
+        2.0
+      ],
+      "nad_supplement": [
+        0.0,
+        1.0
+      ],
+      "rapamycin_dose": [
+        0.0,
+        1.0
+      ],
+      "senolytic_dose": [
+        0.0,
+        1.0
+      ],
+      "transplant_rate": [
+        0.0,
+        1.0
+      ],
+      "yamanaka_intensity": [
+        0.0,
+        1.0
+      ]
+    }
+  },
+  "sections": {
+    "sensitivity": {
+      "available": false,
+      "top_params": [],
+      "interaction_strength": null
+    },
+    "robustness": {
+      "available": false,
+      "violation_rate": null,
+      "mean_flip_size": null,
+      "most_fragile_params": null
+    },
+    "locality": {
+      "available": false,
+      "L50": null,
+      "effective_horizon": null
+    },
+    "alignment": {
+      "available": false,
+      "overall_alignment": null,
+      "worst_aligned_keys": null
+    },
+    "representation": {
+      "available": false,
+      "diegeticization_gain": null,
+      "roundtrip_error": null,
+      "fragmentation_correlation": null
+    },
+    "structure": {
+      "available": false,
+      "most_causal_params": null,
+      "variance_explained": null
+    }
+  },
+  "recommendations": [
+    "No specific recommendations -- run more tools for deeper analysis."
+  ],
+  "tools_used": [],
+  "tools_missing": [
+    "sobol",
+    "receptive_field",
+    "falsifier",
+    "contrast_sets",
+    "contrastive",
+    "locality",
+    "posiwid",
+    "benchmark",
+    "diegeticizer",
+    "token_extispicy",
+    "relation_graph",
+    "pds"
+  ]
+}

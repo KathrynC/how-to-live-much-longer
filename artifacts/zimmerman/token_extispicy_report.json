@@ -1,0 +1,254 @@
+{
+  "fragmentation_stats": {
+    "mean_tokens_per_param": 3.0,
+    "mean_tokens_per_digit": 0.717407778960345,
+    "std_tokens_per_param": 0.0,
+    "max_fragmentation_param": "baseline_age"
+  },
+  "perturbation_sensitivity": {
+    "baseline_age": 1,
+    "baseline_heteroplasmy": 1,
+    "baseline_nad_level": 1,
+    "exercise_level": 1,
+    "genetic_vulnerability": 1,
+    "inflammation_level": 1,
+    "metabolic_demand": 1,
+    "nad_supplement": 1,
+    "rapamycin_dose": 1,
+    "senolytic_dose": 1,
+    "transplant_rate": 1,
+    "yamanaka_intensity": 1
+  },
+  "fragmentation_output_correlation": {
+    "energy_atp_initial": 0.18286100950548104,
+    "energy_atp_final": 0.08710868649913903,
+    "energy_atp_min": 0.1831490172593796,
+    "energy_atp_max": 0.22878975219471973,
+    "energy_atp_mean": 0.15565940098461162,
+    "energy_atp_cv": -0.1375602781365263,
+    "energy_reserve_ratio": -0.16116466292609327,
+    "energy_atp_slope": -0.15116546636112316,
+    "energy_terminal_slope": -0.06624136818541915,
+    "energy_time_to_crisis_years": 0.04199623359362723,
+    "damage_het_initial": -0.14067986167087673,
+    "damage_het_final": -0.06517691705761727,
+    "damage_het_max": -0.15303960035793363,
+    "damage_delta_het": 0.11495044729077637,
+    "damage_het_slope": 0.12006489421580091,
+    "damage_het_acceleration": -0.11719519494722956,
+    "damage_cliff_distance_initial": 0.14067986167087676,
+    "damage_cliff_distance_final": 0.06517691705761725,
+    "damage_time_to_cliff_years": 0.2079176865729567,
+    "damage_frac_above_cliff": -0.0975321991583499,
+    "dynamics_ros_dominant_freq": 0.0,
+    "dynamics_ros_amplitude": -0.20222419582183251,
+    "dynamics_membrane_potential_cv": -0.06079041890948437,
+    "dynamics_membrane_potential_slope": -0.1217342604674686,
+    "dynamics_nad_slope": -0.05193419844411746,
+    "dynamics_ros_het_correlation": -0.16289413223040855,
+    "dynamics_ros_atp_correlation": 0.09613935415623048,
+    "dynamics_senescent_final": 0.017766916327374812,
+    "dynamics_senescent_slope": 0.03734976955399404,
+    "intervention_atp_benefit_terminal": -0.09049095939463878,
+    "intervention_atp_benefit_mean": -0.12202008902140787,
+    "intervention_het_benefit_terminal": -0.09043600752354769,
+    "intervention_energy_cost_per_year": -0.1060065919365192,
+    "intervention_benefit_cost_ratio": 0.01664821556483398,
+    "intervention_total_dose": -0.07579889855058507,
+    "intervention_crisis_delay_years": -0.06986920531179275,
+    "final_heteroplasmy": -0.06517691705761727,
+    "final_atp": 0.08710868649913903,
+    "final_ros": -0.015561437237994686,
+    "final_nad": 0.006366975891144877,
+    "final_senescent": 0.017766916327374812,
+    "final_membrane_potential": 0.009866516263472494
+  },
+  "hazard_zones": [
+    {
+      "params": {
+        "rapamycin_dose": 0.8803803001276922,
+        "nad_supplement": 0.5362004131113752,
+        "senolytic_dose": 0.6217920298607565,
+        "yamanaka_intensity": 0.27318719150087634,
+        "transplant_rate": 0.05051969637200515,
+        "exercise_level": 0.5945676088908644,
+        "baseline_age": 40.63286352419341,
+        "baseline_heteroplasmy": 0.6304399943273343,
+        "baseline_nad_level": 0.868996141474081,
+        "genetic_vulnerability": 0.527240815871546,
+        "metabolic_demand": 1.393570662028591,
+        "inflammation_level": 0.23128053968685225
+      },
+      "fragmentation": 0.1671309192200557,
+      "output_degradation": 0.29268581743696753
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.9209704724874502,
+        "nad_supplement": 0.16553172273527816,
+        "senolytic_dose": 0.28472008233793555,
+        "yamanaka_intensity": 0.15361339519205863,
+        "transplant_rate": 0.11549006366535497,
+        "exercise_level": 0.021148016336440034,
+        "baseline_age": 23.877678641498207,
+        "baseline_heteroplasmy": 0.16590939738906005,
+        "baseline_nad_level": 0.24270554610174033,
+        "genetic_vulnerability": 1.3867157241664567,
+        "metabolic_demand": 1.5210717901992596,
+        "inflammation_level": 0.39363045683202824
+      },
+      "fragmentation": 0.16666666666666666,
+      "output_degradation": 0.34758928795039506
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.8253995111963212,
+        "nad_supplement": 0.29535902534408986,
+        "senolytic_dose": 0.4585480817985511,
+        "yamanaka_intensity": 0.4423141270678932,
+        "transplant_rate": 0.3019273914424916,
+        "exercise_level": 0.9184418955155542,
+        "baseline_age": 74.69058248020612,
+        "baseline_heteroplasmy": 0.10505899044630497,
+        "baseline_nad_level": 0.9976277262700585,
+        "genetic_vulnerability": 1.818800036461618,
+        "metabolic_demand": 0.9258626567960584,
+        "inflammation_level": 0.8368965796609382
+      },
+      "fragmentation": 0.16666666666666666,
+      "output_degradation": 0.2592232458423845
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.9698151167055694,
+        "nad_supplement": 0.9845780814316246,
+        "senolytic_dose": 0.28822824548790527,
+        "yamanaka_intensity": 0.7337534974379162,
+        "transplant_rate": 0.7499835379352686,
+        "exercise_level": 0.3464928613130488,
+        "baseline_age": 28.67088424049547,
+        "baseline_heteroplasmy": 0.03889961227143377,
+        "baseline_nad_level": 0.8218745020233429,
+        "genetic_vulnerability": 1.2345496127253588,
+        "metabolic_demand": 1.9783102542423894,
+        "inflammation_level": 0.46497345619365305
+      },
+      "fragmentation": 0.16666666666666666,
+      "output_degradation": 0.41645282821254087
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.581061139700395,
+        "nad_supplement": 0.34686980453483707,
+        "senolytic_dose": 0.5909154914814168,
+        "yamanaka_intensity": 0.022803871029697498,
+        "transplant_rate": 0.9585592132414453,
+        "exercise_level": 0.48230343694290023,
+        "baseline_age": 74.79146590752003,
+        "baseline_heteroplasmy": 0.07859349992631663,
+        "baseline_nad_level": 0.5893266646705283,
+        "genetic_vulnerability": 1.2360604915317814,
+        "metabolic_demand": 1.9067396824624743,
+        "inflammation_level": 0.5717280523760754
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.834169766040001
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.5900758953583092,
+        "nad_supplement": 0.09504919756440122,
+        "senolytic_dose": 0.6161657000241213,
+        "yamanaka_intensity": 0.1712913040927888,
+        "transplant_rate": 0.5649506114724419,
+        "exercise_level": 0.5724305140338497,
+        "baseline_age": 52.61896070868591,
+        "baseline_heteroplasmy": 0.4965001867374666,
+        "baseline_nad_level": 0.8111387120052704,
+        "genetic_vulnerability": 1.6988670747681,
+        "metabolic_demand": 1.2382298233631437,
+        "inflammation_level": 0.5995934415226123
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.37620916277230315
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.9312362356901018,
+        "nad_supplement": 0.11973358850112281,
+        "senolytic_dose": 0.1171035659001105,
+        "yamanaka_intensity": 0.08770901191076841,
+        "transplant_rate": 0.6578632850405278,
+        "exercise_level": 0.4186083007903795,
+        "baseline_age": 74.20249912992902,
+        "baseline_heteroplasmy": 0.637669842643163,
+        "baseline_nad_level": 0.46691020666259053,
+        "genetic_vulnerability": 1.8475498210423036,
+        "metabolic_demand": 1.6437982206059785,
+        "inflammation_level": 0.2705349409101757
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.638207600703437
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.364192017772054,
+        "nad_supplement": 0.3144399802042629,
+        "senolytic_dose": 0.15761164862499966,
+        "yamanaka_intensity": 0.14778337254219165,
+        "transplant_rate": 0.936127463375744,
+        "exercise_level": 0.43790403719875326,
+        "baseline_age": 46.83238759441869,
+        "baseline_heteroplasmy": 0.693201423243509,
+        "baseline_nad_level": 0.6423944522023199,
+        "genetic_vulnerability": 1.9042099802576933,
+        "metabolic_demand": 1.6704522408640883,
+        "inflammation_level": 0.47936956412454035
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.5620321422013209
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.4087831094286971,
+        "nad_supplement": 0.21762852669696198,
+        "senolytic_dose": 0.5883062484090082,
+        "yamanaka_intensity": 0.3170409113172379,
+        "transplant_rate": 0.0360598342773637,
+        "exercise_level": 0.4184000441568604,
+        "baseline_age": 53.18928725631192,
+        "baseline_heteroplasmy": 0.21431322479400042,
+        "baseline_nad_level": 0.6579663464976926,
+        "genetic_vulnerability": 1.3486578506478815,
+        "metabolic_demand": 1.553003271665557,
+        "inflammation_level": 0.64794848220121
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.2708913305689286
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.9891330026836055,
+        "nad_supplement": 0.5559694280284484,
+        "senolytic_dose": 0.8390697308817134,
+        "yamanaka_intensity": 0.9903216643262726,
+        "transplant_rate": 0.1415958885687747,
+        "exercise_level": 0.4482456132543511,
+        "baseline_age": 47.48009010893439,
+        "baseline_heteroplasmy": 0.07604681946387577,
+        "baseline_nad_level": 0.8042641382357956,
+        "genetic_vulnerability": 1.1506685409838895,
+        "metabolic_demand": 1.203990401285602,
+        "inflammation_level": 0.15067297381324019
+      },
+      "fragmentation": 0.16620498614958448,
+      "output_degradation": 0.4206393856741906
+    }
+  ],
+  "token_edit_vs_string_edit": {
+    "mean_ratio": 0.5139459903478709,
+    "max_ratio": 1.375
+  },
+  "n_samples": 100,
+  "n_sims": 100
+}

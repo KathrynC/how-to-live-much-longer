@@ -101,6 +101,31 @@ python reachable_set.py          # D1: Reachable outcome space + Pareto frontier
 python competing_evaluators.py   # D5: Multi-criteria robust protocols (~2 min, ~1000 sims)
 python temporal_optimizer.py     # D2: Optimal intervention timelines via ES (~7 min, ~3000 sims)
 python multi_tissue_sim.py       # D3: Coupled brain+muscle+cardiac simulation (~2 min, ~30 sims)
+
+# Tier 5 — Literature Search (requires internet, Ollama optional)
+python lit_spider.py                                     # Full run, all params (~20 min with LLM)
+python lit_spider.py --params heteroplasmy_cliff,base_replication_rate  # Subset
+python lit_spider.py --no-llm                            # Keyword-only, no Ollama (~1 min)
+python lit_spider.py --max-papers 5                      # Fewer papers per param
+
+# Tier 5 — EA-Toolkit Optimization (no Ollama needed, requires ~/ea-toolkit)
+python ea_optimizer.py                             # CMA-ES, budget 500 (~3 min)
+python ea_optimizer.py --algo de --budget 1000     # Differential Evolution
+python ea_optimizer.py --compare --budget 300      # Head-to-head 5-algo comparison (~8 min)
+python ea_optimizer.py --landscape --budget 200    # Landscape analysis (~1 min)
+python ea_optimizer.py --patient near_cliff_80     # Different patient profile
+python ea_optimizer.py --metric het                # Optimize heteroplasmy reduction
+
+# Tier 6 — Zimmerman Toolkit Integration (no Ollama needed, requires ~/zimmerman-toolkit)
+python zimmerman_analysis.py                           # All 14 tools (~15-25 min)
+python zimmerman_analysis.py --tools sobol             # Sobol only (~1 min at n_base=32)
+python zimmerman_analysis.py --tools sobol --n-base 256  # Full Sobol (~10 min, 6656 sims)
+python zimmerman_analysis.py --tools falsifier         # Falsification (~30s, 200 tests)
+python zimmerman_analysis.py --tools contrastive       # Contrastive pairs (~2 min)
+python zimmerman_analysis.py --tools sobol,falsifier,posiwid  # Multiple tools
+python zimmerman_analysis.py --patient near_cliff_80   # Intervention-only mode (6D)
+python zimmerman_analysis.py --viz                     # Also generate plots
+python zimmerman_viz.py                                # Generate plots from saved reports
 ```
 
 ## Architecture
@@ -149,6 +174,15 @@ temporal_optimizer.py      ← D2: Temporal schedule optimization (imports simul
 multi_tissue_sim.py        ← D3: Coupled multi-tissue simulation (imports simulator.derivatives, constants)
 
 generate_patients.py       ← Patient population generator + evaluator (imports simulator, analytics, constants)
+
+lit_spider.py              ← PubMed literature search for parameter validation (imports constants, llm_common)
+
+ea_optimizer.py            ← EA-toolkit integration: 8 algorithms for intervention optimization (imports simulator, analytics, constants, ea_toolkit)
+
+# Zimmerman-toolkit integration (Tier 6, no LLM, requires ~/zimmerman-toolkit)
+zimmerman_bridge.py        ← MitoSimulator: Zimmerman Simulator protocol adapter (imports simulator, analytics, constants, zimmerman.base)
+zimmerman_analysis.py      ← Full 14-tool analysis runner + CLI (imports zimmerman_bridge, all 14 zimmerman modules)
+zimmerman_viz.py           ← Matplotlib visualizations for Zimmerman reports (imports constants)
 
 protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ```
@@ -235,6 +269,11 @@ Cramer email corrections (2026-02-15):
 - **competing_evaluators.py** (D5) — 4 evaluator functions (ATP_Guardian, Het_Hunter, Crisis_Delayer, Efficiency_Auditor) score ~500 candidate protocols. Finds "transaction" protocols in top-25% for ALL evaluators. 4D Pareto frontier, evaluator agreement matrix. Optionally ingests Pareto/synergy data from D1/D4. ~1000 sims
 - **temporal_optimizer.py** (D2) — (1+lambda) ES over phased InterventionSchedule genotypes (3 phases × 6 params + 2 boundaries = 20D). Compares optimal phased schedule to constant equivalent; timing_importance = relative improvement. ~3000 sims
 - **multi_tissue_sim.py** (D3) — Wraps derivatives() to simulate brain+muscle+cardiac coupled by shared NAD+ pool, systemic inflammation, and cardiac blood flow. Tests 5 protocols × 4 allocation strategies + brain allocation sweep. Discovers cardiac cascade, worst-first allocation benefits. ~30 sims
+
+**Tier 6 — Zimmerman Toolkit Integration (no LLM, requires ~/zimmerman-toolkit):**
+- **zimmerman_bridge.py** — `MitoSimulator` class satisfying the Zimmerman `Simulator` protocol (`run(params) -> dict`, `param_spec() -> bounds`). Accepts flat 12D param dict, splits into intervention + patient, runs 30-year simulation, computes 4-pillar analytics, returns flat dict of ~40 scalar metrics. Supports full 12D mode and intervention-only 6D mode with fixed patient override. Caches baseline simulation. Caps inf values to 999.0.
+- **zimmerman_analysis.py** — CLI runner for all 14 Zimmerman tools: Sobol, Falsifier, ContrastiveGenerator, ContrastSetGenerator, PDSMapper, POSIWIDAuditor, PromptBuilder, LocalityProfiler, RelationGraphExtractor, Diegeticizer, TokenExtispicyWorkbench, PromptReceptiveField, SuperdiegeticBenchmark, MeaningConstructionDashboard. Supports `--tools` filter, `--patient` profiles, `--n-base` for Sobol, `--viz` for automatic plot generation. Saves individual JSON reports to `artifacts/zimmerman/` plus a compiled markdown dashboard. Full run: ~15-25 min, ~8000+ sims.
+- **zimmerman_viz.py** — Matplotlib visualizations from Zimmerman reports: Sobol horizontal bars (S1/ST, color-coded intervention vs patient), contrastive flip frequency, locality decay curves, causal relation graph (bipartite param→output layout), POSIWID alignment heatmap, dashboard radar chart. Reads from saved JSON reports or accepts dict directly. Outputs to `output/zimmerman/`.
 
 ## 12D Parameter Space
 
@@ -408,6 +447,24 @@ protocol = FullProtocol(rapamycin_dose=0.5, baseline_age=70)
 snapped, warnings = validate_llm_output(raw_dict)
 ```
 
+### Zimmerman toolkit analysis
+
+```python
+from zimmerman_bridge import MitoSimulator
+from zimmerman.sobol import sobol_sensitivity
+from zimmerman.falsifier import Falsifier
+
+# Full 12D mode (intervention + patient)
+sim = MitoSimulator()
+sobol = sobol_sensitivity(sim, n_base=32, seed=42)  # 448 sims
+
+# Intervention-only mode (fixed patient)
+sim_iv = MitoSimulator(intervention_only=True,
+                        patient_override={"baseline_age": 80.0, ...})
+falsifier = Falsifier(sim_iv)
+report = falsifier.falsify(n_random=100, n_boundary=50)
+```
+
 ## Key Data Files
 
 - `output/tiqm_*.json` — Per-scenario TIQM experiment results (offer + confirmation + analytics)
@@ -422,6 +479,21 @@ snapped, warnings = validate_llm_output(raw_dict)
 - `artifacts/archetype_matchmaker.json` — Archetype→protocol matching results
 - `artifacts/sample_patients_100.json` — 100 biologically correlated patients + evaluation metrics
 - `artifacts/sample_patients_edge.json` — 82 edge-case patients for robustness testing + evaluation
+- `artifacts/zimmerman/sobol_report.json` — Sobol global sensitivity indices (S1, ST per param per output)
+- `artifacts/zimmerman/falsifier_report.json` — Falsification results (200 tests, boundary + adversarial)
+- `artifacts/zimmerman/contrastive_report.json` — Contrastive pairs (minimal parameter flips across cliff)
+- `artifacts/zimmerman/contrast_sets_report.json` — Ordered edit sequences with tipping points
+- `artifacts/zimmerman/pds_report.json` — Power/Danger/Structure dimension mapping audit
+- `artifacts/zimmerman/posiwid_report.json` — POSIWID alignment (intended vs actual outcomes)
+- `artifacts/zimmerman/locality_report.json` — Locality profiles (perturbation decay curves)
+- `artifacts/zimmerman/relation_graph_report.json` — Causal relation graph (504 edges)
+- `artifacts/zimmerman/diegeticizer_report.json` — Narrative roundtrip fidelity
+- `artifacts/zimmerman/token_extispicy_report.json` — Tokenization fragmentation hazard
+- `artifacts/zimmerman/receptive_field_report.json` — Segment importance (pharmacological > biological > demographics > vulnerability)
+- `artifacts/zimmerman/supradiegetic_benchmark_report.json` — Form vs meaning benchmark
+- `artifacts/zimmerman/dashboard.json` — Unified dashboard aggregating all tools
+- `artifacts/zimmerman/dashboard.md` — Markdown summary report
+- `output/zimmerman/*.png` — Sobol bars, contrastive sensitivity, locality curves, relation graph, POSIWID alignment, dashboard radar
 
 ## Patient Population Generator (`generate_patients.py`)
 
