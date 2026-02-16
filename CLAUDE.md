@@ -54,7 +54,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (139 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience)
+pytest tests/ -v          # Full pytest suite (163 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -190,6 +190,9 @@ zimmerman_bridge.py        ← MitoSimulator: Zimmerman Simulator protocol adapt
 zimmerman_analysis.py      ← Full 14-tool analysis runner + CLI (imports zimmerman_bridge, all 14 zimmerman modules)
 zimmerman_viz.py           ← Matplotlib visualizations for Zimmerman reports (imports constants)
 
+# Cramer-toolkit integration (Tier 7, no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit)
+cramer_bridge.py           ← Biological stress scenarios + convenience analysis functions (imports cramer toolkit, zimmerman_bridge)
+
 # Resilience suite (agroecology-inspired, no LLM, imports simulator + constants)
 disturbances.py            ← 4 disturbance types + simulate_with_disturbances() custom RK4 loop (imports simulator, constants)
 resilience_metrics.py      ← Resistance, recovery time, regime retention, elasticity, composite score (imports numpy)
@@ -291,6 +294,10 @@ Cramer email corrections (2026-02-15):
 - **zimmerman_bridge.py** — `MitoSimulator` class satisfying the Zimmerman `Simulator` protocol (`run(params) -> dict`, `param_spec() -> bounds`). Accepts flat 12D param dict, splits into intervention + patient, runs 30-year simulation, computes 4-pillar analytics, returns flat dict of ~40 scalar metrics. Supports full 12D mode and intervention-only 6D mode with fixed patient override. Caches baseline simulation. Caps inf values to 999.0.
 - **zimmerman_analysis.py** — CLI runner for all 14 Zimmerman tools: Sobol, Falsifier, ContrastiveGenerator, ContrastSetGenerator, PDSMapper, POSIWIDAuditor, PromptBuilder, LocalityProfiler, RelationGraphExtractor, Diegeticizer, TokenExtispicyWorkbench, PromptReceptiveField, SuperdiegeticBenchmark, MeaningConstructionDashboard. Supports `--tools` filter, `--patient` profiles, `--n-base` for Sobol, `--viz` for automatic plot generation. Saves individual JSON reports to `artifacts/zimmerman/` plus a compiled markdown dashboard. Full run: ~15-25 min, ~8000+ sims.
 - **zimmerman_viz.py** — Matplotlib visualizations from Zimmerman reports: Sobol horizontal bars (S1/ST, color-coded intervention vs patient), contrastive flip frequency, locality decay curves, causal relation graph (bipartite param→output layout), POSIWID alignment heatmap, dashboard radar chart. Reads from saved JSON reports or accepts dict directly. Outputs to `output/zimmerman/`.
+
+**Tier 7 — Cramer Toolkit Integration (no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit):**
+- **cramer_bridge.py** — Domain-specific biological stress scenarios for the cramer-toolkit. Defines 6 scenario banks: INFLAMMATION_SCENARIOS (4), NAD_SCENARIOS (4), VULNERABILITY_SCENARIOS (3), DEMAND_SCENARIOS (3), AGING_SCENARIOS (6), COMBINED_SCENARIOS (5) = 25 total stress scenarios in ALL_STRESS_SCENARIOS. Also defines 5 reference intervention protocols (no_treatment, conservative, moderate, aggressive, transplant_focused). Convenience functions: `run_resilience_analysis()` (full robustness + regret + vulnerability + rankings), `run_vulnerability_analysis()` (sorted impact list), `run_scenario_comparison()` (any analysis function under multiple scenarios).
+- **tests/test_cramer_bridge.py** — 24 tests across 5 classes: scenario bank structure (11), scenario application (4), ScenarioSimulator integration (4), protocol bank (5).
 
 ## 12D Parameter Space
 
@@ -504,6 +511,33 @@ falsifier = Falsifier(sim_iv)
 report = falsifier.falsify(n_random=100, n_boundary=50)
 ```
 
+### Cramer toolkit resilience analysis
+
+```python
+from cramer_bridge import (
+    MitoSimulator, ALL_STRESS_SCENARIOS, PROTOCOLS,
+    run_resilience_analysis, run_vulnerability_analysis,
+    run_scenario_comparison,
+)
+from cramer import ScenarioSimulator, scenario_aware
+
+# Full resilience analysis (robustness + regret + vulnerability + rankings)
+sim = MitoSimulator()
+report = run_resilience_analysis(sim, output_key="final_atp")
+print(f"Most robust: {report['summary']['most_robust']['protocol']}")
+print(f"Score: {report['summary']['most_robust']['score']:.3f}")
+
+# Which scenarios hurt the moderate protocol most?
+vuln = run_vulnerability_analysis(sim, protocol=PROTOCOLS["moderate"])
+print(f"Worst scenario: {vuln[0]['scenario']}")
+
+# Make any Zimmerman tool scenario-conditioned
+from zimmerman.sobol import sobol_sensitivity
+from cramer_bridge import INFLAMMATION_SCENARIOS
+results = scenario_aware(sobol_sensitivity, sim, INFLAMMATION_SCENARIOS, n_base=32)
+# results["baseline"], results["mild_inflammaging"], etc.
+```
+
 ## Key Data Files
 
 - `output/tiqm_*.json` — Per-scenario TIQM experiment results (offer + confirmation + analytics)
@@ -637,7 +671,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs 139 tests across 7 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience)
+- Formal test suite: `pytest tests/ -v` runs 163 tests across 8 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

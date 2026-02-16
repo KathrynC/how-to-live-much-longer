@@ -165,6 +165,8 @@ See the citation key at the top of `constants.py` for full details on each const
 | `disturbances.py` | 4 disturbance types + `simulate_with_disturbances()` with custom RK4 loop |
 | `resilience_metrics.py` | Resistance, recovery time, regime retention, elasticity, composite score |
 | `resilience_viz.py` | 5 visualization functions + CLI for resilience analysis plots |
+| `zimmerman_bridge.py` | Zimmerman Simulator protocol adapter (`MitoSimulator`) |
+| `cramer_bridge.py` | Cramer Toolkit bridge — 25 biological stress scenarios + resilience analysis |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
 | `protocol_mtdna_synthesis.py` | 9-step mtDNA synthesis and transplant protocol |
 
@@ -277,6 +279,36 @@ metrics = compute_resilience(result, baseline)
 print(f"Resilience score: {metrics['summary_score']:.3f}")
 ```
 
+## Scenario-Based Resilience (Cramer Toolkit)
+
+The [cramer-toolkit](../cramer-toolkit/) provides scenario-based resilience analysis — systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`cramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
+
+### Scenario Bank (25 scenarios)
+
+| Category | Count | Examples |
+|---|---|---|
+| Inflammation | 4 | mild_inflammaging (1.5×), inflammatory_storm (max) |
+| NAD+ depletion | 4 | mild_nad_decline (0.8×), critical_nad_crisis (min) |
+| Genetic vulnerability | 3 | elevated (1.25×), max_vulnerability (2.0×) |
+| Metabolic demand | 3 | muscle (1.5×), brain (2.0×) |
+| Aging acceleration | 6 | decade_older (+10yr), near_cliff (het=0.65), past_cliff (het=0.75) |
+| Combined stress | 5 | inflamed_nad_depleted, brain_energy_crisis, worst_case_patient |
+
+### Usage
+
+```python
+from cramer_bridge import run_resilience_analysis, run_vulnerability_analysis
+
+# Full analysis: robustness scores + regret + vulnerability + rankings
+report = run_resilience_analysis(output_key="final_atp")
+print(f"Most robust protocol: {report['summary']['most_robust']['protocol']}")
+
+# Which scenarios damage the moderate protocol most?
+vuln = run_vulnerability_analysis()
+for v in vuln[:3]:
+    print(f"  {v['scenario']}: impact={v['impact']:.4f}")
+```
+
 ## Landscape Characterization
 
 Full analysis: [`artifacts/landscape_characterization.md`](artifacts/landscape_characterization.md)
@@ -294,7 +326,7 @@ The 12D parameter space has been partially characterized (~400 simulations). Key
 ## Testing
 
 ```bash
-# Full test suite (139 tests across 7 modules)
+# Full test suite (163 tests across 8 modules)
 pytest tests/ -v
 
 # Standalone self-tests
