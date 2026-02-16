@@ -1,0 +1,19 @@
+{
+  "experiment": "ea_landscape",
+  "patient": "default",
+  "metric": "combined",
+  "budget": 50,
+  "seed": 42,
+  "elapsed_seconds": 3.3,
+  "n_samples": 2,
+  "fitness_mean": 0.17970216449941065,
+  "fitness_std": 0.18699916387244017,
+  "fitness_min": -0.007296999373029522,
+  "fitness_max": 0.3667013283718508,
+  "roughness": 1.0,
+  "mean_cliffiness": 0.02587128809318741,
+  "max_cliffiness": 0.037998973341217906,
+  "mean_gradient_magnitude": 0.440647260868693,
+  "gradient_sign_flip_rate": 0.0,
+  "evals_used": 38
+}
