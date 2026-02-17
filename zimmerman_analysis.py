@@ -110,9 +110,27 @@ def _midpoint_params(sim: MitoSimulator) -> dict[str, float]:
     return {k: (lo + hi) / 2 for k, (lo, hi) in spec.items()}
 
 
-def _default_full_params() -> dict[str, float]:
-    """Return full 12D default parameters."""
-    return {**DEFAULT_INTERVENTION, **DEFAULT_PATIENT}
+def _default_full_params(sim: MitoSimulator | None = None) -> dict[str, float]:
+    """Return default parameter dict aligned to a simulator's param spec.
+
+    If `sim` is None, returns the canonical 12D mito defaults.
+    If `sim` is provided (e.g., GriefMitoSimulator with 26D), returns a
+    full parameter dict matching `sim.param_spec()`:
+      - known mito keys use project defaults
+      - unknown keys are initialized to range midpoints
+    """
+    base = {**DEFAULT_INTERVENTION, **DEFAULT_PATIENT}
+    if sim is None:
+        return base
+
+    spec = sim.param_spec()
+    out = {}
+    for k, (lo, hi) in spec.items():
+        if k in base:
+            out[k] = float(base[k])
+        else:
+            out[k] = float((lo + hi) / 2.0)
+    return out
 
 
 # ── Tool Runners ──────────────────────────────────────────────────────────────
@@ -168,19 +186,79 @@ def run_falsifier(sim: MitoSimulator, seed: int = 42) -> dict:
 
 def run_contrastive(sim: MitoSimulator, seed: int = 42) -> dict:
     """Find minimal parameter changes that flip cliff outcome."""
-    gen = ContrastiveGenerator(sim, outcome_fn=_cliff_outcome)
+    dim = len(sim.param_spec())
+    spec = sim.param_spec()
 
     # Use a few starting points
     starts = [
-        _default_full_params(),
+        _default_full_params(sim),
         _midpoint_params(sim),
     ]
     # Add a near-cliff starting point
-    near_cliff = {**DEFAULT_INTERVENTION, **DEFAULT_PATIENT}
-    near_cliff["baseline_heteroplasmy"] = 0.60
+    near_cliff = _default_full_params(sim)
+    if "baseline_heteroplasmy" in near_cliff:
+        near_cliff["baseline_heteroplasmy"] = 0.60
     starts.append(near_cliff)
 
-    pairs = gen.contrastive_pairs(starts, n_per_point=30, seed=seed)
+    # Nuance-specific fallback for high-dimensional spaces.
+    # The toolkit's generic contrastive search can become very expensive in 26D.
+    # This approximate mode still produces actionable flip pairs and sensitivity
+    # rankings by random one-parameter edits around representative starts.
+    if dim > 20:
+        rng = np.random.default_rng(seed)
+        keys = list(spec.keys())
+        pairs = []
+        sensitivity_counts = {}
+        n_trials_per_start = 80
+
+        for base in starts:
+            base_full = _midpoint_params(sim)
+            base_full.update(base)
+            base_outcome = _cliff_outcome(sim.run(base_full))
+
+            for _ in range(n_trials_per_start):
+                cand = dict(base_full)
+                key = str(rng.choice(keys))
+                lo, hi = spec[key]
+                cand[key] = float(rng.uniform(lo, hi))
+                cand_outcome = _cliff_outcome(sim.run(cand))
+                if cand_outcome != base_outcome:
+                    pairs.append({
+                        "base_outcome": base_outcome,
+                        "counterfactual_outcome": cand_outcome,
+                        "edited_params": [key],
+                        "base": base_full,
+                        "counterfactual": cand,
+                    })
+                    sensitivity_counts[key] = sensitivity_counts.get(key, 0) + 1
+
+        total = max(sum(sensitivity_counts.values()), 1)
+        sensitivity = {
+            "rankings": sorted(
+                [
+                    (k, v / total)
+                    for k, v in sensitivity_counts.items()
+                ],
+                key=lambda x: x[1],
+                reverse=True,
+            ),
+            "method": "approx_random_single_edit",
+            "n_trials_per_start": n_trials_per_start,
+        }
+        result = {
+            "n_pairs": len(pairs),
+            "pairs": pairs,
+            "sensitivity": sensitivity,
+        }
+        print(f"  Contrastive: {len(pairs)} flip pairs found "
+              f"(approx mode, D={dim})")
+        return result
+
+    gen = ContrastiveGenerator(sim, outcome_fn=_cliff_outcome)
+    # Nuance compatibility: high-dimensional spaces (e.g., 26D grief+mito)
+    # become combinatorially expensive with the 12D default probe count.
+    n_per_point = 30 if dim <= 12 else 8
+    pairs = gen.contrastive_pairs(starts, n_per_point=n_per_point, seed=seed)
     sensitivity = gen.sensitivity_from_contrastives(pairs) if pairs else {}
 
     result = {
@@ -188,14 +266,15 @@ def run_contrastive(sim: MitoSimulator, seed: int = 42) -> dict:
         "pairs": pairs,
         "sensitivity": sensitivity,
     }
-    print(f"  Contrastive: {len(pairs)} flip pairs found")
+    print(f"  Contrastive: {len(pairs)} flip pairs found "
+          f"(n_per_point={n_per_point}, D={dim})")
     return result
 
 
 def run_contrast_sets(sim: MitoSimulator, seed: int = 42) -> dict:
     """Find minimal ordered edit sequences that flip cliff outcome."""
     gen = ContrastSetGenerator(sim, outcome_fn=_cliff_outcome)
-    base = _default_full_params()
+    base = _default_full_params(sim)
     result = gen.batch_contrast_sets(base, n_paths=10, n_edits=20, seed=seed)
     n_tips = len(result.get("pairs", []))
     print(f"  ContrastSets: {n_tips} tipping points found, "
@@ -360,7 +439,7 @@ def run_prompts(sim: MitoSimulator) -> dict:
 def run_locality(sim: MitoSimulator, seed: int = 42) -> dict:
     """Profile perturbation decay: how local are the system's responses?"""
     profiler = LocalityProfiler(sim)
-    base = _default_full_params()
+    base = _default_full_params(sim)
     result = profiler.profile(task={"base_params": base}, n_seeds=10, seed=seed)
     n_sims = result.get("n_sims", "?")
     print(f"  Locality: {n_sims} sims, profiled decay curves")
@@ -370,7 +449,7 @@ def run_locality(sim: MitoSimulator, seed: int = 42) -> dict:
 def run_relation_graph(sim: MitoSimulator, seed: int = 42) -> dict:
     """Build causal relation graph: param → output influence."""
     extractor = RelationGraphExtractor(sim)
-    base = _default_full_params()
+    base = _default_full_params(sim)
     result = extractor.extract(base, n_probes=50, seed=seed)
     n_causal = len(result.get("edges", {}).get("causal", []))
     print(f"  RelationGraph: {n_causal} causal edges, "
@@ -394,8 +473,12 @@ def run_diegeticizer(sim: MitoSimulator) -> dict:
         "metabolic_demand": "tissue_demand",
         "inflammation_level": "chronic_inflammation",
     }
+    # Nuance compatibility: include grief and any other simulator-specific keys.
+    # Diegeticizer requires a complete lexicon over param_spec keys.
+    for key in sim.param_spec().keys():
+        lexicon.setdefault(key, key)
     dieg = Diegeticizer(sim, lexicon=lexicon, n_bins=5)
-    params = _default_full_params()
+    params = _default_full_params(sim)
     narrative = dieg.diegeticize(params)
     recovered = dieg.re_diegeticize(narrative["narrative"])
     roundtrip = dieg.run(params)
