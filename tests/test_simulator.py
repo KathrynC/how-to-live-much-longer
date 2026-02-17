@@ -354,6 +354,16 @@ class TestMutationTypeSplit:
         # With high deletion het approaching cliff, ATP should be reduced
         assert r_high["states"][-1, 2] < 0.5
 
+    def test_analytics_includes_deletion_metrics(self):
+        from analytics import compute_all
+        result = simulate(sim_years=10)
+        baseline = simulate(sim_years=10)
+        analytics = compute_all(result, baseline)
+        damage = analytics["damage"]
+        assert "deletion_het_final" in damage
+        assert "deletion_het_initial" in damage
+        assert damage["deletion_het_final"] <= damage["het_final"]
+
     def test_point_mutations_no_replication_advantage(self):
         """Point mutations replicate at base rate (no size advantage).
 
