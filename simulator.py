@@ -293,7 +293,7 @@ def derivatives(
     inflammation = patient["inflammation_level"]
 
     # ── Derived quantities ────────────────────────────────────────────────
-    total = n_h + n_del + n_pt
+    total = max(n_h + n_del + n_pt, 1e-12)    # zero-division guard
     het_del = n_del / total                    # deletion heteroplasmy (drives cliff)
     het_total = (n_del + n_pt) / total         # total heteroplasmy (for ROS equation)
     cliff = _cliff_factor(het_del)             # C11: cliff from DELETION het only
@@ -683,8 +683,8 @@ if __name__ == "__main__":
     result = simulate()
     final = result["states"][-1]
     print(f"  Final state at year {SIM_YEARS}:")
-    for j, name in enumerate(["N_healthy", "N_damaged", "ATP", "ROS",
-                               "NAD", "Senescent", "ΔΨ"]):
+    for j, name in enumerate(["N_healthy", "N_deletion", "ATP", "ROS",
+                               "NAD", "Senescent", "ΔΨ", "N_point"]):
         print(f"    {name:20s} = {final[j]:.4f}")
     print(f"  Final heteroplasmy: {result['heteroplasmy'][-1]:.4f}")
 
@@ -701,8 +701,8 @@ if __name__ == "__main__":
     result2 = simulate(intervention=cocktail)
     final2 = result2["states"][-1]
     print(f"  Final state at year {SIM_YEARS}:")
-    for j, name in enumerate(["N_healthy", "N_damaged", "ATP", "ROS",
-                               "NAD", "Senescent", "ΔΨ"]):
+    for j, name in enumerate(["N_healthy", "N_deletion", "ATP", "ROS",
+                               "NAD", "Senescent", "ΔΨ", "N_point"]):
         print(f"    {name:20s} = {final2[j]:.4f}")
     print(f"  Final heteroplasmy: {result2['heteroplasmy'][-1]:.4f}")
 
@@ -730,7 +730,7 @@ if __name__ == "__main__":
         r = simulate(patient=p, sim_years=30, dt=0.01)
         print(f"  het={het_start:.2f} → final_ATP={r['states'][-1, 2]:.4f}  "
               f"final_het={r['heteroplasmy'][-1]:.4f}  "
-              f"N_total={r['states'][-1, 0] + r['states'][-1, 1]:.3f}")
+              f"N_total={r['states'][-1, 0] + r['states'][-1, 1] + r['states'][-1, 7]:.3f}")
 
     # Test 5: Falsifier edge cases
     print("\n--- Test 5: Falsifier edge cases ---")
@@ -763,7 +763,7 @@ if __name__ == "__main__":
     r5d = simulate(intervention=i5d, sim_years=30)
     print(f"  [5d] All max: final_ATP={r5d['states'][-1, 2]:.4f}  "
           f"final_het={r5d['heteroplasmy'][-1]:.4f}  "
-          f"N_total={r5d['states'][-1, 0] + r5d['states'][-1, 1]:.3f}")
+          f"N_total={r5d['states'][-1, 0] + r5d['states'][-1, 1] + r5d['states'][-1, 7]:.3f}")
 
     # 5e: NAD supplementation should REDUCE heteroplasmy (fix C3)
     i_nad = dict(DEFAULT_INTERVENTION)

@@ -31,7 +31,7 @@ from constants import (
     SIM_YEARS, DT, N_STATES,
     DEFAULT_INTERVENTION,
 )
-from simulator import initial_state, _rk4_step, _heteroplasmy_fraction
+from simulator import initial_state, _rk4_step, _total_heteroplasmy
 from analytics import compute_energy, compute_damage, NumpyEncoder
 
 PROJECT = Path(__file__).resolve().parent
@@ -118,7 +118,7 @@ def simulate_with_surgery(patient, phase1_intervention, phase2_intervention,
     het_arr = np.zeros(n_steps + 1)
 
     states[0] = state
-    het_arr[0] = _heteroplasmy_fraction(state[0], state[1])
+    het_arr[0] = _total_heteroplasmy(state[0], state[1], state[7])
 
     for i in range(n_steps):
         t = i * dt
@@ -129,7 +129,7 @@ def simulate_with_surgery(patient, phase1_intervention, phase2_intervention,
 
         time_arr[i + 1] = (i + 1) * dt
         states[i + 1] = state
-        het_arr[i + 1] = _heteroplasmy_fraction(state[0], state[1])
+        het_arr[i + 1] = _total_heteroplasmy(state[0], state[1], state[7])
 
     return {
         "time": time_arr,
@@ -179,7 +179,7 @@ def run_experiment():
             "switch_year": None,
             "final_atp": float(baseline["states"][-1, 2]),
             "final_het": float(baseline["heteroplasmy"][-1]),
-            "final_copy_number": float(baseline["states"][-1, 0] + baseline["states"][-1, 1]),
+            "final_copy_number": float(baseline["states"][-1, 0] + baseline["states"][-1, 1] + baseline["states"][-1, 7]),
             "time_to_crisis": energy["time_to_crisis_years"],
             "time_to_cliff": damage["time_to_cliff_years"],
             "atp_trajectory": baseline["states"][:, 2].tolist(),
@@ -214,7 +214,7 @@ def run_experiment():
                     "final_atp": final_atp,
                     "final_het": final_het,
                     "final_copy_number": float(
-                        result_fwd["states"][-1, 0] + result_fwd["states"][-1, 1]),
+                        result_fwd["states"][-1, 0] + result_fwd["states"][-1, 1] + result_fwd["states"][-1, 7]),
                     "time_to_crisis": e_fwd["time_to_crisis_years"],
                     "time_to_cliff": d_fwd["time_to_cliff_years"],
                 })
@@ -243,7 +243,7 @@ def run_experiment():
                     "final_atp": final_atp_r,
                     "final_het": final_het_r,
                     "final_copy_number": float(
-                        result_rev["states"][-1, 0] + result_rev["states"][-1, 1]),
+                        result_rev["states"][-1, 0] + result_rev["states"][-1, 1] + result_rev["states"][-1, 7]),
                     "time_to_crisis": e_rev["time_to_crisis_years"],
                     "time_to_cliff": d_rev["time_to_cliff_years"],
                 })

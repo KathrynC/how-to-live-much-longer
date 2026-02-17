@@ -34,9 +34,15 @@ class TestComputeEnergy:
         assert energy["atp_min"] <= energy["atp_mean"] <= energy["atp_max"]
 
     def test_declining_patient_has_crisis(self, near_cliff_patient):
+        """Near-cliff patient should show energy decline.
+
+        Under C11, het=0.65 at age 80 yields deletion_het ~0.50 (below the
+        0.70 cliff), so ATP stays above the 0.5 crisis threshold and
+        time_to_crisis is inf. Instead, verify ATP declines from initial.
+        """
         result = simulate(patient=near_cliff_patient)
         energy = compute_energy(result)
-        assert energy["time_to_crisis_years"] < 30.0
+        assert energy["atp_final"] < energy["atp_initial"]
 
 
 class TestComputeDamage:
@@ -49,6 +55,7 @@ class TestComputeDamage:
             "het_initial", "het_final", "het_max", "delta_het",
             "het_slope", "het_acceleration", "cliff_distance_initial",
             "cliff_distance_final", "time_to_cliff_years", "frac_above_cliff",
+            "deletion_het_initial", "deletion_het_final", "deletion_het_max",
         }
         assert set(damage.keys()) == expected_keys
 

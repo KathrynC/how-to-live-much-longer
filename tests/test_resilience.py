@@ -57,25 +57,29 @@ class TestDisturbanceClasses:
 
     def test_ionizing_radiation_modifies_state(self):
         shock = IonizingRadiation(start_year=0.0, magnitude=1.0)
-        state = np.array([0.8, 0.2, 1.0, 0.1, 0.8, 0.05, 0.9])
+        # 8D state: [N_h, N_del, ATP, ROS, NAD, Sen, Psi, N_pt]
+        state = np.array([0.8, 0.15, 1.0, 0.1, 0.8, 0.05, 0.9, 0.05])
         modified = shock.modify_state(state, 0.0)
-        # Should transfer healthy → damaged
+        # Should transfer healthy → deletions + point mutations
         assert modified[0] < state[0]
-        assert modified[1] > state[1]
+        assert modified[1] > state[1]  # deletions increased
+        assert modified[7] > state[7]  # point mutations increased
         # Conservation: total mtDNA unchanged
-        assert abs((modified[0] + modified[1]) - (state[0] + state[1])) < 1e-10
+        total_before = state[0] + state[1] + state[7]
+        total_after = modified[0] + modified[1] + modified[7]
+        assert abs(total_after - total_before) < 1e-10
         # ROS should increase
         assert modified[3] > state[3]
 
     def test_toxin_modifies_membrane_potential(self):
         shock = ToxinExposure(start_year=0.0, magnitude=1.0)
-        state = np.array([0.8, 0.2, 1.0, 0.1, 0.8, 0.05, 0.9])
+        state = np.array([0.8, 0.15, 1.0, 0.1, 0.8, 0.05, 0.9, 0.05])
         modified = shock.modify_state(state, 0.0)
         assert modified[6] < state[6]  # membrane potential drops
         assert modified[4] < state[4]  # NAD drops
 
     def test_chemo_is_most_severe(self):
-        state = np.array([0.8, 0.2, 1.0, 0.1, 0.8, 0.05, 0.9])
+        state = np.array([0.8, 0.15, 1.0, 0.1, 0.8, 0.05, 0.9, 0.05])
         rad = IonizingRadiation(start_year=0.0, magnitude=1.0)
         chemo = ChemotherapyBurst(start_year=0.0, magnitude=1.0)
 
@@ -89,7 +93,7 @@ class TestDisturbanceClasses:
 
     def test_inflammation_increases_senescence(self):
         shock = InflammationBurst(start_year=0.0, magnitude=1.0)
-        state = np.array([0.8, 0.2, 1.0, 0.1, 0.8, 0.05, 0.9])
+        state = np.array([0.8, 0.15, 1.0, 0.1, 0.8, 0.05, 0.9, 0.05])
         modified = shock.modify_state(state, 0.0)
         assert modified[5] > state[5]  # senescence increases
 

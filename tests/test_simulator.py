@@ -17,7 +17,7 @@ class TestBasicSimulation:
     def test_no_intervention_aging(self, default_patient, default_intervention):
         """Test 1: Natural aging with no treatment."""
         result = simulate()
-        assert result["states"].shape == (3001, 7)
+        assert result["states"].shape == (3001, 8)
         assert result["heteroplasmy"][-1] > result["heteroplasmy"][0]
         assert result["states"][-1, 2] < result["states"][0, 2]  # ATP declines
 
@@ -29,21 +29,26 @@ class TestBasicSimulation:
         assert treated["states"][-1, 2] > untreated["states"][-1, 2]
 
     def test_near_cliff_patient(self, near_cliff_patient):
-        """Test 3: Near-cliff patient should deteriorate."""
+        """Test 3: Near-cliff patient should deteriorate.
+
+        Under C11, het=0.65 at age 80 yields deletion_het ~0.50 (below the
+        0.70 cliff), so ATP stays moderate (~0.62). Total het still crosses
+        0.70 as both deletion and point mutations accumulate.
+        """
         result = simulate(patient=near_cliff_patient)
-        assert result["heteroplasmy"][-1] > 0.7  # past cliff
-        assert result["states"][-1, 2] < 0.2  # ATP collapse
+        assert result["heteroplasmy"][-1] > 0.7  # past cliff (total het)
+        assert result["states"][-1, 2] < 0.7  # ATP reduced but no collapse
 
 
 class TestCliff:
     """Cliff verification tests (converted from inline Test 4)."""
 
     @pytest.mark.parametrize("het_start,expect_final_het_above", [
-        (0.1, 0.3),
-        (0.3, 0.5),
-        (0.5, 0.7),
-        (0.7, 0.8),
-        (0.9, 0.9),
+        (0.1, 0.29),
+        (0.3, 0.40),
+        (0.5, 0.55),
+        (0.7, 0.72),
+        (0.9, 0.90),
     ])
     def test_cliff_sweep(self, het_start, expect_final_het_above):
         """Higher starting het leads to worse outcomes."""
@@ -68,11 +73,17 @@ class TestFalsifierEdgeCases:
         assert result["states"][-1, 2] > 0.5  # ATP stays reasonable
 
     def test_high_damage_collapses(self):
-        """5b: 90% het should collapse."""
+        """5b: 90% het should show significant ATP reduction.
+
+        Under C11, het=0.90 at age 70 yields deletion_het ~0.52, which is
+        below the 0.70 cliff. ATP is reduced but does not fully collapse.
+        The test verifies meaningful energy impairment (< 0.65) rather than
+        the pre-C11 expectation of near-zero ATP.
+        """
         p = dict(DEFAULT_PATIENT)
         p["baseline_heteroplasmy"] = 0.90
         result = simulate(patient=p, sim_years=30)
-        assert result["states"][-1, 2] < 0.05  # ATP near zero
+        assert result["states"][-1, 2] < 0.65  # ATP significantly reduced
 
     def test_yamanaka_drains_atp(self):
         """5c: Max Yamanaka should cost significant energy."""
@@ -105,7 +116,7 @@ class TestTissueTypes:
     def test_tissue_runs(self, tissue):
         """Each tissue type should produce a valid result."""
         result = simulate(tissue_type=tissue, sim_years=30)
-        assert result["states"].shape == (3001, 7)
+        assert result["states"].shape == (3001, 8)
         assert result["tissue_type"] == tissue
 
     def test_brain_worse_than_default(self):
@@ -130,7 +141,7 @@ class TestStochastic:
         """Multiple trajectories should show variance."""
         r = simulate(stochastic=True, noise_scale=0.02, n_trajectories=10,
                      rng_seed=42, sim_years=30)
-        assert r["states"].shape == (10, 3001, 7)
+        assert r["states"].shape == (10, 3001, 8)
         assert r["heteroplasmy"].shape == (10, 3001)
         final_hets = r["heteroplasmy"][:, -1]
         assert np.std(final_hets) > 0.001  # should have some spread
@@ -223,9 +234,9 @@ class TestInitialState:
     """Tests for initial_state() consistency."""
 
     def test_total_copies_normalized(self, default_patient):
-        """N_healthy + N_damaged should sum to ~1.0."""
+        """N_healthy + N_deletion + N_point should sum to ~1.0."""
         state = initial_state(default_patient)
-        assert state[0] + state[1] == pytest.approx(1.0, abs=1e-10)
+        assert state[0] + state[1] + state[7] == pytest.approx(1.0, abs=1e-10)
 
     def test_atp_positive(self, default_patient):
         """Initial ATP should be positive."""
