@@ -34,6 +34,10 @@ Plus the core infrastructure:
 | `analytics.py` | How do we measure outcomes across 4 pillars? |
 | `llm_common.py` | How do we parse and validate LLM-generated parameter vectors? |
 
+Wolfram-style symbol reference for the additive optimization stack:
+
+- **[`WolframFunctionReference`](WolframFunctionReference.md)** — Function-by-function usage/arguments/details/returns for `gradient_refiner`, `surrogate_optimizer`, and `ml_prefilter_runner`
+
 ---
 
 ## The 12D Parameter Space
@@ -169,6 +173,21 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 - **[`competing_evaluators`](competing_evaluators.md)** — D5: Multi-criteria robust protocol search (~1000 sims)
 - **[`temporal_optimizer`](temporal_optimizer.md)** — D2: Optimal intervention timelines via ES (~3000 sims)
 - **[`multi_tissue_sim`](multi_tissue_sim.md)** — D3: Coupled brain + muscle + cardiac simulation (~30 sims)
+- **[`gradient_refiner`](gradient_refiner.md)** — Local bounded gradient ascent for EA-seeded protocol refinement
+
+### ML Add-ons (Non-Replacing)
+
+- **[`surrogate_optimizer`](surrogate_optimizer.md)** — Surrogate-model utilities for sample-efficient ranking
+- **[`ml_prefilter_runner`](ml_prefilter_runner.md)** — Surrogate-first candidate prefiltering with true-simulation recheck
+
+### Search Add-ons (Non-Replacing)
+
+- **[`search_addons`](search_addons.md)** — Shared operators/objectives/Pareto utilities
+- **[`bayesian_optimizer`](bayesian_optimizer.md)** — Surrogate + UCB Bayesian-style search
+- **[`nsga2_optimizer`](nsga2_optimizer.md)** — Multi-objective Pareto evolutionary search
+- **[`robust_optimizer`](robust_optimizer.md)** — Risk-adjusted optimization across patient uncertainty
+- **[`active_learning_optimizer`](active_learning_optimizer.md)** — Iterative surrogate retraining and proposal
+- **[`map_elites_optimizer`](map_elites_optimizer.md)** — Quality-diversity archive over behavioral niches
 
 ---
 
