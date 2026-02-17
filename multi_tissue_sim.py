@@ -4,7 +4,7 @@ multi_tissue_sim.py — D3: Multi-Tissue Simulator
 
 Discover systemic trade-offs by coupling brain + muscle + cardiac tissues
 with shared resources. Wraps existing derivatives() function, calling it
-3 times per RK4 step (once per tissue). State vector: 7 × 3 = 21 states.
+3 times per RK4 step (once per tissue). State vector: 8 × 3 = 24 states.
 
 Biological motivation (Cramer 2025):
     The single-tissue ODE in simulator.py models one "average" tissue, but
@@ -175,7 +175,7 @@ def _compute_global_pools(tissue_states, profiles):
     """Compute shared resource pools from current tissue states.
 
     Args:
-        tissue_states: Dict mapping tissue name → state vector (7,).
+        tissue_states: Dict mapping tissue name → state vector (8,).
         profiles: Dict mapping tissue name → TISSUE_PROFILES entry.
 
     Returns:
@@ -285,7 +285,7 @@ def multi_tissue_step(tissue_states, t, dt, intervention, patient,
         allocation: Current allocation dict.
 
     Returns:
-        Dict mapping tissue name → new state np.array(7,).
+        Dict mapping tissue name → new state np.array(8,).
     """
     new_states = {}
 
@@ -371,8 +371,9 @@ def multi_tissue_simulate(intervention, patient, sim_years=None,
     # Record initial states
     for tissue in TISSUE_NAMES:
         trajectories[tissue][0] = tissue_states[tissue]
-        total = tissue_states[tissue][0] + tissue_states[tissue][1]
-        het_trajectories[tissue][0] = tissue_states[tissue][1] / max(total, 1e-12)
+        total = tissue_states[tissue][0] + tissue_states[tissue][1] + tissue_states[tissue][7]
+        het_trajectories[tissue][0] = (
+            (tissue_states[tissue][1] + tissue_states[tissue][7]) / max(total, 1e-12))
 
     pools = _compute_global_pools(tissue_states, profiles)
     pool_history["global_nad"][0] = pools["global_nad"]
@@ -409,9 +410,9 @@ def multi_tissue_simulate(intervention, patient, sim_years=None,
         time_arr[i + 1] = (i + 1) * dt
         for tissue in TISSUE_NAMES:
             trajectories[tissue][i + 1] = tissue_states[tissue]
-            total = tissue_states[tissue][0] + tissue_states[tissue][1]
+            total = tissue_states[tissue][0] + tissue_states[tissue][1] + tissue_states[tissue][7]
             het_trajectories[tissue][i + 1] = (
-                tissue_states[tissue][1] / max(total, 1e-12))
+                (tissue_states[tissue][1] + tissue_states[tissue][7]) / max(total, 1e-12))
 
     # Final pool values
     pools = _compute_global_pools(tissue_states, profiles)

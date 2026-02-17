@@ -160,7 +160,6 @@ BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 # DEPRECATED (C11): Use DELETION_REPLICATION_ADVANTAGE instead.
 # Kept for reference; deletion advantage raised from 1.05 to 1.10.
 # DAMAGED_REPLICATION_ADVANTAGE = 1.05
-DAMAGED_REPLICATION_ADVANTAGE = 1.05  # kept for backward compat until Task 2 migrates derivatives()
 
 # CD38 degradation of NMN/NR supplements
 # Cramer Ch. VI.A.3 p.73: CD38 enzyme destroys NMN and NR before they can
