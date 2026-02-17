@@ -51,7 +51,7 @@ The simulator integrates 8 coupled ordinary differential equations using a 4th-o
 | Variable | Symbol | Growth | Drives Cliff? | Description |
 |---|---|---|---|---|
 | Healthy mtDNA | N_healthy | — | — | Normalized healthy copy count |
-| Deletion-mutated mtDNA | N_deletion | Exponential (1.10x) | **Yes** | Large deletions removing ETC subunit genes |
+| Deletion-mutated mtDNA | N_deletion | Exponential (1.21x) | **Yes** | Large deletions removing ETC subunit genes |
 | ATP production | ATP | Equilibrium | — | Energy output (MU/day) |
 | Reactive oxygen species | ROS | Equilibrium | — | Oxidative stress level |
 | NAD+ availability | NAD | Equilibrium | — | Cofactor for energy production |
@@ -64,9 +64,9 @@ The simulator integrates 8 coupled ordinary differential equations using a 4th-o
 - **ROS-damage vicious cycle:** Damaged mitochondria → excess ROS → more mtDNA damage (Ch. II.H pp.14-15, Appendix 2 pp.152-154). Under C11, ROS is attenuated as a mutation source — it contributes ~33% of point mutations only; Pol-gamma replication errors are the primary source of both mutation types
 - **Heteroplasmy cliff:** Steep sigmoid at ~70% — ATP collapses above this threshold (from mitochondrial genetics literature; Cramer's MitoClock uses a different ~25% metric, Ch. V.K p.66)
 - **Age-dependent deletion doubling:** 11.8 years (young) → 3.06 years (old), from Va23 nanopore sequencing data (Appendix 2, p.155, Fig. 23). Transition at age 65 (corrected from earlier value of 40 per Cramer's email review).
-- **Replication advantage:** Shorter damaged mtDNA replicates faster — book says "at least 21%" for deletions >3kbp (Appendix 2, pp.154-155); simulation uses 10% for deletions, 0% for point mutations (C11)
+- **Replication advantage:** Shorter damaged mtDNA replicates faster — book says "at least 21%" for deletions >3kbp (Appendix 2, pp.154-155); simulation now uses 21% for deletions (compliance update), 0% for point mutations (C11)
 - **Energy units:** 1 MU (Metabolic Unit) = 10^8 ATP energy releases. Normal cell = ~1 MU/day (Ch. VIII.A, Table 3, p.100)
-- **Split mutation types (C11):** ROS is a minor contributor (~33% of point mutations only). Pol-gamma replication errors are the primary mutation source. Point mutations (N_point) grow linearly with no replication advantage. Deletion mutations (N_deletion) grow exponentially with 1.10x replication advantage and drive the heteroplasmy cliff. (Appendix 2, pp.152-155; Va23)
+- **Split mutation types (C11):** ROS is a minor contributor (~33% of point mutations only). Pol-gamma replication errors are the primary mutation source. Point mutations (N_point) grow linearly with no replication advantage. Deletion mutations (N_deletion) grow exponentially with 1.21x replication advantage and drive the heteroplasmy cliff. (Appendix 2, pp.152-155; Va23)
 - **Interventions:** Rapamycin → mTOR → mitophagy (Ch. VI.A.1 pp.71-72), NAD+ via NMN/NR gated by CD38 degradation (Ch. VI.A.3 pp.72-73), senolytics D+Q+F (Ch. VII.A.2 p.91), Yamanaka reprogramming at 3-5 MU cost (Ch. VIII.A Table 3 p.100, Ch. VII.B p.95), transplant as primary rejuvenation with competitive displacement of damaged copies (Ch. VIII.G pp.104-107), exercise (hormesis)
 
 ### ODE Corrections Applied
@@ -89,6 +89,7 @@ The simulator integrates 8 coupled ordinary differential equations using a 4th-o
 | C8 | Transplant rate doubled (0.15→0.30), competitive displacement added, headroom raised (1.2→1.5) | Ch. VIII.G pp.104-107 |
 | C9 | AGE_TRANSITION restored from 40 to 65 | Appendix 2 p.155 |
 | C11 | Single damage pool couldn't distinguish mutation types | Split into N_deletion (exponential, cliff) + N_point (linear, mild); ROS coupling weakened to ~33% |
+| C12 | Appendix-2 strict conformance requirement (`>=21%` deletion replication advantage) | `DELETION_REPLICATION_ADVANTAGE` raised from `1.10` to `1.21` explicitly for book-compliance traceability (2026-02-17) |
 
 ## Model Predictions: Slowing and Reversing Aging
 
@@ -138,7 +139,7 @@ All biological constants in `constants.py` have been traced to specific chapters
 | Yamanaka energy cost | 3-5 MU | Ch. VIII.A, Table 3, p.100; Ch. VII.B p.95: "3 to 10 times" (Ci24, Fo18) |
 | Deletion doubling (young) | 11.81 yr | Appendix 2, p.155, Fig. 23 (Va23: Vandiver et al., *Aging Cell* 22(6), 2023) |
 | Deletion doubling (old) | 3.06 yr | Appendix 2, p.155, Fig. 23 (transition at age 65, corrected from 40) |
-| Deletion replication advantage | 1.10x (sim) | Appendix 2, pp.154-155: "at least 21% faster" for >3kbp deletions |
+| Deletion replication advantage | 1.21x (sim) | Appendix 2, pp.154-155: "at least 21% faster" for >3kbp deletions |
 | Point replication advantage | 1.00x | C11: same rate as healthy copies |
 | Point error rate | 1e-6/bp/replication | C11: Pol-gamma fidelity (Jo01, Zh06) |
 | ROS point coefficient | 0.33 | C11: ROS contributes ~33% of point mutations only |
@@ -335,8 +336,14 @@ The 12D parameter space has been partially characterized (~400 simulations). Key
 ## Testing
 
 ```bash
-# Full test suite (222 tests across 8 modules)
+# Full test suite
 pytest tests/ -v
+
+# Appendix-2 conformance suite (default mode)
+pytest tests/test_book_conformance.py -v
+
+# Strict manuscript compliance gate
+STRICT_BOOK_CONFORMANCE=1 pytest tests/test_book_conformance.py -v
 
 # Standalone self-tests
 python simulator.py    # 10 ODE scenarios

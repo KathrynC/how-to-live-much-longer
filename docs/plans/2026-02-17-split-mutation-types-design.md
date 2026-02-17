@@ -154,7 +154,7 @@ POINT_MITOPHAGY_SELECTIVITY = 0.3  # low: point-mutated mitos look normal to PIN
 # Deletion dynamics
 SLIPPAGE_FRACTION = 0.7            # fraction of de novo deletions from Pol gamma slippage
 DSB_FRACTION = 0.3                 # fraction from double-strand break misrepair
-DELETION_REPLICATION_ADVANTAGE = 1.10  # raised from 1.05; book says >= 1.21
+DELETION_REPLICATION_ADVANTAGE = 1.21  # raised from 1.05; book says >= 1.21
 
 # Deletion fraction by age (for initial state split)
 DELETION_FRACTION_YOUNG = 0.4      # age 20: 40% of damage is deletions
