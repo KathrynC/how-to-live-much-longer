@@ -1,0 +1,185 @@
+{
+  "experiment": "ea_constrained_cma_es",
+  "date": "2026-02-17",
+  "seed": 2026,
+  "budget": 400,
+  "profiles": [
+    "default",
+    "near_cliff_80",
+    "post_chemo_55",
+    "melas_35"
+  ],
+  "constraints": {
+    "caps": {
+      "rapamycin_dose": 0.8,
+      "nad_supplement": 0.9,
+      "senolytic_dose": 0.8,
+      "yamanaka_intensity": 0.15,
+      "transplant_rate": 0.8,
+      "exercise_level": 0.6
+    },
+    "dose_penalty_coeff": 0.02,
+    "yamanaka_penalty_coeff": 0.15,
+    "cap_violation_penalty_coeff": 0.5
+  },
+  "results": {
+    "default": {
+      "best_fitness": 0.20815645017473416,
+      "best_raw_fitness": 0.2588554554737367,
+      "best_params": {
+        "exercise_level": 0.0,
+        "nad_supplement": 0.9,
+        "rapamycin_dose": 0.8,
+        "senolytic_dose": 0.5168350703604873,
+        "transplant_rate": 0.318115194589639,
+        "yamanaka_intensity": 0.0
+      },
+      "effective_params": {
+        "rapamycin_dose": 0.8,
+        "nad_supplement": 0.9,
+        "senolytic_dose": 0.5168350703604873,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.318115194589639,
+        "exercise_level": 0.0
+      },
+      "final_atp": 0.8067543306277688,
+      "final_het": 0.1440185986759962,
+      "atp_benefit": 0.12084484386143757,
+      "het_benefit": 0.27602122322459816,
+      "total_dose": 2.534950264950126,
+      "total_penalty": 0.05069900529900252,
+      "n_evals": 400
+    },
+    "near_cliff_80": {
+      "best_fitness": 0.3615191113748296,
+      "best_raw_fitness": 0.4157935350181909,
+      "best_params": {
+        "exercise_level": 0.0,
+        "nad_supplement": 0.9,
+        "rapamycin_dose": 0.7712365473732773,
+        "senolytic_dose": 0.5601515112424377,
+        "transplant_rate": 0.48233312355234753,
+        "yamanaka_intensity": 0.0
+      },
+      "effective_params": {
+        "rapamycin_dose": 0.7712365473732773,
+        "nad_supplement": 0.9,
+        "senolytic_dose": 0.5601515112424377,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.48233312355234753,
+        "exercise_level": 0.0
+      },
+      "final_atp": 0.7663792063504005,
+      "final_het": 0.16359311039831256,
+      "atp_benefit": 0.14486453118997955,
+      "het_benefit": 0.5418580076564227,
+      "total_dose": 2.7137211821680625,
+      "total_penalty": 0.05427442364336125,
+      "n_evals": 400
+    },
+    "post_chemo_55": {
+      "best_fitness": 0.24272937161192168,
+      "best_raw_fitness": 0.29103396834256695,
+      "best_params": {
+        "exercise_level": 0.0,
+        "nad_supplement": 0.9,
+        "rapamycin_dose": 0.8,
+        "senolytic_dose": 0.44680921523678074,
+        "transplant_rate": 0.2684206212954833,
+        "yamanaka_intensity": 0.0
+      },
+      "effective_params": {
+        "rapamycin_dose": 0.8,
+        "nad_supplement": 0.9,
+        "senolytic_dose": 0.44680921523678074,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.2684206212954833,
+        "exercise_level": 0.0
+      },
+      "final_atp": 0.866685897046266,
+      "final_het": 0.1714753042655155,
+      "atp_benefit": 0.11439410439757747,
+      "het_benefit": 0.35327972788997897,
+      "total_dose": 2.415229836532264,
+      "total_penalty": 0.04830459673064528,
+      "n_evals": 400
+    },
+    "melas_35": {
+      "best_fitness": 0.27636394858762414,
+      "best_raw_fitness": 0.3292628887853585,
+      "best_params": {
+        "exercise_level": 0.0,
+        "nad_supplement": 0.9,
+        "rapamycin_dose": 0.7973229527792222,
+        "senolytic_dose": 0.5836960234583892,
+        "transplant_rate": 0.36392803364910487,
+        "yamanaka_intensity": 0.0
+      },
+      "effective_params": {
+        "rapamycin_dose": 0.7973229527792222,
+        "nad_supplement": 0.9,
+        "senolytic_dose": 0.5836960234583892,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.36392803364910487,
+        "exercise_level": 0.0
+      },
+      "final_atp": 0.9506008062907089,
+      "final_het": 0.21811254301439287,
+      "atp_benefit": 0.10813112167916106,
+      "het_benefit": 0.44226353421239484,
+      "total_dose": 2.6449470098867165,
+      "total_penalty": 0.052898940197734334,
+      "n_evals": 400
+    }
+  },
+  "comparison_vs_unconstrained": {
+    "default": {
+      "unconstrained_best_fitness": 0.29233479492206604,
+      "constrained_best_fitness": 0.20815645017473416,
+      "constrained_best_raw_fitness": 0.2588554554737367,
+      "delta_raw_fitness_vs_unconstrained": -0.03347933944832937,
+      "unconstrained_atp": 0.8277013645965321,
+      "constrained_atp": 0.8067543306277688,
+      "delta_atp": -0.020947033968763296,
+      "unconstrained_het": 0.11895398771686397,
+      "constrained_het": 0.1440185986759962,
+      "delta_het": 0.025064610959132233
+    },
+    "near_cliff_80": {
+      "unconstrained_best_fitness": 0.4498481841473763,
+      "constrained_best_fitness": 0.3615191113748296,
+      "constrained_best_raw_fitness": 0.4157935350181909,
+      "delta_raw_fitness_vs_unconstrained": -0.03405464912918543,
+      "unconstrained_atp": 0.7867058331886382,
+      "constrained_atp": 0.7663792063504005,
+      "delta_atp": -0.020326626838237716,
+      "unconstrained_het": 0.13613706581641716,
+      "constrained_het": 0.16359311039831256,
+      "delta_het": 0.027456044581895406
+    },
+    "post_chemo_55": {
+      "unconstrained_best_fitness": 0.325706157661852,
+      "constrained_best_fitness": 0.24272937161192168,
+      "constrained_best_raw_fitness": 0.29103396834256695,
+      "delta_raw_fitness_vs_unconstrained": -0.03467218931928506,
+      "unconstrained_atp": 0.8882780525154665,
+      "constrained_atp": 0.866685897046266,
+      "delta_atp": -0.02159215546920057,
+      "unconstrained_het": 0.14531523656534653,
+      "constrained_het": 0.1714753042655155,
+      "delta_het": 0.02616006770016896
+    },
+    "melas_35": {
+      "unconstrained_best_fitness": 0.3604391918562575,
+      "constrained_best_fitness": 0.27636394858762414,
+      "constrained_best_raw_fitness": 0.3292628887853585,
+      "delta_raw_fitness_vs_unconstrained": -0.031176303070899025,
+      "unconstrained_atp": 0.9678779911526758,
+      "constrained_atp": 0.9506008062907089,
+      "delta_atp": -0.017277184861966943,
+      "unconstrained_het": 0.19031430659652873,
+      "constrained_het": 0.21811254301439287,
+      "delta_het": 0.027798236417864136
+    }
+  }
+}

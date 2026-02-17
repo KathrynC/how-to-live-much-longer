@@ -118,6 +118,17 @@ def simulate_with_surgery(patient, phase1_intervention, phase2_intervention,
     het_arr = np.zeros(n_steps + 1)
 
     states[0] = state
+    # C11: Total heteroplasmy = (N_del + N_pt) / (N_h + N_del + N_pt).
+    # Uses 3-pool _total_heteroplasmy() instead of the old 2-arg _heteroplasmy()
+    # because the state vector is now 8D:
+    #   state[0] = N_healthy     — undamaged mtDNA copies
+    #   state[1] = N_deletion    — large-deletion mtDNA (exponential growth, drives cliff)
+    #   state[7] = N_point       — point-mutated mtDNA (linear growth, no cliff effect)
+    #
+    # Total het (not deletion-only) is appropriate here because causal_surgery
+    # tracks the patient's overall damage burden for treatment timing analysis.
+    # The "point of no return" depends on cumulative damage from BOTH mutation
+    # types, not just deletions, since reversal must address all damaged copies.
     het_arr[0] = _total_heteroplasmy(state[0], state[1], state[7])
 
     for i in range(n_steps):
@@ -129,6 +140,8 @@ def simulate_with_surgery(patient, phase1_intervention, phase2_intervention,
 
         time_arr[i + 1] = (i + 1) * dt
         states[i + 1] = state
+        # 3-pool total het: both deletion and point mutations count toward
+        # the overall damage fraction reported for treatment timing analysis.
         het_arr[i + 1] = _total_heteroplasmy(state[0], state[1], state[7])
 
     return {
@@ -179,6 +192,7 @@ def run_experiment():
             "switch_year": None,
             "final_atp": float(baseline["states"][-1, 2]),
             "final_het": float(baseline["heteroplasmy"][-1]),
+            # C11: 3-pool copy number = N_h + N_del + N_pt (was N_h + N_d pre-C11)
             "final_copy_number": float(baseline["states"][-1, 0] + baseline["states"][-1, 1] + baseline["states"][-1, 7]),
             "time_to_crisis": energy["time_to_crisis_years"],
             "time_to_cliff": damage["time_to_cliff_years"],
@@ -213,6 +227,7 @@ def run_experiment():
                     "switch_year": switch_year,
                     "final_atp": final_atp,
                     "final_het": final_het,
+                    # C11: 3-pool copy number = N_h + N_del + N_pt
                     "final_copy_number": float(
                         result_fwd["states"][-1, 0] + result_fwd["states"][-1, 1] + result_fwd["states"][-1, 7]),
                     "time_to_crisis": e_fwd["time_to_crisis_years"],
@@ -242,6 +257,7 @@ def run_experiment():
                     "switch_year": switch_year,
                     "final_atp": final_atp_r,
                     "final_het": final_het_r,
+                    # C11: 3-pool copy number = N_h + N_del + N_pt
                     "final_copy_number": float(
                         result_rev["states"][-1, 0] + result_rev["states"][-1, 1] + result_rev["states"][-1, 7]),
                     "time_to_crisis": e_rev["time_to_crisis_years"],

@@ -14,7 +14,8 @@ Headless (`Agg` backend) Matplotlib plotting for publication-quality figures. Ge
 
 ### `plot_trajectory(result, output_path, title)`
 
-8-panel subplot: 7 state variables + heteroplasmy over time. Cliff threshold line at 0.70 in heteroplasmy panel. Takes `simulate()` output dict.
+9-panel subplot: 8 state variables + heteroplasmy over time. Cliff threshold
+line at 0.70 in heteroplasmy panel. Takes `simulate()` output dict.
 
 ### `plot_cliff_curve(sweep_result, output_path, cliff_features)`
 
@@ -39,12 +40,13 @@ Grouped bar chart of behavior and trajectory resonance scores by clinical scenar
 | Variable | Color |
 |----------|-------|
 | N_healthy | `#2ecc71` (green) |
-| N_damaged | `#e74c3c` (red) |
+| N_deletion | `#e74c3c` (red) |
 | ATP | `#3498db` (blue) |
 | ROS | `#e67e22` (orange) |
 | NAD | `#9b59b6` (purple) |
 | Senescent_fraction | `#95a5a6` (gray) |
 | Membrane_potential | `#1abc9c` (teal) |
+| N_point | `#8e44ad` (violet) |
 
 ---
 

@@ -176,6 +176,7 @@ def _compute_global_pools(tissue_states, profiles):
 
     Args:
         tissue_states: Dict mapping tissue name → state vector (8,).
+            8D per tissue: [N_h, N_del, ATP, ROS, NAD, Sen, ΔΨ, N_pt].
         profiles: Dict mapping tissue name → TISSUE_PROFILES entry.
 
     Returns:
@@ -275,7 +276,11 @@ def multi_tissue_step(tissue_states, t, dt, intervention, patient,
     """One RK4 step for all 3 tissues with coupling.
 
     Args:
-        tissue_states: Dict mapping tissue name → np.array(7,).
+        tissue_states: Dict mapping tissue name → np.array(8,).
+            8D state vector per tissue (C11):
+              [0] N_healthy, [1] N_deletion, [2] ATP, [3] ROS,
+              [4] NAD, [5] Senescent_fraction, [6] Membrane_potential,
+              [7] N_point
         t: Current time in years.
         dt: Timestep.
         intervention: Base intervention dict.
@@ -371,6 +376,14 @@ def multi_tissue_simulate(intervention, patient, sim_years=None,
     # Record initial states
     for tissue in TISSUE_NAMES:
         trajectories[tissue][0] = tissue_states[tissue]
+        # C11 8D state: 3-pool copy number = N_h[0] + N_del[1] + N_pt[7].
+        # Total heteroplasmy = (N_del + N_pt) / total. Uses total het (not
+        # deletion-only) because cross-tissue inflammation coupling depends on
+        # ALL defective mitochondria: both deletions and point mutations produce
+        # defective ETC complexes that leak ROS, contributing to SASP and the
+        # systemic inflammation pool. The cliff itself is deletion-driven, but
+        # the inter-tissue coupling pathway is ROS→inflammation→SASP, which
+        # does not require threshold behavior.
         total = tissue_states[tissue][0] + tissue_states[tissue][1] + tissue_states[tissue][7]
         het_trajectories[tissue][0] = (
             (tissue_states[tissue][1] + tissue_states[tissue][7]) / max(total, 1e-12))
@@ -410,6 +423,7 @@ def multi_tissue_simulate(intervention, patient, sim_years=None,
         time_arr[i + 1] = (i + 1) * dt
         for tissue in TISSUE_NAMES:
             trajectories[tissue][i + 1] = tissue_states[tissue]
+            # 3-pool total het for cross-tissue coupling (see initial recording comment)
             total = tissue_states[tissue][0] + tissue_states[tissue][1] + tissue_states[tissue][7]
             het_trajectories[tissue][i + 1] = (
                 (tissue_states[tissue][1] + tissue_states[tissue][7]) / max(total, 1e-12))

@@ -2,7 +2,7 @@
 
 Uses Agg backend (non-interactive) for headless rendering.
 Generates publication-quality figures for:
-    - 7-panel trajectory subplots
+    - 9-panel trajectory subplots (8 states + heteroplasmy)
     - Cliff curve (ATP vs heteroplasmy)
     - 2D cliff heatmaps
     - Intervention comparison overlays
@@ -13,36 +13,40 @@ Usage:
     plot_trajectory(result, "output/trajectory.png")
 """
 
+import os
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from constants import STATE_NAMES, HETEROPLASMY_CLIFF
+from constants import STATE_NAMES, HETEROPLASMY_CLIFF, DEFAULT_PATIENT
 
 
 # ── Plot style ───────────────────────────────────────────────────────────────
 
 COLORS = {
     "N_healthy": "#2ecc71",
-    "N_damaged": "#e74c3c",
+    "N_deletion": "#e74c3c",
     "ATP": "#3498db",
     "ROS": "#e67e22",
     "NAD": "#9b59b6",
     "Senescent_fraction": "#95a5a6",
     "Membrane_potential": "#1abc9c",
+    "N_point": "#8e44ad",
     "heteroplasmy": "#c0392b",
     "cliff_line": "#e74c3c",
 }
 
 LABELS = {
     "N_healthy": "Healthy mtDNA",
-    "N_damaged": "Damaged mtDNA",
+    "N_deletion": "Deletion mtDNA",
     "ATP": "ATP (MU/day)",
     "ROS": "ROS Level",
     "NAD": "NAD+ Level",
     "Senescent_fraction": "Senescent Fraction",
     "Membrane_potential": "Membrane Potential (ΔΨ)",
+    "N_point": "Point mtDNA",
 }
 
 
@@ -55,12 +59,12 @@ def _setup_figure(nrows, ncols, figsize=None):
     return fig, axes
 
 
-# ── 7-panel trajectory plot ──────────────────────────────────────────────────
+# ── 9-panel trajectory plot ──────────────────────────────────────────────────
 
 def plot_trajectory(result, output_path="trajectory.png", title=None):
-    """Plot all 7 state variables plus heteroplasmy over time.
+    """Plot all 8 state variables plus heteroplasmy over time.
 
-    Creates an 8-panel subplot (7 states + heteroplasmy).
+    Creates a 9-panel subplot (8 states + heteroplasmy).
 
     Args:
         result: Dict from simulate().
@@ -71,10 +75,10 @@ def plot_trajectory(result, output_path="trajectory.png", title=None):
     states = result["states"]
     het = result["heteroplasmy"]
 
-    fig, axes = _setup_figure(4, 2, figsize=(14, 16))
+    fig, axes = _setup_figure(3, 3, figsize=(16, 12))
     axes = axes.flatten()
 
-    # Plot 7 state variables
+    # Plot 8 state variables
     for i, name in enumerate(STATE_NAMES):
         ax = axes[i]
         color = COLORS.get(name, "#333333")
@@ -84,8 +88,8 @@ def plot_trajectory(result, output_path="trajectory.png", title=None):
         ax.grid(True, alpha=0.3)
         ax.set_xlim(time[0], time[-1])
 
-    # Plot heteroplasmy in the 8th panel
-    ax = axes[7]
+    # Plot heteroplasmy in the 9th panel
+    ax = axes[8]
     ax.plot(time, het, color=COLORS["heteroplasmy"], linewidth=1.5)
     ax.axhline(y=HETEROPLASMY_CLIFF, color=COLORS["cliff_line"],
                linestyle="--", alpha=0.7, label=f"Cliff ({HETEROPLASMY_CLIFF})")
@@ -232,6 +236,127 @@ def plot_intervention_comparison(results_dict, output_path="comparison.png",
     print(f"  Saved: {output_path}")
 
 
+# ── README hero: fork-in-the-road phase portrait ───────────────────────────
+
+def plot_readme_fork_in_the_road(output_path="output/readme_fork_in_the_road.png"):
+    """Plot one-starting-point, four-futures story figure for README.
+
+    Layout:
+      - ATP over time (easy clinical read)
+      - Heteroplasmy over time with cliff threshold
+      - Simplified ATP-vs-heteroplasmy phase map
+    """
+    from simulator import simulate
+
+    patient = {
+        **DEFAULT_PATIENT,
+        "baseline_age": 75.0,
+        "baseline_heteroplasmy": 0.62,
+        "baseline_nad_level": 0.45,
+        "inflammation_level": 0.45,
+    }
+
+    protocols = {
+        "No treatment": {
+            "rapamycin_dose": 0.0, "nad_supplement": 0.0,
+            "senolytic_dose": 0.0, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.0,
+        },
+        "Slowing protocol": {
+            "rapamycin_dose": 0.35, "nad_supplement": 0.35,
+            "senolytic_dose": 0.15, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.35,
+        },
+        "Reversal (no transplant)": {
+            "rapamycin_dose": 0.7, "nad_supplement": 0.8,
+            "senolytic_dose": 0.45, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.5,
+        },
+        "Reversal (+ transplant)": {
+            "rapamycin_dose": 0.7, "nad_supplement": 0.8,
+            "senolytic_dose": 0.45, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.8, "exercise_level": 0.5,
+        },
+    }
+    colors = {
+        "No treatment": "#6c757d",
+        "Slowing protocol": "#1f77b4",
+        "Reversal (no transplant)": "#ff7f0e",
+        "Reversal (+ transplant)": "#2ca02c",
+    }
+
+    # Precompute all trajectories once so each panel uses identical data.
+    traj = {}
+    for name, intervention in protocols.items():
+        result = simulate(intervention=intervention, patient=patient)
+        traj[name] = {
+            "time": result["time"],
+            "het": result["heteroplasmy"],
+            "atp": result["states"][:, 2],
+        }
+
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5.6), constrained_layout=True)
+    fig.suptitle("Fork in the Road: Same Starting Point, Four Futures",
+                 fontsize=15, fontweight="bold")
+
+    # Panel 1: ATP over time.
+    ax = axes[0]
+    for name in protocols:
+        d = traj[name]
+        ax.plot(d["time"], d["atp"], color=colors[name], linewidth=2.4, label=name)
+        ax.scatter(float(d["time"][-1]), float(d["atp"][-1]), color=colors[name], s=28, zorder=4)
+    ax.set_xlabel("Years")
+    ax.set_ylabel("ATP (MU/day)")
+    ax.set_title("1) Energy Trajectory")
+    ax.grid(True, alpha=0.22)
+    ax.legend(loc="lower left", fontsize=8)
+
+    # Panel 2: Heteroplasmy over time with cliff.
+    ax = axes[1]
+    ax.axhspan(HETEROPLASMY_CLIFF, 1.0, color="#b22222", alpha=0.08)
+    ax.axhline(HETEROPLASMY_CLIFF, color="#8b0000", linestyle="--", linewidth=1.3)
+    ax.text(0.02, HETEROPLASMY_CLIFF + 0.015, "Cliff threshold",
+            color="#8b0000", fontsize=9, transform=ax.get_yaxis_transform())
+    for name in protocols:
+        d = traj[name]
+        ax.plot(d["time"], d["het"], color=colors[name], linewidth=2.4)
+        ax.scatter(float(d["time"][-1]), float(d["het"][-1]), color=colors[name], s=28, zorder=4)
+    ax.set_xlabel("Years")
+    ax.set_ylabel("Heteroplasmy")
+    ax.set_title("2) Damage Trajectory")
+    ax.set_ylim(0.0, 1.0)
+    ax.grid(True, alpha=0.22)
+
+    # Panel 3: Simplified phase map.
+    ax = axes[2]
+    ax.axvspan(HETEROPLASMY_CLIFF, 1.0, color="#b22222", alpha=0.08)
+    ax.axvline(HETEROPLASMY_CLIFF, color="#8b0000", linestyle="--", linewidth=1.3)
+    start_point = None
+    for name in protocols:
+        d = traj[name]
+        het = d["het"]
+        atp = d["atp"]
+        if start_point is None:
+            start_point = (float(het[0]), float(atp[0]))
+        ax.plot(het, atp, color=colors[name], linewidth=2.4)
+        ax.scatter(float(het[-1]), float(atp[-1]), color=colors[name], s=34, zorder=4)
+    if start_point is not None:
+        ax.scatter(start_point[0], start_point[1], s=72, color="black", zorder=5)
+        ax.annotate("Start", xy=start_point, xytext=(8, 6),
+                    textcoords="offset points", fontsize=9, color="black")
+    ax.set_xlabel("Heteroplasmy")
+    ax.set_ylabel("ATP (MU/day)")
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(bottom=0.0)
+    ax.set_title("3) State-Space Outcome Map")
+    ax.grid(True, alpha=0.22)
+
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+    fig.savefig(output_path, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Saved: {output_path}")
+
+
 # ── TIQM summary plot ───────────────────────────────────────────────────────
 
 def plot_tiqm_summary(experiments, output_path="tiqm_summary.png"):
@@ -363,6 +488,12 @@ if __name__ == "__main__":
     ]
     plot_tiqm_summary(mock_experiments,
                       os.path.join(output_dir, "tiqm_summary.png"))
+
+    # 6. README hero phase portrait
+    print("\n--- README hero: fork in the road ---")
+    plot_readme_fork_in_the_road(
+        os.path.join(output_dir, "readme_fork_in_the_road.png")
+    )
 
     print("\n" + "=" * 70)
     print(f"All plots saved to {output_dir}/")
