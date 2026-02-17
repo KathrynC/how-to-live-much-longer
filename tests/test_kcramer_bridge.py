@@ -22,7 +22,7 @@ for p in (CRAMER_PATH, ZIMMERMAN_PATH):
 from cramer.base import Scenario, ScenarioSet, Simulator
 from cramer import BASELINE, ScenarioSimulator
 
-from cramer_bridge import (
+from kcramer_bridge import (
     MitoSimulator,
     INFLAMMATION_SCENARIOS,
     NAD_SCENARIOS,
@@ -32,6 +32,7 @@ from cramer_bridge import (
     COMBINED_SCENARIOS,
     ALL_STRESS_SCENARIOS,
     PROTOCOLS,
+    run_vulnerability_analysis,
 )
 from constants import DEFAULT_INTERVENTION, DEFAULT_PATIENT
 
@@ -194,3 +195,21 @@ class TestProtocols:
 
     def test_transplant_focused_maxes_transplant(self):
         assert PROTOCOLS["transplant_focused"]["transplant_rate"] == 1.0
+
+
+# ── Convenience functions ───────────────────────────────────────────────────
+
+class TestConvenienceFunctions:
+    """Verify helper analysis wrappers return expected shapes."""
+
+    def test_run_vulnerability_analysis_returns_ranked_list(self, sim):
+        profile = run_vulnerability_analysis(
+            sim=sim,
+            protocol=PROTOCOLS["moderate"],
+            scenarios=INFLAMMATION_SCENARIOS,
+            output_key="final_atp",
+        )
+        assert isinstance(profile, list)
+        assert len(profile) > 0
+        assert "scenario" in profile[0]
+        assert "impact" in profile[0]

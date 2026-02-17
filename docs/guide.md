@@ -6,7 +6,7 @@ Mitochondrial aging simulation and LLM-mediated intervention design
 
 ## From Book to Simulator
 
-This project implements a computational simulator for the mitochondrial theory of aging described in John G. Cramer's forthcoming book *How to Live Much Longer* (Springer Verlag, 2026). The simulator models 7 coupled state variables — healthy and damaged mtDNA copy counts, ATP, ROS, NAD+, senescent fraction, and membrane potential — integrated via 4th-order Runge-Kutta over a 30-year horizon.
+This project implements a computational simulator for the mitochondrial theory of aging described in John G. Cramer's forthcoming book *How to Live Much Longer* (Springer Verlag, 2026). The simulator models 8 coupled state variables — healthy mtDNA, deletion-mutated mtDNA, ATP, ROS, NAD+, senescent fraction, membrane potential, and point-mutated mtDNA — integrated via 4th-order Runge-Kutta over a 30-year horizon.
 
 The project was created by Kathryn Cramer as a computational implementation and extension of John G. Cramer's biological framework, using Claude as a development utility. It adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent Evolutionary-Robotics project: instead of LLM → physics simulation → VLM scoring for robot locomotion, it uses LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
@@ -102,7 +102,7 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 2. Generate intervention        prompt_templates.py → Ollama → 12D vector
          │                      (numeric, diegetic, or contrastive style)
          │
-3. Simulate                     simulator.py: RK4, 30 years, 7 state vars
+3. Simulate                     simulator.py: RK4, 30 years, 8 state vars
          │
 4. Analyze                      analytics.py: 4 pillars (energy/damage/dynamics/intervention)
          │
@@ -125,7 +125,7 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 
 ### Core Infrastructure
 
-- **[`simulator`](simulator.md)** — RK4 ODE integrator, 7 state variables, tissue types, time-varying schedules
+- **[`simulator`](simulator.md)** — RK4 ODE integrator, 8 state variables, tissue types, time-varying schedules
 - **[`analytics`](analytics.md)** — 4-pillar metrics (energy, damage, dynamics, intervention)
 - **[`llm_common`](llm_common.md)** — LLM query, response parsing, flattening detection, grid snapping
 - **[`constants`](constants.md)** — Biological constants, parameter space definitions, clinical seeds
@@ -136,6 +136,8 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 - **[`tiqm_experiment`](tiqm_experiment.md)** — Full TIQM pipeline: offer wave → simulation → confirmation wave
 - **[`cliff_mapping`](cliff_mapping.md)** — Heteroplasmy cliff characterization, bisection search, 2D heatmaps
 - **[`visualize`](visualize.md)** — Matplotlib trajectory plots, cliff curves, intervention comparisons
+- **[`layer_viz`](layer_viz.md)** — Population-layer visualizations (delta forest + outcome shift matrix)
+- **[`kcramer_bridge`](kcramer_bridge.md)** — K-Cramer Toolkit scenario banks + resilience/regret/vulnerability workflows
 - **[`generate_patients`](generate_patients.md)** — Patient population generator (100 normal + 82 edge-case)
 
 ### Tier 1 — Pure Simulation Experiments

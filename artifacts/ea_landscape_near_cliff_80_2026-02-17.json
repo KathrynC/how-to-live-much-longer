@@ -1,0 +1,19 @@
+{
+  "experiment": "ea_landscape",
+  "patient": "near_cliff_80",
+  "metric": "combined",
+  "budget": 300,
+  "seed": 2026,
+  "elapsed_seconds": 33.1,
+  "n_samples": 15,
+  "fitness_mean": 0.138872589941168,
+  "fitness_std": 0.10203738548296297,
+  "fitness_min": -0.08378131372896666,
+  "fitness_max": 0.29912948350463386,
+  "roughness": 0.2867560150461848,
+  "mean_cliffiness": 0.030851122102018447,
+  "max_cliffiness": 0.04568112443693051,
+  "mean_gradient_magnitude": 0.46904020308576405,
+  "gradient_sign_flip_rate": 0.0,
+  "evals_used": 285
+}

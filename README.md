@@ -4,11 +4,30 @@ A computational simulation of mitochondrial aging dynamics and intervention stra
 
 > **Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*.**
 
+![Fork in the Road: slowing vs reversing vs transplant-enabled reversal](artifacts/readme_fork_in_the_road.png)
+*How to read this figure (same starting state for all curves): Panel 1 shows ATP over time, Panel 2 shows heteroplasmy over time with the cliff threshold, and Panel 3 summarizes end-state geometry (ATP vs heteroplasmy). No treatment drifts toward collapse, slowing delays decline, reversal bends trajectory back, and transplant-enabled reversal exits the cliff basin most strongly.*
+
 ## Overview
 
 This project adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](https://github.com/gardenofcomputation/Evolutionary-Robotics) project for cellular energetics. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
 **Core thesis (Cramer, forthcoming from Springer Verlag in 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
+
+## At the Outset: Slowing vs Reversing
+
+This model treats **slowing aging** and **reversing aging** as distinct goals with different expected efficacy.
+
+- **Slowing aging** means reducing the rate of damage accumulation so ATP declines more slowly and the heteroplasmy cliff is delayed.
+- **Reversing aging** means moving a degraded system back toward lower heteroplasmy and higher ATP.
+
+Expected efficacy is therefore tiered:
+
+- Single interventions can often improve trajectory shape and delay collapse.
+- Durable reversal usually requires multi-mechanism protocols that act on damage clearance, energetic support, and replication dynamics together.
+
+### Why Transplantation Matters
+
+In this model, transplantation is a key differentiator because it directly changes pool composition by adding healthy mtDNA and improving competition against damaged copies. Most other interventions primarily modulate rates (clearance, support, stress), while transplantation changes the substrate itself. This is why transplantation-heavy protocols are often the ones that convert partial stabilization into genuine reversal, especially for near-cliff or post-cliff profiles.
 
 ## TIQM Mapping
 
@@ -176,7 +195,8 @@ See the citation key at the top of `constants.py` for full details on each const
 | `resilience_metrics.py` | Resistance, recovery time, regime retention, elasticity, composite score |
 | `resilience_viz.py` | 5 visualization functions + CLI for resilience analysis plots |
 | `zimmerman_bridge.py` | Zimmerman Simulator protocol adapter (`MitoSimulator`) |
-| `cramer_bridge.py` | Cramer Toolkit bridge — 25 biological stress scenarios + resilience analysis |
+| `kcramer_bridge.py` | K-Cramer Toolkit bridge — 25 biological stress scenarios + resilience analysis |
+| `kcramer_tools_runner.py` | CLI runner for K-Cramer Toolkit workflows (resilience, vulnerability, scenario comparison) |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
 | `protocol_mtdna_synthesis.py` | 9-step mtDNA synthesis and transplant protocol |
 
@@ -291,7 +311,7 @@ print(f"Resilience score: {metrics['summary_score']:.3f}")
 
 ## Scenario-Based Resilience (Cramer Toolkit)
 
-The [cramer-toolkit](../cramer-toolkit/) provides scenario-based resilience analysis — systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`cramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
+The [cramer-toolkit](../cramer-toolkit/) provides scenario-based resilience analysis — systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`kcramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
 
 ### Scenario Bank (25 scenarios)
 
@@ -307,7 +327,7 @@ The [cramer-toolkit](../cramer-toolkit/) provides scenario-based resilience anal
 ### Usage
 
 ```python
-from cramer_bridge import run_resilience_analysis, run_vulnerability_analysis
+from kcramer_bridge import run_resilience_analysis, run_vulnerability_analysis
 
 # Full analysis: robustness scores + regret + vulnerability + rankings
 report = run_resilience_analysis(output_key="final_atp")
@@ -317,6 +337,13 @@ print(f"Most robust protocol: {report['summary']['most_robust']['protocol']}")
 vuln = run_vulnerability_analysis()
 for v in vuln[:3]:
     print(f"  {v['scenario']}: impact={v['impact']:.4f}")
+```
+
+```bash
+# Cramer Toolkit integration CLI
+python kcramer_tools_runner.py --mode resilience
+python kcramer_tools_runner.py --mode vulnerability --protocol moderate
+python kcramer_tools_runner.py --mode compare --patient-profile near_cliff_80 --output-key final_atp
 ```
 
 ## Landscape Characterization

@@ -4,7 +4,7 @@ Creates biologically-meaningful stress scenarios using the cramer-toolkit,
 targeting the MitoSimulator adapter from zimmerman_bridge.py.
 
 Usage:
-    from cramer_bridge import (
+    from kcramer_bridge import (
         MitoSimulator,
         INFLAMMATION_SCENARIOS, NAD_SCENARIOS, VULNERABILITY_SCENARIOS,
         AGING_SCENARIOS, COMBINED_SCENARIOS, ALL_STRESS_SCENARIOS,
@@ -290,7 +290,7 @@ def run_vulnerability_analysis(
         scenarios = ALL_STRESS_SCENARIOS
 
     results = run_scenarios(sim, protocol, scenarios)
-    return vulnerability_profile(results, output_key)
+    return vulnerability_profile(results, output_key=output_key)
 
 
 def run_scenario_comparison(

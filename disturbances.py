@@ -173,18 +173,33 @@ class IonizingRadiation(Disturbance):
         # limited repair machinery compared to nuclear DNA (Cramer Ch. II.H p.14).
         # 5% max conversion rate is conservative — a severe acute dose could
         # damage more, but we cap here to keep the system recoverable at
-        # moderate magnitudes. The transfer is mass-conserving: total copy
-        # number (N_h + N_del + N_pt) is unchanged, only the ratio shifts.
+        # moderate magnitudes.
         #
-        # C11 split: ionizing radiation causes double-strand breaks (DSBs) that
-        # predominantly produce large deletions (~70%), plus oxidative base
-        # damage that yields point mutations (~30%). The 70/30 ratio reflects
-        # radiobiology literature on mtDNA lesion spectra.
+        # MASS CONSERVATION: The transfer is mass-conserving — total copy number
+        # (N_h + N_del + N_pt) is unchanged. We subtract `transfer` from N_healthy
+        # and add it back split across N_deletion and N_point. This models the
+        # physical reality that radiation doesn't destroy mtDNA molecules; it
+        # converts healthy copies into dysfunctional mutant copies.
+        #
+        # C11 70/30 SPLIT: Ionizing radiation produces two lesion types in mtDNA:
+        #   - 70% DELETIONS: High-energy radiation causes double-strand breaks
+        #     (DSBs). When the mtDNA ring is linearized and misrepaired, large
+        #     segments (>3kbp) are lost, producing deletion mutants. These are
+        #     the cliff-driving mutations with replication advantage.
+        #   - 30% POINT MUTATIONS: Radiation also produces oxidative base damage
+        #     (8-oxo-guanine, thymine glycol) via water radiolysis → hydroxyl
+        #     radicals. These cause single-base substitutions when replicated.
+        #     No replication advantage; linear accumulation.
+        # The 70/30 ratio is based on radiobiology literature showing that
+        # ionizing radiation's primary mtDNA lesion is strand breakage, with
+        # oxidative base damage as a secondary effect. For nuclear DNA the
+        # ratio would differ, but mtDNA's circular topology and lack of
+        # chromatin packaging make it especially susceptible to DSBs.
         damage_fraction = 0.05 * self.magnitude  # up to 5% of healthy pool
         transfer = damage_fraction * state[0]
-        state[0] -= transfer
-        state[1] += transfer * 0.7   # 70% → deletions (DSBs)
-        state[7] += transfer * 0.3   # 30% → point mutations (base damage)
+        state[0] -= transfer                     # healthy copies lost
+        state[1] += transfer * 0.7               # 70% → deletions (DSBs)
+        state[7] += transfer * 0.3               # 30% → point mutations (base damage)
         # IMPULSE: Acute ROS burst from water radiolysis and damaged ETC.
         # Ionizing radiation splits water molecules into hydroxyl radicals
         # (immediate ROS), and newly damaged mitochondria with defective
@@ -218,6 +233,15 @@ class ToxinExposure(Disturbance):
     At onset: drops membrane potential and NAD.
     During active window: increases inflammation and metabolic demand
     (detoxification costs energy).
+
+    NOTE (C11): ToxinExposure does NOT directly modify mtDNA copy counts
+    (N_healthy, N_deletion, N_point). Environmental toxins primarily damage
+    the electron transport chain proteins and lipid membranes rather than
+    breaking or mutating DNA strands. The mtDNA damage from toxins occurs
+    INDIRECTLY: ETC disruption → elevated ROS → oxidative DNA damage, which
+    is captured by the ODE dynamics (ROS_POINT_COEFF drives point mutations,
+    ROS-mediated strand breaks drive deletions). No 70/30 split is needed
+    here because the toxin doesn't directly create DNA lesions.
 
     Biological basis: Cramer Ch. IV pp.46-47 (membrane potential),
     Ch. VI.B p.75 (low ΔΨ triggers mitophagy).
@@ -306,15 +330,29 @@ class ChemotherapyBurst(Disturbance):
         # inhibits topoisomerase II. At max magnitude, 10% of healthy copies
         # are instantly rendered dysfunctional.
         #
-        # C11 split: chemo agents produce a mix of lesion types. Cisplatin
-        # crosslinks cause large deletions (~70%), while doxorubicin's
-        # oxidative damage and base adducts yield point mutations (~30%).
-        # Same 70/30 ratio as radiation — both are high-energy DNA damagers.
+        # MASS CONSERVATION: Same as IonizingRadiation — transfer is from
+        # N_healthy into N_deletion + N_point; total copy number unchanged.
+        #
+        # C11 70/30 SPLIT: Chemotherapy agents produce two lesion types:
+        #   - 70% DELETIONS: Cisplatin creates interstrand crosslinks that stall
+        #     replication forks; attempted bypass leads to double-strand breaks
+        #     and large deletions. Doxorubicin inhibits topoisomerase II,
+        #     trapping cleavage complexes that produce DSBs. Both mechanisms
+        #     generate the large-deletion mutants that drive cliff dynamics.
+        #   - 30% POINT MUTATIONS: Doxorubicin's redox cycling generates
+        #     superoxide → 8-oxo-guanine point mutations. Cisplatin also forms
+        #     monoadducts (single-base platinum lesions) that cause miscoding
+        #     during replication. These impair ETC function without conferring
+        #     replication advantage.
+        # The 70/30 ratio matches radiation because both insults are dominated
+        # by strand-break chemistry (crosslinks/intercalation for chemo,
+        # direct ionization/radiolysis for radiation), with oxidative base
+        # damage as the secondary pathway.
         damage_fraction = 0.1 * self.magnitude
         transfer = damage_fraction * state[0]
-        state[0] -= transfer
-        state[1] += transfer * 0.7   # 70% → deletions (crosslinks, DSBs)
-        state[7] += transfer * 0.3   # 30% → point mutations (adducts, base damage)
+        state[0] -= transfer                     # healthy copies lost
+        state[1] += transfer * 0.7               # 70% → deletions (crosslinks, DSBs)
+        state[7] += transfer * 0.3               # 30% → point mutations (adducts, oxidative)
         # IMPULSE: Massive ROS burst. Doxorubicin generates superoxide via
         # redox cycling, and cisplatin disrupts ETC complex activity. 0.3 on
         # baseline ~0.1 = 300% spike — the most severe of all disturbance
@@ -363,6 +401,18 @@ class InflammationBurst(Disturbance):
 
     At onset: immediate ROS and senescence pressure increase.
     During active window: elevated inflammation and metabolic demand.
+
+    NOTE (C11): InflammationBurst does NOT directly modify mtDNA copy counts
+    (N_healthy, N_deletion, N_point). Inflammation damages cells through
+    cytokine signaling (TNF-alpha, IL-6, IL-1beta) and immune cell ROS
+    bursts, not through direct DNA strand breaks or base modifications.
+    The mtDNA damage from inflammation occurs INDIRECTLY via two ODE paths:
+      1. Elevated ROS (from immune cell respiratory burst) → point mutations
+         and deletions through normal ROS-damage coupling.
+      2. SASP-driven senescence → reduced mitophagy capacity → accumulation
+         of both mutation types via impaired quality control.
+    No 70/30 split is needed because inflammation acts through systemic
+    signaling cascades, not direct DNA lesion chemistry.
 
     Biological basis: Cramer Ch. VII.A pp.89-90 (SASP),
     Ch. VIII.F p.103 (senescent cells use ~2x energy).

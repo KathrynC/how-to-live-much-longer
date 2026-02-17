@@ -142,8 +142,20 @@ def compute_damage(result: dict) -> dict[str, float]:
     het = result["heteroplasmy"]
     n_points = len(het)
 
-    # C11: Deletion-specific heteroplasmy (drives the cliff)
-    del_het = result.get("deletion_heteroplasmy", het)  # fallback for old results
+    # C11: Deletion-specific heteroplasmy (drives the cliff).
+    # After the C11 split (Cramer email 2026-02-17), the simulator returns two
+    # heteroplasmy arrays:
+    #   - "heteroplasmy"          = total het = (N_del + N_pt) / (N_h + N_del + N_pt)
+    #   - "deletion_heteroplasmy" = deletion het = N_del / (N_h + N_del + N_pt)
+    #
+    # Only deletion het drives the cliff factor (large deletions impair ETC
+    # assembly, causing the ATP collapse at ~70%). Point mutations degrade
+    # individual complexes but don't cause the catastrophic threshold behavior.
+    #
+    # Fallback to `het` ensures backward compatibility with pre-C11 simulation
+    # results that lack the "deletion_heteroplasmy" key (in those results,
+    # all damaged mtDNA was in a single pool, so het == deletion het).
+    del_het = result.get("deletion_heteroplasmy", het)
 
     het_initial = float(het[0])
     het_final = float(het[-1])
@@ -192,6 +204,17 @@ def compute_damage(result: dict) -> dict[str, float]:
         "cliff_distance_final": cliff_distance_final,
         "time_to_cliff_years": time_to_cliff,
         "frac_above_cliff": frac_above_cliff,
+        # C11 deletion-specific metrics — tracked separately because deletion
+        # heteroplasmy is the mechanistic driver of the cliff, while total het
+        # (above) captures overall mtDNA damage burden for general reporting.
+        #
+        # deletion_het_initial: starting deletion fraction; determines how close
+        #   the patient begins to the cliff threshold (0.70).
+        # deletion_het_final: end-of-simulation deletion fraction; the primary
+        #   outcome metric for cliff avoidance.
+        # deletion_het_max: peak deletion fraction reached during the simulation;
+        #   captures transient cliff-crossing events even if het recovers later
+        #   (e.g., transplant rescue after a temporary spike).
         "deletion_het_initial": float(del_het[0]),
         "deletion_het_final": float(del_het[-1]),
         "deletion_het_max": float(np.max(del_het)),

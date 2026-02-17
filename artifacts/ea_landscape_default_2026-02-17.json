@@ -4,7 +4,7 @@
   "metric": "combined",
   "budget": 300,
   "seed": 2026,
-  "elapsed_seconds": 33.3,
+  "elapsed_seconds": 32.7,
   "n_samples": 15,
   "fitness_mean": -0.008586977663456024,
   "fitness_std": 0.09835617483757975,
