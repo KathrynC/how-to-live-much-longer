@@ -2,20 +2,20 @@
 
 A computational simulation of mitochondrial aging dynamics and intervention strategies, based on John G. Cramer's book.
 
-> **Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial DNA Connection*. ISBN 979-8-9928220-0-4.**
+> **Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*.**
 
 ## Overview
 
 This project adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](https://github.com/gardenofcomputation/Evolutionary-Robotics) project for cellular energetics. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
-**Core thesis (Cramer 2025):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
+**Core thesis (Cramer, forthcoming from Springer Verlag in 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
 
 ## TIQM Mapping
 
 | TIQM Concept | Robotics Project | This Project |
 |---|---|---|
 | Offer wave | LLM generates 12D weight+physics vector | LLM generates 12D intervention+patient vector |
-| Simulation | PyBullet 3-link robot locomotion | RK4 ODE of 7 mitochondrial state variables |
+| Simulation | PyBullet 3-link robot locomotion | RK4 ODE of 8 mitochondrial state variables |
 | Confirmation wave | VLM evaluates locomotion behavior | VLM evaluates cellular trajectory |
 | Resonance | Semantic match to character/sequence seed | Clinical match to patient scenario |
 | Parameter space | 6 weights + 6 physics params | 6 intervention + 6 patient params |
@@ -44,27 +44,29 @@ This project adapts the TIQM (Transactional Interpretation of Quantum Mechanics)
 | `metabolic_demand` | 0.5–2.0 | Tissue energy requirement |
 | `inflammation_level` | 0.0–1.0 | Chronic inflammation |
 
-## ODE Model: 7 State Variables
+## ODE Model: 8 State Variables
 
-The simulator integrates 7 coupled ordinary differential equations using a 4th-order Runge-Kutta method:
+The simulator integrates 8 coupled ordinary differential equations using a 4th-order Runge-Kutta method:
 
-| Variable | Symbol | Description |
-|---|---|---|
-| Healthy mtDNA | N_healthy | Normalized healthy copy count |
-| Damaged mtDNA | N_damaged | Normalized damaged copy count |
-| ATP production | ATP | Energy output (MU/day) |
-| Reactive oxygen species | ROS | Oxidative stress level |
-| NAD+ availability | NAD | Cofactor for energy production |
-| Senescent fraction | Sen | Fraction of senescent cells |
-| Membrane potential | ΔΨ | Mitochondrial membrane potential |
+| Variable | Symbol | Growth | Drives Cliff? | Description |
+|---|---|---|---|---|
+| Healthy mtDNA | N_healthy | — | — | Normalized healthy copy count |
+| Deletion-mutated mtDNA | N_deletion | Exponential (1.10x) | **Yes** | Large deletions removing ETC subunit genes |
+| ATP production | ATP | Equilibrium | — | Energy output (MU/day) |
+| Reactive oxygen species | ROS | Equilibrium | — | Oxidative stress level |
+| NAD+ availability | NAD | Equilibrium | — | Cofactor for energy production |
+| Senescent fraction | Sen | Accumulating | — | Fraction of senescent cells |
+| Membrane potential | ΔΨ | Equilibrium | — | Mitochondrial membrane potential |
+| Point-mutated mtDNA | N_point | Linear (1.00x) | **No** | Single-base changes, functionally mild |
 
 ### Key Dynamics
 
-- **ROS-damage vicious cycle:** Damaged mitochondria → excess ROS → more mtDNA damage (Ch. II.H pp.14-15, Appendix 2 pp.152-154)
+- **ROS-damage vicious cycle:** Damaged mitochondria → excess ROS → more mtDNA damage (Ch. II.H pp.14-15, Appendix 2 pp.152-154). Under C11, ROS is attenuated as a mutation source — it contributes ~33% of point mutations only; Pol-gamma replication errors are the primary source of both mutation types
 - **Heteroplasmy cliff:** Steep sigmoid at ~70% — ATP collapses above this threshold (from mitochondrial genetics literature; Cramer's MitoClock uses a different ~25% metric, Ch. V.K p.66)
 - **Age-dependent deletion doubling:** 11.8 years (young) → 3.06 years (old), from Va23 nanopore sequencing data (Appendix 2, p.155, Fig. 23). Transition at age 65 (corrected from earlier value of 40 per Cramer's email review).
-- **Replication advantage:** Shorter damaged mtDNA replicates faster — book says "at least 21%" for deletions >3kbp (Appendix 2, pp.154-155); simulation conservatively uses 5%
+- **Replication advantage:** Shorter damaged mtDNA replicates faster — book says "at least 21%" for deletions >3kbp (Appendix 2, pp.154-155); simulation uses 10% for deletions, 0% for point mutations (C11)
 - **Energy units:** 1 MU (Metabolic Unit) = 10^8 ATP energy releases. Normal cell = ~1 MU/day (Ch. VIII.A, Table 3, p.100)
+- **Split mutation types (C11):** ROS is a minor contributor (~33% of point mutations only). Pol-gamma replication errors are the primary mutation source. Point mutations (N_point) grow linearly with no replication advantage. Deletion mutations (N_deletion) grow exponentially with 1.10x replication advantage and drive the heteroplasmy cliff. (Appendix 2, pp.152-155; Va23)
 - **Interventions:** Rapamycin → mTOR → mitophagy (Ch. VI.A.1 pp.71-72), NAD+ via NMN/NR gated by CD38 degradation (Ch. VI.A.3 pp.72-73), senolytics D+Q+F (Ch. VII.A.2 p.91), Yamanaka reprogramming at 3-5 MU cost (Ch. VIII.A Table 3 p.100, Ch. VII.B p.95), transplant as primary rejuvenation with competitive displacement of damaged copies (Ch. VIII.G pp.104-107), exercise (hormesis)
 
 ### ODE Corrections Applied
@@ -86,6 +88,7 @@ The simulator integrates 7 coupled ordinary differential equations using a 4th-o
 | C7 | NAD+ boost gated by CD38 survival factor (40% at min dose, 100% at max with apigenin) | Ch. VI.A.3 p.73 |
 | C8 | Transplant rate doubled (0.15→0.30), competitive displacement added, headroom raised (1.2→1.5) | Ch. VIII.G pp.104-107 |
 | C9 | AGE_TRANSITION restored from 40 to 65 | Appendix 2 p.155 |
+| C11 | Single damage pool couldn't distinguish mutation types | Split into N_deletion (exponential, cliff) + N_point (linear, mild); ROS coupling weakened to ~33% |
 
 ## Model Predictions: Slowing and Reversing Aging
 
@@ -125,17 +128,23 @@ Each intervention attacks a different node in the ROS-damage vicious cycle: rapa
 | **Dynamics** | ROS FFT frequency, membrane potential CV, NAD slope, ROS-het correlation |
 | **Intervention** | Energy cost, het benefit, ATP benefit, benefit-cost ratio, crisis delay |
 
-## Biological Constants (Cramer 2025 Citations)
+## Biological Constants (Cramer Forthcoming Citations, Springer 2026)
 
-All biological constants in `constants.py` have been traced to specific chapters and pages in Cramer (2025). Key values:
+All biological constants in `constants.py` have been traced to specific chapters and pages in Cramer (forthcoming from Springer Verlag in 2026). Key values:
 
-| Constant | Value | Cramer 2025 Source |
+| Constant | Value | Cramer forthcoming source (Springer 2026) |
 |---|---|---|
 | Baseline ATP | 1.0 MU/day | Ch. VIII.A, Table 3, p.100 (1 MU = 10^8 ATP releases) |
 | Yamanaka energy cost | 3-5 MU | Ch. VIII.A, Table 3, p.100; Ch. VII.B p.95: "3 to 10 times" (Ci24, Fo18) |
 | Deletion doubling (young) | 11.81 yr | Appendix 2, p.155, Fig. 23 (Va23: Vandiver et al., *Aging Cell* 22(6), 2023) |
 | Deletion doubling (old) | 3.06 yr | Appendix 2, p.155, Fig. 23 (transition at age 65, corrected from 40) |
-| Replication advantage | 1.05x (sim) | Appendix 2, pp.154-155: "at least 21% faster" for >3kbp deletions |
+| Deletion replication advantage | 1.10x (sim) | Appendix 2, pp.154-155: "at least 21% faster" for >3kbp deletions |
+| Point replication advantage | 1.00x | C11: same rate as healthy copies |
+| Point error rate | 1e-6/bp/replication | C11: Pol-gamma fidelity (Jo01, Zh06) |
+| ROS point coefficient | 0.33 | C11: ROS contributes ~33% of point mutations only |
+| Point mitophagy selectivity | 0.3 | C11: point mutants less selectively cleared than deletions |
+| Deletion fraction (young) | 0.15 | C11: 15% of new mutations are deletions in young tissue |
+| Deletion fraction (old) | 0.45 | C11: 45% of new mutations are deletions in old tissue (Va23) |
 | NAD+ decline | 0.01/yr | Ch. VI.A.3, pp.72-73 (Ca16: Camacho-Pereira et al., 2016) |
 | CD38 base survival | 0.4 | Ch. VI.A.3 p.73: CD38 destroys NMN/NR; 40% survives at min dose |
 | CD38 suppression gain | 0.6 | Apigenin suppresses CD38, raising survival to 100% at max dose |
@@ -156,7 +165,7 @@ See the citation key at the top of `constants.py` for full details on each const
 |---|---|
 | `constants.py` | Central configuration, 12D parameter space, biological constants, type aliases |
 | `schemas.py` | Pydantic validation models (`InterventionVector`, `PatientProfile`, `FullProtocol`) |
-| `simulator.py` | RK4 ODE integrator for 7 state variables; supports tissue types, stochastic mode, `InterventionSchedule` |
+| `simulator.py` | RK4 ODE integrator for 8 state variables; supports tissue types, stochastic mode, `InterventionSchedule` |
 | `analytics.py` | 4-pillar health analytics computation |
 | `llm_common.py` | Shared LLM utilities (Ollama query, response parsing, grid snapping, flattening detection) |
 | `prompt_templates.py` | Prompt styles: numeric, diegetic, contrastive (used by `tiqm_experiment.py --style`) |
@@ -326,7 +335,7 @@ The 12D parameter space has been partially characterized (~400 simulations). Key
 ## Testing
 
 ```bash
-# Full test suite (163 tests across 8 modules)
+# Full test suite (222 tests across 8 modules)
 pytest tests/ -v
 
 # Standalone self-tests
@@ -407,7 +416,7 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 
 ## References
 
-- Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial DNA Connection*. ISBN 979-8-9928220-0-4.
+- Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*.
 - Cramer, J.G. (1986). "The Transactional Interpretation of Quantum Mechanics." *Reviews of Modern Physics*, 58(3), 647–687.
 - Camacho-Pereira, J. et al. (2016). "CD38 dictates age-related NAD decline and mitochondrial dysfunction through an SIRT3-dependent mechanism." *Cell Metabolism*, 23(6), 1127–1139.
 - McCully, J.D. et al. (2009). "Injection of isolated mitochondria during early reperfusion for cardioprotection." *American Journal of Physiology*, 296(1), H94–H105.
@@ -418,3 +427,11 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 - Pimm, S.L. (1984). "The complexity and stability of ecosystems." *Nature*, 307(5949), 321–326.
 - Scheffer, M. et al. (2009). "Early-warning signals for critical transitions." *Nature*, 461(7260), 53–59.
 - Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction in Language, as Implemented in Humans and Large Language Models (LLMs)." PhD dissertation, University of Vermont. [PDS mapping, prompt engineering, POSIWID audit]
+
+## Assumptions and Scientific Grounding
+
+- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer Verlag in 2026**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
+- **Model-form assumption:** Biological mechanisms are represented in reduced-form computational structures (ODE-style dynamics, scenario perturbations, and optimization surfaces) to make hypotheses testable and comparable.
+- **Parameter assumption:** Constants and intervention ranges are interpreted as theory-informed approximations for simulation and stress-testing, not as universal physiological truths for all populations.
+- **Evidence and scope assumption:** Outputs are hypothesis-generating research artifacts for mechanism exploration, sensitivity analysis, and scenario comparison. They are not clinical prescriptions, medical advice, or proof of efficacy.
+- **Validation assumption:** Scientific confidence depends on empirical triangulation (literature checks, mechanistic plausibility, sensitivity behavior, and experimental/clinical follow-up), not simulator output alone.
