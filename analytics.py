@@ -142,6 +142,9 @@ def compute_damage(result: dict) -> dict[str, float]:
     het = result["heteroplasmy"]
     n_points = len(het)
 
+    # C11: Deletion-specific heteroplasmy (drives the cliff)
+    del_het = result.get("deletion_heteroplasmy", het)  # fallback for old results
+
     het_initial = float(het[0])
     het_final = float(het[-1])
     het_max = float(np.max(het))
@@ -189,6 +192,9 @@ def compute_damage(result: dict) -> dict[str, float]:
         "cliff_distance_final": cliff_distance_final,
         "time_to_cliff_years": time_to_cliff,
         "frac_above_cliff": frac_above_cliff,
+        "deletion_het_initial": float(del_het[0]),
+        "deletion_het_final": float(del_het[-1]),
+        "deletion_het_max": float(np.max(del_het)),
     }
 
 
