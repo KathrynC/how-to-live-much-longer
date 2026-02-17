@@ -231,3 +231,50 @@ class TestInitialState:
         """Initial ATP should be positive."""
         state = initial_state(default_patient)
         assert state[2] > 0.0
+
+
+# ── C11: Split mutation type tests ──────────────────────────────────────────
+
+from simulator import _total_heteroplasmy, _deletion_heteroplasmy
+
+
+class TestMutationTypeSplit:
+    """Tests for C11: split N_damaged into N_point + N_deletion."""
+
+    def test_state_vector_is_8d(self):
+        """State vector should have 8 variables after C11 split."""
+        from constants import N_STATES
+        assert N_STATES == 8
+
+    def test_state_names_has_n_deletion(self):
+        from constants import STATE_NAMES
+        assert "N_deletion" in STATE_NAMES
+        assert STATE_NAMES[1] == "N_deletion"
+
+    def test_state_names_has_n_point(self):
+        from constants import STATE_NAMES
+        assert "N_point" in STATE_NAMES
+        assert STATE_NAMES[7] == "N_point"
+
+    def test_total_heteroplasmy_sums_both(self):
+        """Total het = (N_del + N_pt) / (N_h + N_del + N_pt)."""
+        het = _total_heteroplasmy(0.7, 0.2, 0.1)
+        assert het == pytest.approx(0.3, abs=1e-10)
+
+    def test_deletion_heteroplasmy_ignores_point(self):
+        """Deletion het = N_del / total (point mutations don't drive cliff)."""
+        het = _deletion_heteroplasmy(0.7, 0.2, 0.1)
+        assert het == pytest.approx(0.2, abs=1e-10)
+
+    def test_total_het_greater_than_deletion_het(self):
+        het_total = _total_heteroplasmy(0.7, 0.2, 0.1)
+        het_del = _deletion_heteroplasmy(0.7, 0.2, 0.1)
+        assert het_total > het_del
+
+    def test_heteroplasmy_edge_case_zero_copies(self):
+        assert _total_heteroplasmy(0.0, 0.0, 0.0) == 1.0
+        assert _deletion_heteroplasmy(0.0, 0.0, 0.0) == 1.0
+
+    def test_heteroplasmy_no_damage(self):
+        assert _total_heteroplasmy(1.0, 0.0, 0.0) == 0.0
+        assert _deletion_heteroplasmy(1.0, 0.0, 0.0) == 0.0

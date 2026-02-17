@@ -157,10 +157,10 @@ YAMANAKA_ENERGY_COST_MAX = 5.0
 # Cramer Ch. VI.B p.75: PINK1/Parkin pathway. No quantitative rate in book.
 BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 
-# Replication advantage: damaged (shorter) mtDNA replicates faster
-# Cramer Appendix 2 pp.154-155: deletions >3kbp replicate "at least 21%
-# faster" (Va23). 1.05 is conservative; book data suggests ≥1.21.
-DAMAGED_REPLICATION_ADVANTAGE = 1.05
+# DEPRECATED (C11): Use DELETION_REPLICATION_ADVANTAGE instead.
+# Kept for reference; deletion advantage raised from 1.05 to 1.10.
+# DAMAGED_REPLICATION_ADVANTAGE = 1.05
+DAMAGED_REPLICATION_ADVANTAGE = 1.05  # kept for backward compat until Task 2 migrates derivatives()
 
 # CD38 degradation of NMN/NR supplements
 # Cramer Ch. VI.A.3 p.73: CD38 enzyme destroys NMN and NR before they can
@@ -177,6 +177,29 @@ CD38_SUPPRESSION_GAIN = 0.6  # additional survival from CD38 inhibitor (apigenin
 TRANSPLANT_ADDITION_RATE = 0.30     # healthy copy addition (was 0.15)
 TRANSPLANT_DISPLACEMENT_RATE = 0.12 # competitive displacement of damaged copies
 TRANSPLANT_HEADROOM = 1.5           # max total copies allowed with transplant (was 1.2)
+
+# ── C11: Split mutation type constants (Cramer email 2026-02-17) ────────────
+# Point mutations: Pol gamma errors + ROS-induced transitions. Linear growth,
+# no replication advantage (same-length mtDNA as wild-type).
+# Deletion mutations: Pol gamma slippage + DSB misrepair. Exponential growth,
+# size-dependent replication advantage (shorter rings replicate faster).
+# Reference: Cramer Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023).
+
+# Point mutation dynamics
+POINT_ERROR_RATE = 0.001           # Pol gamma error rate per replication event
+ROS_POINT_COEFF = 0.05             # ~33% of old 0.15 damage_rate coefficient
+POINT_MITOPHAGY_SELECTIVITY = 0.3  # low: point-mutated mitos often have normal delta-psi
+
+# Deletion replication advantage (REVISED from DAMAGED_REPLICATION_ADVANTAGE)
+# Appendix 2 pp.154-155: "at least 21% faster" for >3kbp deletions (Va23).
+# Raised from 1.05 to 1.10 — still conservative vs book's 1.21.
+DELETION_REPLICATION_ADVANTAGE = 1.10
+
+# Age-dependent deletion fraction of total damage (for initial state)
+# Young adults: mostly point mutations (deletions haven't accumulated yet).
+# Older adults: dominated by deletions (exponential growth catches up).
+DELETION_FRACTION_YOUNG = 0.4      # age 20: 40% of damage is deletions
+DELETION_FRACTION_OLD = 0.8        # age 90: 80% of damage is deletions
 
 # ── 12-Dimensional parameter space ──────────────────────────────────────────
 # 6 intervention parameters + 6 patient parameters
@@ -373,12 +396,13 @@ REASONING_MODELS = {"deepseek-r1:8b", "qwen3-coder:30b"}
 
 STATE_NAMES = [
     "N_healthy",          # 0: healthy mtDNA copies (normalized)
-    "N_damaged",          # 1: damaged mtDNA copies (normalized)
+    "N_deletion",         # 1: deletion-mutated mtDNA (exponential growth, drives cliff)
     "ATP",                # 2: ATP production rate (MU/day)
     "ROS",                # 3: reactive oxygen species level
     "NAD",                # 4: NAD+ availability
     "Senescent_fraction", # 5: fraction of senescent cells
     "Membrane_potential", # 6: mitochondrial membrane potential ΔΨ
+    "N_point",            # 7: point-mutated mtDNA (linear growth, C11)
 ]
 
 N_STATES = len(STATE_NAMES)
