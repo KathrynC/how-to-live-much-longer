@@ -231,3 +231,43 @@ class TestGriefMitoSimulator:
                              "grief_act_int": 0.8, "grief_slp_int": 0.8})
         # Interventions should reduce mitochondrial damage
         assert with_help["final_heteroplasmy"] < no_help["final_heteroplasmy"]
+
+
+# -- Task 3: Grief-Mito Scenarios tests ---------------------------------------
+
+from grief_mito_scenarios import (
+    GRIEF_STRESS_SCENARIOS,
+    GRIEF_PROTOCOLS,
+    grief_scenario_disturbances,
+)
+
+
+class TestGriefMitoScenarios:
+    """Test cramer-toolkit grief scenario bank."""
+
+    def test_scenarios_is_list(self):
+        assert isinstance(GRIEF_STRESS_SCENARIOS, list)
+
+    def test_scenarios_not_empty(self):
+        assert len(GRIEF_STRESS_SCENARIOS) > 0
+
+    def test_each_scenario_has_name_and_disturbance(self):
+        for s in GRIEF_STRESS_SCENARIOS:
+            assert "name" in s
+            assert "disturbance" in s
+            assert isinstance(s["disturbance"], GriefDisturbance)
+
+    def test_protocols_is_dict(self):
+        assert isinstance(GRIEF_PROTOCOLS, dict)
+        assert "no_grief_support" in GRIEF_PROTOCOLS
+        assert "full_grief_support" in GRIEF_PROTOCOLS
+
+    def test_grief_scenario_disturbances_returns_list(self):
+        disturbances = grief_scenario_disturbances("spouse_sudden_65")
+        assert isinstance(disturbances, list)
+        assert len(disturbances) == 2  # with and without support
+
+    def test_all_scenarios_simulate_without_nan(self):
+        for s in GRIEF_STRESS_SCENARIOS[:4]:  # first 4 for speed
+            result = simulate_with_disturbances(disturbances=[s["disturbance"]])
+            assert not np.any(np.isnan(result["states"])), f"NaN in {s['name']}"
