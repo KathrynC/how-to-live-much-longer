@@ -13,6 +13,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **CRAMER CORRECTION APPLIED (2026-02-15):** Per John Cramer's third email:
   - **C10: AGE_TRANSITION coupled to ATP and mitophagy** — The deletion-damage slope change should not be a fixed age. It is now dynamically coupled to ATP energy level and mitophagy efficiency. High ATP + effective mitophagy → transition shifts later (up to +10 years). Low ATP + poor mitophagy → transition shifts earlier (up to -15 years). Hard cutoff replaced with smooth sigmoid blend (width ~5 years).
   - **C10 calibration (2026-02-15):** `NATURAL_HEALTH_REF = 0.77` iteratively calibrated so that a naturally aging person (no intervention) has shift ≈ 0 at age 65, satisfying Cramer's requirement that the *average* transition age is 65. Natural aging yields ATP ≈ 0.774 at age 65 with baseline mitophagy; normalizing by 0.77 gives residual shift < 0.05 years (18 days). See `simulator.py:_deletion_rate()`.
+- **CRAMER CORRECTION APPLIED (2026-02-17):** Per John Cramer's email:
+  - **C11: Split mutation types** — ROS is NOT the main mtDNA mutation driver (1980s Free Radical Theory is outdated). Two distinct mutation types with different dynamics:
+    - **Point mutations** (N_point, state[7]): Linear growth, no replication advantage. Sources: ~67% Pol γ errors + ~33% ROS-induced transitions. Functionally mild.
+    - **Deletion mutations** (N_deletion, state[1]): Exponential growth, size-dependent replication advantage (1.10x, book says ≥1.21). These drive the heteroplasmy cliff. Source: Pol γ slippage, NOT ROS.
+  - State vector expanded from 7D to 8D. Cliff factor uses deletion heteroplasmy only. ROS→damage coupling weakened to ~33% of previous (point mutations only).
+  - Reference: Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023).
 
 ## Project Overview
 
@@ -54,7 +60,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (163 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge)
+pytest tests/ -v          # Full pytest suite (222 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -217,7 +223,7 @@ protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 | TIQM Concept | Robotics Project | This Project |
 |---|---|---|
 | Offer wave | LLM generates 12D weight+physics vector | LLM generates 12D intervention+patient vector |
-| Simulation | PyBullet 3-link robot locomotion (4000 steps @ 240 Hz) | RK4 ODE of 7 state variables (3000 steps, 30 years) |
+| Simulation | PyBullet 3-link robot locomotion (4000 steps @ 240 Hz) | RK4 ODE of 8 state variables (3000 steps, 30 years) |
 | Confirmation wave | VLM evaluates locomotion behavior | VLM evaluates cellular trajectory |
 | Resonance | Semantic match to character/sequence seed | Clinical match to patient scenario |
 | The "cliff" | Behavioral cliffs in 6D weight space | Heteroplasmy cliff at ~70% damaged mtDNA |
@@ -225,21 +231,23 @@ protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ### Core Pipeline
 
 1. **constants.py** — All biological constants (from Cramer 2025), 12D parameter space definitions with discrete grids, Ollama model config, 10 clinical scenario seeds
-2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic)` returns full 30-year trajectory of 7 state variables. Supports tissue-specific profiles (brain/muscle/cardiac) and stochastic Euler-Maruyama mode
+2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic)` returns full 30-year trajectory of 8 state variables. Supports tissue-specific profiles (brain/muscle/cardiac) and stochastic Euler-Maruyama mode
 3. **analytics.py** — 4-pillar metrics computed from simulation results. `compute_all(result)` returns energy/damage/dynamics/intervention pillars
 4. **llm_common.py** — Shared LLM utilities: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`, `split_vector()`. Handles markdown fence stripping, think-tag removal, flattening detection, grid snapping
 5. **tiqm_experiment.py** — Full TIQM pipeline: offer prompt → Ollama → parse 12D vector → snap to grid → simulate → compute analytics → confirmation prompt → parse resonance scores
 
 ### Simulator Details
 
-The ODE system models 7 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ~ 3.65 days, 3000 steps over 30 years). Supports tissue-specific profiles (brain/muscle/cardiac/default from `constants.py:TISSUE_PROFILES`), optional stochastic Euler-Maruyama integration for confidence intervals, and time-varying intervention schedules via `InterventionSchedule`:
+The ODE system models 8 coupled variables integrated via 4th-order Runge-Kutta (dt=0.01 years ~ 3.65 days, 3000 steps over 30 years). Supports tissue-specific profiles (brain/muscle/cardiac/default from `constants.py:TISSUE_PROFILES`), optional stochastic Euler-Maruyama integration for confidence intervals, and time-varying intervention schedules via `InterventionSchedule`:
 
-- **N_healthy / N_damaged**: mtDNA copy counts with homeostatic regulation toward total ≈ 1.0
-- **ATP**: Energy production, driven by cliff factor × NAD × (1 - senescence)
-- **ROS**: Reactive oxygen species, quadratic in heteroplasmy (vicious cycle)
-- **NAD**: Age-declining cofactor, boosted by supplementation, drained by ROS/Yamanaka
-- **Senescent_fraction**: Senescence driven by ROS + low ATP + age, cleared by senolytics
-- **Membrane_potential (ΔΨ)**: Slave variable tracking cliff × NAD × (1 - senescence)
+- **N_healthy** (state[0]): Healthy mtDNA copy count with homeostatic regulation toward total ≈ 1.0
+- **N_deletion** (state[1]): Large-deletion mtDNA copies — exponential growth with replication advantage (1.10x), drive the heteroplasmy cliff. Source: Pol γ slippage
+- **ATP** (state[2]): Energy production, driven by cliff factor (deletion het only) × NAD × (1 - senescence)
+- **ROS** (state[3]): Reactive oxygen species, quadratic in total heteroplasmy; causes only point mutations (~33% of ROS→damage)
+- **NAD** (state[4]): Age-declining cofactor, boosted by supplementation, drained by ROS/Yamanaka
+- **Senescent_fraction** (state[5]): Senescence driven by ROS + low ATP + age, cleared by senolytics
+- **Membrane_potential (ΔΨ)** (state[6]): Slave variable tracking cliff × NAD × (1 - senescence)
+- **N_point** (state[7]): Point-mutation mtDNA copies — linear growth, no replication advantage. Sources: ~67% Pol γ errors + ~33% ROS-induced transitions. Functionally mild
 
 Key dynamics post-falsifier fixes (2026-02-15):
 - **Cliff feeds back into replication and apoptosis** (fix C1) — ATP collapse halts replication
@@ -251,6 +259,7 @@ Key dynamics post-falsifier fixes (2026-02-15):
 Cramer email corrections (2026-02-15):
 - **CD38 degrades NMN/NR** (fix C7) — NAD+ boost gated by CD38 survival factor; low dose mostly destroyed, high dose includes apigenin CD38 suppression
 - **Transplant is primary rejuvenation** (fix C8) — doubled addition rate, competitive displacement of damaged copies, the only method for reversing accumulated mtDNA damage
+- **Split mutation types** (fix C11) — N_damaged split into N_deletion (state[1]) and N_point (state[7]). Cliff uses deletion heteroplasmy only. ROS→damage creates point mutations only (~33% of old coupling). Deletions grow via Pol γ slippage with 1.10x replication advantage
 
 ### 4-Pillar Analytics
 
@@ -340,7 +349,8 @@ All values snapped to discrete grids via `snap_param()` / `snap_all()` in `const
 | Cliff steepness (sigmoid) | 15.0 | Simulation calibration (not from book) |
 | Deletion doubling (young) | 11.8 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); also Ch. II.H p.15 |
 | Deletion doubling (old) | 3.06 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); transition at age 65 (corrected from 40) |
-| Damaged replication advantage | 1.05x | Cramer Appendix 2 pp.154-155: book says "at least 21% faster" (Va23); code uses conservative 5% |
+| Deletion replication advantage | 1.10x | Cramer Appendix 2 pp.154-155: book says "at least 21% faster" (Va23); code uses 10% (size-dependent advantage for large deletions) |
+| Point mutation replication advantage | 1.00x | Point mutations have no replication advantage (no size reduction) |
 | Yamanaka energy cost | 3-5 MU/day | Cramer Ch. VIII.A Table 3 p.100; Ch. VII.B p.95 says 3-10x (Ci24, Fo18) |
 | Baseline ATP | 1.0 MU/day | Cramer Ch. VIII.A Table 3 p.100 (1 MU = 10^8 ATP releases) |
 | Baseline mitophagy rate | 0.02/year | Mechanism: Cramer Ch. VI.B p.75 (PINK1/Parkin); rate is sim param |
@@ -401,7 +411,7 @@ from simulator import simulate
 brain_result = simulate(tissue_type="brain")
 # Stochastic mode: 100 Euler-Maruyama trajectories
 stoch = simulate(stochastic=True, n_trajectories=100, noise_scale=0.02)
-# stoch["trajectories"] has shape (100, n_steps, 7)
+# stoch["trajectories"] has shape (100, n_steps, 8)
 ```
 
 ### Prompt style selection
@@ -699,7 +709,7 @@ Notable extremes:
 
 - All state variables are non-negative (enforced post-step via `np.maximum(state, 0.0)`)
 - Senescent fraction capped at 1.0
-- Heteroplasmy = N_damaged / (N_healthy + N_damaged); returns 1.0 if total < 1e-12
+- Total heteroplasmy = (N_deletion + N_point) / (N_healthy + N_deletion + N_point); deletion heteroplasmy = N_deletion / (N_healthy + N_deletion + N_point). Cliff factor uses deletion heteroplasmy only. Returns 1.0 if total < 1e-12
 - JSON output uses `NumpyEncoder` from `analytics.py` (rounds floats to 6 decimal places)
 - Matplotlib uses Agg backend (headless, non-interactive)
 - LLM responses parsed with markdown fence stripping and `<think>` tag removal (reasoning models)
@@ -711,7 +721,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs 204 tests across 9 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge)
+- Formal test suite: `pytest tests/ -v` runs 222 tests across 9 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)
@@ -749,7 +759,7 @@ This project mirrors the Evolutionary-Robotics project's architecture point-for-
 | Component | ER Project | This Project |
 |---|---|---|
 | Parameter space | 6D weights + 6D physics = 12D | 6D intervention + 6D patient = 12D |
-| Simulation | PyBullet rigid-body physics | RK4 ODE of 7 mitochondrial state variables |
+| Simulation | PyBullet rigid-body physics | RK4 ODE of 8 mitochondrial state variables |
 | Analytics | Beer-framework 4 pillars | Health-framework 4 pillars |
 | Shared LLM utils | `structured_random_common.py` | `llm_common.py` |
 | Cliff analysis | `atlas_cliffiness.py` | `cliff_mapping.py` |
