@@ -56,6 +56,10 @@ from constants import (
     TRANSPLANT_ADDITION_RATE, TRANSPLANT_DISPLACEMENT_RATE, TRANSPLANT_HEADROOM,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     TISSUE_PROFILES,
+    # C11: Split mutation type constants
+    POINT_ERROR_RATE, ROS_POINT_COEFF, POINT_MITOPHAGY_SELECTIVITY,
+    DELETION_REPLICATION_ADVANTAGE,
+    DELETION_FRACTION_YOUNG, DELETION_FRACTION_OLD,
 )
 
 # Default tissue modifiers (no modification)
@@ -148,11 +152,32 @@ def _resolve_intervention(
 
 
 def _heteroplasmy_fraction(n_healthy: float, n_damaged: float) -> float:
-    """Compute heteroplasmy as fraction of damaged copies."""
+    """Compute heteroplasmy as fraction of damaged copies.
+
+    DEPRECATED (C11): Use _total_heteroplasmy() or _deletion_heteroplasmy()
+    instead. Kept for backward compatibility with existing code that uses
+    the 7-variable state vector (index 1 = N_damaged).
+    """
     total = n_healthy + n_damaged
     if total < 1e-12:
         return 1.0
     return n_damaged / total
+
+
+def _total_heteroplasmy(n_healthy: float, n_deletion: float, n_point: float) -> float:
+    """Total heteroplasmy: (N_del + N_pt) / total. For reporting."""
+    total = n_healthy + n_deletion + n_point
+    if total < 1e-12:
+        return 1.0
+    return (n_deletion + n_point) / total
+
+
+def _deletion_heteroplasmy(n_healthy: float, n_deletion: float, n_point: float) -> float:
+    """Deletion heteroplasmy: N_del / total. Drives the cliff factor."""
+    total = n_healthy + n_deletion + n_point
+    if total < 1e-12:
+        return 1.0
+    return n_deletion / total
 
 
 def _cliff_factor(heteroplasmy: float) -> float:
