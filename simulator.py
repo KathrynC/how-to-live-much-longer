@@ -1,9 +1,14 @@
 """Numpy-only RK4 ODE integrator for mitochondrial aging dynamics.
 
-Simulates 7 state variables over a configurable time horizon using a
+Simulates 8 state variables over a configurable time horizon using a
 4th-order Runge-Kutta method. Models the core biology from Cramer (2025):
 ROS-damage vicious cycle, heteroplasmy cliff, age-dependent deletion
 doubling, and six intervention mechanisms.
+
+C11 split (Cramer email 2026-02-17): N_damaged split into N_deletion
+(exponential growth, drives cliff) and N_point (linear growth, no
+replication advantage). Cliff factor now based on deletion heteroplasmy
+only. ROS coupling weakened for point mutations.
 
 Reference:
     Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
@@ -27,12 +32,13 @@ Key biological mechanisms and their book sources:
 
 State variables:
     0. N_healthy          — healthy mtDNA copies (normalized, 1.0 = full)
-    1. N_damaged          — damaged mtDNA copies (normalized)
+    1. N_deletion         — deletion-mutated mtDNA (exponential growth, drives cliff)
     2. ATP                — ATP production rate (MU/day)
     3. ROS                — reactive oxygen species level
     4. NAD                — NAD+ availability
     5. Senescent_fraction — fraction of senescent cells
     6. Membrane_potential — mitochondrial ΔΨ (normalized)
+    7. N_point            — point-mutated mtDNA (linear growth, C11)
 
 Usage:
     from simulator import simulate
@@ -51,7 +57,7 @@ from constants import (
     BASELINE_ATP, BASELINE_ROS, ROS_PER_DAMAGED,
     BASELINE_NAD, NAD_DECLINE_RATE,
     BASELINE_MEMBRANE_POTENTIAL, BASELINE_SENESCENT, SENESCENCE_RATE,
-    BASELINE_MITOPHAGY_RATE, DAMAGED_REPLICATION_ADVANTAGE,
+    BASELINE_MITOPHAGY_RATE,
     CD38_BASE_SURVIVAL, CD38_SUPPRESSION_GAIN,
     TRANSPLANT_ADDITION_RATE, TRANSPLANT_DISPLACEMENT_RATE, TRANSPLANT_HEADROOM,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
@@ -234,41 +240,35 @@ def derivatives(
     patient: dict[str, float],
     tissue_mods: dict[str, float] | None = None,
 ) -> npt.NDArray[np.float64]:
-    """Compute time derivatives of all 7 state variables.
+    """Compute time derivatives of all 8 state variables.
 
-    Fixes applied 2026-02-15 per falsifier report:
-      C1: Cliff now feeds back into replication and apoptosis
-      C2: Total copy number (N_h + N_d) regulated toward 1.0
-      C3: NAD supplementation selectively benefits healthy mitochondria
-      C4: Damaged replication advantage creates bistability past cliff
-      M1: Yamanaka repair gated by available ATP
-      M2: Removed spurious 0.5 factor on damaged replication
-      M3: Strengthened ROS-damage vicious cycle coupling
-      M5: Exercise upregulates mitochondrial biogenesis (actual hormesis)
+    C11 split (Cramer email 2026-02-17, Appendix 2 pp.152-155):
+      - N_damaged split into N_deletion (index 1) and N_point (index 7)
+      - Deletions: exponential growth with replication advantage (drives cliff)
+      - Point mutations: linear growth, no replication advantage
+      - ROS coupling weakened: ~33% of old coefficient, feeds only point mutations
+      - Cliff factor based on deletion heteroplasmy only
 
-    Corrections applied 2026-02-15 per Cramer email:
-      C7: CD38 degrades NMN/NR — NAD+ boost is CD38-gated and reduced
-      C8: Transplant is primary rejuvenation — doubled rate + displacement
+    Previous fixes preserved: C1-C4, C7-C8, C10, M1-M5.
 
     Args:
-        state: np.array of shape (7,) — current state.
+        state: np.array of shape (8,) — current state.
         t: Current time in years from simulation start.
         intervention: Dict with 6 intervention parameter values.
         patient: Dict with 6 patient parameter values.
-        tissue_mods: Optional dict with tissue-specific modifiers:
-            "ros_sensitivity" (float): ROS damage multiplier (default 1.0)
-            "biogenesis_rate" (float): exercise biogenesis multiplier (default 1.0)
+        tissue_mods: Optional tissue-specific modifiers.
 
     Returns:
-        np.array of shape (7,) — derivatives (dstate/dt).
+        np.array of shape (8,) — derivatives (dstate/dt).
     """
     if tissue_mods is None:
         tissue_mods = _DEFAULT_TISSUE_MODS
-    n_h, n_d, atp, ros, nad, sen, psi = state
+    n_h, n_del, atp, ros, nad, sen, psi, n_pt = state
 
     # Prevent negative values in derivative computation
     n_h = max(n_h, 1e-6)
-    n_d = max(n_d, 1e-6)
+    n_del = max(n_del, 1e-6)
+    n_pt = max(n_pt, 0.0)
     atp = max(atp, 0.0)
     ros = max(ros, 0.0)
     nad = max(nad, 0.0)
@@ -283,10 +283,7 @@ def derivatives(
     transplant = intervention["transplant_rate"]
     exercise = intervention["exercise_level"]
 
-    # CD38 survival factor (Cramer Ch. VI.A.3 p.73, email 2026-02-15):
-    # CD38 enzyme destroys NMN/NR precursors. At low supplementation,
-    # only ~40% survives. High doses imply CD38 suppression via apigenin,
-    # raising survival toward 100%.
+    # CD38 survival factor (C7)
     cd38_survival = CD38_BASE_SURVIVAL + CD38_SUPPRESSION_GAIN * nad_supp
 
     # Unpack patient
@@ -296,202 +293,136 @@ def derivatives(
     inflammation = patient["inflammation_level"]
 
     # ── Derived quantities ────────────────────────────────────────────────
-    total = n_h + n_d
-    het = n_d / total                          # heteroplasmy fraction
-    cliff = _cliff_factor(het)                 # sigmoid efficiency factor
-    atp_norm = min(atp / BASELINE_ATP, 1.0)    # normalized ATP (0-1)
-    energy_available = max(atp_norm, 0.05)     # floor to prevent total shutdown
+    total = n_h + n_del + n_pt
+    het_del = n_del / total                    # deletion heteroplasmy (drives cliff)
+    het_total = (n_del + n_pt) / total         # total heteroplasmy (for ROS equation)
+    cliff = _cliff_factor(het_del)             # C11: cliff from DELETION het only
+    atp_norm = min(atp / BASELINE_ATP, 1.0)
+    energy_available = max(atp_norm, 0.05)
 
-    # ── Copy number regulation ────────────────────────────────────────────
-    # Total mtDNA copy number is homeostatically regulated. When total > 1,
-    # replication slows; when total < 1, replication speeds up. This prevents
-    # unbounded growth (fixes C2/M4).
-    copy_number_pressure = max(1.0 - total, -0.5)  # caps downward pressure
+    # ── Copy number regulation (C2, now across 3 pools) ──────────────────
+    copy_number_pressure = max(1.0 - total, -0.5)
 
     # ── Age- and health-dependent deletion rate (C10) ────────────────────
-    # Mitophagy rate at current state (same formula as used below for dn_d)
     _current_mitophagy_rate = (BASELINE_MITOPHAGY_RATE
                                + rapa * 0.08
                                + nad_supp * 0.03 * cd38_survival)
     del_rate = _deletion_rate(age, gen_vuln, atp_norm=energy_available,
                               mitophagy_rate=_current_mitophagy_rate)
 
-    # ── 1. dN_healthy/dt ──────────────────────────────────────────────────
-    # Replication: gated by ATP (fix C1), NAD, and copy number pressure.
-    # Healthy copies replicate at the base rate.
+    # ── 1. dN_healthy/dt ─────────────────────────────────────────────────
     base_replication_rate = 0.1
     replication_h = (base_replication_rate * n_h * nad
                      * energy_available * max(copy_number_pressure, 0.0))
 
-    # ROS-induced damage: converts healthy → damaged (the vicious cycle
-    # entry point). Cramer Ch. II.H p.14, Appendix 2 pp.152-153.
-    # Coupling strength increased (fix M3).
-    # Tissue-specific ROS sensitivity (brain=1.5x, muscle=0.8x, etc.)
-    damage_rate = 0.15 * ros * gen_vuln * n_h * tissue_mods["ros_sensitivity"]
+    # C11: ROS-induced damage creates POINT mutations only (~33% of old rate).
+    ros_point_damage = (ROS_POINT_COEFF * ros * gen_vuln * n_h
+                        * tissue_mods["ros_sensitivity"])
 
-    # Transplant: adds healthy copies AND displaces damaged ones.
-    # Cramer Ch. VIII.G pp.104-107: high-volume mitochondrial transplant
-    # via bioreactor-grown stem cells → mitlet encapsulation.
-    # This is the ONLY method for actual rejuvenation — reversing
-    # accumulated mtDNA damage at scale (Cramer email, 2026-02-15).
+    # Transplant (C8)
     transplant_headroom = max(TRANSPLANT_HEADROOM - total, 0.0)
-    transplant_add = transplant * TRANSPLANT_ADDITION_RATE * min(transplant_headroom, 1.0)
+    transplant_add = (transplant * TRANSPLANT_ADDITION_RATE
+                      * min(transplant_headroom, 1.0))
+    transplant_displace = (transplant * TRANSPLANT_DISPLACEMENT_RATE
+                           * n_del * energy_available)
 
-    # Competitive displacement: transplanted healthy mitochondria with
-    # intact ETC and high ΔΨ outcompete damaged copies for cellular resources.
-    transplant_displace = transplant * TRANSPLANT_DISPLACEMENT_RATE * n_d * energy_available
+    # Yamanaka repair (M1: gated by ATP)
+    repair_deletion = yama * 0.05 * n_del * energy_available
+    repair_point = yama * 0.02 * n_pt * energy_available
 
-    # Yamanaka repair: converts damaged → healthy. GATED BY ATP (fix M1).
-    # Cramer Ch. VII.B pp.92-95: epigenetic reprogramming (OSKMLN).
-    # Ch. VIII.A Table 3 p.100: costs ~3-5 MU (Ci24, Fo18).
-    # At ATP=0, no repair occurs regardless of intensity.
-    repair_rate = yama * 0.06 * n_d * energy_available
-
-    # Exercise hormesis: upregulates mitochondrial biogenesis (fix M5).
-    # Moderate exercise increases healthy copy replication via PGC-1α.
-    # Tissue-specific biogenesis rate (muscle=1.5x, brain=0.3x, etc.)
+    # Exercise biogenesis (M5)
     exercise_biogenesis = (exercise * 0.03 * energy_available
                            * max(copy_number_pressure, 0.0)
                            * tissue_mods["biogenesis_rate"])
 
-    # Apoptosis of cells with severe damage (cliff feedback, fix C1):
-    # When ATP is very low, cells die, removing both healthy and damaged copies.
+    # Apoptosis (C1: cliff feedback)
     apoptosis_h = 0.02 * max(1.0 - energy_available, 0.0) * n_h * (1.0 - cliff)
 
-    dn_h = (replication_h - damage_rate + transplant_add + repair_rate
-            + exercise_biogenesis - apoptosis_h)
+    dn_h = (replication_h - ros_point_damage + transplant_add
+            + repair_deletion + repair_point + exercise_biogenesis - apoptosis_h)
 
-    # ── 2. dN_damaged/dt ──────────────────────────────────────────────────
-    # Damaged copies replicate FASTER ("replicative advantage").
-    # Cramer Appendix 2 pp.154-155: deleted mtDNA (>3kbp) replicates
-    # "at least 21% faster" (Va23). Code uses conservative 1.05 (5%).
-    # No spurious 0.5 factor (fix M2). Also gated by ATP and copy number.
-    replication_d = (base_replication_rate * DAMAGED_REPLICATION_ADVANTAGE
-                     * n_d * nad * energy_available
-                     * max(copy_number_pressure, 0.0))
+    # ── 2. dN_deletion/dt (C11: REVISED from dN_damaged) ────────────────
+    replication_del = (base_replication_rate * DELETION_REPLICATION_ADVANTAGE
+                       * n_del * nad * energy_available
+                       * max(copy_number_pressure, 0.0))
 
-    # New damage from ROS (arrives from healthy pool)
-    new_damage = damage_rate
-
-    # Age-dependent de novo deletions.
-    # Cramer Appendix 2 pp.152-155: deletions arise from Pol γ replication
-    # errors, double-strand breaks, and replication slippage.
-    # Proportional to healthy pool (deletions occur during replication).
-    # Removed the 0.01 suppression factor (fix m6).
+    # De novo deletions from Pol gamma slippage (NOT from ROS)
     age_deletions = del_rate * 0.05 * n_h * energy_available
 
-    # Mitophagy: selective clearance of damaged copies.
-    # Cramer Ch. VI.B p.75: PINK1/Parkin pathway — low ΔΨ → PINK1
-    # accumulates → Parkin signals removal.
-    # Enhanced by rapamycin (Ch. VI.A.1 pp.71-72: mTOR inhibition).
-    # NAD+ supplementation improves mitochondrial quality control —
-    # selectively enhances mitophagy of damaged copies rather than
-    # boosting damaged replication (fix C3).
-    mitophagy_rate = (BASELINE_MITOPHAGY_RATE
-                      + rapa * 0.08                    # rapamycin: ~4x boost at max dose
-                      + nad_supp * 0.03 * cd38_survival)  # NAD: CD38-gated quality control
-    mitophagy = mitophagy_rate * n_d
+    # Mitophagy: selective for deletions (low delta-psi -> PINK1, C3)
+    mitophagy_del = _current_mitophagy_rate * n_del
 
-    # Apoptosis removes damaged copies too
-    apoptosis_d = 0.02 * max(1.0 - energy_available, 0.0) * n_d * (1.0 - cliff)
+    # Apoptosis
+    apoptosis_del = (0.02 * max(1.0 - energy_available, 0.0)
+                     * n_del * (1.0 - cliff))
 
-    dn_d = (replication_d + new_damage + age_deletions
-            - mitophagy - repair_rate - apoptosis_d - transplant_displace)
+    dn_del = (replication_del + age_deletions
+              - mitophagy_del - repair_deletion - apoptosis_del
+              - transplant_displace)
 
-    # ── 3. dATP/dt ────────────────────────────────────────────────────────
-    # ATP represents the cell's energy production capacity (normalized to
-    # 1.0 = healthy baseline). The cliff factor IS the primary driver:
-    # when het crosses the threshold, production capacity collapses.
-    # This then feeds back into replication shutdown (C1 fix).
-    #
-    # ATP = cliff × health_modifiers - intervention_costs
-    # A healthy person (cliff=1, NAD=1, sen=0) has ATP ≈ 1.0
-    # Past the cliff, ATP crashes toward 0.
+    # ── 3. dN_point/dt (C11: NEW) ───────────────────────────────────────
+    # Point mutations replicate at SAME rate as healthy (no advantage)
+    replication_pt = (base_replication_rate * n_pt * nad
+                      * energy_available * max(copy_number_pressure, 0.0))
+
+    # New point mutations from Pol gamma errors during healthy replication
+    point_from_replication = POINT_ERROR_RATE * replication_h
+
+    # Mitophagy: LOW selectivity for point mutations
+    mitophagy_pt = (_current_mitophagy_rate * POINT_MITOPHAGY_SELECTIVITY
+                    * n_pt)
+
+    # Apoptosis
+    apoptosis_pt = (0.02 * max(1.0 - energy_available, 0.0)
+                    * n_pt * (1.0 - cliff))
+
+    dn_pt = (replication_pt + point_from_replication + ros_point_damage
+             - mitophagy_pt - repair_point - apoptosis_pt)
+
+    # ── 4. dATP/dt (unchanged logic, uses DELETION cliff) ───────────────
     atp_target = (BASELINE_ATP * cliff
-                  * (0.6 + 0.4 * min(nad, 1.0))    # NAD modulates ±40%
-                  * (1.0 - 0.15 * sen))              # senescence burden
-
-    # Yamanaka energy cost (rescaled: 0.15-0.35 MU at max; fix m5)
+                  * (0.6 + 0.4 * min(nad, 1.0))
+                  * (1.0 - 0.15 * sen))
     yama_cost = yama * (0.15 + 0.2 * yama)
-
-    # Exercise: modest acute energy cost
     exercise_cost = exercise * 0.03
-
     atp_target = max(atp_target - yama_cost - exercise_cost, 0.0)
-    # Relaxation time constant ~1 year
     datp = 1.0 * (atp_target - atp)
 
-    # ── 4. dROS/dt ────────────────────────────────────────────────────────
-    # ROS production: baseline + damage-dependent (the vicious cycle).
-    # Coupling to heteroplasmy is stronger (fix M3): damaged mitochondria
-    # have electron transport chain defects that leak electrons → superoxide.
+    # ── 5. dROS/dt (C11: uses total het, both damage types produce ROS) ─
     ros_baseline = BASELINE_ROS * met_demand
-    ros_from_damage = ROS_PER_DAMAGED * het * het * (1.0 + inflammation)
-    # ^^ quadratic in het: damage accelerates ROS production nonlinearly
-
-    # Antioxidant defense: NAD-dependent (via sirtuins → SOD2/catalase)
+    ros_from_damage = (ROS_PER_DAMAGED * het_total * het_total
+                       * (1.0 + inflammation))
     defense_factor = 1.0 + 0.4 * min(nad, 1.0)
-    # Exercise upregulates antioxidant defenses (hormesis: mild ROS → adaptation)
     defense_factor += exercise * 0.2
-
-    # Exercise acute ROS burst
     exercise_ros = exercise * 0.03
-
-    # ROS equilibrium
     ros_eq = (ros_baseline + ros_from_damage + exercise_ros) / defense_factor
-    # Relaxation
     dros = 1.0 * (ros_eq - ros)
 
-    # ── 5. dNAD/dt ────────────────────────────────────────────────────────
-    # NAD+ declines with age. Cramer Ch. VI.A.3 pp.72-73: NMN/NR
-    # supplementation. Ca16 = Camacho-Pereira et al. 2016 (Ch. VI refs p.87).
-    # NAD does NOT boost damaged replication (fix C3) — it's consumed
-    # by quality control processes (sirtuins, PARPs) that preferentially
-    # benefit healthy mitochondria.
-    #
-    # CD38 degradation (fix C7, Cramer p.73, email 2026-02-15):
-    # CD38 enzyme destroys NMN/NR before absorption. Low-dose NMN/NR
-    # supplementation is largely futile. High doses imply combined
-    # NMN/NR + CD38 suppression (apigenin), improving delivery.
-    # Coefficient reduced from 0.35 → 0.25 and gated by cd38_survival.
+    # ── 6. dNAD/dt (unchanged) ──────────────────────────────────────────
     age_factor = max(1.0 - NAD_DECLINE_RATE * max(age - 30, 0), 0.2)
     nad_boost = nad_supp * 0.25 * cd38_survival
     nad_target = BASELINE_NAD * age_factor + nad_boost
     nad_target = min(nad_target, 1.2)
-    # ROS consumes NAD (via PARP activation from DNA damage)
     ros_drain = 0.03 * ros
-    # Yamanaka consumes NAD
     yama_drain = yama * 0.03
-    # Relaxation toward target
     dnad = 0.3 * (nad_target - nad) - ros_drain - yama_drain
 
-    # ── 6. dSenescent/dt ─────────────────────────────────────────────────
-    # Cramer Ch. VII.A pp.89-90: senescent cells cease dividing, emit SASP.
-    # Ch. VIII.F p.103: use ~2x energy, apoptosis costs ~0.5-0.7 MU (Table 3).
-    # Senescence triggered by ROS, low ATP, and age.
-    # Low energy accelerates senescence (cliff feedback, fix C1).
+    # ── 7. dSenescent/dt (unchanged) ───────────────────────────────────
     energy_stress = max(1.0 - energy_available, 0.0)
     new_sen = (SENESCENCE_RATE * (1.0 + 2.0 * ros + energy_stress)
                * (1.0 + 0.01 * max(age - 40, 0)))
-    # Senolytic clearance (Cramer Ch. VII.A.2 p.91: D+Q+F protocol)
     clearance = seno * 0.2 * sen
-    # Natural immune clearance (declines with age)
     immune_clear = 0.01 * sen * max(1.0 - 0.01 * max(age - 50, 0), 0.1)
-    # Cap
     if sen >= 1.0:
         new_sen = 0.0
     dsen = new_sen - clearance - immune_clear
 
-    # ── 7. dMembrane_potential/dt ────────────────────────────────────────
-    # Cramer Ch. IV pp.46-47: proton gradient across inner membrane.
-    # Ch. VI.B p.75: low ΔΨ triggers PINK1-mediated mitophagy.
-    # ΔΨ is maintained by the electron transport chain. Collapses with
-    # the cliff (healthy ETC function required).
+    # ── 8. dMembrane_potential/dt (unchanged) ──────────────────────────
     psi_eq = cliff * min(nad, 1.0) * (1.0 - 0.3 * sen)
     psi_eq = min(psi_eq, BASELINE_MEMBRANE_POTENTIAL)
     dpsi = 0.5 * (psi_eq - psi)
 
-    return np.array([dn_h, dn_d, datp, dros, dnad, dsen, dpsi])
+    return np.array([dn_h, dn_del, datp, dros, dnad, dsen, dpsi, dn_pt])
 
 
 def _rk4_step(
@@ -513,41 +444,56 @@ def _rk4_step(
 def initial_state(patient: dict[str, float]) -> npt.NDArray[np.float64]:
     """Compute initial state vector from patient parameters.
 
-    Total copy number N_h + N_d = 1.0 (normalized). Initial ATP computed
-    from the same formula used in the dynamics (cliff-based production
-    minus demand) to avoid transient jumps at t=0.
+    Total copy number N_h + N_del + N_pt = 1.0 (normalized). The split between
+    deletion and point mutations is age-dependent: older patients have a higher
+    fraction of deletions (exponential growth catches up over decades).
+
+    State vector (8D):
+        [0] N_healthy, [1] N_deletion, [2] ATP, [3] ROS, [4] NAD,
+        [5] Senescent_fraction, [6] Membrane_potential, [7] N_point
 
     Args:
         patient: Dict with patient parameter values.
 
     Returns:
-        np.array of shape (7,) — initial state.
+        np.array of shape (8,) — initial state.
     """
     het0 = patient["baseline_heteroplasmy"]
     nad0 = patient["baseline_nad_level"]
     met_demand = patient["metabolic_demand"]
+    age = patient["baseline_age"]
 
-    n_h0 = 1.0 - het0      # healthy fraction (total = 1.0)
-    n_d0 = het0             # damaged fraction
-    cliff0 = _cliff_factor(het0)
+    # Age-dependent deletion fraction (C11: Cramer Appendix 2)
+    age_frac = min(max(age - 20.0, 0.0) / 70.0, 1.0)
+    deletion_frac = (DELETION_FRACTION_YOUNG
+                     + (DELETION_FRACTION_OLD - DELETION_FRACTION_YOUNG) * age_frac)
 
-    # Senescence: accumulates with age (compute before ATP, which depends on it)
-    sen0 = BASELINE_SENESCENT + 0.005 * max(patient["baseline_age"] - 40, 0)
+    n_h0 = 1.0 - het0
+    n_del0 = het0 * deletion_frac
+    n_pt0 = het0 * (1.0 - deletion_frac)
+
+    # Deletion heteroplasmy for cliff factor
+    het_del0 = _deletion_heteroplasmy(n_h0, n_del0, n_pt0)
+    cliff0 = _cliff_factor(het_del0)
+
+    # Senescence
+    sen0 = BASELINE_SENESCENT + 0.005 * max(age - 40, 0)
     sen0 = min(sen0, 0.5)
 
-    # ATP: consistent with dynamics equilibrium formula
+    # ATP: uses deletion cliff
     atp0 = (BASELINE_ATP * cliff0
             * (0.6 + 0.4 * min(nad0, 1.0))
             * (1.0 - 0.15 * sen0))
 
-    # ROS: quadratic in het (matching dynamics)
-    ros0 = (BASELINE_ROS * met_demand + ROS_PER_DAMAGED * het0 * het0) / (1.0 + 0.4 * min(nad0, 1.0))
+    # ROS: uses total het
+    ros0 = (BASELINE_ROS * met_demand
+            + ROS_PER_DAMAGED * het0 * het0) / (1.0 + 0.4 * min(nad0, 1.0))
 
     # Membrane potential
     psi0 = cliff0 * min(nad0, 1.0) * (1.0 - 0.3 * sen0)
     psi0 = min(psi0, BASELINE_MEMBRANE_POTENTIAL)
 
-    return np.array([n_h0, n_d0, atp0, ros0, nad0, min(sen0, 1.0), psi0])
+    return np.array([n_h0, n_del0, atp0, ros0, nad0, min(sen0, 1.0), psi0, n_pt0])
 
 
 def simulate(
@@ -583,11 +529,13 @@ def simulate(
     Returns:
         Dict with:
             "time": np.array of time points (years from start)
-            "states": np.array of shape (n_steps+1, 7) — full trajectory
-                (or (n_trajectories, n_steps+1, 7) if stochastic with
+            "states": np.array of shape (n_steps+1, 8) — full trajectory
+                (or (n_trajectories, n_steps+1, 8) if stochastic with
                 n_trajectories > 1)
-            "heteroplasmy": np.array — heteroplasmy fraction at each step
+            "heteroplasmy": np.array — total heteroplasmy at each step
                 (or (n_trajectories, n_steps+1) if stochastic)
+            "deletion_heteroplasmy": np.array — deletion-only heteroplasmy
+                (drives cliff factor)
             "intervention": the intervention dict used
             "patient": the patient dict used
             "tissue_type": tissue type used (or None)
@@ -625,10 +573,12 @@ def simulate(
     time_arr = np.zeros(n_steps + 1)
     states = np.zeros((n_steps + 1, N_STATES))
     het_arr = np.zeros(n_steps + 1)
+    del_het_arr = np.zeros(n_steps + 1)
 
     # Record initial conditions
     states[0] = state
-    het_arr[0] = _heteroplasmy_fraction(state[0], state[1])
+    het_arr[0] = _total_heteroplasmy(state[0], state[1], state[7])
+    del_het_arr[0] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
     if stochastic:
         rng = np.random.default_rng(rng_seed)
@@ -642,8 +592,9 @@ def simulate(
             # Additive noise on ROS (index 3) and damage rate (index 1)
             dW = rng.normal(0, np.sqrt(dt), N_STATES)
             noise = np.zeros(N_STATES)
-            noise[1] = noise_scale * state[1] * dW[1]  # damage noise
+            noise[1] = noise_scale * state[1] * dW[1]  # deletion noise
             noise[3] = noise_scale * state[3] * dW[3]  # ROS noise
+            noise[7] = noise_scale * state[7] * dW[7]  # point mutation noise
             state = state + dt * deriv + noise
         else:
             state = _rk4_step(state, t, dt, current_intervention, patient, tissue_mods)
@@ -655,12 +606,14 @@ def simulate(
 
         time_arr[i + 1] = (i + 1) * dt
         states[i + 1] = state
-        het_arr[i + 1] = _heteroplasmy_fraction(state[0], state[1])
+        het_arr[i + 1] = _total_heteroplasmy(state[0], state[1], state[7])
+        del_het_arr[i + 1] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
     return {
         "time": time_arr,
         "states": states,
         "heteroplasmy": het_arr,
+        "deletion_heteroplasmy": del_het_arr,
         "intervention": intervention,
         "patient": patient,
         "tissue_type": tissue_type,
@@ -682,11 +635,13 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
     time_arr = np.arange(n_steps + 1) * dt
     all_states = np.zeros((n_trajectories, n_steps + 1, N_STATES))
     all_het = np.zeros((n_trajectories, n_steps + 1))
+    all_del_het = np.zeros((n_trajectories, n_steps + 1))
 
     for traj in range(n_trajectories):
         state = state0.copy()
         all_states[traj, 0] = state
-        all_het[traj, 0] = _heteroplasmy_fraction(state[0], state[1])
+        all_het[traj, 0] = _total_heteroplasmy(state[0], state[1], state[7])
+        all_del_het[traj, 0] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
         for i in range(n_steps):
             t = i * dt
@@ -696,17 +651,20 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
             noise = np.zeros(N_STATES)
             noise[1] = noise_scale * state[1] * dW[1]
             noise[3] = noise_scale * state[3] * dW[3]
+            noise[7] = noise_scale * state[7] * dW[7]
             state = state + dt * deriv + noise
             state = np.maximum(state, 0.0)
             state[5] = min(state[5], 1.0)
 
             all_states[traj, i + 1] = state
-            all_het[traj, i + 1] = _heteroplasmy_fraction(state[0], state[1])
+            all_het[traj, i + 1] = _total_heteroplasmy(state[0], state[1], state[7])
+            all_del_het[traj, i + 1] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
     return {
         "time": time_arr,
         "states": all_states,
         "heteroplasmy": all_het,
+        "deletion_heteroplasmy": all_del_het,
         "intervention": intervention,
         "patient": patient,
         "n_trajectories": n_trajectories,
