@@ -158,3 +158,76 @@ class TestGriefScenarios:
         for s in scenarios[:4]:  # test first 4 for speed
             result = simulate_with_disturbances(disturbances=[s])
             assert not np.any(np.isnan(result["states"]))
+
+
+# -- Task 2: GriefMitoSimulator tests -----------------------------------------
+
+from grief_mito_simulator import GriefMitoSimulator
+
+
+class TestGriefMitoSimulator:
+    """Test the Zimmerman adapter for the combined system."""
+
+    def test_has_run_method(self):
+        sim = GriefMitoSimulator()
+        assert callable(sim.run)
+
+    def test_has_param_spec(self):
+        sim = GriefMitoSimulator()
+        spec = sim.param_spec()
+        assert isinstance(spec, dict)
+
+    def test_param_spec_has_grief_and_mito_params(self):
+        sim = GriefMitoSimulator()
+        spec = sim.param_spec()
+        # Should have grief params (prefixed)
+        assert "grief_B" in spec
+        assert "grief_age" in spec
+        assert "grief_slp_int" in spec
+        # Should have mito params
+        assert "baseline_age" in spec
+        assert "rapamycin_dose" in spec
+
+    def test_run_with_empty_params(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        assert isinstance(result, dict)
+        assert len(result) > 0
+
+    def test_run_returns_flat_dict_of_floats(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        for k, v in result.items():
+            assert isinstance(v, float), f"{k} is {type(v)}"
+
+    def test_run_includes_grief_metrics(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        # Should include grief-side metrics
+        assert "grief_pgd_risk_score" in result
+
+    def test_run_includes_mito_metrics(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        assert "final_heteroplasmy" in result
+        assert "final_atp" in result
+
+    def test_no_nan_in_output(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        for k, v in result.items():
+            assert not np.isnan(v), f"{k} is NaN"
+
+    def test_no_inf_in_output(self):
+        sim = GriefMitoSimulator()
+        result = sim.run({})
+        for k, v in result.items():
+            assert not np.isinf(v), f"{k} is inf"
+
+    def test_grief_intervention_affects_mito_outcome(self):
+        sim = GriefMitoSimulator()
+        no_help = sim.run({"grief_B": 0.9, "grief_M": 0.9})
+        with_help = sim.run({"grief_B": 0.9, "grief_M": 0.9,
+                             "grief_act_int": 0.8, "grief_slp_int": 0.8})
+        # Interventions should reduce mitochondrial damage
+        assert with_help["final_heteroplasmy"] < no_help["final_heteroplasmy"]
