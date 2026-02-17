@@ -271,3 +271,40 @@ class TestGriefMitoScenarios:
         for s in GRIEF_STRESS_SCENARIOS[:4]:  # first 4 for speed
             result = simulate_with_disturbances(disturbances=[s["disturbance"]])
             assert not np.any(np.isnan(result["states"])), f"NaN in {s['name']}"
+
+
+# -- Task 4: Grief-Mito Viz tests ---------------------------------------------
+
+import os
+from grief_mito_viz import (
+    plot_grief_mito_trajectory,
+    plot_intervention_comparison,
+    plot_all_grief_scenarios,
+)
+
+
+class TestGriefMitoViz:
+    """Smoke tests for grief-mito visualization."""
+
+    def test_plot_trajectory_creates_file(self, tmp_path):
+        d = GriefDisturbance()
+        mito_result = simulate_with_disturbances(disturbances=[d])
+        grief_curves = grief_trajectory()
+        out = str(tmp_path / "test_traj.png")
+        plot_grief_mito_trajectory(grief_curves, mito_result, "Test", out)
+        assert os.path.exists(out)
+
+    def test_plot_comparison_creates_file(self, tmp_path):
+        out = str(tmp_path / "test_compare.png")
+        plot_intervention_comparison(
+            grief_patient={"B": 0.8, "M": 0.8, "age": 65.0},
+            output_path=out,
+        )
+        assert os.path.exists(out)
+
+    def test_plot_all_scenarios_creates_files(self, tmp_path):
+        out_dir = str(tmp_path / "viz_output")
+        plot_all_grief_scenarios(output_dir=out_dir, max_scenarios=2)
+        assert os.path.isdir(out_dir)
+        files = os.listdir(out_dir)
+        assert len(files) >= 2
