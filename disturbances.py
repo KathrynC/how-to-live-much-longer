@@ -33,11 +33,18 @@ from constants import (
     N_STATES, SIM_YEARS, DT,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
 )
-# derivatives(): the 7-variable ODE right-hand side from the core simulator.
-# initial_state(): constructs state[0..6] from patient params.
+# derivatives(): the 8-variable ODE right-hand side from the core simulator (8D after C11).
+# initial_state(): constructs state[0..7] from patient params.
 # _resolve_intervention(): handles both plain dicts and InterventionSchedule objects.
-# _heteroplasmy_fraction(): N_d / (N_h + N_d), the central damage metric.
-from simulator import derivatives, initial_state, _resolve_intervention, _heteroplasmy_fraction
+# _heteroplasmy_fraction(): legacy N_d / (N_h + N_d), kept for backwards compatibility.
+# _total_heteroplasmy(): (N_del + N_pt) / (N_h + N_del + N_pt), total damage metric.
+# _deletion_heteroplasmy(): N_del / (N_h + N_del + N_pt), cliff-driving metric.
+from simulator import (
+    derivatives, initial_state, _resolve_intervention,
+    _heteroplasmy_fraction,          # kept for backwards compatibility
+    _total_heteroplasmy,             # C11: total het including point mutations
+    _deletion_heteroplasmy,          # C11: deletion-only het for cliff logic
+)
 
 
 class Disturbance(ABC):
@@ -86,11 +93,11 @@ class Disturbance(ABC):
         Called once when t first enters the active window.
 
         Args:
-            state: Current state vector (7,).
+            state: Current state vector (8,) — 8D after C11 mutation split.
             t: Current time in years.
 
         Returns:
-            Modified state vector (7,).
+            Modified state vector (8,).
         """
         ...
 
@@ -130,14 +137,15 @@ class Disturbance(ABC):
 #      vulnerability to further damage). These modified params feed into
 #      the ODE derivatives, so the effect compounds through the dynamics.
 #
-# The state vector indices (matching simulator.py):
+# The state vector indices (matching simulator.py, 8D after C11 split):
 #   [0] N_healthy          — healthy mtDNA copy number (normalized to ~1.0)
-#   [1] N_damaged          — damaged mtDNA copy number
+#   [1] N_deletion         — deletion-mutated mtDNA (drives cliff at ~70%)
 #   [2] ATP                — energy production (MU/day)
 #   [3] ROS                — reactive oxygen species level
 #   [4] NAD                — NAD+ cofactor availability
 #   [5] Senescent_fraction — fraction of cells in senescence (0..1)
 #   [6] Membrane_potential — mitochondrial inner membrane ΔΨ (normalized)
+#   [7] N_point            — point-mutated mtDNA (linear growth, C11)
 
 
 class IonizingRadiation(Disturbance):
@@ -166,11 +174,17 @@ class IonizingRadiation(Disturbance):
         # 5% max conversion rate is conservative — a severe acute dose could
         # damage more, but we cap here to keep the system recoverable at
         # moderate magnitudes. The transfer is mass-conserving: total copy
-        # number (N_h + N_d) is unchanged, only the ratio shifts.
+        # number (N_h + N_del + N_pt) is unchanged, only the ratio shifts.
+        #
+        # C11 split: ionizing radiation causes double-strand breaks (DSBs) that
+        # predominantly produce large deletions (~70%), plus oxidative base
+        # damage that yields point mutations (~30%). The 70/30 ratio reflects
+        # radiobiology literature on mtDNA lesion spectra.
         damage_fraction = 0.05 * self.magnitude  # up to 5% of healthy pool
         transfer = damage_fraction * state[0]
         state[0] -= transfer
-        state[1] += transfer
+        state[1] += transfer * 0.7   # 70% → deletions (DSBs)
+        state[7] += transfer * 0.3   # 30% → point mutations (base damage)
         # IMPULSE: Acute ROS burst from water radiolysis and damaged ETC.
         # Ionizing radiation splits water molecules into hydroxyl radicals
         # (immediate ROS), and newly damaged mitochondria with defective
@@ -291,10 +305,16 @@ class ChemotherapyBurst(Disturbance):
         # Cisplatin forms platinum-DNA adducts; doxorubicin intercalates and
         # inhibits topoisomerase II. At max magnitude, 10% of healthy copies
         # are instantly rendered dysfunctional.
+        #
+        # C11 split: chemo agents produce a mix of lesion types. Cisplatin
+        # crosslinks cause large deletions (~70%), while doxorubicin's
+        # oxidative damage and base adducts yield point mutations (~30%).
+        # Same 70/30 ratio as radiation — both are high-energy DNA damagers.
         damage_fraction = 0.1 * self.magnitude
         transfer = damage_fraction * state[0]
         state[0] -= transfer
-        state[1] += transfer
+        state[1] += transfer * 0.7   # 70% → deletions (crosslinks, DSBs)
+        state[7] += transfer * 0.3   # 30% → point mutations (adducts, base damage)
         # IMPULSE: Massive ROS burst. Doxorubicin generates superoxide via
         # redox cycling, and cisplatin disrupts ETC complex activity. 0.3 on
         # baseline ~0.1 = 300% spike — the most severe of all disturbance
@@ -422,8 +442,9 @@ def simulate_with_disturbances(
     Returns:
         Dict with:
             "time": np.array of time points
-            "states": np.array of shape (n_steps+1, 7)
-            "heteroplasmy": np.array of heteroplasmy at each step
+            "states": np.array of shape (n_steps+1, 8) — 8D after C11 split
+            "heteroplasmy": np.array of total heteroplasmy at each step
+            "deletion_heteroplasmy": np.array of deletion-only het (drives cliff)
             "intervention": intervention dict used
             "patient": patient dict used
             "disturbances": list of disturbance event dicts
@@ -447,20 +468,23 @@ def simulate_with_disturbances(
     # overrides *inside* the integration loop, between the constraint enforcement
     # and the RK4 step. The core simulator doesn't expose these injection points.
     n_steps = int(sim_years / dt)
-    # initial_state() constructs state[0..6] from patient params — sets N_h, N_d
-    # from baseline_heteroplasmy, ATP from cliff factor, ROS from damage level,
-    # NAD from baseline_nad_level, senescence from age, ΔΨ from energy state.
+    # initial_state() constructs state[0..7] from patient params — sets N_h, N_del,
+    # N_pt from baseline_heteroplasmy (90/10 del/pt split), ATP from cliff factor,
+    # ROS from damage level, NAD from baseline_nad_level, senescence from age,
+    # ΔΨ from energy state.
     state = initial_state(patient)
 
     # Pre-allocate contiguous arrays for the full trajectory.
-    # N_STATES = 7 (the ODE system dimension).
+    # N_STATES = 8 (the ODE system dimension, 8D after C11 mutation split).
     time_arr = np.zeros(n_steps + 1)
     states = np.zeros((n_steps + 1, N_STATES))
     het_arr = np.zeros(n_steps + 1)
+    del_het_arr = np.zeros(n_steps + 1)  # C11: deletion-only het (drives cliff)
 
     # Record initial conditions at t=0.
     states[0] = state
-    het_arr[0] = _heteroplasmy_fraction(state[0], state[1])
+    het_arr[0] = _total_heteroplasmy(state[0], state[1], state[7])
+    del_het_arr[0] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
     # Reset impulse flags so disturbance objects can be reused across
     # multiple simulate_with_disturbances() calls without stale state.
@@ -501,7 +525,7 @@ def simulate_with_disturbances(
 
         # --- Phase 3: RK4 integration step ---
         # Classical 4th-order Runge-Kutta with the (possibly perturbed)
-        # parameters. The derivatives() function computes all 7 state
+        # parameters. The derivatives() function computes all 8 state
         # derivatives from the current state, time, intervention, and patient
         # params. RK4 evaluates derivatives at 4 points per step for O(dt^5)
         # local error — critical for capturing the nonlinear cliff dynamics
@@ -529,7 +553,8 @@ def simulate_with_disturbances(
         # Record this step's results.
         time_arr[i + 1] = (i + 1) * dt
         states[i + 1] = state
-        het_arr[i + 1] = _heteroplasmy_fraction(state[0], state[1])
+        het_arr[i + 1] = _total_heteroplasmy(state[0], state[1], state[7])
+        del_het_arr[i + 1] = _deletion_heteroplasmy(state[0], state[1], state[7])
 
     # Package disturbance metadata for downstream analysis and plotting.
     # shock_times enables shaded regions on trajectory plots; disturbance_info
@@ -545,6 +570,7 @@ def simulate_with_disturbances(
         "time": time_arr,
         "states": states,
         "heteroplasmy": het_arr,
+        "deletion_heteroplasmy": del_het_arr,
         "intervention": intervention,
         "patient": patient,
         "disturbances": disturbance_info,
