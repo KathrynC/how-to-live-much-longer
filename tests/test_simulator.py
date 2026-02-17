@@ -335,7 +335,7 @@ class TestMutationTypeSplit:
         With baseline mitophagy selectively clearing deletions, the NET
         growth rate of deletions may be lower than points. But in absolute
         terms (copy count increase), deletions should still accumulate more
-        than points due to the 1.10x replication advantage and age-dependent
+        than points due to the 1.21x replication advantage and age-dependent
         de novo deletion creation from Pol gamma slippage.
         """
         result = simulate(sim_years=30)
@@ -378,7 +378,7 @@ class TestMutationTypeSplit:
     def test_point_mutations_no_replication_advantage(self):
         """Point mutations replicate at base rate (no size advantage).
 
-        Deletions have 1.10x replication advantage but are selectively
+        Deletions have 1.21x replication advantage but are selectively
         cleared by mitophagy (PINK1/Parkin). Point mutations evade
         mitophagy (normal membrane potential) but replicate at 1.0x.
         The key signature: both types should be present throughout,

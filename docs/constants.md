@@ -23,7 +23,7 @@ All simulation parameters and biological constants derived from Cramer (2026), w
 | `BASELINE_ROS` | 0.1 | Ch. IV.B p.53, Ch. II.H p.14 |
 | `NAD_DECLINE_RATE` | 0.01/yr | Ch. VI.A.3 pp.72-73, Ca16 |
 | `SENESCENCE_RATE` | 0.005/yr | Ch. VII.A pp.89-92 |
-| `DAMAGED_REPLICATION_ADVANTAGE` | 1.05× | Appendix 2 pp.154-155 (book: ≥1.21) |
+| `DELETION_REPLICATION_ADVANTAGE` | 1.21× | Appendix 2 pp.154-155 (strict compliance update, 2026-02-17) |
 | `YAMANAKA_ENERGY_COST` | 3-5 MU | Ch. VIII.A Table 3 p.100 |
 | `TRANSPLANT_ADDITION_RATE` | 0.30 | Ch. VIII.G pp.104-107 |
 | `TRANSPLANT_DISPLACEMENT_RATE` | 0.12 | Competitive displacement of damaged copies |

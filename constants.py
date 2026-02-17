@@ -1,18 +1,18 @@
 """Central configuration for the mitochondrial aging simulation.
 
-All simulation parameters, biological constants (from Cramer 2025),
+All simulation parameters, biological constants (from Cramer),
 12-dimensional parameter space definitions, and Ollama model config.
 
 Reference:
-    Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
-    DNA Connection*. ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming from Springer Verlag in 2026).
+    *How to Live Much Longer: The Mitochondrial DNA Connection*.
 
 Type aliases:
     ParamDict = dict[str, float]
     InterventionDict = dict[str, float]
     PatientDict = dict[str, float]
 
-Citation key (Cramer 2025 chapter/page references):
+Citation key (Cramer chapter/page references):
     HETEROPLASMY_CLIFF = 0.7
         Not given as an explicit number in the book. Cramer discusses a
         ~25% overall MitoClock damage threshold (Ch. V.K, p.66) which is
@@ -28,8 +28,8 @@ Citation key (Cramer 2025 chapter/page references):
         after age 65 is 3.06 years." Also Ch. II.H, p.15.
         Corrected 2026-02-15: AGE_TRANSITION restored to 65 per Cramer
         email ("the data puts it at 65").
-    AGE_TRANSITION = 40.0
-        Book says 65 (Appendix 2, p.155). Simulation uses 40.
+    AGE_TRANSITION = 65.0
+        Appendix 2 (p.155): age-65 regime transition.
     BASELINE_ATP = 1.0
         Ch. VIII.A, Table 3, p.100: "Normal Somatic Cell Operation:
         ~1 MU/day" where 1 MU ≡ 10^8 ATP energy releases.
@@ -63,12 +63,12 @@ Citation key (Cramer 2025 chapter/page references):
         Ch. VI.B, p.75: PINK1/Parkin pathway — damaged mitochondria with
         low membrane potential are tagged for removal. The specific rate
         is a simulation parameter; no quantitative rate in the book.
-    DAMAGED_REPLICATION_ADVANTAGE = 1.05
+    DELETION_REPLICATION_ADVANTAGE = 1.21
         Appendix 2, pp.154-155: deleted mtDNA rings (>3kbp, >18% of
         length) replicate "at least 21% faster" than full-length (p.155,
         citing Va23). Also Ch. II.H, p.15 ("deletion damage builds
-        exponentially"). The code's 1.05 (5%) is conservative relative
-        to Cramer's data suggesting ≥1.21.
+        exponentially"). Compliance update (2026-02-17) enforces the
+        Appendix-2 minimum of 1.21 (>=21%).
 """
 from __future__ import annotations
 
@@ -84,7 +84,7 @@ SIM_YEARS = 30          # total simulation horizon
 DT = 0.01               # timestep in years (~3.65 days)
 N_STEPS = int(SIM_YEARS / DT)  # 3000 steps
 
-# ── Biological constants (Cramer 2025) ───────────────────────────────────────
+# ── Biological constants (Cramer) ────────────────────────────────────────────
 
 # mtDNA copy number per cell (typical range 100-10,000; we use ~1000 as
 # a normalized baseline where 1.0 = full complement).
@@ -107,7 +107,8 @@ CLIFF_STEEPNESS = 15.0
 # Cramer Appendix 2, p.155, Fig. 23 (data from Va23: Vandiver et al.,
 # Aging Cell 22(6), 2023): DT = 11.81 yr before age 65, 3.06 yr after.
 # Also Ch. II.H, p.15: "deletion damage builds exponentially."
-# NOTE: Book uses age 65 as transition; simulation uses 40 (deliberate).
+# NOTE: AGE_TRANSITION is 65 per Appendix 2 p.155. C10 can shift the
+# effective transition age dynamically in _deletion_rate().
 DOUBLING_TIME_YOUNG = 11.8   # years (Cramer Appendix 2, p.155)
 DOUBLING_TIME_OLD = 3.06     # years (Cramer Appendix 2, p.155)
 AGE_TRANSITION = 65.0        # Cramer Appendix 2 p.155: "DT before age 65" (corrected per Cramer email 2026-02-15)
@@ -158,7 +159,7 @@ YAMANAKA_ENERGY_COST_MAX = 5.0
 BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 
 # DEPRECATED (C11): Use DELETION_REPLICATION_ADVANTAGE instead.
-# Kept for reference; deletion advantage raised from 1.05 to 1.10.
+# Kept for reference; deletion advantage progressed from 1.05 to 1.21.
 # DAMAGED_REPLICATION_ADVANTAGE = 1.05
 
 # CD38 degradation of NMN/NR supplements
@@ -178,27 +179,134 @@ TRANSPLANT_DISPLACEMENT_RATE = 0.12 # competitive displacement of damaged copies
 TRANSPLANT_HEADROOM = 1.5           # max total copies allowed with transplant (was 1.2)
 
 # ── C11: Split mutation type constants (Cramer email 2026-02-17) ────────────
-# Point mutations: Pol gamma errors + ROS-induced transitions. Linear growth,
-# no replication advantage (same-length mtDNA as wild-type).
-# Deletion mutations: Pol gamma slippage + DSB misrepair. Exponential growth,
-# size-dependent replication advantage (shorter rings replicate faster).
-# Reference: Cramer Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023).
+#
+# C11 splits the single "N_damaged" compartment into two biologically distinct
+# mutation types: DELETIONS and POINT MUTATIONS. This matters because:
+#
+#   1. Deletions (>3kbp removed from the 16.5kb ring) replicate FASTER than
+#      wild-type — shorter rings complete replication sooner. This is the
+#      exponential expansion mechanism that drives the heteroplasmy cliff
+#      (Cramer Appendix 2 pp.154-155, Va23: Vandiver et al. 2023).
+#
+#   2. Point mutations (single-base substitutions) produce SAME-LENGTH mtDNA
+#      rings with no replication advantage. They accumulate linearly via
+#      polymerase gamma errors and ROS-induced base oxidation. They impair
+#      function (defective ETC subunits) but don't drive cliff dynamics.
+#
+#   3. Mitophagy preferentially removes deletion-bearing mitochondria because
+#      large deletions → defective ETC → low membrane potential → PINK1
+#      accumulates → mitophagy tag. Point-mutated mitos often maintain near-
+#      normal membrane potential, evading quality control (Cramer Ch. VI.B p.75).
+#
+# The cliff is now driven by DELETION heteroplasmy (N_del / total), not total
+# heteroplasmy. Point mutations add background dysfunction but don't trigger
+# the catastrophic nonlinear ATP collapse.
+#
+# Reference: Cramer Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023);
+#            Ch. II.H p.15 (exponential deletion growth);
+#            Ch. VI.B p.75 (PINK1/Parkin selective mitophagy).
 
-# Point mutation dynamics
-POINT_ERROR_RATE = 0.001           # Pol gamma error rate per replication event
-ROS_POINT_COEFF = 0.05             # ~33% of old 0.15 damage_rate coefficient
-POINT_MITOPHAGY_SELECTIVITY = 0.3  # low: point-mutated mitos often have normal delta-psi
+# ── Point mutation dynamics ──
 
-# Deletion replication advantage (REVISED from DAMAGED_REPLICATION_ADVANTAGE)
-# Appendix 2 pp.154-155: "at least 21% faster" for >3kbp deletions (Va23).
-# Raised from 1.05 to 1.10 — still conservative vs book's 1.21.
-DELETION_REPLICATION_ADVANTAGE = 1.10
+# Pol gamma error rate per replication event (dimensionless probability).
+# Biology: Pol gamma (the dedicated mtDNA polymerase) has 3'→5' exonuclease
+# proofreading, giving an error rate of ~1e-7 per base pair per replication.
+# Integrated over the 16,569 bp genome, that's ~0.002 mutations/replication.
+# We use 0.001 as a conservative estimate after accounting for mismatch repair.
+# Too high (>0.01): unrealistic mutation load; point mutations would dominate
+# the damage landscape even in young individuals.
+# Too low (<0.0001): point mutations become negligible; the model collapses
+# back to deletions-only, losing the C11 split's explanatory power.
+# Reference: Cramer Ch. II.H p.15 (mtDNA polymerase); general mtDNA
+# mutagenesis literature (Zheng et al. 2006, Kennedy et al. 2013).
+POINT_ERROR_RATE = 0.001
 
-# Age-dependent deletion fraction of total damage (for initial state)
-# Young adults: mostly point mutations (deletions haven't accumulated yet).
-# Older adults: dominated by deletions (exponential growth catches up).
-DELETION_FRACTION_YOUNG = 0.4      # age 20: 40% of damage is deletions
-DELETION_FRACTION_OLD = 0.8        # age 90: 80% of damage is deletions
+# ROS-induced point mutation coefficient (mutations per unit ROS per year).
+# Biology: ROS (primarily superoxide and hydroxyl radicals) oxidize guanine
+# to 8-oxo-guanine, causing G→T transversion point mutations. This is the
+# dominant mechanism of oxidative mtDNA damage distinct from strand breaks.
+# The value 0.05 is ~33% of the old unified damage_rate coefficient (0.15),
+# reflecting that point mutations are one of several ROS damage pathways
+# (the others being strand breaks → deletions and lipid peroxidation).
+# Too high (>0.2): ROS-driven point mutations overwhelm deletion dynamics,
+# making the cliff unreachable (too much damage is non-cliff-driving).
+# Too low (<0.01): ROS has no effect on point mutation load, eliminating
+# the vicious cycle feedback through the point mutation channel.
+# Reference: Cramer Ch. II.H p.14 (ROS-damage vicious cycle);
+#            Appendix 2 pp.152-153 ("ROS is a rather minor direct contributor").
+ROS_POINT_COEFF = 0.05
+
+# Mitophagy selectivity for point-mutated mitochondria (0 = invisible, 1 = same
+# as deletions).
+# Biology: The PINK1/Parkin mitophagy pathway detects damaged mitochondria via
+# membrane potential collapse. Deletion-bearing mitos have severely defective
+# ETC → low ΔΨ → strong PINK1 signal → efficiently cleared. Point-mutated
+# mitos often retain near-normal ΔΨ because single amino acid substitutions
+# may only partially impair ETC complex function. Selectivity 0.3 means
+# mitophagy clears point-mutated mitos at 30% the rate of deletion-bearing ones.
+# Too high (>0.7): point mutations cleared almost as efficiently as deletions;
+# they never accumulate, negating the purpose of tracking them separately.
+# Too low (<0.1): point-mutated mitos are effectively invisible to quality
+# control; they accumulate without bound, creating unrealistic dysfunction.
+# Reference: Cramer Ch. VI.B p.75 (PINK1 accumulates on low-ΔΨ mitochondria).
+POINT_MITOPHAGY_SELECTIVITY = 0.3
+
+# ── Deletion replication dynamics ──
+
+# Deletion replication advantage (REVISED from DAMAGED_REPLICATION_ADVANTAGE).
+# Biology: mtDNA rings with large deletions (>3kbp, >18% of the 16.5kb genome)
+# complete replication faster because the polymerase has less DNA to copy.
+# Cramer Appendix 2 pp.154-155: deleted rings replicate "at least 21% faster"
+# than full-length (citing Va23: Vandiver et al. 2023). The advantage is
+# size-dependent — a 5kb deletion (~30% of genome) gives ~30% speedup.
+# COMPLIANCE UPDATE (2026-02-17): set to 1.21 to satisfy strict conformance
+# with Appendix 2 wording ("at least 21% faster" for large deletions >3kbp).
+# This update was made for book-compliance traceability, not as a new
+# calibration pass against external datasets.
+# RAISED from the pre-C11 value of 1.05 because the old constant lumped
+# deletions and point mutations together — with point mutations split out,
+# the deletion-specific advantage can be more accurately modeled.
+# Too high (>1.25): deletions expand so fast that no intervention can
+# overcome the replication advantage; the cliff becomes inevitable even with
+# aggressive treatment, which contradicts Cramer's transplant rescue data.
+# Too low (<1.02): deletion expansion is too slow; the cliff takes >100 years
+# to reach, making the aging model biologically implausible.
+# Reference: Cramer Appendix 2 pp.154-155 (Va23 data);
+#            Ch. II.H p.15 ("deletion damage builds exponentially").
+DELETION_REPLICATION_ADVANTAGE = 1.21
+
+# ── Age-dependent deletion fraction of total damage (for initial state) ──
+
+# Young adults: most accumulated mtDNA damage is point mutations because
+# deletions haven't had time to exponentially expand yet. Pol gamma errors
+# and ROS-oxidized bases accumulate linearly from birth.
+# Biology: In 20-year-olds, deep sequencing shows a mix of point mutations
+# (dominant by count) and rare deletions (dominant by functional impact).
+# The 40% deletion fraction reflects that even in youth, some deletions
+# have begun expanding due to their replication advantage.
+# Too high (>0.7): implies young adults already have significant deletion
+# load, which contradicts the observed rarity of mtDNA deletions in youth.
+# Too low (<0.2): implies almost no deletions in young adults; the model
+# would need unrealistically fast deletion expansion to reach the cliff by
+# age 65-80.
+# Reference: Cramer Appendix 2 p.155 (age-dependent damage composition);
+#            Ch. II.H p.15 (exponential deletion accumulation).
+DELETION_FRACTION_YOUNG = 0.4
+
+# Older adults: deletions dominate because their exponential growth has
+# compounded over decades, while point mutations grew only linearly.
+# Biology: In 90-year-olds, deep sequencing of post-mitotic tissues (brain,
+# muscle) shows that large deletions account for the majority of mtDNA damage
+# by functional impact. The "common deletion" (4,977 bp) alone can reach
+# >50% in aged substantia nigra neurons (Bender et al. 2006).
+# The 80% deletion fraction reflects this late-life dominance.
+# Too high (>0.95): leaves almost no room for point mutations in the elderly,
+# which contradicts sequencing data showing substantial point mutation load.
+# Too low (<0.5): implies deletions haven't overtaken point mutations even
+# by age 90, which contradicts the exponential growth model.
+# Reference: Cramer Appendix 2 p.155 (age-dependent damage composition);
+#            Ch. V.K p.66 (MitoClock damage metric).
+DELETION_FRACTION_OLD = 0.8
 
 # ── 12-Dimensional parameter space ──────────────────────────────────────────
 # 6 intervention parameters + 6 patient parameters
@@ -392,6 +500,35 @@ CONFIRMATION_MODEL = "llama3.1:latest"
 REASONING_MODELS = {"deepseek-r1:8b", "qwen3-coder:30b"}
 
 # ── State variable indices ───────────────────────────────────────────────────
+#
+# C11 expanded the state vector from 7D to 8D by splitting "N_damaged" into
+# two compartments: N_deletion (index 1) and N_point (index 7).
+#
+# Index 1 was RENAMED from "N_damaged" to "N_deletion". This preserves
+# backwards compatibility because the old N_damaged was effectively tracking
+# deletion-dominated damage (the cliff-driving population). All existing code
+# that reads state[1] continues to get the cliff-relevant quantity.
+#
+# Index 7 (N_point) was APPENDED at the end of the state vector to minimize
+# blast radius. This means:
+#   - All existing code indexing state[0:7] continues to work without changes.
+#   - Only code that explicitly checks state.shape or iterates over all state
+#     variables needs updating (simulator.py, analytics.py, disturbances.py).
+#   - The heteroplasmy calculation changes from N_d/(N_h+N_d) to
+#     (N_del+N_pt)/(N_h+N_del+N_pt) for total, and N_del/(N_h+N_del+N_pt)
+#     for the cliff-driving deletion heteroplasmy.
+#
+# The full 8D state vector:
+#   [0] N_healthy          — wild-type mtDNA copies (normalized to ~1.0)
+#   [1] N_deletion         — deletion-mutated mtDNA: shorter rings, replication
+#                            advantage, drives the heteroplasmy cliff at ~70%
+#   [2] ATP                — energy production rate (MU/day)
+#   [3] ROS                — reactive oxygen species level (normalized)
+#   [4] NAD                — NAD+ cofactor availability (normalized)
+#   [5] Senescent_fraction — fraction of cells in irreversible growth arrest (0..1)
+#   [6] Membrane_potential — inner membrane electrochemical gradient ΔΨ (normalized)
+#   [7] N_point            — point-mutated mtDNA: same-length rings, no replication
+#                            advantage, linear accumulation, evades mitophagy
 
 STATE_NAMES = [
     "N_healthy",          # 0: healthy mtDNA copies (normalized)

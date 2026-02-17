@@ -97,8 +97,8 @@ POINT_MITOPHAGY_SELECTIVITY = 0.3  # low: point-mutated mitos often have normal 
 
 # Deletion replication advantage (REVISED from DAMAGED_REPLICATION_ADVANTAGE)
 # Appendix 2 pp.154-155: "at least 21% faster" for >3kbp deletions (Va23).
-# Raised from 1.05 to 1.10 — still conservative vs book's 1.21.
-DELETION_REPLICATION_ADVANTAGE = 1.10
+# Raised from 1.05 to 1.21 — still compliance-aligned with book minimum 1.21.
+DELETION_REPLICATION_ADVANTAGE = 1.21
 
 # Age-dependent deletion fraction of total damage (for initial state)
 # Young adults: mostly point mutations (deletions haven't accumulated yet).
@@ -126,7 +126,7 @@ Keep the old `DAMAGED_REPLICATION_ADVANTAGE = 1.05` line but add a deprecation c
 
 ```python
 # DEPRECATED (C11): Use DELETION_REPLICATION_ADVANTAGE instead.
-# Kept for reference; deletion advantage raised from 1.05 to 1.10.
+# Kept for reference; deletion advantage raised from 1.05 to 1.21.
 # DAMAGED_REPLICATION_ADVANTAGE = 1.05
 ```
 
@@ -199,7 +199,7 @@ git commit -m "feat(C11): add split mutation constants and heteroplasmy function
 
 New STATE_NAMES with N_deletion (idx 1) and N_point (idx 7).
 _total_heteroplasmy() and _deletion_heteroplasmy() for the split.
-DELETION_REPLICATION_ADVANTAGE raised from 1.05 to 1.10 (book: >=1.21).
+DELETION_REPLICATION_ADVANTAGE raised from 1.05 to 1.21 (book: >=1.21 (strict compliance enforced)).
 ROS_POINT_COEFF = 0.05 (~33% of old 0.15 damage_rate).
 
 Per John Cramer email 2026-02-17, Appendix 2 pp.152-155."
@@ -488,7 +488,7 @@ def derivatives(
     # ── 2. dN_deletion/dt (C11: REVISED from dN_damaged) ────────────────
     # Deletions replicate FASTER (exponential growth, C4 bistability).
     # Cramer Appendix 2 pp.154-155: deleted mtDNA rings replicate "at least
-    # 21% faster" (Va23). Using conservative 1.10 (raised from 1.05).
+    # 21% faster" (Va23). Using conservative 1.21 (raised from 1.05).
     replication_del = (base_replication_rate * DELETION_REPLICATION_ADVANTAGE
                        * n_del * nad * energy_available
                        * max(copy_number_pressure, 0.0))
@@ -645,7 +645,7 @@ Expected: All 18 tests PASS (8 from Task 1 + 10 from this step).
 git add simulator.py tests/test_simulator.py
 git commit -m "feat(C11): split derivatives into N_deletion + N_point dynamics
 
-Deletions: exponential growth (1.10x advantage), de novo from Pol gamma
+Deletions: exponential growth (1.21x advantage), de novo from Pol gamma
 slippage. Point: linear growth, no advantage, 33% from ROS.
 Cliff driven by deletion heteroplasmy only. ROS coupling weakened.
 Result dict includes both 'heteroplasmy' (total) and
@@ -984,7 +984,7 @@ Add after the existing C10 correction entry in the Action Items section:
 - **CRAMER CORRECTION APPLIED (2026-02-17):** Per John Cramer's email:
   - **C11: Split mutation types** — ROS is NOT the main mtDNA mutation driver (1980s Free Radical Theory is outdated). Two distinct mutation types with different dynamics:
     - **Point mutations** (N_point, state[7]): Linear growth, no replication advantage. Sources: ~67% Pol γ errors + ~33% ROS-induced transitions. Functionally mild.
-    - **Deletion mutations** (N_deletion, state[1]): Exponential growth, size-dependent replication advantage (1.10x, book says ≥1.21). These drive the heteroplasmy cliff. Source: Pol γ slippage, NOT ROS.
+    - **Deletion mutations** (N_deletion, state[1]): Exponential growth, size-dependent replication advantage (1.21x, book says ≥1.21). These drive the heteroplasmy cliff. Source: Pol γ slippage, NOT ROS.
   - State vector expanded from 7D to 8D. Cliff factor uses deletion heteroplasmy only. ROS→damage coupling weakened to ~33% of previous (point mutations only).
   - Reference: Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023).
 ```

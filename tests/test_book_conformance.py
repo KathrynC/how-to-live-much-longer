@@ -6,11 +6,14 @@ Each test maps to a claim ID in docs/book_conformance_appendix2.md.
 from __future__ import annotations
 
 import os
+import math
 
 import pytest
 
 from constants import (
     AGE_TRANSITION,
+    CD38_BASE_SURVIVAL,
+    CD38_SUPPRESSION_GAIN,
     DELETION_REPLICATION_ADVANTAGE,
     DOUBLING_TIME_OLD,
     DOUBLING_TIME_YOUNG,
@@ -74,6 +77,29 @@ def test_deletion_rate_accelerates_with_age():
     assert old > young
 
 
+def test_figure23_regime_rates_match_reported_doubling_scales():
+    """A2-01/A2-02: Rate regimes align with Figure 23 doubling values."""
+    # With nominal health reference, these ages are deep in their regimes.
+    young_rate = _deletion_rate(
+        age=25.0,
+        genetic_vulnerability=1.0,
+        atp_norm=0.77,
+        mitophagy_rate=0.02,
+    )
+    old_rate = _deletion_rate(
+        age=90.0,
+        genetic_vulnerability=1.0,
+        atp_norm=0.77,
+        mitophagy_rate=0.02,
+    )
+    expected_young = math.log(2.0) / 11.81
+    expected_old = math.log(2.0) / 3.06
+
+    # Tolerant checks: dynamic smoothing and health-coupled transition are active.
+    assert young_rate == pytest.approx(expected_young, rel=0.10)
+    assert old_rate == pytest.approx(expected_old, rel=0.10)
+
+
 def test_cliff_depends_on_deletion_fraction_not_total_mutation_burden():
     """A2-05: ATP cliff term should follow deletion heteroplasmy semantics.
 
@@ -112,16 +138,34 @@ def test_more_deletion_with_same_total_damage_worsens_atp_derivative():
     assert d_high[2] < d_low[2]
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Known Appendix 2 deviation: model currently uses 1.10 "
-        "deletion replication advantage, while book text describes >=1.21 for >3kbp."
-    ),
-)
-def test_book_minimum_21pct_replication_advantage_known_deviation():
-    """A2-08: Explicitly track current mismatch with strict >=21% wording."""
+def test_book_minimum_21pct_replication_advantage_compliant():
+    """A2-08: Enforce Appendix 2 minimum replication advantage wording."""
     assert DELETION_REPLICATION_ADVANTAGE >= 1.21
+
+
+def test_cd38_survival_endpoints_match_c7_text():
+    """C7: CD38 survival is 40% at minimum and 100% at maximum dose."""
+    min_survival = CD38_BASE_SURVIVAL + CD38_SUPPRESSION_GAIN * 0.0
+    max_survival = CD38_BASE_SURVIVAL + CD38_SUPPRESSION_GAIN * 1.0
+    assert min_survival == pytest.approx(0.4, abs=1e-12)
+    assert max_survival == pytest.approx(1.0, abs=1e-12)
+
+
+def test_nad_dynamics_reflect_cd38_gated_nonlinearity():
+    """C7: Higher NMN/NR dose should get amplified by CD38-gated survival."""
+    patient = _base_patient()
+    state = [0.7, 0.2, 0.8, 0.1, 0.5, 0.05, 0.9, 0.1]
+
+    low = _base_intervention()
+    high = _base_intervention()
+    low["nad_supplement"] = 0.25
+    high["nad_supplement"] = 1.0
+
+    d_low = derivatives(state, 0.0, low, patient)
+    d_high = derivatives(state, 0.0, high, patient)
+
+    # dNAD index = 4; high dose should strongly increase NAD derivative.
+    assert d_high[4] > d_low[4]
 
 
 @pytest.mark.skipif(
