@@ -95,6 +95,11 @@ python resilience_viz.py --disturbance chemo --magnitude 0.8  # Chemotherapy bur
 python resilience_viz.py --disturbance toxin                  # Toxin exposure
 python resilience_viz.py --disturbance inflammation            # Inflammation burst
 
+# Grief→Mito integration (requires ~/grief-simulator)
+python grief_mito_viz.py                                      # Generate all grief→mito plots
+python -m pytest tests/test_grief_bridge.py -v                # Grief bridge tests (41 tests)
+python -c "from grief_mito_simulator import GriefMitoSimulator; s = GriefMitoSimulator(); print(s.run({}))"
+
 # Zimmerman-informed experiments (2026-02-15 upgrade)
 python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
 python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman §4.6.4)
@@ -192,6 +197,12 @@ zimmerman_viz.py           ← Matplotlib visualizations for Zimmerman reports (
 
 # Cramer-toolkit integration (Tier 7, no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit)
 cramer_bridge.py           ← Biological stress scenarios + convenience analysis functions (imports cramer toolkit, zimmerman_bridge)
+
+# Grief→Mito Integration (Phase 2, requires ~/grief-simulator)
+grief_bridge.py            ← GriefDisturbance + grief_trajectory() + grief_scenarios() (imports grief-simulator via importlib)
+grief_mito_simulator.py    ← GriefMitoSimulator: Zimmerman adapter for 26D combined system
+grief_mito_scenarios.py    ← Grief stress scenario bank (16 scenarios) for cramer-toolkit
+grief_mito_viz.py          ← Side-by-side grief/mito visualization (trajectory + comparison + overview)
 
 # Resilience suite (agroecology-inspired, no LLM, imports simulator + constants)
 disturbances.py            ← 4 disturbance types + simulate_with_disturbances() custom RK4 loop (imports simulator, constants)
@@ -538,6 +549,34 @@ results = scenario_aware(sobol_sensitivity, sim, INFLAMMATION_SCENARIOS, n_base=
 # results["baseline"], results["mild_inflammaging"], etc.
 ```
 
+### Grief->Mito integration
+
+```python
+from grief_bridge import GriefDisturbance, grief_trajectory, grief_scenarios
+from disturbances import simulate_with_disturbances
+
+# Single bereaved scenario
+d = GriefDisturbance(
+    grief_patient={"B": 0.8, "M": 0.8, "age": 65.0, "E_ctx": 0.6},
+    grief_intervention={"act_int": 0.7, "slp_int": 0.8},
+)
+result = simulate_with_disturbances(disturbances=[d])
+
+# All 8 clinical seeds x 2 intervention levels
+for s in grief_scenarios():
+    result = simulate_with_disturbances(disturbances=[s])
+
+# Zimmerman adapter (26D combined system)
+from grief_mito_simulator import GriefMitoSimulator
+sim = GriefMitoSimulator()
+result = sim.run({"grief_B": 0.9, "baseline_age": 70.0})
+
+# Scenario bank for cramer-toolkit
+from grief_mito_scenarios import GRIEF_STRESS_SCENARIOS, GRIEF_PROTOCOLS
+for s in GRIEF_STRESS_SCENARIOS:
+    r = simulate_with_disturbances(disturbances=[s["disturbance"]])
+```
+
 ## Key Data Files
 
 - `output/tiqm_*.json` — Per-scenario TIQM experiment results (offer + confirmation + analytics)
@@ -568,6 +607,7 @@ results = scenario_aware(sobol_sensitivity, sim, INFLAMMATION_SCENARIOS, n_base=
 - `artifacts/zimmerman/dashboard.md` — Markdown summary report
 - `output/zimmerman/*.png` — Sobol bars, contrastive sensitivity, locality curves, relation graph, POSIWID alignment, dashboard radar
 - `output/resilience_*.png` — Shock response, comparison, summary, recovery landscape plots
+- `output/grief_mito/*.png` — Grief→mito trajectory panels, intervention comparison, scenario overview
 
 ## Patient Population Generator (`generate_patients.py`)
 
@@ -671,7 +711,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs 163 tests across 8 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge)
+- Formal test suite: `pytest tests/ -v` runs 204 tests across 9 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)
