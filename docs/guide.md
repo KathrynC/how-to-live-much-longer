@@ -36,7 +36,7 @@ Plus the core infrastructure:
 
 Wolfram-style symbol reference for the additive optimization stack:
 
-- **[`WolframFunctionReference`](WolframFunctionReference.md)** — Function-by-function usage/arguments/details/returns for `gradient_refiner`, `surrogate_optimizer`, and `ml_prefilter_runner`
+- **[`optimization_reference`](optimization_reference.md)** — Function-by-function usage/arguments/details/returns for `gradient_refiner`, `surrogate_optimizer`, and `ml_prefilter_runner`
 
 ---
 

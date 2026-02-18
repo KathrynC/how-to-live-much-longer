@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-02-17 17:03:29",
+  "simulator": "GriefMitoSimulator",
+  "dimension": 26,
+  "sobol_n_base": 16,
+  "tools_succeeded": [
+    "sobol",
+    "falsifier",
+    "contrastive",
+    "contrast_sets",
+    "pds",
+    "posiwid",
+    "prompts",
+    "locality",
+    "relation_graph",
+    "diegeticizer",
+    "token_extispicy",
+    "receptive_field",
+    "supradiegetic_benchmark",
+    "dashboard"
+  ],
+  "tools_failed": {}
+}

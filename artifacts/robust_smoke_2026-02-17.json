@@ -1,0 +1,99 @@
+{
+  "experiment": "robust_optimizer",
+  "patient": "default",
+  "metric": "combined",
+  "seed": 2026,
+  "budget": 8,
+  "ensemble_size": 5,
+  "sigma": 0.08,
+  "best": {
+    "params": {
+      "rapamycin_dose": 0.03701255165568218,
+      "nad_supplement": 0.8474842578679099,
+      "senolytic_dose": 0.9250094365597059,
+      "yamanaka_intensity": 0.42732201243930074,
+      "transplant_rate": 0.49671877374363127,
+      "exercise_level": 0.8643897689064381
+    },
+    "robust_fitness": 0.0801718388721998,
+    "mean_fitness": 0.09655969555924707,
+    "std_fitness": 0.01638785668704727,
+    "worst_fitness": 0.07428190341172584,
+    "best_fitness": 0.12488733264064605
+  },
+  "history": [
+    {
+      "step": 0,
+      "robust_fitness": 0.01861177029064101,
+      "mean_fitness": 0.03554420326585238,
+      "std_fitness": 0.016932432975211367,
+      "worst_fitness": 0.01264351893753024,
+      "best_fitness": 0.0647745570438994
+    },
+    {
+      "step": 1,
+      "robust_fitness": 0.03835934327077561,
+      "mean_fitness": 0.055207375742180397,
+      "std_fitness": 0.01684803247140479,
+      "worst_fitness": 0.03236006884162752,
+      "best_fitness": 0.08426924920237791
+    },
+    {
+      "step": 2,
+      "robust_fitness": 0.03835934327077561,
+      "mean_fitness": 0.055207375742180397,
+      "std_fitness": 0.01684803247140479,
+      "worst_fitness": 0.03236006884162752,
+      "best_fitness": 0.08426924920237791
+    },
+    {
+      "step": 3,
+      "robust_fitness": 0.03835934327077561,
+      "mean_fitness": 0.055207375742180397,
+      "std_fitness": 0.01684803247140479,
+      "worst_fitness": 0.03236006884162752,
+      "best_fitness": 0.08426924920237791
+    },
+    {
+      "step": 4,
+      "robust_fitness": 0.0490079061671771,
+      "mean_fitness": 0.06578002573054711,
+      "std_fitness": 0.016772119563370012,
+      "worst_fitness": 0.04299887713648658,
+      "best_fitness": 0.09467810293542761
+    },
+    {
+      "step": 5,
+      "robust_fitness": 0.0770597540631626,
+      "mean_fitness": 0.09380946025021938,
+      "std_fitness": 0.016749706187056786,
+      "worst_fitness": 0.07105480271577233,
+      "best_fitness": 0.1226549137180305
+    },
+    {
+      "step": 6,
+      "robust_fitness": 0.0770597540631626,
+      "mean_fitness": 0.09380946025021938,
+      "std_fitness": 0.016749706187056786,
+      "worst_fitness": 0.07105480271577233,
+      "best_fitness": 0.1226549137180305
+    },
+    {
+      "step": 7,
+      "robust_fitness": 0.08009308280679756,
+      "mean_fitness": 0.0963877969295423,
+      "std_fitness": 0.01629471412274475,
+      "worst_fitness": 0.07414543452548937,
+      "best_fitness": 0.12444934119586687
+    },
+    {
+      "step": 8,
+      "robust_fitness": 0.0801718388721998,
+      "mean_fitness": 0.09655969555924707,
+      "std_fitness": 0.01638785668704727,
+      "worst_fitness": 0.07428190341172584,
+      "best_fitness": 0.12488733264064605
+    }
+  ],
+  "elapsed_seconds": 5.34
+}

@@ -1,0 +1,436 @@
+{
+  "narrative": {
+    "narrative": {
+      "grief_slp_int": "medium",
+      "grief_act_int": "medium",
+      "grief_nut_int": "medium",
+      "grief_alc_int": "medium",
+      "grief_br_int": "medium",
+      "grief_med_int": "medium",
+      "grief_soc_int": "medium",
+      "grief_B": "medium",
+      "grief_M": "medium",
+      "grief_D_circ": "medium",
+      "grief_V_prior": "medium",
+      "grief_age": "medium",
+      "grief_E_ctx": "medium",
+      "grief_infl_0": "medium",
+      "rapamycin_intensity": "very low",
+      "NAD_restoration": "very low",
+      "senolytic_clearance": "very low",
+      "reprogramming_strength": "very low",
+      "mitochondrial_infusion": "very low",
+      "physical_activity": "very low",
+      "patient_age": "high",
+      "damage_level": "low",
+      "cellular_NAD": "medium",
+      "genetic_fragility": "low",
+      "tissue_demand": "low",
+      "chronic_inflammation": "low"
+    },
+    "numeric": {
+      "grief_slp_int": 0.5,
+      "grief_act_int": 0.5,
+      "grief_nut_int": 0.5,
+      "grief_alc_int": 0.5,
+      "grief_br_int": 0.5,
+      "grief_med_int": 0.5,
+      "grief_soc_int": 0.5,
+      "grief_B": 0.5,
+      "grief_M": 0.5,
+      "grief_D_circ": 0.5,
+      "grief_V_prior": 0.5,
+      "grief_age": 55.0,
+      "grief_E_ctx": 0.5,
+      "grief_infl_0": 0.25,
+      "rapamycin_dose": 0.0,
+      "nad_supplement": 0.0,
+      "senolytic_dose": 0.0,
+      "yamanaka_intensity": 0.0,
+      "transplant_rate": 0.0,
+      "exercise_level": 0.0,
+      "baseline_age": 70.0,
+      "baseline_heteroplasmy": 0.3,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 1.0,
+      "metabolic_demand": 1.0,
+      "inflammation_level": 0.25
+    },
+    "bins_used": {
+      "grief_slp_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_act_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_nut_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_alc_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_br_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_med_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_soc_int": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_B": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_M": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_D_circ": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_V_prior": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_age": {
+        "label": "medium",
+        "range": [
+          48.0,
+          62.0
+        ]
+      },
+      "grief_E_ctx": {
+        "label": "medium",
+        "range": [
+          0.4,
+          0.6000000000000001
+        ]
+      },
+      "grief_infl_0": {
+        "label": "medium",
+        "range": [
+          0.2,
+          0.30000000000000004
+        ]
+      },
+      "rapamycin_dose": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "nad_supplement": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "senolytic_dose": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "yamanaka_intensity": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "transplant_rate": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "exercise_level": {
+        "label": "very low",
+        "range": [
+          0.0,
+          0.2
+        ]
+      },
+      "baseline_age": {
+        "label": "high",
+        "range": [
+          62.0,
+          76.0
+        ]
+      },
+      "baseline_heteroplasmy": {
+        "label": "low",
+        "range": [
+          0.19,
+          0.38
+        ]
+      },
+      "baseline_nad_level": {
+        "label": "medium",
+        "range": [
+          0.52,
+          0.6799999999999999
+        ]
+      },
+      "genetic_vulnerability": {
+        "label": "low",
+        "range": [
+          0.8,
+          1.1
+        ]
+      },
+      "metabolic_demand": {
+        "label": "low",
+        "range": [
+          0.8,
+          1.1
+        ]
+      },
+      "inflammation_level": {
+        "label": "low",
+        "range": [
+          0.2,
+          0.4
+        ]
+      }
+    }
+  },
+  "recovered": {
+    "params": {
+      "grief_slp_int": 0.5,
+      "grief_act_int": 0.5,
+      "grief_nut_int": 0.5,
+      "grief_alc_int": 0.5,
+      "grief_br_int": 0.5,
+      "grief_med_int": 0.5,
+      "grief_soc_int": 0.5,
+      "grief_B": 0.5,
+      "grief_M": 0.5,
+      "grief_D_circ": 0.5,
+      "grief_V_prior": 0.5,
+      "grief_age": 55.0,
+      "grief_E_ctx": 0.5,
+      "grief_infl_0": 0.25,
+      "rapamycin_dose": 0.1,
+      "nad_supplement": 0.1,
+      "senolytic_dose": 0.1,
+      "yamanaka_intensity": 0.1,
+      "transplant_rate": 0.1,
+      "exercise_level": 0.1,
+      "baseline_age": 69.0,
+      "baseline_heteroplasmy": 0.28500000000000003,
+      "baseline_nad_level": 0.6,
+      "genetic_vulnerability": 0.9500000000000001,
+      "metabolic_demand": 0.9500000000000001,
+      "inflammation_level": 0.30000000000000004
+    },
+    "narrative": {
+      "grief_slp_int": "medium",
+      "grief_act_int": "medium",
+      "grief_nut_int": "medium",
+      "grief_alc_int": "medium",
+      "grief_br_int": "medium",
+      "grief_med_int": "medium",
+      "grief_soc_int": "medium",
+      "grief_B": "medium",
+      "grief_M": "medium",
+      "grief_D_circ": "medium",
+      "grief_V_prior": "medium",
+      "grief_age": "medium",
+      "grief_E_ctx": "medium",
+      "grief_infl_0": "medium",
+      "rapamycin_intensity": "very low",
+      "NAD_restoration": "very low",
+      "senolytic_clearance": "very low",
+      "reprogramming_strength": "very low",
+      "mitochondrial_infusion": "very low",
+      "physical_activity": "very low",
+      "patient_age": "high",
+      "damage_level": "low",
+      "cellular_NAD": "medium",
+      "genetic_fragility": "low",
+      "tissue_demand": "low",
+      "chronic_inflammation": "low"
+    },
+    "mode": "deterministic",
+    "recovery_uncertainty": {
+      "grief_slp_int": 0.2,
+      "grief_act_int": 0.2,
+      "grief_nut_int": 0.2,
+      "grief_alc_int": 0.2,
+      "grief_br_int": 0.2,
+      "grief_med_int": 0.2,
+      "grief_soc_int": 0.2,
+      "grief_B": 0.2,
+      "grief_M": 0.2,
+      "grief_D_circ": 0.2,
+      "grief_V_prior": 0.2,
+      "grief_age": 14.0,
+      "grief_E_ctx": 0.2,
+      "grief_infl_0": 0.1,
+      "rapamycin_dose": 0.2,
+      "nad_supplement": 0.2,
+      "senolytic_dose": 0.2,
+      "yamanaka_intensity": 0.2,
+      "transplant_rate": 0.2,
+      "exercise_level": 0.2,
+      "baseline_age": 14.0,
+      "baseline_heteroplasmy": 0.19,
+      "baseline_nad_level": 0.16,
+      "genetic_vulnerability": 0.3,
+      "metabolic_demand": 0.3,
+      "inflammation_level": 0.2
+    }
+  },
+  "roundtrip": {
+    "energy_atp_initial": 0.8213160838930832,
+    "energy_atp_final": 0.6860883162830613,
+    "energy_atp_min": 0.6860883162830613,
+    "energy_atp_max": 0.8213160838930832,
+    "energy_atp_mean": 0.7508152983814274,
+    "energy_atp_cv": 0.0488099926747913,
+    "energy_reserve_ratio": 0.08620892813172752,
+    "energy_atp_slope": -0.004227601854033149,
+    "energy_terminal_slope": -0.00439384495775236,
+    "energy_time_to_crisis_years": 999.0,
+    "damage_het_initial": 0.28500000000000003,
+    "damage_het_final": 0.26938501337556214,
+    "damage_het_max": 0.28500000000000003,
+    "damage_delta_het": -0.015614986624437888,
+    "damage_het_slope": -0.00016480622100847054,
+    "damage_het_acceleration": 0.0001668681805257852,
+    "damage_cliff_distance_initial": 0.4149999999999999,
+    "damage_cliff_distance_final": 0.4306149866244378,
+    "damage_time_to_cliff_years": 999.0,
+    "damage_frac_above_cliff": 0.0,
+    "damage_deletion_het_initial": 0.1938,
+    "damage_deletion_het_final": 0.12919943051824254,
+    "damage_deletion_het_max": 0.1938,
+    "dynamics_ros_dominant_freq": 0.033322225924691765,
+    "dynamics_ros_amplitude": 0.0026867328808354443,
+    "dynamics_membrane_potential_cv": 0.16748278937761638,
+    "dynamics_membrane_potential_slope": -0.008980821725058537,
+    "dynamics_nad_slope": -0.009382882896312577,
+    "dynamics_ros_het_correlation": 0.6624849796397789,
+    "dynamics_ros_atp_correlation": 0.5308074121188467,
+    "dynamics_senescent_final": 0.28907726653329696,
+    "dynamics_senescent_slope": 0.004759493807374283,
+    "intervention_atp_benefit_terminal": -0.0051314386215753904,
+    "intervention_atp_benefit_mean": -0.012487974067284191,
+    "intervention_het_benefit_terminal": 0.12867027475622073,
+    "intervention_energy_cost_per_year": 0.32500000000000007,
+    "intervention_benefit_cost_ratio": -0.01578904191253966,
+    "intervention_total_dose": 0.6000000000000001,
+    "intervention_crisis_delay_years": 0.0,
+    "final_heteroplasmy": 0.26938501337556214,
+    "final_atp": 0.6860883162830613,
+    "final_ros": 0.10889559485186011,
+    "final_nad": 0.33411603706655507,
+    "final_senescent": 0.28907726653329696,
+    "final_membrane_potential": 0.32451927983138656,
+    "grief_pe_decay_rate": -0.3300374284959584,
+    "grief_pe_initial": 0.55,
+    "grief_pe_terminal": 6.688224603820577e-05,
+    "grief_g_peak": 0.5,
+    "grief_g_terminal": 2.2936860810190498e-05,
+    "grief_grief_half_life_years": 0.20273972602739726,
+    "grief_pgd_risk_score": 0.21996257150404167,
+    "grief_sns_peak": 0.6123230351024778,
+    "grief_sns_terminal": 0.09353412665449028,
+    "grief_sns_mean_first_year": 0.48951235863114734,
+    "grief_cort_peak": 0.8797810740673452,
+    "grief_cort_mean": 0.6920893797307728,
+    "grief_cort_terminal": 0.637410942460356,
+    "grief_hrv_min": 0.6820923168950712,
+    "grief_hrv_terminal": 0.8782019502210634,
+    "grief_sleep_mean": 0.7959907931473101,
+    "grief_sleep_nadir": 0.7433858549987685,
+    "grief_sleep_terminal": 0.8168646569232682,
+    "grief_infl_peak": 0.25,
+    "grief_infl_mean": 0.011463875131702798,
+    "grief_infl_terminal": 0.0,
+    "grief_ctra_max": 0.14177916160112491,
+    "grief_ctra_terminal": 0.05051900262848308,
+    "grief_five_ht_nadir": 0.75,
+    "grief_five_ht_terminal": 0.9999800963334262,
+    "grief_neuroinfl_peak": 0.04852642240678322,
+    "grief_neuroinfl_terminal": 0.01650173752009417,
+    "grief_cvd_risk_terminal": 0.033424001635704165,
+    "grief_cvd_risk_max_rate": 0.03039248768792918,
+    "grief_mortality_hazard_ratio": 1.0557083894746764
+  },
+  "lexicon": {
+    "rapamycin_dose": "rapamycin_intensity",
+    "nad_supplement": "NAD_restoration",
+    "senolytic_dose": "senolytic_clearance",
+    "yamanaka_intensity": "reprogramming_strength",
+    "transplant_rate": "mitochondrial_infusion",
+    "exercise_level": "physical_activity",
+    "baseline_age": "patient_age",
+    "baseline_heteroplasmy": "damage_level",
+    "baseline_nad_level": "cellular_NAD",
+    "genetic_vulnerability": "genetic_fragility",
+    "metabolic_demand": "tissue_demand",
+    "inflammation_level": "chronic_inflammation",
+    "grief_slp_int": "grief_slp_int",
+    "grief_act_int": "grief_act_int",
+    "grief_nut_int": "grief_nut_int",
+    "grief_alc_int": "grief_alc_int",
+    "grief_br_int": "grief_br_int",
+    "grief_med_int": "grief_med_int",
+    "grief_soc_int": "grief_soc_int",
+    "grief_B": "grief_B",
+    "grief_M": "grief_M",
+    "grief_D_circ": "grief_D_circ",
+    "grief_V_prior": "grief_V_prior",
+    "grief_age": "grief_age",
+    "grief_E_ctx": "grief_E_ctx",
+    "grief_infl_0": "grief_infl_0"
+  }
+}

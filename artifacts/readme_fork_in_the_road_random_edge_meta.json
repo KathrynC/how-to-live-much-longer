@@ -1,0 +1,17 @@
+{
+  "seed": 2026,
+  "n_patients": 1000,
+  "n_edge": 82,
+  "cohort_size": 1082,
+  "selected_index": 921,
+  "selected_patient": {
+    "baseline_age": 70.0,
+    "baseline_heteroplasmy": 0.2,
+    "baseline_nad_level": 0.6,
+    "genetic_vulnerability": 1.25,
+    "metabolic_demand": 1.0,
+    "inflammation_level": 0.25
+  },
+  "source": "random draw from generate_patients(n)+generate_edge_patients()",
+  "output_image": "artifacts/readme_fork_in_the_road_random_edge.png"
+}
