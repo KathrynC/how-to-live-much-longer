@@ -258,6 +258,19 @@ Based on Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction i
 | `lit_spider.py` | PubMed literature search for all ~26 simulator parameters; LLM-extracted numerical values vs current values | ~390 abstracts, ~20 min (LLM) / ~1 min (keyword) |
 | `ea_optimizer.py` | EA-toolkit integration: 8 algorithms (CMA-ES, DE, ES, etc.) for intervention optimization, head-to-head comparison, landscape analysis | ~500 sims, ~3 min |
 
+## Optimization Add-ons: Gradient and ML
+
+These add-on tools extend analysis and search without replacing existing analytics.
+
+- Gradient descent refiner: [`gradient_refiner.py`](gradient_refiner.py)
+- Machine-learning prefilter: [`ml_prefilter_runner.py`](ml_prefilter_runner.py)
+
+Wolfram-style function documentation:
+
+- [`docs/gradient_refiner.md`](docs/gradient_refiner.md)
+- [`docs/ml_prefilter_runner.md`](docs/ml_prefilter_runner.md)
+- Index: [`docs/optimization_reference.md`](docs/optimization_reference.md)
+
 ## Questions from John G. Cramer (2026-02-16)
 
 Full Q&A: [`artifacts/cramer_questions_2026-02-16.md`](artifacts/cramer_questions_2026-02-16.md)
@@ -435,6 +448,10 @@ python reachable_set.py            # ~5 min
 python competing_evaluators.py     # ~2 min
 python temporal_optimizer.py       # ~7 min
 python multi_tissue_sim.py         # ~2 min
+
+# Optimization add-ons (no Ollama needed)
+python gradient_refiner.py         # gradient-descent protocol refinement
+python ml_prefilter_runner.py      # ML-guided candidate prefiltering
 ```
 
 ## Requirements

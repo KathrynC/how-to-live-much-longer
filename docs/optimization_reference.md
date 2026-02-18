@@ -1,4 +1,6 @@
-# Wolfram-Style Function Reference (Add-ons)
+# Optimization Reference (Add-ons)
+
+This document is part of the How to Live Much Longer simulation project.
 
 Symbol reference for the additive optimization stack:
 

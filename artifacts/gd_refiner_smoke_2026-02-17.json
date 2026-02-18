@@ -1,0 +1,132 @@
+{
+  "experiment": "gradient_refiner",
+  "patient": "default",
+  "metric": "combined",
+  "seed_artifact": "artifacts/ea_hill_climber.json",
+  "profile": null,
+  "steps": 6,
+  "lr": 0.04,
+  "fd_rel_step": 0.001,
+  "patience": 12,
+  "elapsed_seconds": 8.58,
+  "seed": 2026,
+  "seed_params": {
+    "rapamycin_dose": 0.807571227791497,
+    "nad_supplement": 0.3887609590755972,
+    "senolytic_dose": 0.6628020485972332,
+    "yamanaka_intensity": 0.7046035680568907,
+    "transplant_rate": 0.05827159905274698,
+    "exercise_level": 0.6992348666956862
+  },
+  "seed_fitness": -0.056752117533372615,
+  "best_params": {
+    "rapamycin_dose": 1.0,
+    "nad_supplement": 0.6297401205808091,
+    "senolytic_dose": 0.8980188299547535,
+    "yamanaka_intensity": 0.4658729080190056,
+    "transplant_rate": 0.25737460362257436,
+    "exercise_level": 0.45923167215368965
+  },
+  "best_fitness": 0.09098448951812385,
+  "improvement": 0.14773660705149647,
+  "best_step": 6,
+  "history": [
+    {
+      "step": 0,
+      "fitness": -0.056752117533372615,
+      "grad_norm": 0.0,
+      "params": {
+        "rapamycin_dose": 0.807571227791497,
+        "nad_supplement": 0.3887609590755972,
+        "senolytic_dose": 0.6628020485972332,
+        "yamanaka_intensity": 0.7046035680568907,
+        "transplant_rate": 0.05827159905274698,
+        "exercise_level": 0.6992348666956862
+      }
+    },
+    {
+      "step": 1,
+      "fitness": -0.028195512130918476,
+      "grad_norm": 0.48150762257488644,
+      "params": {
+        "rapamycin_dose": 0.8475712166683037,
+        "nad_supplement": 0.42876095503779665,
+        "senolytic_dose": 0.7028020204668738,
+        "yamanaka_intensity": 0.6646035689388812,
+        "transplant_rate": 0.0982715956453505,
+        "exercise_level": 0.6592348788690362
+      }
+    },
+    {
+      "step": 2,
+      "fitness": -0.001982029934108065,
+      "grad_norm": 0.45693630674717856,
+      "params": {
+        "rapamycin_dose": 0.8874085753775955,
+        "nad_supplement": 0.46879493020440083,
+        "senolytic_dose": 0.7426125035179709,
+        "yamanaka_intensity": 0.624645237938063,
+        "transplant_rate": 0.13586339214714618,
+        "exercise_level": 0.6192354254739872
+      }
+    },
+    {
+      "step": 3,
+      "fitness": 0.022820445183014737,
+      "grad_norm": 0.43997374231430747,
+      "params": {
+        "rapamycin_dose": 0.9270489203291112,
+        "nad_supplement": 0.5088871195093909,
+        "senolytic_dose": 0.7821265722982164,
+        "yamanaka_intensity": 0.5847594179917364,
+        "transplant_rate": 0.1704678257574326,
+        "exercise_level": 0.5792365377539715
+      }
+    },
+    {
+      "step": 4,
+      "fitness": 0.04664933634630791,
+      "grad_norm": 0.4251534181972592,
+      "params": {
+        "rapamycin_dose": 0.966467381005422,
+        "nad_supplement": 0.5490607972098001,
+        "senolytic_dose": 0.8212507154986348,
+        "yamanaka_intensity": 0.5449788418319126,
+        "transplant_rate": 0.2020929756022873,
+        "exercise_level": 0.5392371291156872
+      }
+    },
+    {
+      "step": 5,
+      "fitness": 0.06956214038542857,
+      "grad_norm": 0.41109847964508106,
+      "params": {
+        "rapamycin_dose": 1.0,
+        "nad_supplement": 0.5893380353720812,
+        "senolytic_dose": 0.8599042739049036,
+        "yamanaka_intensity": 0.5053378998207928,
+        "transplant_rate": 0.23096553943073178,
+        "exercise_level": 0.49923594468449595
+      }
+    },
+    {
+      "step": 6,
+      "fitness": 0.09098448951812385,
+      "grad_norm": 0.3974596552154622,
+      "params": {
+        "rapamycin_dose": 1.0,
+        "nad_supplement": 0.6297401205808091,
+        "senolytic_dose": 0.8980188299547535,
+        "yamanaka_intensity": 0.4658729080190056,
+        "transplant_rate": 0.25737460362257436,
+        "exercise_level": 0.45923167215368965
+      }
+    }
+  ],
+  "best_metrics": {
+    "final_atp": 0.6294764361938024,
+    "final_het": 0.12520474171928908,
+    "atp_benefit": -0.05643305057252879,
+    "het_benefit": 0.2948350801813053
+  }
+}

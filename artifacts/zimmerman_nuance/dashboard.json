@@ -1,0 +1,232 @@
+{
+  "simulator_info": {
+    "n_params": 26,
+    "param_names": [
+      "baseline_age",
+      "baseline_heteroplasmy",
+      "baseline_nad_level",
+      "exercise_level",
+      "genetic_vulnerability",
+      "grief_B",
+      "grief_D_circ",
+      "grief_E_ctx",
+      "grief_M",
+      "grief_V_prior",
+      "grief_act_int",
+      "grief_age",
+      "grief_alc_int",
+      "grief_br_int",
+      "grief_infl_0",
+      "grief_med_int",
+      "grief_nut_int",
+      "grief_slp_int",
+      "grief_soc_int",
+      "inflammation_level",
+      "metabolic_demand",
+      "nad_supplement",
+      "rapamycin_dose",
+      "senolytic_dose",
+      "transplant_rate",
+      "yamanaka_intensity"
+    ],
+    "param_ranges": {
+      "baseline_age": [
+        20.0,
+        90.0
+      ],
+      "baseline_heteroplasmy": [
+        0.0,
+        0.95
+      ],
+      "baseline_nad_level": [
+        0.2,
+        1.0
+      ],
+      "exercise_level": [
+        0.0,
+        1.0
+      ],
+      "genetic_vulnerability": [
+        0.5,
+        2.0
+      ],
+      "grief_B": [
+        0.0,
+        1.0
+      ],
+      "grief_D_circ": [
+        0.0,
+        1.0
+      ],
+      "grief_E_ctx": [
+        0.0,
+        1.0
+      ],
+      "grief_M": [
+        0.0,
+        1.0
+      ],
+      "grief_V_prior": [
+        0.0,
+        1.0
+      ],
+      "grief_act_int": [
+        0.0,
+        1.0
+      ],
+      "grief_age": [
+        20.0,
+        90.0
+      ],
+      "grief_alc_int": [
+        0.0,
+        1.0
+      ],
+      "grief_br_int": [
+        0.0,
+        1.0
+      ],
+      "grief_infl_0": [
+        0.0,
+        0.5
+      ],
+      "grief_med_int": [
+        0.0,
+        1.0
+      ],
+      "grief_nut_int": [
+        0.0,
+        1.0
+      ],
+      "grief_slp_int": [
+        0.0,
+        1.0
+      ],
+      "grief_soc_int": [
+        0.0,
+        1.0
+      ],
+      "inflammation_level": [
+        0.0,
+        1.0
+      ],
+      "metabolic_demand": [
+        0.5,
+        2.0
+      ],
+      "nad_supplement": [
+        0.0,
+        1.0
+      ],
+      "rapamycin_dose": [
+        0.0,
+        1.0
+      ],
+      "senolytic_dose": [
+        0.0,
+        1.0
+      ],
+      "transplant_rate": [
+        0.0,
+        1.0
+      ],
+      "yamanaka_intensity": [
+        0.0,
+        1.0
+      ]
+    }
+  },
+  "sections": {
+    "sensitivity": {
+      "available": true,
+      "top_params": [
+        "baseline_nad_level",
+        "baseline_heteroplasmy",
+        "grief_slp_int",
+        "grief_act_int",
+        "grief_nut_int",
+        "grief_alc_int",
+        "grief_br_int",
+        "grief_med_int",
+        "grief_soc_int",
+        "grief_B",
+        "grief_M",
+        "grief_D_circ",
+        "grief_V_prior",
+        "grief_age",
+        "grief_E_ctx",
+        "grief_infl_0",
+        "rapamycin_dose",
+        "nad_supplement",
+        "senolytic_dose",
+        "yamanaka_intensity",
+        "transplant_rate",
+        "exercise_level",
+        "genetic_vulnerability",
+        "metabolic_demand",
+        "inflammation_level",
+        "baseline_age"
+      ],
+      "interaction_strength": 0.11310970285115121
+    },
+    "robustness": {
+      "available": true,
+      "violation_rate": 0.0,
+      "mean_flip_size": null,
+      "most_fragile_params": null
+    },
+    "locality": {
+      "available": true,
+      "L50": {
+        "cut_frac": 0.8,
+        "target_position": 0.9,
+        "distractor_strength": 1.0
+      },
+      "effective_horizon": 0.8
+    },
+    "alignment": {
+      "available": true,
+      "overall_alignment": 0.8303340104059723,
+      "worst_aligned_keys": [
+        "final_heteroplasmy",
+        "final_atp"
+      ]
+    },
+    "representation": {
+      "available": true,
+      "diegeticization_gain": null,
+      "roundtrip_error": null,
+      "fragmentation_correlation": 0.12210978282287331
+    },
+    "structure": {
+      "available": true,
+      "most_causal_params": [
+        "most_causal_params",
+        "most_connected_outputs"
+      ],
+      "variance_explained": null
+    }
+  },
+  "recommendations": [
+    "Most influential parameters: baseline_nad_level, baseline_heteroplasmy, grief_slp_int. Focus LLM prompts on these for maximum impact.",
+    "Interaction strength is 0.113 -- parameters interact non-additively. Consider joint parameter prompts rather than independent per-parameter generation.",
+    "Worst-aligned output keys: final_heteroplasmy, final_atp. These diverge most from intended outcomes.",
+    "Most causal parameters: most_causal_params, most_connected_outputs."
+  ],
+  "tools_used": [
+    "sobol",
+    "receptive_field",
+    "falsifier",
+    "contrast_sets",
+    "locality",
+    "posiwid",
+    "benchmark",
+    "token_extispicy",
+    "relation_graph",
+    "pds"
+  ],
+  "tools_missing": [
+    "contrastive",
+    "diegeticizer"
+  ]
+}

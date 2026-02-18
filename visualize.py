@@ -13,6 +13,8 @@ Usage:
     plot_trajectory(result, "output/trajectory.png")
 """
 
+import argparse
+import json
 import os
 
 import matplotlib
@@ -20,7 +22,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from constants import STATE_NAMES, HETEROPLASMY_CLIFF, DEFAULT_PATIENT
+from constants import (
+    STATE_NAMES,
+    HETEROPLASMY_CLIFF,
+    DEFAULT_PATIENT,
+    PATIENT_NAMES,
+)
 
 
 # ── Plot style ───────────────────────────────────────────────────────────────
@@ -357,6 +364,152 @@ def plot_readme_fork_in_the_road(output_path="output/readme_fork_in_the_road.png
     print(f"  Saved: {output_path}")
 
 
+def plot_readme_fork_in_the_road_random_edge(
+    output_path="output/readme_fork_in_the_road_random_edge.png",
+    n_patients=1000,
+    seed=2026,
+    metadata_path=None,
+):
+    """Plot README hero using a random patient drawn from normal+edge cohort.
+
+    This keeps the same 3-panel visual structure as plot_readme_fork_in_the_road
+    but chooses the patient stochastically from:
+      generate_patients(n=n_patients, seed=seed) + generate_edge_patients()
+
+    Args:
+        output_path: Target image path.
+        n_patients: Number of normal patients to generate before appending edges.
+        seed: RNG seed controlling both normal generation and random draw.
+        metadata_path: Optional JSON sidecar path. If None, writes next to image.
+    """
+    from generate_patients import generate_patients, generate_edge_patients
+    from simulator import simulate
+
+    rng = np.random.default_rng(seed)
+    normal = generate_patients(n=n_patients, seed=seed)
+    edge = generate_edge_patients()
+    cohort = normal + edge
+    idx = int(rng.integers(0, len(cohort)))
+    selected = cohort[idx]
+    patient = {k: float(selected[k]) for k in PATIENT_NAMES}
+
+    protocols = {
+        "No treatment": {
+            "rapamycin_dose": 0.0, "nad_supplement": 0.0,
+            "senolytic_dose": 0.0, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.0,
+        },
+        "Slowing protocol": {
+            "rapamycin_dose": 0.35, "nad_supplement": 0.35,
+            "senolytic_dose": 0.15, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.35,
+        },
+        "Reversal (no transplant)": {
+            "rapamycin_dose": 0.7, "nad_supplement": 0.8,
+            "senolytic_dose": 0.45, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0, "exercise_level": 0.5,
+        },
+        "Reversal (+ transplant)": {
+            "rapamycin_dose": 0.7, "nad_supplement": 0.8,
+            "senolytic_dose": 0.45, "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.8, "exercise_level": 0.5,
+        },
+    }
+    colors = {
+        "No treatment": "#6c757d",
+        "Slowing protocol": "#1f77b4",
+        "Reversal (no transplant)": "#ff7f0e",
+        "Reversal (+ transplant)": "#2ca02c",
+    }
+
+    traj = {}
+    for name, intervention in protocols.items():
+        result = simulate(intervention=intervention, patient=patient)
+        traj[name] = {
+            "time": result["time"],
+            "het": result["heteroplasmy"],
+            "atp": result["states"][:, 2],
+        }
+
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5.6), constrained_layout=True)
+    fig.suptitle("Fork in the Road: Random Patient (Normal + Edge Cohort)",
+                 fontsize=15, fontweight="bold")
+
+    ax = axes[0]
+    for name in protocols:
+        d = traj[name]
+        ax.plot(d["time"], d["atp"], color=colors[name], linewidth=2.4, label=name)
+        ax.scatter(float(d["time"][-1]), float(d["atp"][-1]), color=colors[name], s=28, zorder=4)
+    ax.set_xlabel("Years")
+    ax.set_ylabel("ATP (MU/day)")
+    ax.set_title("1) Energy Trajectory")
+    ax.grid(True, alpha=0.22)
+    ax.legend(loc="lower left", fontsize=8)
+
+    ax = axes[1]
+    ax.axhspan(HETEROPLASMY_CLIFF, 1.0, color="#b22222", alpha=0.08)
+    ax.axhline(HETEROPLASMY_CLIFF, color="#8b0000", linestyle="--", linewidth=1.3)
+    ax.text(0.02, HETEROPLASMY_CLIFF + 0.015, "Cliff threshold",
+            color="#8b0000", fontsize=9, transform=ax.get_yaxis_transform())
+    for name in protocols:
+        d = traj[name]
+        ax.plot(d["time"], d["het"], color=colors[name], linewidth=2.4)
+        ax.scatter(float(d["time"][-1]), float(d["het"][-1]), color=colors[name], s=28, zorder=4)
+    ax.set_xlabel("Years")
+    ax.set_ylabel("Heteroplasmy")
+    ax.set_title("2) Damage Trajectory")
+    ax.set_ylim(0.0, 1.0)
+    ax.grid(True, alpha=0.22)
+
+    ax = axes[2]
+    ax.axvspan(HETEROPLASMY_CLIFF, 1.0, color="#b22222", alpha=0.08)
+    ax.axvline(HETEROPLASMY_CLIFF, color="#8b0000", linestyle="--", linewidth=1.3)
+    start_point = None
+    for name in protocols:
+        d = traj[name]
+        het = d["het"]
+        atp = d["atp"]
+        if start_point is None:
+            start_point = (float(het[0]), float(atp[0]))
+        ax.plot(het, atp, color=colors[name], linewidth=2.4)
+        ax.scatter(float(het[-1]), float(atp[-1]), color=colors[name], s=34, zorder=4)
+    if start_point is not None:
+        ax.scatter(start_point[0], start_point[1], s=72, color="black", zorder=5)
+        ax.annotate("Start", xy=start_point, xytext=(8, 6),
+                    textcoords="offset points", fontsize=9, color="black")
+    ax.set_xlabel("Heteroplasmy")
+    ax.set_ylabel("ATP (MU/day)")
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(bottom=0.0)
+    ax.set_title("3) State-Space Outcome Map")
+    ax.grid(True, alpha=0.22)
+
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+    fig.savefig(output_path, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Saved: {output_path}")
+
+    if metadata_path is None:
+        root, _ = os.path.splitext(output_path)
+        metadata_path = f"{root}_meta.json"
+    os.makedirs(os.path.dirname(metadata_path) or ".", exist_ok=True)
+
+    metadata = {
+        "seed": int(seed),
+        "n_patients": int(n_patients),
+        "n_edge": len(edge),
+        "cohort_size": len(cohort),
+        "selected_index": int(idx),
+        "selected_patient": patient,
+        "source": "random draw from generate_patients(n)+generate_edge_patients()",
+        "output_image": output_path,
+    }
+    with open(metadata_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2)
+    print(f"  Saved: {metadata_path}")
+    return metadata
+
+
 # ── TIQM summary plot ───────────────────────────────────────────────────────
 
 def plot_tiqm_summary(experiments, output_path="tiqm_summary.png"):
@@ -419,13 +572,46 @@ def plot_tiqm_summary(experiments, output_path="tiqm_summary.png"):
 # ── Standalone execution ────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    import os
     from simulator import simulate
     from cliff_mapping import sweep_heteroplasmy, extract_cliff_features
     from constants import DEFAULT_INTERVENTION
 
-    output_dir = "output"
+    parser = argparse.ArgumentParser(
+        description="Generate mitochondrial-aging simulation visualizations."
+    )
+    parser.add_argument("--output-dir", default="output",
+                        help="Directory for generated plots (default: output)")
+    parser.add_argument("--hero-random-edge", action="store_true",
+                        help="Generate random+edge cohort README hero image and exit.")
+    parser.add_argument("--n-patients", type=int, default=1000,
+                        help="Normal cohort size for --hero-random-edge (default: 1000)")
+    parser.add_argument("--seed", type=int, default=2026,
+                        help="Random seed for --hero-random-edge (default: 2026)")
+    parser.add_argument("--hero-output", default=None,
+                        help="Optional output path for random-edge hero image")
+    parser.add_argument("--hero-meta", default=None,
+                        help="Optional metadata JSON path for random-edge hero")
+    args = parser.parse_args()
+
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
+
+    if args.hero_random_edge:
+        print("=" * 70)
+        print("Visualization — README Hero (Random + Edge Cohort)")
+        print("=" * 70)
+        hero_out = args.hero_output or os.path.join(
+            output_dir, "readme_fork_in_the_road_random_edge.png"
+        )
+        plot_readme_fork_in_the_road_random_edge(
+            output_path=hero_out,
+            n_patients=args.n_patients,
+            seed=args.seed,
+            metadata_path=args.hero_meta,
+        )
+        print("\n" + "=" * 70)
+        print(f"Random+edge hero saved to {hero_out}")
+        raise SystemExit(0)
 
     print("=" * 70)
     print("Visualization — Generating All Plots")

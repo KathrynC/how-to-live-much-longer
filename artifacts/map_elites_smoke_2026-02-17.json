@@ -1,0 +1,162 @@
+{
+  "experiment": "map_elites_optimizer",
+  "patient": "default",
+  "metric": "combined",
+  "seed": 2026,
+  "budget": 60,
+  "bins_atp": 6,
+  "bins_het": 6,
+  "sigma": 0.08,
+  "coverage": 0.16666666666666666,
+  "n_elites": 6,
+  "best": {
+    "params": {
+      "rapamycin_dose": 0.22423707266285925,
+      "nad_supplement": 0.916002640884146,
+      "senolytic_dose": 0.3701415068946892,
+      "yamanaka_intensity": 0.0,
+      "transplant_rate": 0.9477409368878569,
+      "exercise_level": 0.12113152353697731
+    },
+    "fitness": 0.24231697463216137,
+    "final_atp": 0.8013236836917621,
+    "final_het": 0.16623426648713335,
+    "atp_benefit": 0.11541419692543087,
+    "het_benefit": 0.253805555413461,
+    "crisis_delay_years": 0.0,
+    "total_dose": 2.5792536808665285,
+    "cell": [
+      4,
+      0
+    ]
+  },
+  "elites": [
+    {
+      "params": {
+        "rapamycin_dose": 0.5193842211443356,
+        "nad_supplement": 0.32654466381127,
+        "senolytic_dose": 0.49995502241119394,
+        "yamanaka_intensity": 0.09344593349461805,
+        "transplant_rate": 0.9047040725533528,
+        "exercise_level": 0.9897361675845034
+      },
+      "fitness": 0.13158075634124705,
+      "final_atp": 0.6914244046477005,
+      "final_het": 0.16790814498083878,
+      "atp_benefit": 0.005514917881369263,
+      "het_benefit": 0.2521316769197556,
+      "crisis_delay_years": 0.0,
+      "total_dose": 3.333770080999274,
+      "cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.659569533072841,
+        "nad_supplement": 0.8811861793495235,
+        "senolytic_dose": 0.35506101458853867,
+        "yamanaka_intensity": 0.31867896643874516,
+        "transplant_rate": 0.313666741563808,
+        "exercise_level": 0.11784964452439528
+      },
+      "fitness": 0.16875129522429574,
+      "final_atp": 0.7143545756995132,
+      "final_het": 0.13942740931836684,
+      "atp_benefit": 0.028445088933181983,
+      "het_benefit": 0.2806124125822275,
+      "crisis_delay_years": 0.0,
+      "total_dose": 2.6460120795378517,
+      "cell": [
+        3,
+        0
+      ]
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.8734157143892045,
+        "nad_supplement": 0.5078303080372399,
+        "senolytic_dose": 0.230603702340588,
+        "yamanaka_intensity": 0.6030119641948568,
+        "transplant_rate": 0.388257935991484,
+        "exercise_level": 0.33463032002280435
+      },
+      "fitness": 0.009189447999587874,
+      "final_atp": 0.5486538811342343,
+      "final_het": 0.12714971463722471,
+      "atp_benefit": -0.13725560563209693,
+      "het_benefit": 0.2928901072633696,
+      "crisis_delay_years": 0.0,
+      "total_dose": 2.9377499449761775,
+      "cell": [
+        2,
+        0
+      ]
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.2957662738839424,
+        "nad_supplement": 0.4260112128292482,
+        "senolytic_dose": 0.726123774167338,
+        "yamanaka_intensity": 0.5919867861621845,
+        "transplant_rate": 0.19512241288487536,
+        "exercise_level": 0.7676377794448648
+      },
+      "fitness": -0.019432767251125124,
+      "final_atp": 0.5462731598222246,
+      "final_het": 0.1796327025146313,
+      "atp_benefit": -0.13963632694410666,
+      "het_benefit": 0.24040711938596307,
+      "crisis_delay_years": 0.0,
+      "total_dose": 3.002648239372453,
+      "cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.19712546110596132,
+        "nad_supplement": 0.8320209835118639,
+        "senolytic_dose": 0.30480584276912814,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 1.0,
+        "exercise_level": 0.14704865055826677
+      },
+      "fitness": 0.22452997177490025,
+      "final_atp": 0.7858004523154084,
+      "final_het": 0.17076180944894823,
+      "atp_benefit": 0.09989096554907717,
+      "het_benefit": 0.24927801245164613,
+      "crisis_delay_years": 0.0,
+      "total_dose": 2.48100093794522,
+      "cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "params": {
+        "rapamycin_dose": 0.22423707266285925,
+        "nad_supplement": 0.916002640884146,
+        "senolytic_dose": 0.3701415068946892,
+        "yamanaka_intensity": 0.0,
+        "transplant_rate": 0.9477409368878569,
+        "exercise_level": 0.12113152353697731
+      },
+      "fitness": 0.24231697463216137,
+      "final_atp": 0.8013236836917621,
+      "final_het": 0.16623426648713335,
+      "atp_benefit": 0.11541419692543087,
+      "het_benefit": 0.253805555413461,
+      "crisis_delay_years": 0.0,
+      "total_dose": 2.5792536808665285,
+      "cell": [
+        4,
+        0
+      ]
+    }
+  ],
+  "elapsed_seconds": 6.49
+}

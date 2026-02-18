@@ -1,0 +1,104 @@
+{
+  "run": "cohort_1000_plus_edge",
+  "seed": 2026,
+  "intervention": "DEFAULT_INTERVENTION",
+  "n_normal": 1000,
+  "n_edge": 82,
+  "n_combined": 1082,
+  "normal": {
+    "label": "normal_1000",
+    "n_input": 1000,
+    "n_simulated": 1000,
+    "n_failed": 0,
+    "atp_final": {
+      "mean": 0.7497820337819612,
+      "std": 0.09375098475008964,
+      "min": 0.5418610533192005,
+      "max": 0.9155392887329816
+    },
+    "het_final": {
+      "mean": 0.383407832336683,
+      "std": 0.15003788667238946,
+      "min": 0.11129557356022955,
+      "max": 0.8952589727688509
+    },
+    "deletion_het_final": {
+      "mean": 0.18844924379163955,
+      "std": 0.09739786178462577,
+      "min": 0.039633592025508466,
+      "max": 0.5361651800775569
+    },
+    "cliff_crossed_final": 0,
+    "cliff_crossed_rate": 0.0,
+    "categories": {
+      "collapsed": 0,
+      "declining": 0,
+      "stable": 668,
+      "healthy": 332
+    }
+  },
+  "edge": {
+    "label": "edge_cases",
+    "n_input": 82,
+    "n_simulated": 82,
+    "n_failed": 0,
+    "atp_final": {
+      "mean": 0.7137602750446363,
+      "std": 0.10444086115962903,
+      "min": 0.416695690638828,
+      "max": 0.9158927573394189
+    },
+    "het_final": {
+      "mean": 0.5824442214906481,
+      "std": 0.23633495432414817,
+      "min": 0.08878844654580367,
+      "max": 0.9794522084835063
+    },
+    "deletion_het_final": {
+      "mean": 0.28138639126137927,
+      "std": 0.12976743937718674,
+      "min": 0.04040410771737092,
+      "max": 0.6277744636623463
+    },
+    "cliff_crossed_final": 0,
+    "cliff_crossed_rate": 0.0,
+    "categories": {
+      "collapsed": 0,
+      "declining": 1,
+      "stable": 63,
+      "healthy": 18
+    }
+  },
+  "combined": {
+    "label": "combined",
+    "n_input": 1082,
+    "n_simulated": 1082,
+    "n_failed": 0,
+    "atp_final": {
+      "mean": 0.7470521038222009,
+      "std": 0.09508256595578486,
+      "min": 0.416695690638828,
+      "max": 0.9158927573394189
+    },
+    "het_final": {
+      "mean": 0.3984919209786656,
+      "std": 0.1667723808961117,
+      "min": 0.08878844654580367,
+      "max": 0.9794522084835063
+    },
+    "deletion_het_final": {
+      "mean": 0.1954925396257603,
+      "std": 0.10319200177075889,
+      "min": 0.039633592025508466,
+      "max": 0.6277744636623463
+    },
+    "cliff_crossed_final": 0,
+    "cliff_crossed_rate": 0.0,
+    "categories": {
+      "collapsed": 0,
+      "declining": 1,
+      "stable": 731,
+      "healthy": 350
+    }
+  }
+}
