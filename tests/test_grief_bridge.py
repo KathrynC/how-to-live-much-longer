@@ -243,7 +243,7 @@ from grief_mito_scenarios import (
 
 
 class TestGriefMitoScenarios:
-    """Test cramer-toolkit grief scenario bank."""
+    """Test kcramer grief scenario bank."""
 
     def test_scenarios_is_list(self):
         assert isinstance(GRIEF_STRESS_SCENARIOS, list)

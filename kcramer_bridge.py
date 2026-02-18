@@ -1,6 +1,7 @@
-"""Cramer Toolkit bridge for the mitochondrial aging simulator.
+"""K-Cramer Toolkit bridge for the mitochondrial aging simulator.
 
-Creates biologically-meaningful stress scenarios using the cramer-toolkit,
+Creates biologically-meaningful stress scenarios using the `kcramer` namespace
+from the neighboring `cramer-toolkit` repository,
 targeting the MitoSimulator adapter from zimmerman_bridge.py.
 
 Usage:
@@ -15,7 +16,7 @@ Usage:
     report = run_resilience_analysis(sim)
 
 Requires:
-    cramer-toolkit (at ~/cramer-toolkit)
+    cramer-toolkit repo (kcramer namespace) at ~/cramer-toolkit
     zimmerman-toolkit (at ~/zimmerman-toolkit)
 """
 from __future__ import annotations
@@ -26,18 +27,18 @@ from pathlib import Path
 # ── Path setup ───────────────────────────────────────────────────────────────
 
 PROJECT = Path(__file__).resolve().parent
-CRAMER_PATH = PROJECT.parent / "cramer-toolkit"
+KCRAMER_TOOLKIT_PATH = PROJECT.parent / "cramer-toolkit"
 ZIMMERMAN_PATH = PROJECT.parent / "zimmerman-toolkit"
 
-for p in (CRAMER_PATH, ZIMMERMAN_PATH):
+for p in (KCRAMER_TOOLKIT_PATH, ZIMMERMAN_PATH):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
 # Project imports
 from zimmerman_bridge import MitoSimulator  # noqa: E402
 
-# Cramer toolkit imports
-from cramer import (  # noqa: E402
+# K-Cramer toolkit imports
+from kcramer import (  # noqa: E402
     Scenario,
     ScenarioSet,
     scale_param,
@@ -252,7 +253,7 @@ def run_resilience_analysis(
         output_key: Output metric for scoring. Defaults to "final_atp".
 
     Returns:
-        Full resilience summary from cramer.resilience_summary().
+        Full resilience summary from kcramer.resilience_summary().
     """
     if sim is None:
         sim = MitoSimulator()

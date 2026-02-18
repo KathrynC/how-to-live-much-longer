@@ -3,7 +3,7 @@
 Exposes the combined grief + mitochondrial aging system as a single
 Zimmerman-compatible Simulator with a 26-dimensional parameter space
 (14 grief + 12 mito). This makes the coupled system compatible with
-all 14 zimmerman-toolkit interrogation tools and the cramer-toolkit
+all 14 zimmerman-toolkit interrogation tools and the kcramer
 resilience analysis framework.
 
 Usage:

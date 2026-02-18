@@ -1,4 +1,4 @@
-"""Tests for the Cramer Toolkit bridge.
+"""Tests for the K-Cramer Toolkit bridge.
 
 Verifies that domain-specific biological stress scenarios are valid,
 the scenario bank is complete, and convenience analysis functions
@@ -13,14 +13,14 @@ import pytest
 
 # Ensure toolkits are importable
 PROJECT = Path(__file__).resolve().parent.parent
-CRAMER_PATH = PROJECT.parent / "cramer-toolkit"
+KCRAMER_TOOLKIT_PATH = PROJECT.parent / "cramer-toolkit"
 ZIMMERMAN_PATH = PROJECT.parent / "zimmerman-toolkit"
-for p in (CRAMER_PATH, ZIMMERMAN_PATH):
+for p in (KCRAMER_TOOLKIT_PATH, ZIMMERMAN_PATH):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from cramer.base import Scenario, ScenarioSet, Simulator
-from cramer import BASELINE, ScenarioSimulator
+from kcramer.base import Scenario, ScenarioSet, Simulator
+from kcramer import BASELINE, ScenarioSimulator
 
 from kcramer_bridge import (
     MitoSimulator,
