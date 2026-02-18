@@ -322,9 +322,9 @@ metrics = compute_resilience(result, baseline)
 print(f"Resilience score: {metrics['summary_score']:.3f}")
 ```
 
-## Scenario-Based Resilience (Cramer Toolkit)
+## Scenario-Based Resilience (K-Cramer Toolkit)
 
-The [cramer-toolkit](../cramer-toolkit/) provides scenario-based resilience analysis — systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`kcramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
+The [cramer-toolkit](../cramer-toolkit/) provides the `kcramer` scenario-resilience namespace used here for systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`kcramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
 
 ### Scenario Bank (25 scenarios)
 
@@ -353,7 +353,7 @@ for v in vuln[:3]:
 ```
 
 ```bash
-# Cramer Toolkit integration CLI
+# K-Cramer Toolkit integration CLI
 python kcramer_tools_runner.py --mode resilience
 python kcramer_tools_runner.py --mode vulnerability --protocol moderate
 python kcramer_tools_runner.py --mode compare --patient-profile near_cliff_80 --output-key final_atp

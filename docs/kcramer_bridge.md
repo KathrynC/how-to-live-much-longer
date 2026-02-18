@@ -1,13 +1,14 @@
 # kcramer_bridge
 
-Domain-specific Cramer Toolkit integration for mitochondrial resilience analysis.
+Domain-specific K-Cramer Toolkit integration for mitochondrial resilience analysis.
 
 ---
 
 ## Overview
 
-`kcramer_bridge.py` maps the generic scenario primitives from
-`cramer-toolkit` to biologically meaningful stress conditions for this model.
+`kcramer_bridge.py` maps the generic scenario primitives from the
+`kcramer` namespace (provided by `cramer-toolkit`) to biologically meaningful
+stress conditions for this model.
 It enables protocol robustness/regret/vulnerability analysis under 25 stress
 scenarios spanning inflammation, NAD depletion, vulnerability, demand, aging,
 and combined multi-factor stress.

@@ -1,7 +1,7 @@
-"""Grief-derived stress scenarios for cramer-toolkit resilience analysis.
+"""Grief-derived stress scenarios for kcramer resilience analysis.
 
 Defines 16 grief stress scenarios (8 clinical seeds x 2 intervention levels)
-and named grief intervention protocols, compatible with the cramer-toolkit's
+and named grief intervention protocols, compatible with the kcramer
 scenario-based analysis framework.
 
 Usage:
