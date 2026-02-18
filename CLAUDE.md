@@ -111,6 +111,7 @@ python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6
 python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman §4.6.4)
 python posiwid_audit.py          # POSIWID alignment audit (requires Ollama, ~15-20 min)
 python archetype_matchmaker.py   # Archetype→protocol matchmaker (needs character data)
+python ten_types_audit.py        # Ten Types platform audit (deterministic, no Ollama)
 
 # Tier 5 — Discovery Tools (no Ollama needed, standalone)
 python interaction_mapper.py     # D4: Synergy/antagonism between intervention pairs (~3 min, ~2160 sims)
@@ -182,6 +183,7 @@ sobol_sensitivity.py       ← Saltelli sampling + Sobol indices (imports simula
 pds_mapping.py             ← PDS→patient mapping (imports constants, analytics)
 posiwid_audit.py           ← POSIWID alignment audit (imports llm_common, simulator)
 archetype_matchmaker.py    ← Archetype→protocol matching (imports pds_mapping, analytics)
+ten_types_audit.py         ← Ten Types whole-platform audit (deterministic evidence scoring)
 
 # Discovery tools (Tier 5, no LLM, imports simulator + analytics/constants)
 interaction_mapper.py      ← D4: Synergy/antagonism 2D grid sweeps (imports simulator, constants)

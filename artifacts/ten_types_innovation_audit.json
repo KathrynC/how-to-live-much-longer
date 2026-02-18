@@ -1,0 +1,1176 @@
+{
+  "timestamp": "2026-02-18 17:26:06",
+  "as_of": "2026-02-18",
+  "scope": "whole_platform",
+  "scoring_model": "strict_3_level",
+  "type_assessments": [
+    {
+      "type_id": "profit_model",
+      "label": "Value Model",
+      "canonical_label": "Profit Model",
+      "category": "Configuration",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "README.md",
+        "LICENSE",
+        "docs/model_deviations.md",
+        "docs/book_conformance_appendix2.md",
+        "tests/test_book_conformance.py"
+      ]
+    },
+    {
+      "type_id": "network",
+      "label": "Network",
+      "canonical_label": "Network",
+      "category": "Configuration",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 2,
+        "differentiating": 3,
+        "total": 5
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "zimmerman_bridge.py",
+        "kcramer_bridge.py",
+        "zimmerman_analysis.py",
+        "README.md"
+      ]
+    },
+    {
+      "type_id": "structure",
+      "label": "Structure",
+      "canonical_label": "Structure",
+      "category": "Configuration",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "constants.py",
+        "schemas.py",
+        "docs/guide.md",
+        "docs/plans/progress.json",
+        "tests/conftest.py",
+        "README.md"
+      ]
+    },
+    {
+      "type_id": "process",
+      "label": "Process",
+      "canonical_label": "Process",
+      "category": "Configuration",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "simulator.py",
+        "analytics.py",
+        "tests",
+        "README.md",
+        "docs/book_conformance_appendix2.md"
+      ]
+    },
+    {
+      "type_id": "product_performance",
+      "label": "Product Performance",
+      "canonical_label": "Product Performance",
+      "category": "Offering",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 2,
+        "differentiating": 3,
+        "total": 5
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "simulator.py",
+        "constants.py",
+        "tests/test_simulator.py",
+        "artifacts/falsifier_report_2026-02-15.md",
+        "README.md"
+      ]
+    },
+    {
+      "type_id": "product_system",
+      "label": "Product System",
+      "canonical_label": "Product System",
+      "category": "Offering",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "schemas.py",
+        "llm_common.py",
+        "prompt_templates.py",
+        "zimmerman_bridge.py",
+        "grief_mito_simulator.py",
+        "kcramer_tools_runner.py"
+      ]
+    },
+    {
+      "type_id": "service",
+      "label": "Service",
+      "canonical_label": "Service",
+      "category": "Experience",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "docs/guide.md",
+        "docs/simulator.md",
+        "docs/analytics.md",
+        "resilience_viz.py",
+        "visualize.py",
+        "docs/resilience_metrics.md"
+      ]
+    },
+    {
+      "type_id": "channel",
+      "label": "Channel",
+      "canonical_label": "Channel",
+      "category": "Experience",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "README.md",
+        "kcramer_tools_runner.py",
+        "zimmerman_analysis.py",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "type_id": "brand",
+      "label": "Brand",
+      "canonical_label": "Brand",
+      "category": "Experience",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 2,
+        "differentiating": 3,
+        "total": 5
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "README.md",
+        "LICENSE",
+        "artifacts/project_state_2026-02-15.md",
+        "artifacts/compliance_impact_replication_advantage_2026-02-17.md"
+      ]
+    },
+    {
+      "type_id": "customer_engagement",
+      "label": "Customer Engagement",
+      "canonical_label": "Customer Engagement",
+      "category": "Experience",
+      "maturity_level": "differentiating",
+      "maturity_score": 2,
+      "counts_as_innovation": true,
+      "hit_counts": {
+        "basic": 3,
+        "differentiating": 3,
+        "total": 6
+      },
+      "rationale": "Differentiating signal detected with broad supporting evidence.",
+      "evidence_refs": [
+        "prompt_templates.py",
+        "posiwid_audit.py",
+        "clinical_consensus.py",
+        "character_seed_experiment.py",
+        "archetype_matchmaker.py",
+        "docs/guide.md"
+      ]
+    }
+  ],
+  "summary": {
+    "n_types": 10,
+    "strict_count_rule": "Only differentiating counts as true innovation.",
+    "innovative_count": 10,
+    "me_too_count": 0,
+    "no_activity_count": 0,
+    "innovation_coverage_pct": 100.0,
+    "weighted_maturity_pct": 100.0
+  },
+  "category_balance": {
+    "Configuration": {
+      "n_types": 4,
+      "differentiating": 4,
+      "me_too": 0,
+      "no_activity": 0,
+      "mean_maturity_score": 2.0
+    },
+    "Experience": {
+      "n_types": 4,
+      "differentiating": 4,
+      "me_too": 0,
+      "no_activity": 0,
+      "mean_maturity_score": 2.0
+    },
+    "Offering": {
+      "n_types": 2,
+      "differentiating": 2,
+      "me_too": 0,
+      "no_activity": 0,
+      "mean_maturity_score": 2.0
+    }
+  },
+  "priority_gaps": [],
+  "evidence_index": {
+    "profit_model.readme_present": {
+      "probe_key": "profit_model.readme_present",
+      "type_id": "profit_model",
+      "tier": "basic",
+      "description": "Repository-level value proposition is documented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "README.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "exists=True"
+    },
+    "profit_model.license_present": {
+      "probe_key": "profit_model.license_present",
+      "type_id": "profit_model",
+      "tier": "basic",
+      "description": "Licensing clarifies value-sharing boundaries.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "LICENSE",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "LICENSE"
+      ],
+      "detail": "exists=True"
+    },
+    "profit_model.deviation_doc_present": {
+      "probe_key": "profit_model.deviation_doc_present",
+      "type_id": "profit_model",
+      "tier": "basic",
+      "description": "Value assumptions and known deviations are documented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/model_deviations.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/model_deviations.md"
+      ],
+      "detail": "exists=True"
+    },
+    "profit_model.conformance_matrix_present": {
+      "probe_key": "profit_model.conformance_matrix_present",
+      "type_id": "profit_model",
+      "tier": "differentiating",
+      "description": "Value-accountability matrix ties claims to tests.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/book_conformance_appendix2.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/book_conformance_appendix2.md"
+      ],
+      "detail": "exists=True"
+    },
+    "profit_model.conformance_tests_present": {
+      "probe_key": "profit_model.conformance_tests_present",
+      "type_id": "profit_model",
+      "tier": "differentiating",
+      "description": "Executable conformance checks protect value integrity.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "tests/test_book_conformance.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "tests/test_book_conformance.py"
+      ],
+      "detail": "exists=True"
+    },
+    "profit_model.research_scope_statement": {
+      "probe_key": "profit_model.research_scope_statement",
+      "type_id": "profit_model",
+      "tier": "differentiating",
+      "description": "Non-commercial value lens is explicitly stated.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "hypothesis-generating research artifacts"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "network.zimmerman_bridge_present": {
+      "probe_key": "network.zimmerman_bridge_present",
+      "type_id": "network",
+      "tier": "basic",
+      "description": "External toolkit bridge is implemented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "zimmerman_bridge.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "zimmerman_bridge.py"
+      ],
+      "detail": "exists=True"
+    },
+    "network.kcramer_bridge_present": {
+      "probe_key": "network.kcramer_bridge_present",
+      "type_id": "network",
+      "tier": "basic",
+      "description": "Second toolkit bridge is implemented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "kcramer_bridge.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "kcramer_bridge.py"
+      ],
+      "detail": "exists=True"
+    },
+    "network.cross_tool_runner_present": {
+      "probe_key": "network.cross_tool_runner_present",
+      "type_id": "network",
+      "tier": "differentiating",
+      "description": "Integrated multi-tool runner orchestrates networked capabilities.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "zimmerman_analysis.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "zimmerman_analysis.py"
+      ],
+      "detail": "exists=True"
+    },
+    "network.readme_mentions_kcramer_bridge": {
+      "probe_key": "network.readme_mentions_kcramer_bridge",
+      "type_id": "network",
+      "tier": "differentiating",
+      "description": "Networked integration is exposed in public docs.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "K-Cramer Toolkit bridge"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "network.readme_mentions_zimmerman_bridge": {
+      "probe_key": "network.readme_mentions_zimmerman_bridge",
+      "type_id": "network",
+      "tier": "differentiating",
+      "description": "Cross-project protocol adapter is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "Zimmerman Simulator protocol adapter"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "structure.constants_present": {
+      "probe_key": "structure.constants_present",
+      "type_id": "structure",
+      "tier": "basic",
+      "description": "Core configuration is centralized.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "constants.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "constants.py"
+      ],
+      "detail": "exists=True"
+    },
+    "structure.schemas_present": {
+      "probe_key": "structure.schemas_present",
+      "type_id": "structure",
+      "tier": "basic",
+      "description": "Data contracts are explicitly modeled.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "schemas.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "schemas.py"
+      ],
+      "detail": "exists=True"
+    },
+    "structure.docs_guide_present": {
+      "probe_key": "structure.docs_guide_present",
+      "type_id": "structure",
+      "tier": "basic",
+      "description": "Information architecture is maintained in guide docs.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/guide.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/guide.md"
+      ],
+      "detail": "exists=True"
+    },
+    "structure.plan_tracking_present": {
+      "probe_key": "structure.plan_tracking_present",
+      "type_id": "structure",
+      "tier": "differentiating",
+      "description": "Program-level planning structure is tracked.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/plans/progress.json",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/plans/progress.json"
+      ],
+      "detail": "exists=True"
+    },
+    "structure.test_harness_present": {
+      "probe_key": "structure.test_harness_present",
+      "type_id": "structure",
+      "tier": "differentiating",
+      "description": "Shared test harness enforces structure.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "tests/conftest.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "tests/conftest.py"
+      ],
+      "detail": "exists=True"
+    },
+    "structure.core_pipeline_doc": {
+      "probe_key": "structure.core_pipeline_doc",
+      "type_id": "structure",
+      "tier": "differentiating",
+      "description": "System structure is externally legible.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "### Core Pipeline"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "process.simulator_present": {
+      "probe_key": "process.simulator_present",
+      "type_id": "process",
+      "tier": "basic",
+      "description": "Core simulation process is codified.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "simulator.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "simulator.py"
+      ],
+      "detail": "exists=True"
+    },
+    "process.analytics_present": {
+      "probe_key": "process.analytics_present",
+      "type_id": "process",
+      "tier": "basic",
+      "description": "Outcome analytics process is codified.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "analytics.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "analytics.py"
+      ],
+      "detail": "exists=True"
+    },
+    "process.tests_dir_present": {
+      "probe_key": "process.tests_dir_present",
+      "type_id": "process",
+      "tier": "basic",
+      "description": "Verification process exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "tests",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "tests"
+      ],
+      "detail": "exists=True"
+    },
+    "process.full_test_command": {
+      "probe_key": "process.full_test_command",
+      "type_id": "process",
+      "tier": "differentiating",
+      "description": "Repeatable full-suite test process is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "pytest tests/ -v"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "process.strict_conformance_gate": {
+      "probe_key": "process.strict_conformance_gate",
+      "type_id": "process",
+      "tier": "differentiating",
+      "description": "Optional strict process gate is available.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "STRICT_BOOK_CONFORMANCE=1"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "process.conformance_matrix_present": {
+      "probe_key": "process.conformance_matrix_present",
+      "type_id": "process",
+      "tier": "differentiating",
+      "description": "Process traceability is mapped claim-to-test.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/book_conformance_appendix2.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/book_conformance_appendix2.md"
+      ],
+      "detail": "exists=True"
+    },
+    "product_performance.simulator_present": {
+      "probe_key": "product_performance.simulator_present",
+      "type_id": "product_performance",
+      "tier": "basic",
+      "description": "Core product engine exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "simulator.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "simulator.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_performance.core_constants_present": {
+      "probe_key": "product_performance.core_constants_present",
+      "type_id": "product_performance",
+      "tier": "basic",
+      "description": "Core model constants are maintained.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "constants.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "constants.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_performance.simulator_tests_present": {
+      "probe_key": "product_performance.simulator_tests_present",
+      "type_id": "product_performance",
+      "tier": "differentiating",
+      "description": "Core performance behavior is regression-tested.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "tests/test_simulator.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "tests/test_simulator.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_performance.falsifier_artifact_present": {
+      "probe_key": "product_performance.falsifier_artifact_present",
+      "type_id": "product_performance",
+      "tier": "differentiating",
+      "description": "Critical quality fixes are archived as evidence.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "artifacts/falsifier_report_2026-02-15.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "artifacts/falsifier_report_2026-02-15.md"
+      ],
+      "detail": "exists=True"
+    },
+    "product_performance.readme_ode_corrections": {
+      "probe_key": "product_performance.readme_ode_corrections",
+      "type_id": "product_performance",
+      "tier": "differentiating",
+      "description": "Performance correction history is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "ODE Corrections Applied"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "product_system.schemas_present": {
+      "probe_key": "product_system.schemas_present",
+      "type_id": "product_system",
+      "tier": "basic",
+      "description": "Typed interfaces support system integration.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "schemas.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "schemas.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_system.llm_common_present": {
+      "probe_key": "product_system.llm_common_present",
+      "type_id": "product_system",
+      "tier": "basic",
+      "description": "Shared LLM utilities provide subsystem cohesion.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "llm_common.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "llm_common.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_system.prompt_templates_present": {
+      "probe_key": "product_system.prompt_templates_present",
+      "type_id": "product_system",
+      "tier": "basic",
+      "description": "Prompt layer integrates with simulator pipeline.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "prompt_templates.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "prompt_templates.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_system.zimmerman_bridge_present": {
+      "probe_key": "product_system.zimmerman_bridge_present",
+      "type_id": "product_system",
+      "tier": "differentiating",
+      "description": "Simulator protocol adapter enables ecosystem composition.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "zimmerman_bridge.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "zimmerman_bridge.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_system.grief_adapter_present": {
+      "probe_key": "product_system.grief_adapter_present",
+      "type_id": "product_system",
+      "tier": "differentiating",
+      "description": "Cross-domain system extension is implemented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "grief_mito_simulator.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "grief_mito_simulator.py"
+      ],
+      "detail": "exists=True"
+    },
+    "product_system.kcramer_tools_runner_present": {
+      "probe_key": "product_system.kcramer_tools_runner_present",
+      "type_id": "product_system",
+      "tier": "differentiating",
+      "description": "System-level workflows are orchestrated through a unified runner.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "kcramer_tools_runner.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "kcramer_tools_runner.py"
+      ],
+      "detail": "exists=True"
+    },
+    "service.guide_present": {
+      "probe_key": "service.guide_present",
+      "type_id": "service",
+      "tier": "basic",
+      "description": "Service-level guidance exists for users.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/guide.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/guide.md"
+      ],
+      "detail": "exists=True"
+    },
+    "service.simulator_docs_present": {
+      "probe_key": "service.simulator_docs_present",
+      "type_id": "service",
+      "tier": "basic",
+      "description": "Core usage and behavior documentation is available.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/simulator.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/simulator.md"
+      ],
+      "detail": "exists=True"
+    },
+    "service.analytics_docs_present": {
+      "probe_key": "service.analytics_docs_present",
+      "type_id": "service",
+      "tier": "basic",
+      "description": "Outcome interpretation service is documented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/analytics.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/analytics.md"
+      ],
+      "detail": "exists=True"
+    },
+    "service.resilience_viz_present": {
+      "probe_key": "service.resilience_viz_present",
+      "type_id": "service",
+      "tier": "differentiating",
+      "description": "Service layer includes ready-to-run visual diagnostics.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "resilience_viz.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "resilience_viz.py"
+      ],
+      "detail": "exists=True"
+    },
+    "service.visualize_present": {
+      "probe_key": "service.visualize_present",
+      "type_id": "service",
+      "tier": "differentiating",
+      "description": "Core visualization services are part of the platform.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "visualize.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "visualize.py"
+      ],
+      "detail": "exists=True"
+    },
+    "service.resilience_metrics_docs_present": {
+      "probe_key": "service.resilience_metrics_docs_present",
+      "type_id": "service",
+      "tier": "differentiating",
+      "description": "Operational resilience service semantics are documented.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "docs/resilience_metrics.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/resilience_metrics.md"
+      ],
+      "detail": "exists=True"
+    },
+    "channel.setup_section_present": {
+      "probe_key": "channel.setup_section_present",
+      "type_id": "channel",
+      "tier": "basic",
+      "description": "Primary channel onboarding is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "## Setup"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "channel.simulator_cli_command_present": {
+      "probe_key": "channel.simulator_cli_command_present",
+      "type_id": "channel",
+      "tier": "basic",
+      "description": "Direct execution channel is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "python simulator.py"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "channel.analytics_cli_command_present": {
+      "probe_key": "channel.analytics_cli_command_present",
+      "type_id": "channel",
+      "tier": "basic",
+      "description": "Second execution channel is documented.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "python analytics.py"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "channel.kcramer_runner_present": {
+      "probe_key": "channel.kcramer_runner_present",
+      "type_id": "channel",
+      "tier": "differentiating",
+      "description": "Dedicated cross-tool access channel exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "kcramer_tools_runner.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "kcramer_tools_runner.py"
+      ],
+      "detail": "exists=True"
+    },
+    "channel.zimmerman_analysis_present": {
+      "probe_key": "channel.zimmerman_analysis_present",
+      "type_id": "channel",
+      "tier": "differentiating",
+      "description": "High-level orchestration channel exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "zimmerman_analysis.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "zimmerman_analysis.py"
+      ],
+      "detail": "exists=True"
+    },
+    "channel.claude_discovery_tools_section": {
+      "probe_key": "channel.claude_discovery_tools_section",
+      "type_id": "channel",
+      "tier": "differentiating",
+      "description": "Agent-facing channel map is maintained.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "CLAUDE.md",
+        "pattern": "Tier 5 \u2014 Discovery Tools"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "CLAUDE.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "brand.readme_title_present": {
+      "probe_key": "brand.readme_title_present",
+      "type_id": "brand",
+      "tier": "basic",
+      "description": "Project identity is clearly named in primary docs.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "# How to Live Much Longer"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "brand.license_present": {
+      "probe_key": "brand.license_present",
+      "type_id": "brand",
+      "tier": "basic",
+      "description": "Legal identity and usage boundaries are explicit.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "LICENSE",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "LICENSE"
+      ],
+      "detail": "exists=True"
+    },
+    "brand.project_state_artifact_present": {
+      "probe_key": "brand.project_state_artifact_present",
+      "type_id": "brand",
+      "tier": "differentiating",
+      "description": "Narrative continuity is preserved through state artifacts.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "artifacts/project_state_2026-02-15.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "artifacts/project_state_2026-02-15.md"
+      ],
+      "detail": "exists=True"
+    },
+    "brand.compliance_impact_artifact_present": {
+      "probe_key": "brand.compliance_impact_artifact_present",
+      "type_id": "brand",
+      "tier": "differentiating",
+      "description": "Identity claims are reinforced by compliance artifacts.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "artifacts/compliance_impact_replication_advantage_2026-02-17.md",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "artifacts/compliance_impact_replication_advantage_2026-02-17.md"
+      ],
+      "detail": "exists=True"
+    },
+    "brand.readme_citation_positioning": {
+      "probe_key": "brand.readme_citation_positioning",
+      "type_id": "brand",
+      "tier": "differentiating",
+      "description": "Consistent external positioning is maintained.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "pattern": "forthcoming from Springer Verlag in 2026"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "README.md"
+      ],
+      "detail": "pattern_present=True"
+    },
+    "customer_engagement.prompt_templates_present": {
+      "probe_key": "customer_engagement.prompt_templates_present",
+      "type_id": "customer_engagement",
+      "tier": "basic",
+      "description": "Interaction prompts are productized.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "prompt_templates.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "prompt_templates.py"
+      ],
+      "detail": "exists=True"
+    },
+    "customer_engagement.posiwid_audit_present": {
+      "probe_key": "customer_engagement.posiwid_audit_present",
+      "type_id": "customer_engagement",
+      "tier": "basic",
+      "description": "Intention-vs-outcome feedback loop exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "posiwid_audit.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "posiwid_audit.py"
+      ],
+      "detail": "exists=True"
+    },
+    "customer_engagement.clinical_consensus_present": {
+      "probe_key": "customer_engagement.clinical_consensus_present",
+      "type_id": "customer_engagement",
+      "tier": "basic",
+      "description": "Multi-model feedback and comparison channel exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "clinical_consensus.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "clinical_consensus.py"
+      ],
+      "detail": "exists=True"
+    },
+    "customer_engagement.character_seed_present": {
+      "probe_key": "customer_engagement.character_seed_present",
+      "type_id": "customer_engagement",
+      "tier": "differentiating",
+      "description": "Large-scale user-facing prompt archetype exploration exists.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "character_seed_experiment.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "character_seed_experiment.py"
+      ],
+      "detail": "exists=True"
+    },
+    "customer_engagement.archetype_matchmaker_present": {
+      "probe_key": "customer_engagement.archetype_matchmaker_present",
+      "type_id": "customer_engagement",
+      "tier": "differentiating",
+      "description": "Personalization layer connects archetypes to outcomes.",
+      "criterion": {
+        "kind": "path_exists",
+        "path": "archetype_matchmaker.py",
+        "pattern": null
+      },
+      "matched": true,
+      "evidence_refs": [
+        "archetype_matchmaker.py"
+      ],
+      "detail": "exists=True"
+    },
+    "customer_engagement.guide_workflow_present": {
+      "probe_key": "customer_engagement.guide_workflow_present",
+      "type_id": "customer_engagement",
+      "tier": "differentiating",
+      "description": "Engagement loop is documented as an iterative workflow.",
+      "criterion": {
+        "kind": "file_contains",
+        "path": "docs/guide.md",
+        "pattern": "## Typical Workflow"
+      },
+      "matched": true,
+      "evidence_refs": [
+        "docs/guide.md"
+      ],
+      "detail": "pattern_present=True"
+    }
+  }
+}

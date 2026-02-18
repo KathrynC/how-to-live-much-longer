@@ -110,9 +110,11 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
          │
 4. Analyze                      analytics.py: 4 pillars (energy/damage/dynamics/intervention)
          │
-5. Audit alignment              posiwid_audit.py: intention vs actual
+5. Audit portfolio coverage     ten_types_audit.py: Ten Types whole-platform scorecard
          │
-6. Iterate                      Adjust prompt style, patient profile, or intervention
+6. Audit alignment              posiwid_audit.py: intention vs actual
+         │
+7. Iterate                      Adjust prompt style, patient profile, or intervention
 ```
 
 ---
@@ -134,6 +136,7 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 - **[`llm_common`](llm_common.md)** — LLM query, response parsing, flattening detection, grid snapping
 - **[`constants`](constants.md)** — Biological constants, parameter space definitions, clinical seeds
 - **[`schemas`](schemas.md)** — Pydantic validation models for LLM output
+- **[`ten_types_audit`](ten_types_audit.md)** — Deterministic Ten Types innovation scorecard for this repository
 
 ### TIQM Pipeline & Utilities
 
