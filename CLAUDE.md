@@ -60,7 +60,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (~385 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge, expansion modules, scenarios)
+pytest tests/ -v          # Full pytest suite (~453 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge, expansion modules, scenarios, protocol dictionary pipeline)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -207,6 +207,16 @@ scenario_plot.py           ← Trajectory/milestone/heatmap plots (imports matpl
 run_scenario_comparison.py ← CLI 4-scenario comparison (imports all scenario modules)
 
 lit_spider.py              ← PubMed literature search for parameter validation (imports constants, llm_common)
+
+# Protocol Dictionary Pipeline (2026-02-19, ported from rosetta-motion)
+protocol_record.py         ← ProtocolRecord dataclass, fingerprinting, VALID_OUTCOME_CLASSES (imports nothing)
+protocol_dictionary.py     ← Persistent catalog with query/dedup/summary (imports protocol_record)
+protocol_enrichment.py     ← Complexity, clinical signature, prototype grouping (imports protocol_record)
+protocol_classifier.py     ← Multi-labeler: rule + analytics-fit classification (imports nothing from project)
+protocol_rewrite_rules.py  ← Declarative 3-layer rule engine with audit trail (imports nothing from project)
+protocol_pattern_language.py ← DAG validation + topological orchestrator (imports nothing from project)
+protocol_review.py         ← JSONL review queue with resolve/provenance (imports protocol_record)
+run_protocol_pipeline.py   ← End-to-end pipeline runner + CLI (imports all protocol modules + simulator + analytics)
 
 ea_optimizer.py            ← EA-toolkit integration: 8 algorithms for intervention optimization (imports simulator, analytics, constants, ea_toolkit)
 
@@ -380,6 +390,51 @@ The resolver accepts ~50D input (14 patient + 24 intervention expanded params) a
 - `artifacts/design_doc_time_varying_parameter_resolver_2026-02-19.md`
 - `artifacts/handoff_batch{1,2,3,4}_*_2026-02-19.md`
 - `docs/plans/2026-02-19-precision-medicine-expansion.md`
+
+## Protocol Dictionary Pipeline (2026-02-19)
+
+Ported from rosetta-motion's pattern language, rewrite rules, multi-labeler, and review governance patterns. Provides a unified protocol curation system: ingest → enrich → classify → rewrite → review → save.
+
+### Architecture
+
+```
+Sources (dark_matter, EA, LLM seeds) → [Ingest] → ProtocolRecord → [Enrich] → [Classify] → [Rewrite Rules] → [Review Queue] → ProtocolDictionary
+```
+
+### New Modules
+
+| Module | Role | Rosetta-Motion Source |
+|--------|------|---------------------|
+| `protocol_record.py` | ProtocolRecord dataclass + fingerprinting | `DiscoveryRecord` |
+| `protocol_dictionary.py` | Persistent catalog with query/dedup/summary | `MotionDiscovery` |
+| `protocol_enrichment.py` | Complexity, clinical signature, prototype group | `controller_simplicity()`, `sensory_signature()` |
+| `protocol_classifier.py` | Rule-based + analytics-fit multi-labeler | `discover_label()` |
+| `protocol_rewrite_rules.py` | Declarative 3-layer rule engine with audit | `rewrite_rules.py` |
+| `protocol_pattern_language.py` | DAG validation, topological sort, orchestration | `pattern_language.py`, `pattern_orchestrator.py` |
+| `protocol_review.py` | JSONL review queue with resolve/provenance | `review_queue_append()` |
+| `run_protocol_pipeline.py` | End-to-end pipeline runner + ingest adapters | `run_pipeline.py` |
+
+### Pattern Files
+
+- `patterns/protocol_pattern_language.v1.json` — 7-stage DAG (global → ingest → analytics → robustness → classify → review → report)
+- `patterns/protocol_rewrite_rules.v1.json` — 4 default rules (Yamanaka energy warning, transplant-dominant flag, low-confidence routing, paradoxical investigation)
+
+### New Commands
+
+```bash
+# Single protocol through pipeline
+python run_protocol_pipeline.py --intervention '{"rapamycin_dose":0.5,"nad_supplement":0.75}' --output artifacts/protocol_pipeline
+
+# Ingest from dark_matter artifact
+python run_protocol_pipeline.py --source dark_matter --artifact artifacts/dark_matter.json
+
+# Protocol pipeline tests (~68 tests across 9 files)
+pytest tests/test_protocol_record.py tests/test_protocol_dictionary.py tests/test_protocol_enrichment.py tests/test_protocol_classifier.py tests/test_protocol_rewrite_rules.py tests/test_protocol_pattern_language.py tests/test_protocol_review.py tests/test_protocol_pipeline.py tests/test_protocol_pipeline_integration.py -v
+```
+
+### Design Documents
+
+- `docs/plans/2026-02-19-protocol-dictionary-pipeline.md`
 
 ## 12D Parameter Space
 
@@ -783,7 +838,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs ~385 tests across 17 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios)
+- Formal test suite: `pytest tests/ -v` runs ~453 tests across 26 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

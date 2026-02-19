@@ -1,0 +1,83 @@
+{
+  "version": "v1",
+  "description": "Protocol curation pipeline pattern language. Stages proceed from ingest through analytics, robustness, classification, review, and reporting.",
+  "patterns": [
+    {
+      "id": "protocol_program",
+      "name": "Protocol Program",
+      "stage": "global",
+      "problem": "Protocol classification can drift when analysis stages are run ad hoc.",
+      "solution": "Establish a global pipeline structure that all downstream stages must follow.",
+      "confidence_tier": "core",
+      "larger_patterns": [],
+      "smaller_patterns": ["ingest_protocols", "review_governance"],
+      "order_hint": 0
+    },
+    {
+      "id": "ingest_protocols",
+      "name": "Ingest Protocols",
+      "stage": "ingest",
+      "problem": "Protocol records arrive from diverse sources with varying completeness.",
+      "solution": "Normalize all records to ProtocolRecord schema with provenance metadata.",
+      "confidence_tier": "core",
+      "larger_patterns": ["protocol_program"],
+      "smaller_patterns": ["analytics_profile"],
+      "order_hint": 10
+    },
+    {
+      "id": "analytics_profile",
+      "name": "Analytics Profile",
+      "stage": "analytics",
+      "problem": "Classification is unreliable without simulation analytics.",
+      "solution": "Compute 4-pillar health analytics and enrichment fields before classification.",
+      "confidence_tier": "core",
+      "larger_patterns": ["ingest_protocols"],
+      "smaller_patterns": ["robustness_assessment", "classify_outcomes"],
+      "order_hint": 20
+    },
+    {
+      "id": "robustness_assessment",
+      "name": "Robustness Assessment",
+      "stage": "robustness",
+      "problem": "Protocols that perform well under baseline conditions may fail under stress.",
+      "solution": "Evaluate biological stress resilience via cramer-toolkit before final classification.",
+      "confidence_tier": "adaptable",
+      "larger_patterns": ["analytics_profile"],
+      "smaller_patterns": ["review_governance"],
+      "order_hint": 30
+    },
+    {
+      "id": "classify_outcomes",
+      "name": "Classify Outcomes",
+      "stage": "classify",
+      "problem": "Single-method classification misses edge cases and ambiguity.",
+      "solution": "Run multi-method pipeline (rule + analytics-fit) and aggregate with confidence.",
+      "confidence_tier": "core",
+      "larger_patterns": ["analytics_profile"],
+      "smaller_patterns": ["review_governance", "report_synthesis"],
+      "order_hint": 40
+    },
+    {
+      "id": "review_governance",
+      "name": "Review Governance",
+      "stage": "review",
+      "problem": "Low-confidence or paradoxical protocols need human clinical judgment.",
+      "solution": "Route flagged protocols to review queue with structured audit metadata.",
+      "confidence_tier": "core",
+      "larger_patterns": ["protocol_program", "robustness_assessment", "classify_outcomes"],
+      "smaller_patterns": ["report_synthesis"],
+      "order_hint": 50
+    },
+    {
+      "id": "report_synthesis",
+      "name": "Report Synthesis",
+      "stage": "report",
+      "problem": "Progress is hard to evaluate without integrated quality diagnostics.",
+      "solution": "Generate summary reports with outcome distributions, confidence histograms, and coverage.",
+      "confidence_tier": "core",
+      "larger_patterns": ["classify_outcomes", "review_governance"],
+      "smaller_patterns": [],
+      "order_hint": 60
+    }
+  ]
+}
