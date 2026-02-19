@@ -197,6 +197,7 @@ See the citation key at the top of `constants.py` for full details on each const
 | `zimmerman_bridge.py` | Zimmerman Simulator protocol adapter (`MitoSimulator`) |
 | `kcramer_bridge.py` | K-Cramer Toolkit bridge — 25 biological stress scenarios + resilience analysis |
 | `kcramer_tools_runner.py` | CLI runner for K-Cramer Toolkit workflows (resilience, vulnerability, scenario comparison) |
+| `ten_types_audit.py` | Deterministic Ten Types of Innovation audit (strict 3-level scoring) |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
 | `protocol_mtdna_synthesis.py` | 9-step mtDNA synthesis and transplant protocol |
 
@@ -373,6 +374,19 @@ The 12D parameter space has been partially characterized (~400 simulations). Key
 - **No timing critical point**: For near-cliff patients, switch-time has r=0.007 with outcome — the bistable attractor has already captured the trajectory.
 - **Robustness paradox**: Successful protocols are 7.4x more robust than failing ones.
 
+## Ten Types Innovation Audit
+
+Run the deterministic platform-level audit:
+
+```bash
+python ten_types_audit.py
+```
+
+Default artifacts:
+
+- [`artifacts/ten_types_innovation_audit.json`](artifacts/ten_types_innovation_audit.json)
+- [`artifacts/ten_types_innovation_audit.md`](artifacts/ten_types_innovation_audit.md)
+
 ## Testing
 
 ```bash
@@ -441,6 +455,9 @@ python sobol_sensitivity.py        # ~3 min, no Ollama
 python pds_mapping.py              # no Ollama
 python posiwid_audit.py            # requires Ollama, ~15-20 min
 python archetype_matchmaker.py     # needs character experiment data
+
+# Ten Types audit (no Ollama)
+python ten_types_audit.py          # deterministic whole-platform innovation audit
 
 # Discovery tools (Tier 5 — no Ollama needed)
 python interaction_mapper.py       # ~3 min
