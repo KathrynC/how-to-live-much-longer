@@ -475,6 +475,7 @@ def simulate_with_disturbances(
     disturbances: list[Disturbance] | None = None,
     sim_years: float | None = None,
     dt: float | None = None,
+    resolver=None,
 ) -> dict:
     """Run mitochondrial aging simulation with disturbance events.
 
@@ -562,13 +563,16 @@ def simulate_with_disturbances(
         # --- Phase 2: Parameter modification (every active timestep) ---
         # _resolve_intervention handles both plain dicts and InterventionSchedule
         # objects, returning the intervention dict active at time t.
-        current_intervention = _resolve_intervention(intervention, t)
-        # Copy the base patient params so disturbances overlay without
-        # permanently mutating the originals. Each disturbance chains its
-        # modifications — if multiple disturbances are active simultaneously,
-        # their effects stack (e.g., radiation + inflammation = both elevated
-        # vulnerability AND elevated inflammation).
-        current_patient = dict(patient)
+        if resolver is not None:
+            current_intervention, current_patient = resolver.resolve(t)
+        else:
+            current_intervention = _resolve_intervention(intervention, t)
+            # Copy the base patient params so disturbances overlay without
+            # permanently mutating the originals. Each disturbance chains its
+            # modifications — if multiple disturbances are active simultaneously,
+            # their effects stack (e.g., radiation + inflammation = both elevated
+            # vulnerability AND elevated inflammation).
+            current_patient = dict(patient)
         for d in disturbances:
             current_intervention, current_patient = d.modify_params(
                 current_intervention, current_patient, t)

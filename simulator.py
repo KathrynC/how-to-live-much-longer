@@ -1176,6 +1176,7 @@ def simulate(
     noise_scale: float = 0.01,
     n_trajectories: int = 1,
     rng_seed: int | None = None,
+    resolver=None,
 ) -> dict:
     """Run the full mitochondrial aging simulation.
 
@@ -1252,7 +1253,7 @@ def simulate(
     if stochastic and n_trajectories > 1:
         return _simulate_stochastic(
             intervention, patient, n_steps, dt, tissue_mods,
-            noise_scale, n_trajectories, rng_seed)
+            noise_scale, n_trajectories, rng_seed, resolver=resolver)
 
     # ── Compute initial state from patient parameters ─────────────────────
     state = initial_state(patient)
@@ -1277,7 +1278,11 @@ def simulate(
     for i in range(n_steps):
         t = i * dt
         # Resolve time-varying intervention (handles both dict and schedule)
-        current_intervention = _resolve_intervention(intervention, t)
+        if resolver is not None:
+            current_intervention, current_patient = resolver.resolve(t)
+        else:
+            current_intervention = _resolve_intervention(intervention, t)
+            current_patient = patient
 
         if stochastic:
             # ── Euler-Maruyama integration ────────────────────────────────
@@ -1285,7 +1290,7 @@ def simulate(
             # This is a first-order stochastic integrator (O(dt^0.5) for
             # the noise term), less accurate than RK4 but necessary for
             # modeling biological variability in ROS and mutation rates.
-            deriv = derivatives(state, t, current_intervention, patient, tissue_mods)
+            deriv = derivatives(state, t, current_intervention, current_patient, tissue_mods)
 
             # Wiener increments: dW ~ N(0, sqrt(dt)) for each state variable
             dW = rng.normal(0, np.sqrt(dt), N_STATES)
@@ -1304,7 +1309,7 @@ def simulate(
             state = state + dt * deriv + noise
         else:
             # ── Deterministic RK4 integration ─────────────────────────────
-            state = _rk4_step(state, t, dt, current_intervention, patient, tissue_mods)
+            state = _rk4_step(state, t, dt, current_intervention, current_patient, tissue_mods)
 
         # ── Post-step constraints ─────────────────────────────────────────
         # Enforce non-negativity: all biological quantities must be >= 0.
@@ -1334,7 +1339,7 @@ def simulate(
 
 
 def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
-                          noise_scale, n_trajectories, rng_seed):
+                          noise_scale, n_trajectories, rng_seed, resolver=None):
     """Run multiple stochastic trajectories for confidence intervals.
 
     Uses Euler-Maruyama integration with multiplicative noise on three
@@ -1394,8 +1399,12 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
 
         for i in range(n_steps):
             t = i * dt
-            current_intervention = _resolve_intervention(intervention, t)
-            deriv = derivatives(state, t, current_intervention, patient, tissue_mods)
+            if resolver is not None:
+                current_intervention, current_patient = resolver.resolve(t)
+            else:
+                current_intervention = _resolve_intervention(intervention, t)
+                current_patient = patient
+            deriv = derivatives(state, t, current_intervention, current_patient, tissue_mods)
 
             # Wiener increments for this step
             dW = rng.normal(0, np.sqrt(dt), N_STATES)

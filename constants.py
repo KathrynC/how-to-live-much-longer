@@ -607,3 +607,149 @@ CLINICAL_SEEDS = [
                        "intervention can extend the genetic advantage further.",
     },
 ]
+
+# ============================================================================
+# EXPANSION CONSTANTS — Precision Medicine Upgrade (2026-02-19)
+# ============================================================================
+# These constants support the expanded parameter space (genetics, lifestyle,
+# neuroplasticity, Alzheimer's pathology) described in the handoff docs at
+# artifacts/handoff_batch{1,2,3,4}_*_2026-02-19.md.
+#
+# IMPORTANT: Nothing below modifies the Cramer core ODE. These constants are
+# consumed by the parameter resolver (parameter_resolver.py), downstream chain
+# (downstream_chain.py), and scenario framework — never by simulator.py or
+# derivatives().
+# ============================================================================
+
+# ── Grief module (UVM LEMURS, bereavement studies) ──────────────────────────
+GRIEF_ROS_FACTOR = 0.3
+GRIEF_NAD_DECAY = 0.15
+GRIEF_SENESCENCE_FACTOR = 0.1
+SLEEP_DISRUPTION_IMPACT = 0.7
+SOCIAL_SUPPORT_BUFFER = 0.5
+COPING_DECAY_RATE = 0.3
+LOVE_BUFFER_FACTOR = 0.2
+GRIEF_REDUCTION_FROM_MEF2 = 0.1
+
+# ── Genetic multipliers (APOE4 literature, O'Shea 2024) ────────────────────
+GENOTYPE_MULTIPLIERS = {
+    'apoe4_het': {
+        'mitophagy_efficiency': 0.65,
+        'inflammation': 1.2,
+        'vulnerability': 1.3,
+        'grief_sensitivity': 1.3,
+        'alcohol_sensitivity': 1.3,
+        'mef2_induction': 1.2,
+        'amyloid_clearance': 0.7,
+    },
+    'apoe4_hom': {
+        'mitophagy_efficiency': 0.45,
+        'inflammation': 1.4,
+        'vulnerability': 1.6,
+        'grief_sensitivity': 1.5,
+        'alcohol_sensitivity': 1.5,
+        'mef2_induction': 1.3,
+        'amyloid_clearance': 0.5,
+    },
+    'foxo3_protective': {
+        'mitophagy_efficiency': 1.3,
+        'inflammation': 0.9,
+        'vulnerability': 0.9,
+    },
+    'cd38_risk': {
+        'nad_efficiency': 0.7,
+        'baseline_nad': 0.8,
+    },
+}
+
+# ── Sex-specific (Ivanich et al. 2025) ─────────────────────────────────────
+FEMALE_APOE4_INFLAMMATION_BOOST = 1.1
+MENOPAUSE_HETEROPLASMY_ACCELERATION = 1.05
+ESTROGEN_PROTECTION_LOSS_FACTOR = 1.0
+
+# ── Alcohol (Anttila 2004, Downer 2014) ────────────────────────────────────
+ALCOHOL_INFLAMMATION_FACTOR = 0.25
+ALCOHOL_NAD_FACTOR = 0.15
+ALCOHOL_APOE4_SYNERGY = 1.3
+ALCOHOL_SLEEP_DISRUPTION = 0.4
+
+# ── Coffee (Nature Metabolism 2024) ────────────────────────────────────────
+COFFEE_TRIGONELLINE_NAD_EFFECT = 0.05
+COFFEE_CHLOROGENIC_ACID_ANTI_INFLAMMATORY = 0.05
+COFFEE_CAFFEINE_MITOCHONDRIAL_BOOST = 0.03
+COFFEE_APOE4_BENEFIT_MULTIPLIER = 1.2
+COFFEE_FEMALE_BENEFIT_MULTIPLIER = 1.3
+COFFEE_MAX_BENEFICIAL_CUPS = 3
+COFFEE_SLEEP_DISRUPTION_THRESHOLD_HOURS = 12
+COFFEE_PREPARATION_MULTIPLIERS = {
+    'filtered': 1.0,
+    'unfiltered': 0.8,
+    'instant': 0.5,
+}
+
+# ── Diet ───────────────────────────────────────────────────────────────────
+KETONE_ATP_FACTOR = 0.1
+IF_MITOPHAGY_FACTOR = 0.2
+KETO_FEMALE_APOE4_MULTIPLIER = 1.3
+
+# ── Probiotics ─────────────────────────────────────────────────────────────
+PROBIOTIC_GROWTH_RATE = 0.1
+GUT_DECAY_RATE = 0.02
+MAX_GUT_HEALTH = 1.0
+MIN_NAD_CONVERSION_EFFICIENCY = 0.7
+MAX_NAD_CONVERSION_EFFICIENCY = 1.0
+
+# ── Supplement dose-response (Norwitz et al. 2021) ─────────────────────────
+MAX_NR_EFFECT = 2.0;           NR_HALF_MAX = 0.5
+MAX_DHA_EFFECT = 0.2;          DHA_HALF_MAX = 0.5
+MAX_COQ10_EFFECT = 0.15;       COQ10_HALF_MAX = 0.5
+MAX_RESVERATROL_EFFECT = 0.15; RESVERATROL_HALF_MAX = 0.5
+MAX_PQQ_EFFECT = 0.15;         PQQ_HALF_MAX = 0.5
+MAX_ALA_EFFECT = 0.12;         ALA_HALF_MAX = 0.5
+MAX_VITAMIN_D_EFFECT = 0.10;   VITAMIN_D_HALF_MAX = 0.5
+MAX_B_COMPLEX_EFFECT = 0.15;   B_COMPLEX_HALF_MAX = 0.5
+MAX_MAGNESIUM_EFFECT = 0.10;   MAGNESIUM_HALF_MAX = 0.5
+MAX_ZINC_EFFECT = 0.08;        ZINC_HALF_MAX = 0.5
+MAX_SELENIUM_EFFECT = 0.08;    SELENIUM_HALF_MAX = 0.5
+
+# ── MEF2 pathway (Barker et al. 2021, Science Translational Medicine) ──────
+MEF2_INDUCTION_RATE = 0.15
+MEF2_DECAY_RATE = 0.08
+EXCITABILITY_SUPPRESSION_FACTOR = 0.7
+MEF2_RESILIENCE_BOOST = 0.4
+MEF2_MEMORY_BOOST = 0.2
+
+# ── Epigenetics (histone acetylation) ──────────────────────────────────────
+HA_INDUCTION_RATE = 0.2
+HA_DECAY_RATE = 0.05
+PLASTICITY_FACTOR_BASE = 0.5
+PLASTICITY_FACTOR_HA_MAX = 1.0
+
+# ── Synaptic plasticity ───────────────────────────────────────────────────
+LEARNING_RATE_BASE = 0.3
+SYNAPTIC_DECAY_RATE = 0.1
+MAX_SYNAPTIC_STRENGTH = 2.0
+SYNAPSES_TO_MEMORY = 0.3
+BASELINE_MEMORY = 0.5
+
+# ── Cognitive reserve (Nature 2025) ────────────────────────────────────────
+CR_GROWTH_RATE_BY_ACTIVITY = {
+    'collaborative_novel': 0.10,
+    'solitary_novel': 0.08,
+    'collaborative_routine': 0.05,
+    'solitary_routine': 0.03,
+}
+
+# ── Amyloid and tau pathology ──────────────────────────────────────────────
+AMYLOID_PRODUCTION_BASE = 0.05
+AMYLOID_PRODUCTION_AGE_FACTOR = 0.001
+AMYLOID_CLEARANCE_BASE = 0.12
+AMYLOID_CLEARANCE_APOE4_FACTOR = 0.7
+AMYLOID_INFLAMMATION_SYNERGY = 0.2
+TAU_SEEDING_RATE = 0.1
+TAU_SEEDING_FACTOR = 0.5
+TAU_INFLAMMATION_FACTOR = 0.1
+TAU_CLEARANCE_BASE = 0.05
+AMYLOID_TOXICITY = 0.3
+TAU_TOXICITY = 0.5
+RESILIENCE_WEIGHTS = {'MEF2': 0.3, 'synaptic_gain': 0.3, 'CR': 0.4}
