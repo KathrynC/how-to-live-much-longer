@@ -1,0 +1,42 @@
+{
+  "version": "v1",
+  "description": "Protocol rewrite rules for normalization, clinical safety, and semantic routing.",
+  "rules": [
+    {
+      "id": "flag_high_yamanaka",
+      "layer": "clinical",
+      "enabled": true,
+      "priority": 100,
+      "description": "Flag protocols with high Yamanaka intensity (3-5 MU energy cost)",
+      "match": {"yamanaka_intensity": {"gt": 0.5}},
+      "rewrite": {"append_unique": {"flags": ["high_yamanaka_energy_cost"]}}
+    },
+    {
+      "id": "flag_transplant_dominant",
+      "layer": "clinical",
+      "enabled": true,
+      "priority": 110,
+      "description": "Flag transplant-dominant protocols for experimental review",
+      "match": {"transplant_rate": {"gt": 0.75}},
+      "rewrite": {"append_unique": {"flags": ["transplant_dominant"]}}
+    },
+    {
+      "id": "route_low_confidence",
+      "layer": "semantic",
+      "enabled": true,
+      "priority": 200,
+      "description": "Route low-confidence classifications to review queue",
+      "match": {"confidence": {"lt": 0.6}},
+      "rewrite": {"append_unique": {"flags": ["needs_review"]}}
+    },
+    {
+      "id": "flag_paradoxical",
+      "layer": "semantic",
+      "enabled": true,
+      "priority": 210,
+      "description": "Flag paradoxical outcomes for investigation",
+      "match": {"outcome_class": {"equals": "paradoxical"}},
+      "rewrite": {"append_unique": {"flags": ["paradoxical_investigate"]}}
+    }
+  ]
+}
