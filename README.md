@@ -139,6 +139,102 @@ The model shows **no absolute point of no return**. Even starting at 90% heterop
 
 Each intervention attacks a different node in the ROS-damage vicious cycle: rapamycin *removes* damaged copies, NAD+ *supports* healthy ones, senolytics *free energy*, exercise *creates* new copies and reduces ROS, transplant *adds* copies from outside, and Yamanaka *converts* damaged to healthy. This confirms Cramer's core thesis: aging is a cellular energy crisis requiring multi-angle intervention.
 
+## Precision Medicine Expansion (2026-02-19)
+
+The simulator has been extended from an 8-state/12D core to a precision medicine platform with ~50D expanded inputs and 14 downstream state variables — without modifying the Cramer core ODE.
+
+### Three-Layer Architecture
+
+```
+~50D Expanded Inputs → [ParameterResolver] → 12D Core → [Cramer ODE] → 8 States → [DownstreamChain] → 6 ODEs + Memory Index
+```
+
+1. **ParameterResolver** (`parameter_resolver.py`): Maps genetics (APOE4, FOXO3, CD38), lifestyle (alcohol, coffee, diet), supplements (11 nutraceuticals via Hill-function dose-response), grief, and sleep into effective 12D core inputs through a 10-step modifier chain. Pre-computes time-varying trajectories (grief decay, alcohol taper, gut health ODE) at construction, interpolates at each timestep.
+
+2. **Cramer Core ODE** (`simulator.py`): Unchanged. The `simulate()` function accepts an optional `resolver=None` kwarg; when provided, it calls `resolver.resolve(t)` each step instead of using static intervention/patient dicts. All 8 state variables and their dynamics are untouched.
+
+3. **DownstreamChain** (`downstream_chain.py`): Post-processes core ODE outputs into 6 additional Euler-integrated ODEs:
+   - **MEF2** — Transcription factor driven by ATP and histone acetylation
+   - **Histone acetylation (HA)** — Epigenetic state driven by NAD+
+   - **Synaptic strength (SS)** — Driven by MEF2, impaired by inflammation
+   - **Cognitive reserve (CR)** — Accumulated from intellectual engagement and education
+   - **Amyloid-beta** — Accumulates with age, cleared proportionally to ATP (APOE4 impairs clearance)
+   - **Tau** — Driven by amyloid seeding, cleared proportionally to ATP
+
+   Derived metrics: `memory_index` (0–1 scale, < 0.5 = dementia), `resilience` (weighted MEF2 + synaptic + CR).
+
+### Expanded Parameter Space
+
+The resolver accepts ~50D input (14 patient + 24 intervention parameters) and produces standard 12D core inputs:
+
+**New patient parameters:** `apoe_genotype` (0/1/2 = non-carrier/het/hom), `sex` (M/F), `menopause_status`, `estrogen_therapy`, `foxo3_protective`, `cd38_risk`, `grief_intensity`, `grief_duration`, `intellectual_engagement`, `education_level`
+
+**New intervention parameters:** `sleep_intervention`, `oura_ring`, `alcohol_intake`, `coffee_intake`, `diet_type` (standard/mediterranean/keto), `fasting_regimen`, `probiotic_intensity`, `therapy_intensity`, 11 supplement doses (NR, DHA, CoQ10, resveratrol, PQQ, ALA, vitamin D, B vitamins, magnesium, zinc, selenium)
+
+### Scenario Comparison Framework
+
+Four escalating intervention scenarios for a 63-year-old female APOE4 heterozygous carrier:
+
+| Scenario | Components |
+|----------|-----------|
+| **A:** Sleep + Alcohol Cessation | Sleep optimization (Oura), alcohol → 0 |
+| **B:** A + OTC Supplements + Keto | + NR/DHA/CoQ10/resveratrol/PQQ/ALA/vitD/B/Mg/Zn/Se, keto diet, probiotics |
+| **C:** B + Prescription | + Rapamycin 0.8, senolytics 0.8 |
+| **D:** C + Experimental | + Mitochondrial transplant 0.9, Yamanaka 0.5 (ATP-gated) |
+
+#### Simulation Results (32-year projection, age 63→95)
+
+| Metric | A | B | C | D |
+|--------|---|---|---|---|
+| Final heteroplasmy | 0.473 | 0.356 | 0.244 | 0.143 |
+| Final ATP (MU/day) | 0.713 | 0.735 | 0.772 | 0.627* |
+| Final memory index | 0.885 | 0.888 | 0.907 | 0.907 |
+| Dementia onset | Never | Never | Never | Never |
+
+*Scenario D shows lower ATP than C due to the 3–5 MU energy cost of Yamanaka reprogramming (Cramer Ch. VIII.A).
+
+**Key finding:** All four scenarios prevent dementia in this patient. Heteroplasmy decreases monotonically A→D, confirming that each tier adds genuine benefit. Even Scenario A (sleep + alcohol cessation alone) maintains memory index at 0.885 over 32 years.
+
+### New Modules
+
+| Module | Role |
+|--------|------|
+| `genetics_module.py` | APOE4/FOXO3/CD38 genotype + sex/menopause modifiers |
+| `lifestyle_module.py` | Alcohol, coffee, diet, fasting effects |
+| `supplement_module.py` | Hill-function dose-response for 11 nutraceuticals |
+| `parameter_resolver.py` | 50D→12D modifier chain with time-varying trajectories |
+| `downstream_chain.py` | MEF2, HA, synaptic strength, cognitive reserve, amyloid, tau ODEs + memory_index |
+| `scenario_definitions.py` | InterventionProfile/Scenario dataclasses, predefined A–D scenarios |
+| `scenario_runner.py` | Pipeline orchestration: resolver → simulate → downstream |
+| `scenario_analysis.py` | Milestone extraction, scenario comparison tables |
+| `scenario_plot.py` | Trajectory plots, milestone bars, heatmaps |
+| `run_scenario_comparison.py` | CLI script for 4-scenario comparison |
+
+### Usage
+
+```bash
+# 4-scenario comparison (63yo APOE4 female, scenarios A–D)
+python run_scenario_comparison.py                    # Print milestones and summary
+python run_scenario_comparison.py --save-plots       # Also save plots to output/scenarios/
+python run_scenario_comparison.py --years 40         # Custom projection duration
+```
+
+```python
+from parameter_resolver import ParameterResolver
+from simulator import simulate
+from downstream_chain import compute_downstream
+
+# Build resolver from expanded params
+pr = ParameterResolver(patient_expanded, intervention_expanded, duration_years=32)
+
+# Run core ODE with resolver
+result = simulate(resolver=pr)
+
+# Post-process: amyloid, tau, memory index
+downstream = compute_downstream(result, patient_expanded)
+print(f"Memory index at 95: {downstream[-1]['memory_index']:.3f}")
+```
+
 ## 4-Pillar Analytics
 
 | Pillar | Metrics |
@@ -185,7 +281,7 @@ See the citation key at the top of `constants.py` for full details on each const
 |---|---|
 | `constants.py` | Central configuration, 12D parameter space, biological constants, type aliases |
 | `schemas.py` | Pydantic validation models (`InterventionVector`, `PatientProfile`, `FullProtocol`) |
-| `simulator.py` | RK4 ODE integrator for 8 state variables; supports tissue types, stochastic mode, `InterventionSchedule` |
+| `simulator.py` | RK4 ODE integrator for 8 state variables; supports tissue types, stochastic mode, `InterventionSchedule`, optional `ParameterResolver` |
 | `analytics.py` | 4-pillar health analytics computation |
 | `llm_common.py` | Shared LLM utilities (Ollama query, response parsing, grid snapping, flattening detection) |
 | `prompt_templates.py` | Prompt styles: numeric, diegetic, contrastive (used by `tiqm_experiment.py --style`) |
@@ -200,6 +296,21 @@ See the citation key at the top of `constants.py` for full details on each const
 | `ten_types_audit.py` | Deterministic Ten Types of Innovation audit (strict 3-level scoring) |
 | `tiqm_experiment.py` | Full TIQM pipeline with Ollama LLM integration |
 | `protocol_mtdna_synthesis.py` | 9-step mtDNA synthesis and transplant protocol |
+
+### Precision Medicine Modules
+
+| File | Description |
+|---|---|
+| `genetics_module.py` | APOE4/FOXO3/CD38 genotype modifiers + sex/menopause effects |
+| `lifestyle_module.py` | Alcohol, coffee, diet, fasting dose-response models |
+| `supplement_module.py` | Hill-function dose-response for 11 nutraceuticals (NR, DHA, CoQ10, etc.) |
+| `parameter_resolver.py` | 10-step modifier chain mapping ~50D expanded inputs → 12D core parameters |
+| `downstream_chain.py` | 6 post-core ODEs (MEF2, HA, synaptic strength, CR, amyloid, tau) + memory_index |
+| `scenario_definitions.py` | `InterventionProfile` and `Scenario` dataclasses, predefined A–D scenarios |
+| `scenario_runner.py` | Pipeline: ParameterResolver → simulate() → compute_downstream() |
+| `scenario_analysis.py` | Milestone extraction (dementia age, cliff crossing), scenario comparison |
+| `scenario_plot.py` | Multi-panel trajectory plots, milestone bars, summary heatmaps |
+| `run_scenario_comparison.py` | CLI main script for 4-scenario batch comparison |
 
 ### Research Campaign Scripts
 
@@ -390,8 +501,11 @@ Default artifacts:
 ## Testing
 
 ```bash
-# Full test suite
+# Full test suite (~385 tests across 17 modules)
 pytest tests/ -v
+
+# Precision medicine expansion tests
+pytest tests/test_expansion_constants.py tests/test_genetics_module.py tests/test_lifestyle_module.py tests/test_supplement_module.py tests/test_parameter_resolver.py tests/test_resolver_integration.py tests/test_downstream_chain.py tests/test_scenario_framework.py tests/test_integration_scenarios.py -v
 
 # Appendix-2 conformance suite (default mode)
 pytest tests/test_book_conformance.py -v
@@ -469,7 +583,28 @@ python multi_tissue_sim.py         # ~2 min
 # Optimization add-ons (no Ollama needed)
 python gradient_refiner.py         # gradient-descent protocol refinement
 python ml_prefilter_runner.py      # ML-guided candidate prefiltering
+
+# Precision medicine scenario comparison (no Ollama needed)
+python run_scenario_comparison.py                    # 4-scenario milestones (A–D)
+python run_scenario_comparison.py --save-plots       # Also save trajectory plots
+python run_scenario_comparison.py --years 40         # Custom projection duration
 ```
+
+## Zotero (Local)
+
+Index local Zotero storage and search by keyword:
+
+```bash
+python scripts/zotero_index.py --refresh
+python scripts/zotero_index.py --query "mitochondrial DNA"
+
+# Makefile shortcuts
+make zotero-index
+make zotero-query q="mitochondrial DNA"
+```
+
+Zotero-derived implementation handoff (for low-budget continuation):
+- [`docs/HANDOFF_ZOTERO_INTEGRATION.md`](docs/HANDOFF_ZOTERO_INTEGRATION.md)
 
 ## Requirements
 
