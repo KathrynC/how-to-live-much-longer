@@ -60,7 +60,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (222 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge)
+pytest tests/ -v          # Full pytest suite (~385 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge, expansion modules, scenarios)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -194,6 +194,18 @@ multi_tissue_sim.py        ← D3: Coupled multi-tissue simulation (imports simu
 
 generate_patients.py       ← Patient population generator + evaluator (imports simulator, analytics, constants)
 
+# Precision Medicine Expansion (2026-02-19)
+genetics_module.py         ← APOE4/FOXO3/CD38 + sex modifiers (imports constants)
+lifestyle_module.py        ← Alcohol, coffee, diet, fasting (imports constants)
+supplement_module.py       ← Hill-function dose-response 11 nutraceuticals (imports constants)
+parameter_resolver.py      ← 50D→12D modifier chain (imports genetics, lifestyle, supplements)
+downstream_chain.py        ← MEF2, HA, SS, CR, amyloid, tau ODEs + memory_index (imports constants)
+scenario_definitions.py    ← InterventionProfile, Scenario, A-D scenarios (imports nothing)
+scenario_runner.py         ← Pipeline orchestration (imports parameter_resolver, simulator, downstream_chain)
+scenario_analysis.py       ← Milestone extraction (imports numpy)
+scenario_plot.py           ← Trajectory/milestone/heatmap plots (imports matplotlib)
+run_scenario_comparison.py ← CLI 4-scenario comparison (imports all scenario modules)
+
 lit_spider.py              ← PubMed literature search for parameter validation (imports constants, llm_common)
 
 ea_optimizer.py            ← EA-toolkit integration: 8 algorithms for intervention optimization (imports simulator, analytics, constants, ea_toolkit)
@@ -233,7 +245,7 @@ protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
 ### Core Pipeline
 
 1. **constants.py** — All biological constants (from Cramer 2025), 12D parameter space definitions with discrete grids, Ollama model config, 10 clinical scenario seeds
-2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic)` returns full 30-year trajectory of 8 state variables. Supports tissue-specific profiles (brain/muscle/cardiac) and stochastic Euler-Maruyama mode
+2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic, resolver)` returns full 30-year trajectory of 8 state variables. Supports tissue-specific profiles (brain/muscle/cardiac), stochastic Euler-Maruyama mode, and optional `ParameterResolver` for precision medicine expanded inputs
 3. **analytics.py** — 4-pillar metrics computed from simulation results. `compute_all(result)` returns energy/damage/dynamics/intervention pillars
 4. **llm_common.py** — Shared LLM utilities: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`, `split_vector()`. Handles markdown fence stripping, think-tag removal, flattening detection, grid snapping
 5. **tiqm_experiment.py** — Full TIQM pipeline: offer prompt → Ollama → parse 12D vector → snap to grid → simulate → compute analytics → confirmation prompt → parse resonance scores
@@ -320,6 +332,54 @@ Cramer email corrections (2026-02-15):
 **Tier 7 — Cramer Toolkit Integration (no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit):**
 - **cramer_bridge.py** — Domain-specific biological stress scenarios for the cramer-toolkit. Defines 6 scenario banks: INFLAMMATION_SCENARIOS (4), NAD_SCENARIOS (4), VULNERABILITY_SCENARIOS (3), DEMAND_SCENARIOS (3), AGING_SCENARIOS (6), COMBINED_SCENARIOS (5) = 25 total stress scenarios in ALL_STRESS_SCENARIOS. Also defines 5 reference intervention protocols (no_treatment, conservative, moderate, aggressive, transplant_focused). Convenience functions: `run_resilience_analysis()` (full robustness + regret + vulnerability + rankings), `run_vulnerability_analysis()` (sorted impact list), `run_scenario_comparison()` (any analysis function under multiple scenarios).
 - **tests/test_cramer_bridge.py** — 24 tests across 5 classes: scenario bank structure (11), scenario application (4), ScenarioSimulator integration (4), protocol bank (5).
+
+## Precision Medicine Expansion (2026-02-19)
+
+Three-layer architecture expanding the simulator from 8-state/12D to a precision medicine platform (~50D input, 14 downstream state variables) without modifying the Cramer core ODE.
+
+### Architecture
+
+```
+~50D Expanded Inputs → [ParameterResolver] → 12D Core → [Cramer ODE] → 8 States → [DownstreamChain] → 6 ODEs + Memory Index
+```
+
+1. **ParameterResolver** (`parameter_resolver.py`): Maps genetics, lifestyle, supplements, grief, sleep to effective 12D core inputs via a 10-step modifier chain. Pre-computes time-varying trajectories (grief decay, alcohol taper, gut health) at construction, interpolates at each timestep.
+2. **Cramer Core ODE** (`simulator.py`): Unchanged. Accepts `resolver=None` kwarg; when provided, calls `resolver.resolve(t)` instead of `_resolve_intervention()`.
+3. **DownstreamChain** (`downstream_chain.py`): Post-processes core outputs into 6 additional ODEs (MEF2, histone acetylation, synaptic strength, cognitive reserve, amyloid-beta, tau) + derived `memory_index` and `resilience`.
+
+### New Modules
+
+| Module | Role | Depends On |
+|--------|------|-----------|
+| `genetics_module.py` | APOE4/FOXO3/CD38 genotype + sex/menopause modifiers | constants |
+| `lifestyle_module.py` | Alcohol, coffee, diet, fasting effects | constants |
+| `supplement_module.py` | Hill-function dose-response for 11 nutraceuticals | constants |
+| `parameter_resolver.py` | 50D→12D modifier chain with time-varying trajectories | genetics, lifestyle, supplements |
+| `downstream_chain.py` | MEF2, HA, SS, CR, amyloid, tau ODEs + memory_index | constants |
+| `scenario_definitions.py` | InterventionProfile/Scenario dataclasses, A-D scenarios | — |
+| `scenario_runner.py` | Pipeline: resolver → simulate → downstream | parameter_resolver, simulator, downstream_chain |
+| `scenario_analysis.py` | Milestone extraction, scenario comparison | — |
+| `scenario_plot.py` | Trajectory plots, milestone bars, heatmaps | matplotlib |
+| `run_scenario_comparison.py` | CLI script for 4-scenario comparison | all above |
+
+### New Commands
+
+```bash
+# 4-scenario comparison (63yo APOE4 female, scenarios A-D)
+python run_scenario_comparison.py                    # Print milestones
+python run_scenario_comparison.py --save-plots       # Also save plots to output/scenarios/
+python run_scenario_comparison.py --years 40         # Custom duration
+```
+
+### Expanded Parameter Space
+
+The resolver accepts ~50D input (14 patient + 24 intervention expanded params) and produces the standard 12D core pair. New patient params include `apoe_genotype` (0/1/2), `sex` (M/F), `menopause_status`, `grief_intensity`, `intellectual_engagement`, `education_level`. New intervention params include `sleep_intervention`, `alcohol_intake`, `coffee_intake`, `diet_type`, 11 supplement doses, `probiotic_intensity`, `therapy_intensity`.
+
+### Design Documents
+
+- `artifacts/design_doc_time_varying_parameter_resolver_2026-02-19.md`
+- `artifacts/handoff_batch{1,2,3,4}_*_2026-02-19.md`
+- `docs/plans/2026-02-19-precision-medicine-expansion.md`
 
 ## 12D Parameter Space
 
@@ -723,7 +783,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs 222 tests across 9 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge)
+- Formal test suite: `pytest tests/ -v` runs ~385 tests across 17 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)
