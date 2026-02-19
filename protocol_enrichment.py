@@ -67,8 +67,8 @@ def clinical_signature(analytics: dict[str, Any]) -> dict[str, Any]:
         cliff_risk = "none"
 
     return {
-        "final_atp": energy.get("final_atp"),
-        "final_het": damage.get("final_het"),
+        "final_atp": energy.get("atp_final", energy.get("final_atp")),
+        "final_het": damage.get("het_final", damage.get("final_het")),
         "energy_trend": energy_trend,
         "cliff_risk": cliff_risk,
         "benefit_cost_ratio": intervention.get("benefit_cost_ratio"),

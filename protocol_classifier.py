@@ -15,19 +15,21 @@ import math
 from typing import Any
 
 # Class prototypes: mean values for key metrics per outcome class.
-# Built from dark_matter.py classification thresholds and reachable_set observations.
+# Calibrated from 700-trial dark_matter.py sweep (2026-02-19).
+# Key insight: heteroplasmy is NOT a strong discriminator — most interventions
+# reduce het regardless of outcome. Classes are separated primarily by ATP.
 CLASS_PROTOTYPES = {
-    "thriving":    {"final_atp": 0.85, "mean_atp": 0.80, "final_het": 0.20},
-    "stable":      {"final_atp": 0.60, "mean_atp": 0.55, "final_het": 0.50},
-    "declining":   {"final_atp": 0.35, "mean_atp": 0.40, "final_het": 0.65},
-    "collapsed":   {"final_atp": 0.10, "mean_atp": 0.15, "final_het": 0.85},
+    "thriving":    {"final_atp": 0.82, "mean_atp": 0.87, "final_het": 0.20},
+    "stable":      {"final_atp": 0.67, "mean_atp": 0.72, "final_het": 0.22},
+    "declining":   {"final_atp": 0.40, "mean_atp": 0.47, "final_het": 0.21},
+    "collapsed":   {"final_atp": 0.10, "mean_atp": 0.15, "final_het": 0.50},
 }
 
 # Metric keys used for prototype distance computation
 FIT_KEYS = ["final_atp", "mean_atp", "final_het"]
 
-# Standard deviations for z-scoring (estimated from population simulations)
-FIT_STD = {"final_atp": 0.25, "mean_atp": 0.20, "final_het": 0.20}
+# Standard deviations for z-scoring (from dark_matter population, 2026-02-19)
+FIT_STD = {"final_atp": 0.08, "mean_atp": 0.08, "final_het": 0.08}
 
 
 def rule_classify(
@@ -75,9 +77,9 @@ def analytics_fit_classify(
     energy = analytics.get("energy", {})
     damage = analytics.get("damage", {})
     metrics = {
-        "final_atp": energy.get("final_atp"),
-        "mean_atp": energy.get("mean_atp"),
-        "final_het": damage.get("final_het"),
+        "final_atp": energy.get("atp_final", energy.get("final_atp")),
+        "mean_atp": energy.get("atp_mean", energy.get("mean_atp")),
+        "final_het": damage.get("het_final", damage.get("final_het")),
     }
 
     distances: dict[str, float] = {}

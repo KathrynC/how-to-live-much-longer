@@ -64,26 +64,39 @@ def ingest_from_simulation(
     )
 
 
+DARK_MATTER_PATIENTS = {
+    "moderate_60": {
+        "baseline_age": 60.0, "baseline_heteroplasmy": 0.40,
+        "baseline_nad_level": 0.6, "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0, "inflammation_level": 0.3,
+    },
+    "near_cliff_75": {
+        "baseline_age": 75.0, "baseline_heteroplasmy": 0.60,
+        "baseline_nad_level": 0.4, "genetic_vulnerability": 1.25,
+        "metabolic_demand": 1.0, "inflammation_level": 0.5,
+    },
+}
+
+
 def ingest_dark_matter(path: Path) -> list[ProtocolRecord]:
     """Import protocols from dark_matter.py JSON artifact."""
     data = json.loads(path.read_text())
     records = []
-    for patient_key, patient_data in data.items():
-        categories = patient_data.get("by_category", {})
-        for category, cat_data in categories.items():
-            for example in cat_data.get("examples", []):
-                records.append(ProtocolRecord(
-                    intervention=example.get("intervention", {}),
-                    patient={},  # dark_matter doesn't store full patient dict
-                    source="dark_matter",
-                    method="random_sample",
-                    outcome_class=category,
-                    simulation={
-                        "final_atp": example.get("final_atp"),
-                        "final_het": example.get("final_het"),
-                    },
-                    meta={"patient_key": patient_key},
-                ))
+    for entry in data.get("results", []):
+        patient_key = entry.get("patient", "")
+        patient_dict = dict(DARK_MATTER_PATIENTS.get(patient_key, {}))
+        records.append(ProtocolRecord(
+            intervention=entry.get("intervention", {}),
+            patient=patient_dict,
+            source="dark_matter",
+            method="random_sample",
+            outcome_class=entry.get("category"),
+            simulation={
+                "final_atp": entry.get("final_atp"),
+                "final_het": entry.get("final_het"),
+            },
+            meta={"patient_key": patient_key, "trial": entry.get("trial")},
+        ))
     return records
 
 

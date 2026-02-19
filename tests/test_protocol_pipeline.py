@@ -15,35 +15,31 @@ class TestIngestAdapters:
     def test_ingest_from_dark_matter(self, tmp_path):
         from run_protocol_pipeline import ingest_dark_matter
         artifact = {
-            "moderate_patient": {
-                "total_sampled": 2,
-                "by_category": {
-                    "thriving": {
-                        "count": 1,
-                        "examples": [{
-                            "intervention": {"rapamycin_dose": 0.5, "nad_supplement": 0.75,
-                                             "senolytic_dose": 0.5, "yamanaka_intensity": 0.0,
-                                             "transplant_rate": 0.0, "exercise_level": 0.5},
-                            "final_atp": 0.85, "final_het": 0.20,
-                        }],
-                    },
-                    "collapsed": {
-                        "count": 1,
-                        "examples": [{
-                            "intervention": {"rapamycin_dose": 0.0, "nad_supplement": 0.0,
-                                             "senolytic_dose": 0.0, "yamanaka_intensity": 1.0,
-                                             "transplant_rate": 0.0, "exercise_level": 0.0},
-                            "final_atp": 0.05, "final_het": 0.92,
-                        }],
-                    },
+            "experiment": "dark_matter",
+            "results": [
+                {
+                    "trial": 1, "patient": "moderate_60",
+                    "intervention": {"rapamycin_dose": 0.5, "nad_supplement": 0.75,
+                                     "senolytic_dose": 0.5, "yamanaka_intensity": 0.0,
+                                     "transplant_rate": 0.0, "exercise_level": 0.5},
+                    "final_atp": 0.85, "final_het": 0.20, "category": "thriving",
                 },
-            },
+                {
+                    "trial": 2, "patient": "near_cliff_75",
+                    "intervention": {"rapamycin_dose": 0.0, "nad_supplement": 0.0,
+                                     "senolytic_dose": 0.0, "yamanaka_intensity": 1.0,
+                                     "transplant_rate": 0.0, "exercise_level": 0.0},
+                    "final_atp": 0.05, "final_het": 0.92, "category": "collapsed",
+                },
+            ],
         }
         path = tmp_path / "dark_matter.json"
         path.write_text(json.dumps(artifact))
         records = ingest_dark_matter(path)
         assert len(records) == 2
         assert records[0].source == "dark_matter"
+        assert records[0].patient["baseline_age"] == 60.0
+        assert records[1].patient["baseline_age"] == 75.0
 
     def test_ingest_from_simulation(self):
         from run_protocol_pipeline import ingest_from_simulation
