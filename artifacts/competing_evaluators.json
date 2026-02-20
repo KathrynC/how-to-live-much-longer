@@ -1,0 +1,562 @@
+{
+  "experiment": "competing_evaluators",
+  "date": "2026-02-19 20:43:01",
+  "elapsed_seconds": 33.6,
+  "n_sims": 311,
+  "n_candidates": 310,
+  "test_patient": {
+    "baseline_age": 70.0,
+    "baseline_heteroplasmy": 0.3,
+    "baseline_nad_level": 0.6,
+    "genetic_vulnerability": 1.0,
+    "metabolic_demand": 1.0,
+    "inflammation_level": 0.25
+  },
+  "evaluator_names": [
+    "ATP_Guardian",
+    "Het_Hunter",
+    "Crisis_Delayer",
+    "Efficiency_Auditor"
+  ],
+  "source_counts": {
+    "random_lhs": 300,
+    "named:cocktail_balanced": 1,
+    "named:rapamycin_heavy": 1,
+    "named:transplant_focused": 1,
+    "named:nad_heavy": 1,
+    "named:exercise_only": 1,
+    "named:kitchen_sink": 1,
+    "named:transplant_plus_rapa": 1,
+    "named:minimal_effective": 1,
+    "named:aggressive_reversal": 1,
+    "named:yamanaka_cautious": 1
+  },
+  "transactions": {
+    "count": 1,
+    "fraction": 0.0032258064516129032,
+    "protocols": [
+      {
+        "intervention": {
+          "rapamycin_dose": 0.8217868934531588,
+          "nad_supplement": 0.07540597343286919,
+          "senolytic_dose": 0.27595549904164535,
+          "yamanaka_intensity": 0.14320733329511567,
+          "transplant_rate": 0.659451767327037,
+          "exercise_level": 0.11792156478135456
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": -0.23860180859513203,
+          "Het_Hunter": 0.28016111775871255,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": -0.0656719197588484
+        },
+        "percentile_ranks": {
+          "ATP_Guardian": 83.49514563106796,
+          "Het_Hunter": 77.02265372168284,
+          "Crisis_Delayer": 89.64401294498381,
+          "Efficiency_Auditor": 85.43689320388349
+        },
+        "robustness": 83.64750364180294
+      }
+    ]
+  },
+  "pareto_4d": {
+    "count": 9,
+    "protocols": [
+      {
+        "intervention": {
+          "rapamycin_dose": 0.9367261226132566,
+          "nad_supplement": 0.6956108611921961,
+          "senolytic_dose": 0.636655590705064,
+          "yamanaka_intensity": 0.3869135256112302,
+          "transplant_rate": 0.9256792589818007,
+          "exercise_level": 0.5089729503090197
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": -0.7884421195962358,
+          "Het_Hunter": 0.30673277480873923,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": -0.13784869957208037
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.9225417738235688,
+          "nad_supplement": 0.9713136899419771,
+          "senolytic_dose": 0.3494582524792926,
+          "yamanaka_intensity": 0.8235164499639922,
+          "transplant_rate": 0.6870242901917457,
+          "exercise_level": 0.199514642636645
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": -2.118703689490358,
+          "Het_Hunter": 0.30421224472883135,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": -0.13655495867563897
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.9073101383028963,
+          "nad_supplement": 0.9684324855539417,
+          "senolytic_dose": 0.7621773062834094,
+          "yamanaka_intensity": 0.025777081581865154,
+          "transplant_rate": 0.7603694025656623,
+          "exercise_level": 0.4826362171028776
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": 0.009114766692148321,
+          "Het_Hunter": 0.30378171885813327,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": -0.041711522677248286
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.9666000905985139,
+          "nad_supplement": 0.9503965110358007,
+          "senolytic_dose": 0.9866493829760987,
+          "yamanaka_intensity": 0.21975556829360426,
+          "transplant_rate": 0.57561004985483,
+          "exercise_level": 0.6458189166688676
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": -0.3783980948765936,
+          "Het_Hunter": 0.30713906986335127,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": -0.13926426788856094
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.34208670826980353,
+          "nad_supplement": 0.45983353698208146,
+          "senolytic_dose": 0.9505147436267405,
+          "yamanaka_intensity": 0.0027010085175782216,
+          "transplant_rate": 0.6844657235138736,
+          "exercise_level": 0.13583171659179422
+        },
+        "source": "random_lhs",
+        "scores": {
+          "ATP_Guardian": 0.04108300809350016,
+          "Het_Hunter": 0.24915612501738366,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": 0.41640105207370565
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.1,
+          "nad_supplement": 0.25,
+          "senolytic_dose": 0.1,
+          "yamanaka_intensity": 0.0,
+          "transplant_rate": 0.75,
+          "exercise_level": 0.1
+        },
+        "source": "named:transplant_focused",
+        "scores": {
+          "ATP_Guardian": 0.020984844408580117,
+          "Het_Hunter": 0.22099170889993985,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": 0.7382081208782493
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.25,
+          "nad_supplement": 0.75,
+          "senolytic_dose": 0.25,
+          "yamanaka_intensity": 0.0,
+          "transplant_rate": 0.0,
+          "exercise_level": 0.25
+        },
+        "source": "named:nad_heavy",
+        "scores": {
+          "ATP_Guardian": 0.03701826751377866,
+          "Het_Hunter": 0.13276775357864867,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": 0.49808985719542137
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.5,
+          "nad_supplement": 0.25,
+          "senolytic_dose": 0.25,
+          "yamanaka_intensity": 0.0,
+          "transplant_rate": 0.75,
+          "exercise_level": 0.25
+        },
+        "source": "named:transplant_plus_rapa",
+        "scores": {
+          "ATP_Guardian": 0.0202051186727795,
+          "Het_Hunter": 0.25695218642067547,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": 0.3156320943615183
+        }
+      },
+      {
+        "intervention": {
+          "rapamycin_dose": 0.75,
+          "nad_supplement": 0.75,
+          "senolytic_dose": 0.5,
+          "yamanaka_intensity": 0.0,
+          "transplant_rate": 1.0,
+          "exercise_level": 0.5
+        },
+        "source": "named:aggressive_reversal",
+        "scores": {
+          "ATP_Guardian": 0.03480091076753729,
+          "Het_Hunter": 0.29174442718653915,
+          "Crisis_Delayer": 0.3,
+          "Efficiency_Auditor": 0.1836774982323881
+        }
+      }
+    ]
+  },
+  "agreement_matrix": [
+    [
+      1.0,
+      -0.10379598458444568,
+      0.024833060261444106,
+      0.652849531179036
+    ],
+    [
+      -0.10379598458444567,
+      1.0,
+      0.07173710981518049,
+      -0.5271130678745606
+    ],
+    [
+      0.024833060261444106,
+      0.0717371098151805,
+      1.0,
+      -0.007699922358293827
+    ],
+    [
+      0.6528495311790359,
+      -0.5271130678745606,
+      -0.007699922358293827,
+      1.0
+    ]
+  ],
+  "per_evaluator_rankings": {
+    "ATP_Guardian": {
+      "top_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.34208670826980353,
+            "nad_supplement": 0.45983353698208146,
+            "senolytic_dose": 0.9505147436267405,
+            "yamanaka_intensity": 0.0027010085175782216,
+            "transplant_rate": 0.6844657235138736,
+            "exercise_level": 0.13583171659179422
+          },
+          "score": 0.04108300809350016,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.25,
+            "nad_supplement": 0.75,
+            "senolytic_dose": 0.25,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0,
+            "exercise_level": 0.25
+          },
+          "score": 0.03701826751377866,
+          "source": "named:nad_heavy"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.75,
+            "nad_supplement": 0.75,
+            "senolytic_dose": 0.5,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 1.0,
+            "exercise_level": 0.5
+          },
+          "score": 0.03480091076753729,
+          "source": "named:aggressive_reversal"
+        }
+      ],
+      "bottom_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.4884358986353302,
+            "nad_supplement": 0.6982025653507985,
+            "senolytic_dose": 0.7085895365283252,
+            "yamanaka_intensity": 0.9987697066925755,
+            "transplant_rate": 0.6139993164355271,
+            "exercise_level": 0.9094528765708977
+          },
+          "score": -2.839521186734962,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.42465859397941647,
+            "nad_supplement": 0.768993965752033,
+            "senolytic_dose": 0.29286760628739644,
+            "yamanaka_intensity": 0.9949204460703014,
+            "transplant_rate": 0.22520669724904288,
+            "exercise_level": 0.8548175515533313
+          },
+          "score": -2.8272384578207332,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.3205120446506402,
+            "nad_supplement": 0.5820114148477777,
+            "senolytic_dose": 0.6915034883339508,
+            "yamanaka_intensity": 0.9885627793512811,
+            "transplant_rate": 0.17794894490887114,
+            "exercise_level": 0.8034276410187937
+          },
+          "score": -2.7997918365177843,
+          "source": "random_lhs"
+        }
+      ]
+    },
+    "Het_Hunter": {
+      "top_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.9666000905985139,
+            "nad_supplement": 0.9503965110358007,
+            "senolytic_dose": 0.9866493829760987,
+            "yamanaka_intensity": 0.21975556829360426,
+            "transplant_rate": 0.57561004985483,
+            "exercise_level": 0.6458189166688676
+          },
+          "score": 0.30713906986335127,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.9367261226132566,
+            "nad_supplement": 0.6956108611921961,
+            "senolytic_dose": 0.636655590705064,
+            "yamanaka_intensity": 0.3869135256112302,
+            "transplant_rate": 0.9256792589818007,
+            "exercise_level": 0.5089729503090197
+          },
+          "score": 0.30673277480873923,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.9225417738235688,
+            "nad_supplement": 0.9713136899419771,
+            "senolytic_dose": 0.3494582524792926,
+            "yamanaka_intensity": 0.8235164499639922,
+            "transplant_rate": 0.6870242901917457,
+            "exercise_level": 0.199514642636645
+          },
+          "score": 0.30421224472883135,
+          "source": "random_lhs"
+        }
+      ],
+      "bottom_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.0,
+            "nad_supplement": 0.0,
+            "senolytic_dose": 0.0,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0,
+            "exercise_level": 1.0
+          },
+          "score": -0.0007815445058640402,
+          "source": "named:exercise_only"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.25,
+            "nad_supplement": 0.25,
+            "senolytic_dose": 0.1,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0,
+            "exercise_level": 0.5
+          },
+          "score": 0.09249898870482093,
+          "source": "named:minimal_effective"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.04639480631838518,
+            "nad_supplement": 0.017125978453092685,
+            "senolytic_dose": 0.9881880128596728,
+            "yamanaka_intensity": 0.45214669800483287,
+            "transplant_rate": 0.003496913492414244,
+            "exercise_level": 0.15652564469338476
+          },
+          "score": 0.11375117348247227,
+          "source": "random_lhs"
+        }
+      ]
+    },
+    "Crisis_Delayer": {
+      "top_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.8726804150872742,
+            "nad_supplement": 0.05505362600419037,
+            "senolytic_dose": 0.4440469742977891,
+            "yamanaka_intensity": 0.813423940444992,
+            "transplant_rate": 0.7968623956055004,
+            "exercise_level": 0.028842624081637715
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.9790513570987194,
+            "nad_supplement": 0.727708566496762,
+            "senolytic_dose": 0.19366385656866272,
+            "yamanaka_intensity": 0.5865283843132515,
+            "transplant_rate": 0.05476366290489752,
+            "exercise_level": 0.846397032215222
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.20579661334638513,
+            "nad_supplement": 0.873503201608583,
+            "senolytic_dose": 0.9940232838654695,
+            "yamanaka_intensity": 0.10570005626684875,
+            "transplant_rate": 0.6189943946928953,
+            "exercise_level": 0.743668406671389
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        }
+      ],
+      "bottom_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.8726804150872742,
+            "nad_supplement": 0.05505362600419037,
+            "senolytic_dose": 0.4440469742977891,
+            "yamanaka_intensity": 0.813423940444992,
+            "transplant_rate": 0.7968623956055004,
+            "exercise_level": 0.028842624081637715
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.9790513570987194,
+            "nad_supplement": 0.727708566496762,
+            "senolytic_dose": 0.19366385656866272,
+            "yamanaka_intensity": 0.5865283843132515,
+            "transplant_rate": 0.05476366290489752,
+            "exercise_level": 0.846397032215222
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.20579661334638513,
+            "nad_supplement": 0.873503201608583,
+            "senolytic_dose": 0.9940232838654695,
+            "yamanaka_intensity": 0.10570005626684875,
+            "transplant_rate": 0.6189943946928953,
+            "exercise_level": 0.743668406671389
+          },
+          "score": 0.3,
+          "source": "random_lhs"
+        }
+      ]
+    },
+    "Efficiency_Auditor": {
+      "top_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.1,
+            "nad_supplement": 0.25,
+            "senolytic_dose": 0.1,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.75,
+            "exercise_level": 0.1
+          },
+          "score": 0.7382081208782493,
+          "source": "named:transplant_focused"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.25,
+            "nad_supplement": 0.75,
+            "senolytic_dose": 0.25,
+            "yamanaka_intensity": 0.0,
+            "transplant_rate": 0.0,
+            "exercise_level": 0.25
+          },
+          "score": 0.49808985719542137,
+          "source": "named:nad_heavy"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.34208670826980353,
+            "nad_supplement": 0.45983353698208146,
+            "senolytic_dose": 0.9505147436267405,
+            "yamanaka_intensity": 0.0027010085175782216,
+            "transplant_rate": 0.6844657235138736,
+            "exercise_level": 0.13583171659179422
+          },
+          "score": 0.41640105207370565,
+          "source": "random_lhs"
+        }
+      ],
+      "bottom_3": [
+        {
+          "intervention": {
+            "rapamycin_dose": 0.8488762140425453,
+            "nad_supplement": 0.744647085923927,
+            "senolytic_dose": 0.9801842346983374,
+            "yamanaka_intensity": 0.9006717832513079,
+            "transplant_rate": 0.9516922566582059,
+            "exercise_level": 0.6966366674935883
+          },
+          "score": -0.17630491913389737,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.5537458460121678,
+            "nad_supplement": 0.9112816812599664,
+            "senolytic_dose": 0.8205871276639102,
+            "yamanaka_intensity": 0.9858133157423167,
+            "transplant_rate": 0.5381945876372051,
+            "exercise_level": 0.9569081832453196
+          },
+          "score": -0.1646810301855988,
+          "source": "random_lhs"
+        },
+        {
+          "intervention": {
+            "rapamycin_dose": 0.7087820970580608,
+            "nad_supplement": 0.7497459443869773,
+            "senolytic_dose": 0.565541765314554,
+            "yamanaka_intensity": 0.690472129893243,
+            "transplant_rate": 0.9287538642861349,
+            "exercise_level": 0.8338042975569571
+          },
+          "score": -0.15406234946885877,
+          "source": "random_lhs"
+        }
+      ]
+    }
+  }
+}

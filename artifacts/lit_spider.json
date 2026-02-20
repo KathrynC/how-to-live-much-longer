@@ -1,13 +1,1440 @@
 {
   "experiment": "lit_spider",
-  "date": "2026-02-16 13:12:32 UTC",
-  "elapsed_seconds": 4.4,
-  "n_parameters": 2,
-  "n_pubmed_queries": 2,
-  "n_abstracts_fetched": 9,
+  "date": "2026-02-20 01:37:36 UTC",
+  "elapsed_seconds": 44.3,
+  "n_parameters": 26,
+  "n_pubmed_queries": 26,
+  "n_abstracts_fetched": 363,
   "n_llm_extractions": 0,
   "ollama_model": "keyword-only",
   "parameters": {
+    "base_replication_rate": {
+      "parameter": "base_replication_rate",
+      "current_value": 0.1,
+      "current_unit": "per year",
+      "location": "simulator.py:297 (embedded in derivatives())",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 7,
+      "n_values_extracted": 17,
+      "literature_values": [
+        {
+          "value": 70.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "37788894",
+          "paper_title": "Novel function of MOTS-c in mitochondrial remodelling contributes to its antiviral role during HBV infection."
+        },
+        {
+          "value": 0.3,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39039280",
+          "paper_title": "Mitochondrial DNA mosaicism in normal human somatic cells."
+        },
+        {
+          "value": 6.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39039280",
+          "paper_title": "Mitochondrial DNA mosaicism in normal human somatic cells."
+        },
+        {
+          "value": 5.0,
+          "unit": "\u00d7",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39039280",
+          "paper_title": "Mitochondrial DNA mosaicism in normal human somatic cells."
+        },
+        {
+          "value": 20.0,
+          "unit": "per year",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39039280",
+          "paper_title": "Mitochondrial DNA mosaicism in normal human somatic cells."
+        },
+        {
+          "value": 2.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35094997",
+          "paper_title": "Advances in Thymidine Kinase 2 Deficiency: Clinical Aspects, Translational Progress, and Emerging Therapies."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38712963",
+          "paper_title": "SFTSV nucleoprotein mediates DNA sensor cGAS degradation to suppress cGAS-dependent antiviral responses."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38712963",
+          "paper_title": "SFTSV nucleoprotein mediates DNA sensor cGAS degradation to suppress cGAS-dependent antiviral responses."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35227992",
+          "paper_title": "Examining the role of mitochondrial genetic variation in nicotine dependence."
+        },
+        {
+          "value": 10.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38665433",
+          "paper_title": "Nucleoside supplements as treatments for mitochondrial DNA depletion syndrome."
+        },
+        {
+          "value": 0.1,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38665433",
+          "paper_title": "Nucleoside supplements as treatments for mitochondrial DNA depletion syndrome."
+        },
+        {
+          "value": 20.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38665433",
+          "paper_title": "Nucleoside supplements as treatments for mitochondrial DNA depletion syndrome."
+        },
+        {
+          "value": 200.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38665433",
+          "paper_title": "Nucleoside supplements as treatments for mitochondrial DNA depletion syndrome."
+        },
+        {
+          "value": 50.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38665433",
+          "paper_title": "Nucleoside supplements as treatments for mitochondrial DNA depletion syndrome."
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34972066",
+          "paper_title": "Placental mtDNA copy number and methylation in association with macrosomia in healthy pregnancy."
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34972066",
+          "paper_title": "Placental mtDNA copy number and methylation in association with macrosomia in healthy pregnancy."
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34972066",
+          "paper_title": "Placental mtDNA copy number and methylation in association with macrosomia in healthy pregnancy."
+        }
+      ],
+      "literature_range": {
+        "min": 0.1,
+        "max": 200.0,
+        "median": 30.0,
+        "n": 17
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "37788894",
+          "title": "Novel function of MOTS-c in mitochondrial remodelling contributes to its antiviral role during HBV infection.",
+          "year": "2024",
+          "doi": "10.1136/gutjnl-2023-330389",
+          "authors": [
+            "Lin C",
+            "Luo L",
+            "Xun Z"
+          ]
+        },
+        {
+          "pmid": "39039280",
+          "title": "Mitochondrial DNA mosaicism in normal human somatic cells.",
+          "year": "2024",
+          "doi": "10.1038/s41588-024-01838-z",
+          "authors": [
+            "An J",
+            "Nam CH",
+            "Kim R"
+          ]
+        },
+        {
+          "pmid": "35094997",
+          "title": "Advances in Thymidine Kinase 2 Deficiency: Clinical Aspects, Translational Progress, and Emerging Therapies.",
+          "year": "2022",
+          "doi": "10.3233/JND-210786",
+          "authors": [
+            "Berardo A",
+            "Dom\u00ednguez-Gonz\u00e1lez C",
+            "Engelstad K"
+          ]
+        },
+        {
+          "pmid": "38712963",
+          "title": "SFTSV nucleoprotein mediates DNA sensor cGAS degradation to suppress cGAS-dependent antiviral responses.",
+          "year": "2024",
+          "doi": "10.1128/spectrum.03796-23",
+          "authors": [
+            "Jiang Z-z",
+            "Chu M",
+            "Yan L-n"
+          ]
+        },
+        {
+          "pmid": "35227992",
+          "title": "Examining the role of mitochondrial genetic variation in nicotine dependence.",
+          "year": "2022",
+          "doi": "10.1016/j.psychres.2022.114452",
+          "authors": [
+            "Giannoulis SV",
+            "Chenoweth MJ",
+            "Saquilayan P"
+          ]
+        }
+      ]
+    },
+    "ros_damage_coupling": {
+      "parameter": "ros_damage_coupling",
+      "current_value": 0.15,
+      "current_unit": "dimensionless coupling strength",
+      "location": "simulator.py:310 (ROS\u2192damage conversion)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 3,
+      "literature_values": [
+        {
+          "value": 35.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        },
+        {
+          "value": 100.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        },
+        {
+          "value": 38.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        }
+      ],
+      "literature_range": {
+        "min": 35.0,
+        "max": 100.0,
+        "median": 38.0,
+        "n": 3
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39923879",
+          "title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions.",
+          "year": "2025",
+          "doi": "10.1016/j.ajog.2025.02.006",
+          "authors": [
+            "Ram\u00edrez-Mart\u00edn N",
+            "Buigues A",
+            "Rodr\u00edguez-Varela C"
+          ]
+        }
+      ]
+    },
+    "apoptosis_rate": {
+      "parameter": "apoptosis_rate",
+      "current_value": 0.02,
+      "current_unit": "per year (energy-gated)",
+      "location": "simulator.py:336 (embedded in derivatives())",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 3,
+      "n_values_extracted": 4,
+      "literature_values": [
+        {
+          "value": 0.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36465612",
+          "paper_title": "Cangfudaotan decoction inhibits mitochondria-dependent apoptosis of granulosa cells in rats with polycystic ovarian syndrome."
+        },
+        {
+          "value": 30.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39245438",
+          "paper_title": null
+        },
+        {
+          "value": 1.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39245438",
+          "paper_title": null
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "25355314",
+          "paper_title": "Depletion of the central metabolite NAD leads to oncosis-mediated cell death."
+        }
+      ],
+      "literature_range": {
+        "min": 0.5,
+        "max": 95.0,
+        "median": 15.5,
+        "n": 4
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "36465612",
+          "title": "Cangfudaotan decoction inhibits mitochondria-dependent apoptosis of granulosa cells in rats with polycystic ovarian syndrome.",
+          "year": "2022",
+          "doi": "10.3389/fendo.2022.962154",
+          "authors": [
+            "Jiang XL",
+            "Tai H",
+            "Xiao XS"
+          ]
+        },
+        {
+          "pmid": "39245438",
+          "title": null,
+          "year": "2025",
+          "doi": "10.1080/15548627.2024.2395799",
+          "authors": [
+            "Lee TL",
+            "Shen WC",
+            "Chen YC"
+          ]
+        },
+        {
+          "pmid": "25355314",
+          "title": "Depletion of the central metabolite NAD leads to oncosis-mediated cell death.",
+          "year": "2014",
+          "doi": "10.1074/jbc.M114.580159",
+          "authors": [
+            "Del Nagro C",
+            "Xiao Y",
+            "Rangell L"
+          ]
+        }
+      ]
+    },
+    "exercise_biogenesis": {
+      "parameter": "exercise_biogenesis",
+      "current_value": 0.03,
+      "current_unit": "dimensionless coupling strength",
+      "location": "simulator.py:333 (exercise \u2192 biogenesis term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 6,
+      "n_values_extracted": 23,
+      "literature_values": [
+        {
+          "value": 21.0,
+          "unit": "mm",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40045401",
+          "paper_title": "Circulating mitochondrial DNA signature in cardiometabolic patients."
+        },
+        {
+          "value": 42.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40045401",
+          "paper_title": "Circulating mitochondrial DNA signature in cardiometabolic patients."
+        },
+        {
+          "value": 33.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40045401",
+          "paper_title": "Circulating mitochondrial DNA signature in cardiometabolic patients."
+        },
+        {
+          "value": 25.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40045401",
+          "paper_title": "Circulating mitochondrial DNA signature in cardiometabolic patients."
+        },
+        {
+          "value": 35.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40045401",
+          "paper_title": "Circulating mitochondrial DNA signature in cardiometabolic patients."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34798200",
+          "paper_title": "AICAR stimulates mitochondrial biogenesis and BCAA catabolic enzyme expression in C2C12 myotubes."
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32804305",
+          "paper_title": "Transcription of mtDNA and dyslipidemia are ameliorated by aerobic exercise in type 2 diabetes."
+        },
+        {
+          "value": 65.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 17.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 21.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 57.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 56.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 45.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 66.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34588196",
+          "paper_title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD."
+        },
+        {
+          "value": 2.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31385363",
+          "paper_title": "Effect of metformin on myotube BCAA catabolism."
+        },
+        {
+          "value": 24.0,
+          "unit": "hours",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31385363",
+          "paper_title": "Effect of metformin on myotube BCAA catabolism."
+        },
+        {
+          "value": 12.0,
+          "unit": "hours",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31385363",
+          "paper_title": "Effect of metformin on myotube BCAA catabolism."
+        },
+        {
+          "value": 48.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38635100",
+          "paper_title": "Associations between mitochondrial copy number, exercise capacity, physiologic cost of walking, and cardiac strain in young adult survivors of childhood cancer."
+        },
+        {
+          "value": 30.7,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38635100",
+          "paper_title": "Associations between mitochondrial copy number, exercise capacity, physiologic cost of walking, and cardiac strain in young adult survivors of childhood cancer."
+        },
+        {
+          "value": 25.7,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38635100",
+          "paper_title": "Associations between mitochondrial copy number, exercise capacity, physiologic cost of walking, and cardiac strain in young adult survivors of childhood cancer."
+        },
+        {
+          "value": 10.7,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38635100",
+          "paper_title": "Associations between mitochondrial copy number, exercise capacity, physiologic cost of walking, and cardiac strain in young adult survivors of childhood cancer."
+        },
+        {
+          "value": 31.7,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38635100",
+          "paper_title": "Associations between mitochondrial copy number, exercise capacity, physiologic cost of walking, and cardiac strain in young adult survivors of childhood cancer."
+        }
+      ],
+      "literature_range": {
+        "min": 1.0,
+        "max": 66.0,
+        "median": 30.7,
+        "n": 23
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "40045401",
+          "title": "Circulating mitochondrial DNA signature in cardiometabolic patients.",
+          "year": "2025",
+          "doi": "10.1186/s12933-025-02656-1",
+          "authors": [
+            "Mengozzi A",
+            "Armenia S",
+            "De Biase N"
+          ]
+        },
+        {
+          "pmid": "34798200",
+          "title": "AICAR stimulates mitochondrial biogenesis and BCAA catabolic enzyme expression in C2C12 myotubes.",
+          "year": "2022",
+          "doi": "10.1016/j.biochi.2021.11.004",
+          "authors": [
+            "Hinkle JS",
+            "Rivera CN",
+            "Vaughan RA"
+          ]
+        },
+        {
+          "pmid": "32804305",
+          "title": "Transcription of mtDNA and dyslipidemia are ameliorated by aerobic exercise in type 2 diabetes.",
+          "year": "2020",
+          "doi": "10.1007/s11033-020-05725-8",
+          "authors": [
+            "Benite-Ribeiro SA",
+            "Lucas-Lima KL",
+            "Jones JN"
+          ]
+        },
+        {
+          "pmid": "34588196",
+          "title": "Whole-body and muscle responses to aerobic exercise training and withdrawal in ageing and COPD.",
+          "year": "2022",
+          "doi": "10.1183/13993003.01507-2021",
+          "authors": [
+            "Latimer LE",
+            "Constantin-Teodosiu D",
+            "Popat B"
+          ]
+        },
+        {
+          "pmid": "31385363",
+          "title": "Effect of metformin on myotube BCAA catabolism.",
+          "year": "2020",
+          "doi": "10.1002/jcb.29327",
+          "authors": [
+            "Rivera ME",
+            "Lyon ES",
+            "Vaughan RA"
+          ]
+        }
+      ]
+    },
+    "rapamycin_mitophagy_boost": {
+      "parameter": "rapamycin_mitophagy_boost",
+      "current_value": 0.08,
+      "current_unit": "dimensionless (added to baseline mitophagy)",
+      "location": "simulator.py:366 (rapa * 0.08 term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 0,
+      "n_values_extracted": 0,
+      "literature_values": [],
+      "literature_range": {},
+      "assessment": "no-data",
+      "discrepancy": "none",
+      "key_papers": []
+    },
+    "nad_quality_control_boost": {
+      "parameter": "nad_quality_control_boost",
+      "current_value": 0.03,
+      "current_unit": "dimensionless (NAD-dependent mitophagy term)",
+      "location": "simulator.py:366 (nad_supp * 0.03 term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 1,
+      "literature_values": [
+        {
+          "value": 2.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38254035",
+          "paper_title": "\u03b1-Ketoglutarate improves cardiac insufficiency through NAD"
+        }
+      ],
+      "literature_range": {
+        "min": 2.0,
+        "max": 2.0,
+        "median": 2.0,
+        "n": 1
+      },
+      "assessment": "sparse",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "38254035",
+          "title": "\u03b1-Ketoglutarate improves cardiac insufficiency through NAD",
+          "year": "2024",
+          "doi": "10.1186/s10020-024-00783-1",
+          "authors": [
+            "Yu H",
+            "Gan D",
+            "Luo Z"
+          ]
+        }
+      ]
+    },
+    "senescence_ros_multiplier": {
+      "parameter": "senescence_ros_multiplier",
+      "current_value": 2.0,
+      "current_unit": "multiplier",
+      "location": "simulator.py:454 (1 + 2*ros term in senescence)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 1,
+      "literature_values": [
+        {
+          "value": 0.1,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39988732",
+          "paper_title": "Autophagy regulates cellular senescence by mediating the degradation of CDKN1A/p21 and CDKN2A/p16 through SQSTM1/p62-mediated selective autophagy in myxomatous mitral valve degeneration."
+        }
+      ],
+      "literature_range": {
+        "min": 0.1,
+        "max": 0.1,
+        "median": 0.1,
+        "n": 1
+      },
+      "assessment": "sparse",
+      "discrepancy": "major",
+      "key_papers": [
+        {
+          "pmid": "39988732",
+          "title": "Autophagy regulates cellular senescence by mediating the degradation of CDKN1A/p21 and CDKN2A/p16 through SQSTM1/p62-mediated selective autophagy in myxomatous mitral valve degeneration.",
+          "year": "2025",
+          "doi": "10.1080/15548627.2025.2469315",
+          "authors": [
+            "Tang Q",
+            "Tang K",
+            "Markby GR"
+          ]
+        }
+      ]
+    },
+    "atp_relaxation_time": {
+      "parameter": "atp_relaxation_time",
+      "current_value": 1.0,
+      "current_unit": "years",
+      "location": "simulator.py:396 (1.0 * (atp_target - atp) term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 6,
+      "n_values_extracted": 15,
+      "literature_values": [
+        {
+          "value": 1.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39550308",
+          "paper_title": "Metabolic checkpoints in rheumatoid arthritis."
+        },
+        {
+          "value": 10.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28551786",
+          "paper_title": "Mitochondrial Bioenergetics During Ischemia and Reperfusion."
+        },
+        {
+          "value": 36.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28551786",
+          "paper_title": "Mitochondrial Bioenergetics During Ischemia and Reperfusion."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31327095",
+          "paper_title": "Azoramide improves mitochondrial dysfunction in palmitate-induced insulin resistant H9c2 cells."
+        },
+        {
+          "value": 47.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 52.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 23.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 76.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 127.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 23.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 132.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 40.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756312",
+          "paper_title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes."
+        },
+        {
+          "value": 6.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "26694849",
+          "paper_title": "Mitochondrial Coupling and Contractile Efficiency in Humans with High and Low V\u02d9O2peaks."
+        },
+        {
+          "value": 830.0,
+          "unit": "nm",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30561165",
+          "paper_title": "Potentials for prolonging shelf-life of platelets by near infrared low-level light."
+        }
+      ],
+      "literature_range": {
+        "min": 1.0,
+        "max": 830.0,
+        "median": 40.0,
+        "n": 15
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39550308",
+          "title": "Metabolic checkpoints in rheumatoid arthritis.",
+          "year": "2025",
+          "doi": "10.1016/j.semarthrit.2024.152586",
+          "authors": [
+            "Weyand CM",
+            "Goronzy JJ"
+          ]
+        },
+        {
+          "pmid": "28551786",
+          "title": "Mitochondrial Bioenergetics During Ischemia and Reperfusion.",
+          "year": "2017",
+          "doi": "10.1007/978-3-319-55330-6_8",
+          "authors": [
+            "Consolini AE",
+            "Ragone MI",
+            "Bonazzola P"
+          ]
+        },
+        {
+          "pmid": "31327095",
+          "title": "Azoramide improves mitochondrial dysfunction in palmitate-induced insulin resistant H9c2 cells.",
+          "year": "2019",
+          "doi": "10.1007/s11010-019-03590-z",
+          "authors": [
+            "Okatan EN",
+            "Olgar Y",
+            "Tuncay E"
+          ]
+        },
+        {
+          "pmid": "28756312",
+          "title": "Hydrogen peroxide, nitric oxide and ATP are molecules involved in cardiac mitochondrial biogenesis in Diabetes.",
+          "year": "2017",
+          "doi": "10.1016/j.freeradbiomed.2017.07.027",
+          "authors": [
+            "Bombicino SS",
+            "Iglesias DE",
+            "Rukavina-Mikusic IA"
+          ]
+        },
+        {
+          "pmid": "26694849",
+          "title": "Mitochondrial Coupling and Contractile Efficiency in Humans with High and Low V\u02d9O2peaks.",
+          "year": "2016",
+          "doi": "10.1249/MSS.0000000000000858",
+          "authors": [
+            "Layec G",
+            "Bringard A",
+            "Le Fur Y"
+          ]
+        }
+      ]
+    },
+    "ros_relaxation_time": {
+      "parameter": "ros_relaxation_time",
+      "current_value": 1.0,
+      "current_unit": "years",
+      "location": "simulator.py:417 (1.0 * (ros_eq - ros) term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 14,
+      "n_papers_relevant": 2,
+      "n_values_extracted": 3,
+      "literature_values": [
+        {
+          "value": 30.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38061207",
+          "paper_title": "Dimethyl malonate preserves renal and mitochondrial functions following ischemia-reperfusion via inhibition of succinate dehydrogenase."
+        },
+        {
+          "value": 20.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38061207",
+          "paper_title": "Dimethyl malonate preserves renal and mitochondrial functions following ischemia-reperfusion via inhibition of succinate dehydrogenase."
+        },
+        {
+          "value": 0.24,
+          "unit": "nm",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36306447",
+          "paper_title": null
+        }
+      ],
+      "literature_range": {
+        "min": 0.24,
+        "max": 30.0,
+        "median": 20.0,
+        "n": 3
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "38061207",
+          "title": "Dimethyl malonate preserves renal and mitochondrial functions following ischemia-reperfusion via inhibition of succinate dehydrogenase.",
+          "year": "2024",
+          "doi": "10.1016/j.redox.2023.102984",
+          "authors": [
+            "Carlstr\u00f6m M",
+            "Rannier Ribeiro Antonino Carvalho L",
+            "Guimaraes D"
+          ]
+        },
+        {
+          "pmid": "36306447",
+          "title": null,
+          "year": "2023",
+          "doi": "10.1021/acs.molpharmaceut.2c00752",
+          "authors": [
+            "Rani S",
+            "Sahoo RK",
+            "Kumar V"
+          ]
+        }
+      ]
+    },
+    "nad_relaxation_time": {
+      "parameter": "nad_relaxation_time",
+      "current_value": 0.3,
+      "current_unit": "years",
+      "location": "simulator.py:440 (0.3 * (nad_target - nad) term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 7,
+      "n_values_extracted": 18,
+      "literature_values": [
+        {
+          "value": 24.0,
+          "unit": "hours",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28756747",
+          "paper_title": "NAMPT-Mediated NAD Biosynthesis as the Internal Timing Mechanism: In NAD+ World, Time Is Running in Its Own Way."
+        },
+        {
+          "value": 331.0,
+          "unit": "mV",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "12171",
+          "paper_title": "Adrenodoxin reductase-adrenodexin complex."
+        },
+        {
+          "value": 40.0,
+          "unit": "mV",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "12171",
+          "paper_title": "Adrenodoxin reductase-adrenodexin complex."
+        },
+        {
+          "value": 18.0,
+          "unit": "minutes",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "178671",
+          "paper_title": "Turnover at nicotinamide adenine dinucleotide in cultures of human cells."
+        },
+        {
+          "value": 24.0,
+          "unit": "hours",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "178671",
+          "paper_title": "Turnover at nicotinamide adenine dinucleotide in cultures of human cells."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "8214600",
+          "paper_title": "Variation of one unit of activity with oxidation rate of organic substrate in indirect superoxide dismutase assays."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "16678117",
+          "paper_title": "Generation of superoxide by the mitochondrial Complex I."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "16678117",
+          "paper_title": "Generation of superoxide by the mitochondrial Complex I."
+        },
+        {
+          "value": 2.9,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "3620161",
+          "paper_title": "Regulation of ethanol metabolism in the rat."
+        },
+        {
+          "value": 120.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "3620161",
+          "paper_title": "Regulation of ethanol metabolism in the rat."
+        },
+        {
+          "value": 0.1,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "3620161",
+          "paper_title": "Regulation of ethanol metabolism in the rat."
+        },
+        {
+          "value": 20.0,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "3620161",
+          "paper_title": "Regulation of ethanol metabolism in the rat."
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "3620161",
+          "paper_title": "Regulation of ethanol metabolism in the rat."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "172128",
+          "paper_title": "Redox state of respiratory chain enzymes and potassium transport in silkworm mid-gut."
+        },
+        {
+          "value": 32.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "172128",
+          "paper_title": "Redox state of respiratory chain enzymes and potassium transport in silkworm mid-gut."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "172128",
+          "paper_title": "Redox state of respiratory chain enzymes and potassium transport in silkworm mid-gut."
+        },
+        {
+          "value": 90.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "172128",
+          "paper_title": "Redox state of respiratory chain enzymes and potassium transport in silkworm mid-gut."
+        },
+        {
+          "value": 100.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "172128",
+          "paper_title": "Redox state of respiratory chain enzymes and potassium transport in silkworm mid-gut."
+        }
+      ],
+      "literature_range": {
+        "min": 0.1,
+        "max": 331.0,
+        "median": 28.0,
+        "n": 18
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "28756747",
+          "title": "NAMPT-Mediated NAD Biosynthesis as the Internal Timing Mechanism: In NAD+ World, Time Is Running in Its Own Way.",
+          "year": "2018",
+          "doi": "10.1089/rej.2017.1975",
+          "authors": [
+            "Poljsak B"
+          ]
+        },
+        {
+          "pmid": "12171",
+          "title": "Adrenodoxin reductase-adrenodexin complex.",
+          "year": "1976",
+          "doi": "",
+          "authors": [
+            "Lambeth JD",
+            "McCaslin DR",
+            "Kamin H"
+          ]
+        },
+        {
+          "pmid": "178671",
+          "title": "Turnover at nicotinamide adenine dinucleotide in cultures of human cells.",
+          "year": "1976",
+          "doi": "10.1002/jcp.1040880210",
+          "authors": [
+            "Rechsteiner M",
+            "Hillyard D",
+            "Olivera BM"
+          ]
+        },
+        {
+          "pmid": "8214600",
+          "title": "Variation of one unit of activity with oxidation rate of organic substrate in indirect superoxide dismutase assays.",
+          "year": "1993",
+          "doi": "10.1006/abio.1993.1368",
+          "authors": [
+            "Jewett SL",
+            "Rocklin AM"
+          ]
+        },
+        {
+          "pmid": "16678117",
+          "title": "Generation of superoxide by the mitochondrial Complex I.",
+          "year": "2006",
+          "doi": "10.1016/j.bbabio.2006.03.013",
+          "authors": [
+            "Grivennikova VG",
+            "Vinogradov AD"
+          ]
+        }
+      ]
+    },
+    "yamanaka_repair_rate": {
+      "parameter": "yamanaka_repair_rate",
+      "current_value": 0.06,
+      "current_unit": "dimensionless (yama * 0.06 * n_d * energy_available)",
+      "location": "simulator.py:329 (Yamanaka repair term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 13,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 1,
+      "literature_values": [
+        {
+          "value": 7.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30558644",
+          "paper_title": "Rejuvenation by cell reprogramming: a new horizon in gerontology."
+        }
+      ],
+      "literature_range": {
+        "min": 7.0,
+        "max": 7.0,
+        "median": 7.0,
+        "n": 1
+      },
+      "assessment": "sparse",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "30558644",
+          "title": "Rejuvenation by cell reprogramming: a new horizon in gerontology.",
+          "year": "2018",
+          "doi": "10.1186/s13287-018-1075-y",
+          "authors": [
+            "Goya RG",
+            "Lehmann M",
+            "Chiavellini P"
+          ]
+        }
+      ]
+    },
+    "senolytic_clearance_rate": {
+      "parameter": "senolytic_clearance_rate",
+      "current_value": 0.2,
+      "current_unit": "per year (dose-dependent)",
+      "location": "simulator.py:457 (seno * 0.2 * sen term)",
+      "current_citation": null,
+      "priority": "high",
+      "n_papers_searched": 5,
+      "n_papers_relevant": 4,
+      "n_values_extracted": 14,
+      "literature_values": [
+        {
+          "value": 15.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38871781",
+          "paper_title": "Primary oocytes with cellular senescence features are involved in ovarian aging in mice."
+        },
+        {
+          "value": 15.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "38260383",
+          "paper_title": "Primary oocytes with cellular senescence features are involved in ovarian aging in mice."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33631598",
+          "paper_title": "Partial recovery of senescence in circulating follicular helper T cells after Dasatinib treatment."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33631598",
+          "paper_title": "Partial recovery of senescence in circulating follicular helper T cells after Dasatinib treatment."
+        },
+        {
+          "value": 35.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 70.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 40.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 70.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 65.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "33870156",
+          "paper_title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the "
+        }
+      ],
+      "literature_range": {
+        "min": 15.0,
+        "max": 70.0,
+        "median": 55.0,
+        "n": 14
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "38871781",
+          "title": "Primary oocytes with cellular senescence features are involved in ovarian aging in mice.",
+          "year": "2024",
+          "doi": "10.1038/s41598-024-64441-6",
+          "authors": [
+            "Yan H",
+            "Miranda EAD",
+            "Jin S"
+          ]
+        },
+        {
+          "pmid": "38260383",
+          "title": "Primary oocytes with cellular senescence features are involved in ovarian aging in mice.",
+          "year": "2024",
+          "doi": "10.1101/2024.01.08.574768",
+          "authors": [
+            "Yan H",
+            "Miranda EAD",
+            "Jin S"
+          ]
+        },
+        {
+          "pmid": "33631598",
+          "title": "Partial recovery of senescence in circulating follicular helper T cells after Dasatinib treatment.",
+          "year": "2021",
+          "doi": "10.1016/j.intimp.2021.107465",
+          "authors": [
+            "Ghamar Talepoor A",
+            "Khosropanah S",
+            "Doroudchi M"
+          ]
+        },
+        {
+          "pmid": "33870156",
+          "title": "Genetic or pharmacological reduction of cholangiocyte senescence improves inflammation and fibrosis in the ",
+          "year": "2021",
+          "doi": "10.1016/j.jhepr.2021.100250",
+          "authors": [
+            "Alsuraih M",
+            "O'Hara SP",
+            "Woodrum JE"
+          ]
+        }
+      ]
+    },
     "heteroplasmy_cliff": {
       "parameter": "heteroplasmy_cliff",
       "current_value": 0.7,
@@ -15,9 +1442,9 @@
       "location": "constants.py:HETEROPLASMY_CLIFF",
       "current_citation": "Rossignol et al. 2003",
       "priority": "medium",
-      "n_papers_searched": 4,
-      "n_papers_relevant": 1,
-      "n_values_extracted": 1,
+      "n_papers_searched": 14,
+      "n_papers_relevant": 3,
+      "n_values_extracted": 4,
       "literature_values": [
         {
           "value": 75.0,
@@ -26,15 +1453,39 @@
           "confidence": "low",
           "pmid": "40068680",
           "paper_title": "Engineering mtDNA deletions by reconstituting end joining in human mitochondria."
+        },
+        {
+          "value": 5.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "8215979",
+          "paper_title": "Mitochondrial encephalomyopathies."
+        },
+        {
+          "value": 90.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "26025377",
+          "paper_title": "Mitochondrial respiratory dysfunction caused by a heteroplasmic mitochondrial DNA mutation blocks cellular reprogramming."
+        },
+        {
+          "value": 100.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "26025377",
+          "paper_title": "Mitochondrial respiratory dysfunction caused by a heteroplasmic mitochondrial DNA mutation blocks cellular reprogramming."
         }
       ],
       "literature_range": {
-        "min": 75.0,
-        "max": 75.0,
-        "median": 75.0,
-        "n": 1
+        "min": 5.0,
+        "max": 100.0,
+        "median": 82.5,
+        "n": 4
       },
-      "assessment": "sparse",
+      "assessment": "well-supported",
       "discrepancy": "minor",
       "key_papers": [
         {
@@ -47,6 +1498,756 @@
             "Land M",
             "Kavlashvili T"
           ]
+        },
+        {
+          "pmid": "8215979",
+          "title": "Mitochondrial encephalomyopathies.",
+          "year": "1993",
+          "doi": "10.1001/archneur.1993.00540110075008",
+          "authors": [
+            "DiMauro S",
+            "Moraes CT"
+          ]
+        },
+        {
+          "pmid": "26025377",
+          "title": "Mitochondrial respiratory dysfunction caused by a heteroplasmic mitochondrial DNA mutation blocks cellular reprogramming.",
+          "year": "2015",
+          "doi": "10.1093/hmg/ddv201",
+          "authors": [
+            "Yokota M",
+            "Hatakeyama H",
+            "Okabe S"
+          ]
+        }
+      ]
+    },
+    "damaged_replication_advantage": {
+      "parameter": "damaged_replication_advantage",
+      "current_value": 1.05,
+      "current_unit": "multiplier (vs healthy mtDNA replication rate)",
+      "location": "constants.py:DAMAGED_REPLICATION_ADVANTAGE",
+      "current_citation": "Vandiver et al. 2023 (Cramer Appendix 2 pp.154-155)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 4,
+      "n_values_extracted": 8,
+      "literature_values": [
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "28717049",
+          "paper_title": "Regulation of Small Mitochondrial DNA Replicative Advantage by Ribonucleotide Reductase in "
+        },
+        {
+          "value": 96.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31787044",
+          "paper_title": "The conflict within: origin, proliferation and persistence of a spontaneously arising selfish mitochondrial genome."
+        },
+        {
+          "value": 1.0,
+          "unit": "mu",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31787044",
+          "paper_title": "The conflict within: origin, proliferation and persistence of a spontaneously arising selfish mitochondrial genome."
+        },
+        {
+          "value": 65.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31787044",
+          "paper_title": "The conflict within: origin, proliferation and persistence of a spontaneously arising selfish mitochondrial genome."
+        },
+        {
+          "value": 52.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31787044",
+          "paper_title": "The conflict within: origin, proliferation and persistence of a spontaneously arising selfish mitochondrial genome."
+        },
+        {
+          "value": 0.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "41249289",
+          "paper_title": "Caloric restriction enhances inheritance of wild-type mitochondrial DNA in Saccharomyces cerevisiae."
+        },
+        {
+          "value": 76.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "12881447",
+          "paper_title": "Quantification of mitochondrial DNA deletion, depletion, and overreplication: application to diagnosis."
+        },
+        {
+          "value": 97.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "12881447",
+          "paper_title": "Quantification of mitochondrial DNA deletion, depletion, and overreplication: application to diagnosis."
+        }
+      ],
+      "literature_range": {
+        "min": 0.5,
+        "max": 97.0,
+        "median": 70.5,
+        "n": 8
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "28717049",
+          "title": "Regulation of Small Mitochondrial DNA Replicative Advantage by Ribonucleotide Reductase in ",
+          "year": "2017",
+          "doi": "10.1534/g3.117.043851",
+          "authors": [
+            "Bradshaw E",
+            "Yoshida M",
+            "Ling F"
+          ]
+        },
+        {
+          "pmid": "31787044",
+          "title": "The conflict within: origin, proliferation and persistence of a spontaneously arising selfish mitochondrial genome.",
+          "year": "2020",
+          "doi": "10.1098/rstb.2019.0174",
+          "authors": [
+            "Dubie JJ",
+            "Caraway AR",
+            "Stout MM"
+          ]
+        },
+        {
+          "pmid": "41249289",
+          "title": "Caloric restriction enhances inheritance of wild-type mitochondrial DNA in Saccharomyces cerevisiae.",
+          "year": "2025",
+          "doi": "10.1038/s41598-025-23888-x",
+          "authors": [
+            "Zhu W",
+            "Yoshida M",
+            "Ling F"
+          ]
+        },
+        {
+          "pmid": "12881447",
+          "title": "Quantification of mitochondrial DNA deletion, depletion, and overreplication: application to diagnosis.",
+          "year": "2003",
+          "doi": "10.1373/49.8.1309",
+          "authors": [
+            "Chabi B",
+            "Mousson de Camaret B",
+            "Duborjal H"
+          ]
+        }
+      ]
+    },
+    "cliff_steepness": {
+      "parameter": "cliff_steepness",
+      "current_value": 15.0,
+      "current_unit": "dimensionless (sigmoid steepness parameter)",
+      "location": "constants.py:CLIFF_STEEPNESS",
+      "current_citation": "Simulation calibration",
+      "priority": "medium",
+      "n_papers_searched": 2,
+      "n_papers_relevant": 1,
+      "n_values_extracted": 9,
+      "literature_values": [
+        {
+          "value": 1200.0,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 1.033,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 2.054,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 0.063,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 0.312,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 600.0,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 0.0,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 400.0,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        },
+        {
+          "value": 200.0,
+          "unit": "\u03bcmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40933716",
+          "paper_title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO"
+        }
+      ],
+      "literature_range": {
+        "min": 0.0,
+        "max": 1200.0,
+        "median": 2.054,
+        "n": 9
+      },
+      "assessment": "conflicting",
+      "discrepancy": "major",
+      "key_papers": [
+        {
+          "pmid": "40933716",
+          "title": "Accuracy of photorespiration and mitochondrial respiration in the light fitted by CO",
+          "year": "2025",
+          "doi": "10.3389/fpls.2025.1455533",
+          "authors": [
+            "Niu Z",
+            "Ye ZW",
+            "Huang Q"
+          ]
+        }
+      ]
+    },
+    "tissue_ros_sensitivity_brain": {
+      "parameter": "tissue_ros_sensitivity_brain",
+      "current_value": 1.5,
+      "current_unit": "multiplier (vs default tissue)",
+      "location": "constants.py:TISSUE_PROFILES['brain']['ros_sensitivity']",
+      "current_citation": "Cramer Ch. V.J p.65 (qualitative)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 0,
+      "n_values_extracted": 0,
+      "literature_values": [],
+      "literature_range": {},
+      "assessment": "no-data",
+      "discrepancy": "none",
+      "key_papers": []
+    },
+    "tissue_ros_sensitivity_cardiac": {
+      "parameter": "tissue_ros_sensitivity_cardiac",
+      "current_value": 1.2,
+      "current_unit": "multiplier (vs default tissue)",
+      "location": "constants.py:TISSUE_PROFILES['cardiac']['ros_sensitivity']",
+      "current_citation": "Cramer Ch. VII (qualitative)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 2,
+      "n_values_extracted": 8,
+      "literature_values": [
+        {
+          "value": 40.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39026280",
+          "paper_title": "Mitochondrial network remodeling of the diabetic heart: implications to ischemia related cardiac dysfunction."
+        },
+        {
+          "value": 27.9,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 2.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 11.7,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 2.1,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 2.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        },
+        {
+          "value": 95.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34371522",
+          "paper_title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study."
+        }
+      ],
+      "literature_range": {
+        "min": 2.0,
+        "max": 95.0,
+        "median": 19.799999999999997,
+        "n": 8
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39026280",
+          "title": "Mitochondrial network remodeling of the diabetic heart: implications to ischemia related cardiac dysfunction.",
+          "year": "2024",
+          "doi": "10.1186/s12933-024-02357-1",
+          "authors": [
+            "Rudokas MW",
+            "McKay M",
+            "Toksoy Z"
+          ]
+        },
+        {
+          "pmid": "34371522",
+          "title": "Effects of pre-operative isolation on postoperative pulmonary complications after elective surgery: an international prospective cohort study.",
+          "year": "2021",
+          "doi": "10.1111/anae.15560",
+          "authors": []
+        }
+      ]
+    },
+    "tissue_biogenesis_brain": {
+      "parameter": "tissue_biogenesis_brain",
+      "current_value": 0.3,
+      "current_unit": "multiplier (vs default tissue)",
+      "location": "constants.py:TISSUE_PROFILES['brain']['biogenesis_rate']",
+      "current_citation": "Post-mitotic neuron biology (qualitative)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 4,
+      "n_values_extracted": 7,
+      "literature_values": [
+        {
+          "value": 24.0,
+          "unit": "hours",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "23110128",
+          "paper_title": "Selenite stimulates mitochondrial biogenesis signaling and enhances mitochondrial functional performance in murine hippocampal neuronal cells."
+        },
+        {
+          "value": 2.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31190345",
+          "paper_title": "Propofol induces impairment of mitochondrial biogenesis through inhibiting the expression of peroxisome proliferator-activated receptor-\u03b3 coactivator-1\u03b1."
+        },
+        {
+          "value": 67.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39258790",
+          "paper_title": "High-concentration hydrogen inhalation mitigates sepsis-associated encephalopathy in mice by improving mitochondrial dynamics."
+        },
+        {
+          "value": 67.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39258790",
+          "paper_title": "High-concentration hydrogen inhalation mitigates sepsis-associated encephalopathy in mice by improving mitochondrial dynamics."
+        },
+        {
+          "value": 67.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39258790",
+          "paper_title": "High-concentration hydrogen inhalation mitigates sepsis-associated encephalopathy in mice by improving mitochondrial dynamics."
+        },
+        {
+          "value": 67.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39258790",
+          "paper_title": "High-concentration hydrogen inhalation mitigates sepsis-associated encephalopathy in mice by improving mitochondrial dynamics."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "26611103",
+          "paper_title": "HIV alters neuronal mitochondrial fission/fusion in the brain during HIV-associated neurocognitive disorders."
+        }
+      ],
+      "literature_range": {
+        "min": 2.0,
+        "max": 67.0,
+        "median": 67.0,
+        "n": 7
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "23110128",
+          "title": "Selenite stimulates mitochondrial biogenesis signaling and enhances mitochondrial functional performance in murine hippocampal neuronal cells.",
+          "year": "2012",
+          "doi": "10.1371/journal.pone.0047910",
+          "authors": [
+            "Mendelev N",
+            "Mehta SL",
+            "Idris H"
+          ]
+        },
+        {
+          "pmid": "31190345",
+          "title": "Propofol induces impairment of mitochondrial biogenesis through inhibiting the expression of peroxisome proliferator-activated receptor-\u03b3 coactivator-1\u03b1.",
+          "year": "2019",
+          "doi": "10.1002/jcb.29138",
+          "authors": [
+            "Qin J",
+            "Li Y",
+            "Wang K"
+          ]
+        },
+        {
+          "pmid": "39258790",
+          "title": "High-concentration hydrogen inhalation mitigates sepsis-associated encephalopathy in mice by improving mitochondrial dynamics.",
+          "year": "2024",
+          "doi": "10.1111/cns.70021",
+          "authors": [
+            "Cui Y",
+            "Meng S",
+            "Zhang N"
+          ]
+        },
+        {
+          "pmid": "26611103",
+          "title": "HIV alters neuronal mitochondrial fission/fusion in the brain during HIV-associated neurocognitive disorders.",
+          "year": "2016",
+          "doi": "10.1016/j.nbd.2015.11.015",
+          "authors": [
+            "Fields JA",
+            "Serger E",
+            "Campos S"
+          ]
+        }
+      ]
+    },
+    "tissue_biogenesis_muscle": {
+      "parameter": "tissue_biogenesis_muscle",
+      "current_value": 1.5,
+      "current_unit": "multiplier (vs default tissue)",
+      "location": "constants.py:TISSUE_PROFILES['muscle']['biogenesis_rate']",
+      "current_citation": "PGC-1alpha biology (qualitative)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 4,
+      "n_values_extracted": 14,
+      "literature_values": [
+        {
+          "value": 5.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 5.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 7.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 3.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 4.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 11.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 3.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 4.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 3.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 4.9,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39390310",
+          "paper_title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression."
+        },
+        {
+          "value": 5.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39288086",
+          "paper_title": "Exercise training and changes in skeletal muscle mitochondrial proteins: from blots to \"omics\"."
+        },
+        {
+          "value": 90.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "21245132",
+          "paper_title": "Exercise increases mitochondrial PGC-1alpha content and promotes nuclear-mitochondrial cross-talk to coordinate mitochondrial biogenesis."
+        },
+        {
+          "value": 10.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "23994518",
+          "paper_title": "Exercise training attenuates aging-associated mitochondrial dysfunction in rat skeletal muscle: role of PGC-1\u03b1."
+        },
+        {
+          "value": 45.0,
+          "unit": "min",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "23994518",
+          "paper_title": "Exercise training attenuates aging-associated mitochondrial dysfunction in rat skeletal muscle: role of PGC-1\u03b1."
+        }
+      ],
+      "literature_range": {
+        "min": 3.0,
+        "max": 90.0,
+        "median": 5.0,
+        "n": 14
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39390310",
+          "title": "Effects of Exercise Training on Mitochondrial and Capillary Growth in Human Skeletal Muscle: A Systematic Review and Meta-Regression.",
+          "year": "2025",
+          "doi": "10.1007/s40279-024-02120-2",
+          "authors": [
+            "M\u00f8lmen KS",
+            "Almquist NW",
+            "Skattebo \u00d8"
+          ]
+        },
+        {
+          "pmid": "39288086",
+          "title": "Exercise training and changes in skeletal muscle mitochondrial proteins: from blots to \"omics\".",
+          "year": "2024",
+          "doi": "10.1080/10409238.2024.2383408",
+          "authors": [
+            "Reisman EG",
+            "Caruana NJ",
+            "Bishop DJ"
+          ]
+        },
+        {
+          "pmid": "21245132",
+          "title": "Exercise increases mitochondrial PGC-1alpha content and promotes nuclear-mitochondrial cross-talk to coordinate mitochondrial biogenesis.",
+          "year": "2011",
+          "doi": "10.1074/jbc.M110.211466",
+          "authors": [
+            "Safdar A",
+            "Little JP",
+            "Stokl AJ"
+          ]
+        },
+        {
+          "pmid": "23994518",
+          "title": "Exercise training attenuates aging-associated mitochondrial dysfunction in rat skeletal muscle: role of PGC-1\u03b1.",
+          "year": "2013",
+          "doi": "10.1016/j.exger.2013.08.004",
+          "authors": [
+            "Kang C",
+            "Chung E",
+            "Diffee G"
+          ]
+        }
+      ]
+    },
+    "cd38_base_survival": {
+      "parameter": "cd38_base_survival",
+      "current_value": 0.4,
+      "current_unit": "fraction surviving CD38 degradation",
+      "location": "constants.py:CD38_BASE_SURVIVAL",
+      "current_citation": "Cramer Ch. VI.A.3 p.73 (qualitative)",
+      "priority": "medium",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 2,
+      "n_values_extracted": 3,
+      "literature_values": [
+        {
+          "value": 87.0,
+          "unit": "x",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31281500",
+          "paper_title": "Endocytosis-mediated mitochondrial transplantation: Transferring normal human astrocytic mitochondria into glioma cells rescues aerobic respiration and enhances radiosensitivity."
+        },
+        {
+          "value": 87.0,
+          "unit": "x",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31281500",
+          "paper_title": "Endocytosis-mediated mitochondrial transplantation: Transferring normal human astrocytic mitochondria into glioma cells rescues aerobic respiration and enhances radiosensitivity."
+        },
+        {
+          "value": 35.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "24295520",
+          "paper_title": "Overexpression of CD38 decreases cellular NAD levels and alters the expression of proteins involved in energy metabolism and antioxidant defense."
+        }
+      ],
+      "literature_range": {
+        "min": 35.0,
+        "max": 87.0,
+        "median": 87.0,
+        "n": 3
+      },
+      "assessment": "well-supported",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "31281500",
+          "title": "Endocytosis-mediated mitochondrial transplantation: Transferring normal human astrocytic mitochondria into glioma cells rescues aerobic respiration and enhances radiosensitivity.",
+          "year": "2019",
+          "doi": "10.7150/thno.33100",
+          "authors": [
+            "Sun C",
+            "Liu X",
+            "Wang B"
+          ]
+        },
+        {
+          "pmid": "24295520",
+          "title": "Overexpression of CD38 decreases cellular NAD levels and alters the expression of proteins involved in energy metabolism and antioxidant defense.",
+          "year": "2014",
+          "doi": "10.1021/pr4010597",
+          "authors": [
+            "Hu Y",
+            "Wang H",
+            "Wang Q"
+          ]
         }
       ]
     },
@@ -57,9 +2258,9 @@
       "location": "constants.py:DOUBLING_TIME_YOUNG",
       "current_citation": "Vandiver et al. 2023 (Cramer Appendix 2 p.155)",
       "priority": "low",
-      "n_papers_searched": 5,
-      "n_papers_relevant": 2,
-      "n_values_extracted": 4,
+      "n_papers_searched": 15,
+      "n_papers_relevant": 7,
+      "n_values_extracted": 23,
       "literature_values": [
         {
           "value": 10.0,
@@ -92,16 +2293,168 @@
           "confidence": "low",
           "pmid": "37132288",
           "paper_title": "Nanopore sequencing identifies a higher frequency and expanded spectrum of mitochondrial DNA deletion mutations in human aging."
+        },
+        {
+          "value": 0.02,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 0.25,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 10.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 0.51,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 1.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1472070",
+          "paper_title": "Age-associated oxygen damage and mutations in mitochondrial DNA in human hearts."
+        },
+        {
+          "value": 7.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1472070",
+          "paper_title": "Age-associated oxygen damage and mutations in mitochondrial DNA in human hearts."
+        },
+        {
+          "value": 5.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 65.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 17.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 17.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 56.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "11795533",
+          "paper_title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA."
+        },
+        {
+          "value": 86.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "9799119",
+          "paper_title": "Bioenergetic consequences of accumulating the common 4977-bp mitochondrial DNA deletion."
+        },
+        {
+          "value": 55.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "9799119",
+          "paper_title": "Bioenergetic consequences of accumulating the common 4977-bp mitochondrial DNA deletion."
+        },
+        {
+          "value": 93.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "15477759",
+          "paper_title": "High frequency of common deletion (4981 bp) in mitochondrial DNA in nasopharyngeal carcinoma and its correlation with patient age and clinical stages."
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "15477759",
+          "paper_title": "High frequency of common deletion (4981 bp) in mitochondrial DNA in nasopharyngeal carcinoma and its correlation with patient age and clinical stages."
+        },
+        {
+          "value": 26.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "15477759",
+          "paper_title": "High frequency of common deletion (4981 bp) in mitochondrial DNA in nasopharyngeal carcinoma and its correlation with patient age and clinical stages."
+        },
+        {
+          "value": 48.0,
+          "unit": "yr",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "15477759",
+          "paper_title": "High frequency of common deletion (4981 bp) in mitochondrial DNA in nasopharyngeal carcinoma and its correlation with patient age and clinical stages."
+        },
+        {
+          "value": 48.0,
+          "unit": "yr",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "15477759",
+          "paper_title": "High frequency of common deletion (4981 bp) in mitochondrial DNA in nasopharyngeal carcinoma and its correlation with patient age and clinical stages."
         }
       ],
       "literature_range": {
-        "min": 10.0,
-        "max": 81.0,
-        "median": 10.0,
-        "n": 4
+        "min": 0.02,
+        "max": 93.0,
+        "median": 17.0,
+        "n": 23
       },
       "assessment": "conflicting",
-      "discrepancy": "none",
+      "discrepancy": "minor",
       "key_papers": [
         {
           "pmid": "37815936",
@@ -124,19 +2477,1050 @@
             "Hoang AN",
             "Herbst A"
           ]
+        },
+        {
+          "pmid": "1898383",
+          "title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm.",
+          "year": "1991",
+          "doi": "10.1016/0006-291x(91)91921-x",
+          "authors": [
+            "Hayakawa M",
+            "Torii K",
+            "Sugiyama S"
+          ]
+        },
+        {
+          "pmid": "1472070",
+          "title": "Age-associated oxygen damage and mutations in mitochondrial DNA in human hearts.",
+          "year": "1992",
+          "doi": "10.1016/0006-291x(92)92300-m",
+          "authors": [
+            "Hayakawa M",
+            "Hattori K",
+            "Sugiyama S"
+          ]
+        },
+        {
+          "pmid": "11795533",
+          "title": "Increases of mitochondrial mass and mitochondrial genome in association with enhanced oxidative stress in human cells harboring 4,977 BP-deleted mitochondrial DNA.",
+          "year": "2001",
+          "doi": "10.1111/j.1749-6632.2001.tb05640.x",
+          "authors": [
+            "Wei YH",
+            "Lee CF",
+            "Lee HC"
+          ]
+        }
+      ]
+    },
+    "doubling_time_old": {
+      "parameter": "doubling_time_old",
+      "current_value": 3.06,
+      "current_unit": "years",
+      "location": "constants.py:DOUBLING_TIME_OLD",
+      "current_citation": "Vandiver et al. 2023 (Cramer Appendix 2 p.155)",
+      "priority": "low",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 9,
+      "n_values_extracted": 39,
+      "literature_values": [
+        {
+          "value": 35.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        },
+        {
+          "value": 100.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        },
+        {
+          "value": 38.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39923879",
+          "paper_title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions."
+        },
+        {
+          "value": 20.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "25446805",
+          "paper_title": "Genetic factors associated with longevity: a review of recent findings."
+        },
+        {
+          "value": 35.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "25446805",
+          "paper_title": "Genetic factors associated with longevity: a review of recent findings."
+        },
+        {
+          "value": 0.07673,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 0.00015,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 3.03,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 4.36,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 13.58,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 17.08,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 2.5,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 1.6,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 2.76,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35765148",
+          "paper_title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia."
+        },
+        {
+          "value": 57.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34572132",
+          "paper_title": "Mitochondrial DNA Haplogroup Related to the Prevalence of "
+        },
+        {
+          "value": 35.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "34572132",
+          "paper_title": "Mitochondrial DNA Haplogroup Related to the Prevalence of "
+        },
+        {
+          "value": 42.6,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 96.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 30.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 0.05,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 60.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 1.94,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 60.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 3.34,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 70.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 72.54,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "20164450",
+          "paper_title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles."
+        },
+        {
+          "value": 50.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "10022226",
+          "paper_title": "Micronutrients prevent cancer and delay aging."
+        },
+        {
+          "value": 2.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "10022226",
+          "paper_title": "Micronutrients prevent cancer and delay aging."
+        },
+        {
+          "value": 20.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "10022226",
+          "paper_title": "Micronutrients prevent cancer and delay aging."
+        },
+        {
+          "value": 10.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "10022226",
+          "paper_title": "Micronutrients prevent cancer and delay aging."
+        },
+        {
+          "value": 68.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "10022226",
+          "paper_title": "Micronutrients prevent cancer and delay aging."
+        },
+        {
+          "value": 65.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "17578510",
+          "paper_title": "Ultraviolet radiation exposure accelerates the accumulation of the aging-dependent T414G mitochondrial DNA mutation in human skin."
+        },
+        {
+          "value": 97.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "17578510",
+          "paper_title": "Ultraviolet radiation exposure accelerates the accumulation of the aging-dependent T414G mitochondrial DNA mutation in human skin."
+        },
+        {
+          "value": 0.02,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 0.25,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 10.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 0.51,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "1898383",
+          "paper_title": "Age-associated accumulation of 8-hydroxydeoxyguanosine in mitochondrial DNA of human diaphragm."
+        },
+        {
+          "value": 26.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "19517797",
+          "paper_title": "[Molecular mechanism of age-related hearing loss: toward its prevention]."
+        }
+      ],
+      "literature_range": {
+        "min": 0.00015,
+        "max": 100.0,
+        "median": 20.0,
+        "n": 39
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39923879",
+          "title": "Nicotinamide mononucleotide supplementation improves oocyte developmental competence in different ovarian damage conditions.",
+          "year": "2025",
+          "doi": "10.1016/j.ajog.2025.02.006",
+          "authors": [
+            "Ram\u00edrez-Mart\u00edn N",
+            "Buigues A",
+            "Rodr\u00edguez-Varela C"
+          ]
+        },
+        {
+          "pmid": "25446805",
+          "title": "Genetic factors associated with longevity: a review of recent findings.",
+          "year": "2015",
+          "doi": "10.1016/j.arr.2014.10.005",
+          "authors": [
+            "Shadyab AH",
+            "LaCroix AZ"
+          ]
+        },
+        {
+          "pmid": "35765148",
+          "title": "Combined fibre atrophy and decreased muscle regeneration capacity driven by mitochondrial DNA alterations underlie the development of sarcopenia.",
+          "year": "2022",
+          "doi": "10.1002/jcsm.13026",
+          "authors": [
+            "Kimoloi S",
+            "Sen A",
+            "Guenther S"
+          ]
+        },
+        {
+          "pmid": "34572132",
+          "title": "Mitochondrial DNA Haplogroup Related to the Prevalence of ",
+          "year": "2021",
+          "doi": "10.3390/cells10092482",
+          "authors": [
+            "Lee Y",
+            "Lee SM",
+            "Choi J"
+          ]
+        },
+        {
+          "pmid": "20164450",
+          "title": "Somatic mitochondrial DNA deletions accumulate to high levels in aging human extraocular muscles.",
+          "year": "2010",
+          "doi": "10.1167/iovs.09-4660",
+          "authors": [
+            "Yu-Wai-Man P",
+            "Lai-Cheong J",
+            "Borthwick GM"
+          ]
+        }
+      ]
+    },
+    "nad_decline_rate": {
+      "parameter": "nad_decline_rate",
+      "current_value": 0.01,
+      "current_unit": "per year",
+      "location": "constants.py:NAD_DECLINE_RATE",
+      "current_citation": "Camacho-Pereira et al. 2016 (Cramer Ch. VI.A.3)",
+      "priority": "low",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 5,
+      "n_values_extracted": 27,
+      "literature_values": [
+        {
+          "value": 200.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "39460833",
+          "paper_title": "The NAD"
+        },
+        {
+          "value": 35.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 55.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 12.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 28.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 25.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "31207144",
+          "paper_title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD"
+        },
+        {
+          "value": 52.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 91.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 32.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 18.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 66.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 43.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 34.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 3.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 3.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "40069789",
+          "paper_title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease."
+        },
+        {
+          "value": 30.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 40.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 40.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 30.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 15.59,
+          "unit": "nmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 40.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 16.28,
+          "unit": "nmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 40.0,
+          "unit": "years",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 16.55,
+          "unit": "nmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "36182928",
+          "paper_title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study."
+        },
+        {
+          "value": 60.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30875389",
+          "paper_title": "Quantitative analysis of the effects of nicotinamide phosphoribosyltransferase induction on the rates of NAD+ synthesis and breakdown in mammalian cells using stable isotope-labeling combined with mass spectrometry."
+        },
+        {
+          "value": 700.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30875389",
+          "paper_title": "Quantitative analysis of the effects of nicotinamide phosphoribosyltransferase induction on the rates of NAD+ synthesis and breakdown in mammalian cells using stable isotope-labeling combined with mass spectrometry."
+        }
+      ],
+      "literature_range": {
+        "min": 3.0,
+        "max": 700.0,
+        "median": 34.0,
+        "n": 27
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "39460833",
+          "title": "The NAD",
+          "year": "2024",
+          "doi": "10.1007/s10815-024-03263-x",
+          "authors": [
+            "Li T",
+            "Wang Y",
+            "Yu Y"
+          ]
+        },
+        {
+          "pmid": "31207144",
+          "title": "Aerobic and resistance exercise training reverses age-dependent decline in NAD",
+          "year": "2019",
+          "doi": "10.14814/phy2.14139",
+          "authors": [
+            "de Guia RM",
+            "Agerholm M",
+            "Nielsen TS"
+          ]
+        },
+        {
+          "pmid": "40069789",
+          "title": "Pharmacokinetic and pharmacodynamic assessment of oral nicotinamide in the NEAT clinical trial for early Alzheimer's disease.",
+          "year": "2025",
+          "doi": "10.1186/s13195-025-01693-y",
+          "authors": [
+            "Ketron GL",
+            "Grun F",
+            "Grill JD"
+          ]
+        },
+        {
+          "pmid": "36182928",
+          "title": "Relationship between sperm NAD\u2009+\u2009concentration and reproductive aging in normozoospermia men:A Cohort study.",
+          "year": "2022",
+          "doi": "10.1186/s12894-022-01107-3",
+          "authors": [
+            "Bai X",
+            "Wang P"
+          ]
+        },
+        {
+          "pmid": "30875389",
+          "title": "Quantitative analysis of the effects of nicotinamide phosphoribosyltransferase induction on the rates of NAD+ synthesis and breakdown in mammalian cells using stable isotope-labeling combined with mass spectrometry.",
+          "year": "2019",
+          "doi": "10.1371/journal.pone.0214000",
+          "authors": [
+            "Hara N",
+            "Osago H",
+            "Hiyoshi M"
+          ]
+        }
+      ]
+    },
+    "senescence_rate": {
+      "parameter": "senescence_rate",
+      "current_value": 0.005,
+      "current_unit": "per year",
+      "location": "constants.py:SENESCENCE_RATE",
+      "current_citation": "Cramer Ch. VII.A pp.89-92 (qualitative)",
+      "priority": "low",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 0,
+      "n_values_extracted": 0,
+      "literature_values": [],
+      "literature_range": {},
+      "assessment": "no-data",
+      "discrepancy": "none",
+      "key_papers": []
+    },
+    "baseline_ros": {
+      "parameter": "baseline_ros",
+      "current_value": 0.1,
+      "current_unit": "normalized",
+      "location": "constants.py:BASELINE_ROS",
+      "current_citation": "Cramer Ch. IV.B p.53, Ch. II.H p.14",
+      "priority": "low",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 7,
+      "n_values_extracted": 17,
+      "literature_values": [
+        {
+          "value": 25.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "29859845",
+          "paper_title": "Mitochondrial uncoupling, ROS generation and cardioprotection."
+        },
+        {
+          "value": 10.0,
+          "unit": "nM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30176156",
+          "paper_title": "Parallel damage in mitochondria and lysosomes is an efficient way to photoinduce cell death."
+        },
+        {
+          "value": 2.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30176156",
+          "paper_title": "Parallel damage in mitochondria and lysosomes is an efficient way to photoinduce cell death."
+        },
+        {
+          "value": 0.15,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "12237311",
+          "paper_title": "Topology of superoxide production from different sites in the mitochondrial electron transport chain."
+        },
+        {
+          "value": 750.0,
+          "unit": "\u03bcM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "29702406",
+          "paper_title": "Oxygen-dependence of mitochondrial ROS production as detected by Amplex Red assay."
+        },
+        {
+          "value": 3.0,
+          "unit": "pmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 84.0,
+          "unit": "pmol",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 7.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 14.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 4.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 4.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "32971363",
+          "paper_title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I"
+        },
+        {
+          "value": 40.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30389498",
+          "paper_title": "Mitochondrial and cytosolic sources of hydrogen peroxide in resting C2C12 myoblasts."
+        },
+        {
+          "value": 45.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30389498",
+          "paper_title": "Mitochondrial and cytosolic sources of hydrogen peroxide in resting C2C12 myoblasts."
+        },
+        {
+          "value": 30.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30389498",
+          "paper_title": "Mitochondrial and cytosolic sources of hydrogen peroxide in resting C2C12 myoblasts."
+        },
+        {
+          "value": 15.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "30389498",
+          "paper_title": "Mitochondrial and cytosolic sources of hydrogen peroxide in resting C2C12 myoblasts."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "16678117",
+          "paper_title": "Generation of superoxide by the mitochondrial Complex I."
+        },
+        {
+          "value": 1.0,
+          "unit": "mM",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "16678117",
+          "paper_title": "Generation of superoxide by the mitochondrial Complex I."
+        }
+      ],
+      "literature_range": {
+        "min": 0.15,
+        "max": 750.0,
+        "median": 10.0,
+        "n": 17
+      },
+      "assessment": "conflicting",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "29859845",
+          "title": "Mitochondrial uncoupling, ROS generation and cardioprotection.",
+          "year": "2018",
+          "doi": "10.1016/j.bbabio.2018.05.019",
+          "authors": [
+            "Cadenas S"
+          ]
+        },
+        {
+          "pmid": "30176156",
+          "title": "Parallel damage in mitochondria and lysosomes is an efficient way to photoinduce cell death.",
+          "year": "2019",
+          "doi": "10.1080/15548627.2018.1515609",
+          "authors": [
+            "Martins WK",
+            "Santos NF",
+            "Rocha CS"
+          ]
+        },
+        {
+          "pmid": "12237311",
+          "title": "Topology of superoxide production from different sites in the mitochondrial electron transport chain.",
+          "year": "2002",
+          "doi": "10.1074/jbc.M207217200",
+          "authors": [
+            "St-Pierre J",
+            "Buckingham JA",
+            "Roebuck SJ"
+          ]
+        },
+        {
+          "pmid": "29702406",
+          "title": "Oxygen-dependence of mitochondrial ROS production as detected by Amplex Red assay.",
+          "year": "2018",
+          "doi": "10.1016/j.redox.2018.04.014",
+          "authors": [
+            "Grivennikova VG",
+            "Kareyeva AV",
+            "Vinogradov AD"
+          ]
+        },
+        {
+          "pmid": "32971363",
+          "title": "Production of superoxide and hydrogen peroxide in the mitochondrial matrix is dominated by site I",
+          "year": "2020",
+          "doi": "10.1016/j.redox.2020.101722",
+          "authors": [
+            "Fang J",
+            "Wong HS",
+            "Brand MD"
+          ]
+        }
+      ]
+    },
+    "ros_per_damaged": {
+      "parameter": "ros_per_damaged",
+      "current_value": 0.3,
+      "current_unit": "dimensionless coupling strength",
+      "location": "constants.py:ROS_PER_DAMAGED",
+      "current_citation": "Cramer Ch. II.H p.14, Appendix 2 pp.152-153",
+      "priority": "low",
+      "n_papers_searched": 15,
+      "n_papers_relevant": 2,
+      "n_values_extracted": 2,
+      "literature_values": [
+        {
+          "value": 25.0,
+          "unit": "%",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "29859845",
+          "paper_title": "Mitochondrial uncoupling, ROS generation and cardioprotection."
+        },
+        {
+          "value": 160.0,
+          "unit": "\u00b5M",
+          "context": "keyword extraction (no semantic understanding)",
+          "confidence": "low",
+          "pmid": "35026589",
+          "paper_title": "Salidroside prevents PM2.5-induced BEAS-2B cell apoptosis via SIRT1-dependent regulation of ROS and mitochondrial function."
+        }
+      ],
+      "literature_range": {
+        "min": 25.0,
+        "max": 160.0,
+        "median": 92.5,
+        "n": 2
+      },
+      "assessment": "sparse",
+      "discrepancy": "minor",
+      "key_papers": [
+        {
+          "pmid": "29859845",
+          "title": "Mitochondrial uncoupling, ROS generation and cardioprotection.",
+          "year": "2018",
+          "doi": "10.1016/j.bbabio.2018.05.019",
+          "authors": [
+            "Cadenas S"
+          ]
+        },
+        {
+          "pmid": "35026589",
+          "title": "Salidroside prevents PM2.5-induced BEAS-2B cell apoptosis via SIRT1-dependent regulation of ROS and mitochondrial function.",
+          "year": "2022",
+          "doi": "10.1016/j.ecoenv.2022.113170",
+          "authors": [
+            "Shan H",
+            "Li X",
+            "Ouyang C"
+          ]
         }
       ]
     }
   },
   "summary": {
-    "well_supported": [],
-    "sparse_evidence": [
-      "heteroplasmy_cliff"
+    "well_supported": [
+      "ros_damage_coupling",
+      "ros_relaxation_time",
+      "senolytic_clearance_rate",
+      "heteroplasmy_cliff",
+      "damaged_replication_advantage",
+      "tissue_biogenesis_brain",
+      "cd38_base_survival"
     ],
-    "no_data": [],
-    "major_discrepancies": [],
+    "sparse_evidence": [
+      "nad_quality_control_boost",
+      "senescence_ros_multiplier",
+      "yamanaka_repair_rate",
+      "ros_per_damaged"
+    ],
+    "no_data": [
+      "rapamycin_mitophagy_boost",
+      "tissue_ros_sensitivity_brain",
+      "senescence_rate"
+    ],
+    "major_discrepancies": [
+      "senescence_ros_multiplier",
+      "cliff_steepness"
+    ],
     "conflicting": [
-      "doubling_time_young"
+      "base_replication_rate",
+      "apoptosis_rate",
+      "exercise_biogenesis",
+      "atp_relaxation_time",
+      "nad_relaxation_time",
+      "cliff_steepness",
+      "tissue_ros_sensitivity_cardiac",
+      "tissue_biogenesis_muscle",
+      "doubling_time_young",
+      "doubling_time_old",
+      "nad_decline_rate",
+      "baseline_ros"
     ]
   }
 }

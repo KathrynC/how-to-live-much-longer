@@ -68,43 +68,67 @@
   },
   "sections": {
     "sensitivity": {
-      "available": false,
-      "top_params": [],
-      "interaction_strength": null
+      "available": true,
+      "top_params": [
+        "baseline_heteroplasmy",
+        "baseline_age",
+        "baseline_nad_level",
+        "rapamycin_dose",
+        "nad_supplement",
+        "senolytic_dose",
+        "yamanaka_intensity",
+        "transplant_rate",
+        "exercise_level",
+        "genetic_vulnerability",
+        "metabolic_demand",
+        "inflammation_level"
+      ],
+      "interaction_strength": 0.07698964845885356
     },
     "robustness": {
-      "available": false,
-      "violation_rate": null,
-      "mean_flip_size": null,
+      "available": true,
+      "violation_rate": 0.0,
+      "mean_flip_size": 0.375,
       "most_fragile_params": null
     },
     "locality": {
-      "available": false,
-      "L50": null,
-      "effective_horizon": null
+      "available": true,
+      "L50": {
+        "cut_frac": 0.8,
+        "target_position": 0.9,
+        "distractor_strength": 1.0
+      },
+      "effective_horizon": 0.8
     },
     "alignment": {
-      "available": false,
-      "overall_alignment": null,
-      "worst_aligned_keys": null
+      "available": true,
+      "overall_alignment": 0.8375146730184089,
+      "worst_aligned_keys": [
+        "final_heteroplasmy",
+        "final_atp"
+      ]
     },
     "representation": {
-      "available": false,
+      "available": true,
       "diegeticization_gain": null,
       "roundtrip_error": null,
-      "fragmentation_correlation": null
+      "fragmentation_correlation": 0.1043367257330876
     },
     "structure": {
-      "available": false,
-      "most_causal_params": null,
+      "available": true,
+      "most_causal_params": [
+        "most_causal_params",
+        "most_connected_outputs"
+      ],
       "variance_explained": null
     }
   },
   "recommendations": [
-    "No specific recommendations -- run more tools for deeper analysis."
+    "Most influential parameters: baseline_heteroplasmy, baseline_age, baseline_nad_level. Focus LLM prompts on these for maximum impact.",
+    "Worst-aligned output keys: final_heteroplasmy, final_atp. These diverge most from intended outcomes.",
+    "Most causal parameters: most_causal_params, most_connected_outputs."
   ],
-  "tools_used": [],
-  "tools_missing": [
+  "tools_used": [
     "sobol",
     "receptive_field",
     "falsifier",
@@ -117,5 +141,6 @@
     "token_extispicy",
     "relation_graph",
     "pds"
-  ]
+  ],
+  "tools_missing": []
 }

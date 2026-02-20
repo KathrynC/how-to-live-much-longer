@@ -1,533 +1,794 @@
 {
-  "timestamp": "2026-02-15 13:06:51",
+  "timestamp": "2026-02-19 20:44:50",
   "llm_model": "llama3.1:latest",
   "files_scanned": 23,
-  "total_issues": 67,
-  "errors": 31,
-  "warnings": 22,
-  "info": 14,
+  "total_issues": 105,
+  "errors": 39,
+  "warnings": 21,
+  "info": 45,
   "cross_file_issues": [],
   "files": {
-    "/Users/gardenofcomputation/how-to-live-much-longer/analytics.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "BUG",
-          "message": "compute_energy() does not handle the case where n_points is 0 or 1, leading to division by zero in psi_cv calculation.",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "STYLE",
-          "message": "The variable 'baseline_result' is used before it's checked for None in compute_intervention()",
-          "line": 266
-        }
-      ],
-      "total": 2
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/archetype_matchmaker.py": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/constants.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 37
+          "message": "Import 'annotations' appears unused",
+          "line": 73
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "mtDNA copy number per cell is set to a fixed value (1000.0) without considering variations by tissue type or age.",
+          "line": 24
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "The `GRIEF_ROS_FACTOR` constant is not checked for null before being used in calculations.",
+          "line": 134
+        },
+        {
+          "severity": "error",
+          "type": "DATA LOSS",
+          "message": "The `SIM_YEARS` and `DT` constants are not validated to prevent potential division by zero errors or out-of-range values.",
+          "line": 15
+        },
+        {
+          "severity": "warning",
+          "type": "NUMERICAL",
+          "message": "The `KETONE_ATP_FACTOR` constant is set to a value (0.1) that may lead to numerical instability in the simulation.",
+          "line": 246
+        },
+        {
+          "severity": "error",
+          "type": "CONSISTENCY",
+          "message": "The `BASELINE_MTDNA_COPIES` constant is not defined in the Cramer core ODE, but its value is used elsewhere in the code.",
+          "line": 24
+        }
+      ],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/disturbances.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 25
         },
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'pds_to_patient' appears unused",
+          "message": "Import '_heteroplasmy_fraction' appears unused",
           "line": 42
         }
       ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "logic_error",
-          "message": "The `classify_outcome` function does not handle the case where `het_final` is exactly equal to `HETEROPLASMY_CLIFF`.",
-          "line": 54
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "The `load_experiment_results` function does not check if the loaded JSON data contains a key named 'results' or 'artifacts'.",
-          "line": 83
-        },
-        {
-          "severity": "error",
           "type": "numerical",
-          "message": "The `pds_bin` function does not handle the case where any of the PDS scores are NaN.",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "The `run_matchmaker` function does not check if the 'character_seed_experiment.json' file exists before trying to load it.",
-          "line": 235
-        }
-      ],
-      "total": 6
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/categorical_structure.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "numerical",
-          "message": "Division by zero in sequence_correlation_distance function when n < 4",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "Missing null check for r['seq_terms'] in test_functoriality function",
-          "line": 234
-        }
-      ],
-      "total": 2
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/causal_surgery.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for patient['params'] in PATIENTS dictionary",
-          "line": 44
-        },
-        {
-          "severity": "warning",
-          "type": "numerical",
-          "message": "Potential division by zero in _rk4_step function when state[5] is close to 0.0",
-          "line": 143
-        },
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Index out of bounds error in simulate_with_surgery function when switch_year is equal to sim_years",
-          "line": 187
-        }
-      ],
-      "total": 3
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/character_seed_experiment.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for 'vector' before calling 'split_vector()'",
-          "line": 246
-        },
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for 'intervention' and 'patient' before passing to 'simulate()'",
-          "line": 264
-        },
-        {
-          "severity": "warning",
-          "type": "numerical",
-          "message": "Potential division by zero in 'compute_all()' when calculating 'atp_benefit_terminal'",
-          "line": 313
-        },
-        {
-          "severity": "info",
-          "type": "consistency",
-          "message": "Parameter names do not match constants.py definitions for 'DEFAULT_INTERVENTION' and 'HETEROPLASMY_CLIFF'",
-          "line": 34
-        }
-      ],
-      "total": 4
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/cliff_mapping.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "logic error",
-          "message": "In find_cliff_edge(), if hi - lo < tol is never true because of floating point precision issues.",
+          "message": "Division by zero in RK4 step size calculation (DT)",
           "line": 123
         },
         {
           "severity": "warning",
-          "type": "numerical instability",
-          "message": "In extract_cliff_features(), the numerical gradient calculation may lead to NaNs due to division by zero.",
-          "line": 246
-        }
-      ],
-      "total": 2
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/clinical_consensus.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
+          "type": "crash",
+          "message": "Missing null check for disturbances list before iterating over it",
+          "line": 234
+        },
         {
           "severity": "error",
           "type": "numerical",
-          "message": "Division by zero in cosine_similarity function when na or nb is close to 0",
-          "line": 24
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "Missing null check for vector in query_ollama function",
-          "line": 143
+          "message": "Negative state variable in post-step constraint enforcement (state[5])",
+          "line": 456
         }
       ],
-      "total": 2
+      "total": 5
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/constants.py": {
-      "tier1_issues": [],
+    "/Users/gardenofcomputation/how-to-live-much-longer/downstream_chain.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 30
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'np' appears unused",
+          "line": 32
+        }
+      ],
       "tier2_issues": [
         {
           "severity": "error",
           "type": "BUGS",
-          "message": "mtDNA copy number per cell is not checked for being within a valid range.",
-          "line": 24
+          "message": "In `memory_index` function, if `resilience` is 1.0, then `effective_pathology` will be zero and `mi` will be calculated as `BASELINE_MEMORY + (ss - 1) * SYNAPSES_TO_MEMORY + mef2 * MEF2_MEMORY_BOOST + cr * 0.2`, which can lead to a negative value for `mi` if `cr` is greater than 0.2.",
+          "line": 234
+        },
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In `memory_index` function, the calculation of `effective_pathology` does not account for the case where `resilience` is less than 1.0 but greater than 0.0.",
+          "line": 235
+        },
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In `compute_downstream` function, if `n_steps` is 1, then `dt` will be set to 0.01 instead of the actual time step size.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "STYLE",
+          "message": "The variable `current_age` is not used anywhere in the code.",
+          "line": 187
+        }
+      ],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/genetics_module.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'FEMALE_APOE4_INFLAMMATION_BOOST' appears unused",
+          "line": 15
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'ESTROGEN_PROTECTION_LOSS_FACTOR' appears unused",
+          "line": 15
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 13
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "Off-by-one error in compute_sex_modifiers function for menopause_status 'peri'",
+          "line": 123
         },
         {
           "severity": "warning",
           "type": "CRASHES",
-          "message": "No null check on tissue profiles before accessing their values.",
-          "line": 134
+          "message": "Missing null check for expanded_params dictionary keys in apply_genetic_modifiers function",
+          "line": 145
+        },
+        {
+          "severity": "info",
+          "type": "NUMERICAL",
+          "message": "Potential division by zero in compute_sex_modifiers function for estrogen_therapy=1 and menopause_status='post'",
+          "line": 130
+        }
+      ],
+      "total": 6
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/lifestyle_module.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 11
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "compute_coffee_effects() does not handle invalid coffee_type values.",
+          "line": 34
+        },
+        {
+          "severity": "error",
+          "type": "CRASHES",
+          "message": "compute_diet_effects() does not check for invalid diet_type values.",
+          "line": 63
+        },
+        {
+          "severity": "warning",
+          "type": "NUMERICAL",
+          "message": "compute_alcohol_effects() may produce NaN results if apoe_sensitivity is zero.",
+          "line": 14
+        },
+        {
+          "severity": "info",
+          "type": "CONSISTENCY",
+          "message": "Parameter names in compute_coffee_effects() match constants.py definitions.",
+          "line": 25
+        }
+      ],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/parameter_resolver.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'GRIEF_NAD_DECAY' appears unused",
+          "line": 26
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'SOCIAL_SUPPORT_BUFFER' appears unused",
+          "line": 26
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 23
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'ALCOHOL_APOE4_SYNERGY' appears unused",
+          "line": 26
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'GRIEF_SENESCENCE_FACTOR' appears unused",
+          "line": 26
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In `_precompute_grief`, `total_decay` is calculated with `therapy_decay` which may be negative due to `COPING_DECAY_RATE` being a constant.",
+          "line": 143
+        },
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In `_precompute_alcohol`, the `taper_years` value is not checked for validity (e.g., it should be greater than zero).",
+          "line": 173
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "In `resolve`, if `self._genetic_mods['vulnerability']` or `self._sex_mods['heteroplasmy_multiplier']` is zero, it will cause a division by zero error.",
+          "line": 266
         },
         {
           "severity": "error",
           "type": "NUMERICAL",
-          "message": "Division by zero in ATP production equation when N_damaged is zero.",
-          "line": 245
+          "message": "In `_precompute_gut_health`, the Euler integration step size `dt` may be too large, causing numerical instability.",
+          "line": 221
+        },
+        {
+          "severity": "info",
+          "type": "CONSISTENCY",
+          "message": "The parameter names in this file do not match the constants defined in `constants.py`. Some examples include: `GRIEF_ROS_FACTOR`, `COPING_DECAY_RATE`.",
+          "line": 0
+        }
+      ],
+      "total": 10
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_classifier.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 12
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In analytics_fit_classify(), when computing distances, the keys list is created with [k for k in FIT_KEYS if metrics.get(k) is not None and k in proto]. However, this will skip 'final_atp' key when 'energy' dictionary does not contain 'atp_final' or 'final_atp'.",
+          "line": 134
+        },
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In analytics_fit_classify(), the distances dictionary is created with z2 = sum(((float(metrics[k]) - proto[k]) / FIT_STD.get(k, 1.0)) ** 2 for k in keys). However, this will raise a ZeroDivisionError when FIT_STD.get(k) returns 0.",
+          "line": 141
+        },
+        {
+          "severity": "error",
+          "type": "CRASHES",
+          "message": "In multi_classify(), the pipeline list is not checked for None before accessing its elements. This can lead to an IndexError if the pipeline list is empty or None.",
+          "line": 184
+        },
+        {
+          "severity": "info",
+          "type": "NUMERICAL",
+          "message": "In analytics_fit_classify(), the confidence is computed with math.exp(-distances[best]). However, this may lead to NaN values when distances[best] is very large. Consider using a more robust method for computing confidence.",
+          "line": 162
+        }
+      ],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_dictionary.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 7
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in mean_confidence calculation",
+          "line": 83
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for r.confidence before accessing its value",
+          "line": 73
+        }
+      ],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_enrichment.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 7
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "Division by zero in clinical_signature() when 'atp_slope' is None and 'energy_trend' calculation fails.",
+          "line": 43
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "Missing null check for 'intervention' key in enrich_record()",
+          "line": 104
+        },
+        {
+          "severity": "info",
+          "type": "NUMERICAL",
+          "message": "Potential NaN propagation in clinical_signature() when calculating 'energy_trend'",
+          "line": 52
+        }
+      ],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_pattern_language.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 7
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In validate_pattern_language function, if a pattern has 'larger_patterns' or 'smaller_patterns', it does not check if these patterns exist in the by_id dictionary before trying to access them.",
+          "line": 63
+        },
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "In build_sequence function, when sorting the ready list, it uses a custom key that can lead to incorrect ordering if two patterns have the same 'order_hint' value.",
+          "line": 143
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "In orchestrate_record function, if registry is None and no handler is found for a pattern, it sets status to 'missing_handler', but this might not be the correct behavior depending on the use case.",
+          "line": 187
+        },
+        {
+          "severity": "error",
+          "type": "NUMERICAL",
+          "message": "In orchestrate_record function, when updating the record with new values, it does not check if any of these values are NaN or infinity before using them.",
+          "line": 205
+        }
+      ],
+      "total": 5
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_record.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 7
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "Inconsistent outcome_class validation in VALID_OUTCOME_CLASSES and ProtocolRecord definition.",
+          "line": 12
+        },
+        {
+          "severity": "warning",
+          "type": "CRASHES",
+          "message": "Missing null check for patient context in ProtocolRecord.__init__.",
+          "line": 34
+        },
+        {
+          "severity": "info",
+          "type": "NUMERICAL",
+          "message": "Potential division by zero in simulation result calculation (final states, trajectory shape).",
+          "line": 64
+        }
+      ],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_review.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 7
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in ODE equations is possible when mtDNA damage or ATP production rates are zero.",
+          "line": 0
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Index out of bounds error can occur if review index is negative or greater than or equal to the number of entries in the queue.",
+          "line": 34
+        }
+      ],
+      "total": 3
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/protocol_rewrite_rules.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 10
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'Path' appears unused",
+          "line": 15
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'Any' appears unused",
+          "line": 16
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'json' appears unused",
+          "line": 13
+        }
+      ],
+      "tier2_issues": [],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/run_protocol_pipeline.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 16
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Division by zero in ODE equations when baseline_nad_level is zero.",
+          "line": 123
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for patient dictionary keys in ingest_from_simulation function.",
+          "line": 145
+        },
+        {
+          "severity": "error",
+          "type": "numerical",
+          "message": "Negative state variable 'final_atp' in simulation results.",
+          "line": 234
+        }
+      ],
+      "total": 4
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/run_scenario_comparison.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'extract_milestones' appears unused",
+          "line": 15
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "BUGS",
+          "message": "Off-by-one error in years calculation",
+          "line": 24
         },
         {
           "severity": "warning",
           "type": "DATA LOSS",
-          "message": "No checkpointing or saving of results implemented.",
+          "message": "No file handling for results or plots",
+          "line": 0
+        },
+        {
+          "severity": "info",
+          "type": "NUMERICAL",
+          "message": "Potential division by zero in ODE equations (RK4)",
           "line": 0
         }
       ],
       "total": 4
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/fisher_metric.py": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/scenario_analysis.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'DEFAULT_INTERVENTION' appears unused",
-          "line": 36
+          "message": "Import 'annotations' appears unused",
+          "line": 6
         }
       ],
       "tier2_issues": [],
       "total": 1
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/llm_common.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for response in parse_json_response()",
-          "line": 63
-        },
-        {
-          "severity": "error",
-          "type": "numerical",
-          "message": "Potential division by zero in detect_flattening() when age is exactly 1.0",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "consistency",
-          "message": "snap_all() function not defined in this file, assuming it's imported from another module",
-          "line": 187
-        }
-      ],
-      "total": 3
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/llm_seeded_evolution.py": {
+    "/Users/gardenofcomputation/how-to-live-much-longer/scenario_definitions.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'ALL_PARAM_NAMES' appears unused",
-          "line": 33
+          "message": "Import 'annotations' appears unused",
+          "line": 12
         }
       ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for _baseline_cache key existence before accessing it.",
-          "line": 73
-        },
-        {
-          "severity": "error",
           "type": "numerical",
-          "message": "Potential division by zero in fitness function when calculating atp_benefit and het_benefit.",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "Index out of bounds error possible when accessing grid indices in mutate function.",
-          "line": 187
-        },
-        {
-          "severity": "error",
-          "type": "numerical",
-          "message": "NaN propagation possible in simulate function due to unhandled edge cases in ODE equations.",
-          "line": 261
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "Potential type mismatch when accessing intervention parameters in load_llm_seeds function.",
-          "line": 323
-        }
-      ],
-      "total": 6
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/oeis_seed_experiment.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "numerical",
-          "message": "Division by zero in ODE simulation",
+          "message": "Division by zero in _scenario_b_interventions() when setting ip.fasting_regimen = 0.5",
           "line": 123
         },
         {
           "severity": "warning",
           "type": "crash",
-          "message": "Missing null check for 'seq' dictionary",
-          "line": 456
+          "message": "Missing null check for patient_params in Scenario class",
+          "line": 54
         },
         {
           "severity": "info",
-          "type": "data_loss",
-          "message": "Checkpoint file not closed after save",
-          "line": 789
+          "type": "consistency",
+          "message": "Parameter names do not match constants.py definitions for some parameters (e.g. 'diet_type' vs 'diet_type_str')",
+          "line": 25
         }
       ],
-      "total": 3
+      "total": 4
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/pds_mapping.py": {
-      "tier1_issues": [],
+    "/Users/gardenofcomputation/how-to-live-much-longer/scenario_plot.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 11
+        },
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'extract_milestones' appears unused",
+          "line": 20
+        }
+      ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for `characters` in `load_characters()` function.",
+          "type": "BUGS",
+          "message": "Off-by-one error in plot_trajectories() when calculating age_arr.",
           "line": 64
         },
         {
           "severity": "warning",
-          "type": "numerical",
-          "message": "Potential division by zero in `np.clip()` function calls.",
-          "line": 246,
-          "column": 10
+          "type": "CRASHES",
+          "message": "Missing null check for 'core' key in plot_trajectories().",
+          "line": 73
         },
         {
           "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for `experiment_data` in `compare_predictions()` function.",
-          "line": 434
-        }
-      ],
-      "total": 3
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/posiwid_audit.py": {
-      "tier1_issues": [
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'INTERVENTION_NAMES' appears unused",
-          "line": 44
+          "type": "NUMERICAL",
+          "message": "Potential division by zero in summary_table() when calculating table['metrics'][age].",
+          "line": 234
         },
         {
           "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'PATIENT_NAMES' appears unused",
-          "line": 44
-        },
-        {
-          "severity": "info",
-          "type": "unused_import",
-          "message": "Import 'compute_all' appears unused",
-          "line": 49
-        }
-      ],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "logic_error",
-          "message": "In score_alignment function, 'exp_atp' and 'actual_atp_change' are not checked for NaN before comparison.",
-          "line": 246
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "In run_audit function, if intention or protocol response is None, the program continues without warning or error message.",
-          "line": 184
-        },
-        {
-          "severity": "info",
-          "type": "data_loss",
-          "message": "The output file path is hardcoded and may not be suitable for all environments.",
-          "line": 444
+          "type": "CONSISTENCY",
+          "message": "Parameter 'baseline_age' not found in constants.py.",
+          "line": 69
         }
       ],
       "total": 6
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/prompt_templates.py": {
-      "tier1_issues": [],
+    "/Users/gardenofcomputation/how-to-live-much-longer/scenario_runner.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 9
+        }
+      ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "logic_error",
-          "message": "OFFER_DIEGETIC has a hardcoded value for yamanaka_intensity (3-5 MU of ATP) without considering the actual energy cost.",
-          "line": 123
+          "type": "BUGS",
+          "message": "Uninitialized variable 'years' can cause division by zero in simulate() if scenario.duration_years is zero.",
+          "line": 24
         },
         {
           "severity": "warning",
-          "type": "data_loss",
-          "message": "The file is very long and may cause issues with code readability and maintainability.",
-          "line": 1
+          "type": "DATA LOSS",
+          "message": "No error handling for file operations or result saving in case of exceptions during simulation.",
+          "line": 0
         },
         {
           "severity": "error",
-          "type": "numerical_error",
-          "message": "OFFER_DIEGETIC has a hardcoded value for yamanaka_intensity (3-5 MU of ATP) which can lead to division by zero errors if not handled properly.",
-          "line": 123
-        },
-        {
-          "severity": "info",
-          "type": "consistency",
-          "message": "The parameter names in OFFER_NUMERIC and OFFER_DIEGETIC do not match the constants.py definitions.",
-          "line": 10
+          "type": "NUMERICAL",
+          "message": "Negative state variables can occur if mtDNA damage is not properly bounded in the ODE equations.",
+          "line": 0
         }
       ],
       "total": 4
     },
     "/Users/gardenofcomputation/how-to-live-much-longer/simulator.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "logic error",
-          "message": "In function _deletion_rate, the condition for age < AGE_TRANSITION should be >= instead of <.",
-          "line": 143
-        },
-        {
-          "severity": "warning",
-          "type": "crash",
-          "message": "In function derivatives, there is no null check for 'intervention' and 'patient' arguments.",
-          "line": 245
-        },
-        {
-          "severity": "error",
-          "type": "numerical instability",
-          "message": "In function _cliff_factor, the cliff steepness parameter (CLIFF_STEEPNESS) can cause numerical instability when heteroplasmy is close to HETEROPLASMY_CLIFF.",
-          "line": 123
-        },
-        {
-          "severity": "error",
-          "type": "data loss",
-          "message": "The file 'constants.py' is not imported, which may lead to data loss if the constants are modified externally.",
-          "line": 15
-        },
-        {
-          "severity": "warning",
-          "type": "numerical instability",
-          "message": "In function derivatives, the division by zero can occur when NAD_DECLINE_RATE is zero and NAD is close to its baseline value.",
-          "line": 313
-        }
-      ],
-      "total": 5
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/sobol_sensitivity.py": {
       "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'DEFAULT_INTERVENTION' appears unused",
-          "line": 38
+          "message": "Import 'annotations' appears unused",
+          "line": 82
         },
+        {
+          "severity": "warning",
+          "type": "division_risk",
+          "message": "Division by N_healthy + N_damaged without zero guard",
+          "line": 222
+        }
+      ],
+      "tier2_issues": [
+        {
+          "severity": "error",
+          "type": "bug",
+          "message": "Division by zero in ATP production equation (index 2) when N_deletion is zero.",
+          "line": 123
+        },
+        {
+          "severity": "warning",
+          "type": "crash",
+          "message": "Missing null check for 'patient' parameter in simulate function.",
+          "line": 456
+        },
+        {
+          "severity": "error",
+          "type": "bug",
+          "message": "Incorrect calculation of heteroplasmy cliff (index 1) when N_deletion is greater than HETEROPLASMY_CLIFF.",
+          "line": 789
+        },
+        {
+          "severity": "info",
+          "type": "numerical",
+          "message": "NaN propagation in membrane potential equation (index 6) due to division by zero.",
+          "line": 1011
+        },
+        {
+          "severity": "error",
+          "type": "bug",
+          "message": "Incorrect parameter name 'TRANSPLA' in constants.py, should be 'TRANSPLANT_ADDITION_RATE'.",
+          "line": 1212
+        }
+      ],
+      "total": 7
+    },
+    "/Users/gardenofcomputation/how-to-live-much-longer/supplement_module.py": {
+      "tier1_issues": [
         {
           "severity": "info",
           "type": "unused_import",
-          "message": "Import 'ALL_PARAM_NAMES' appears unused",
-          "line": 38
+          "message": "Import 'annotations' appears unused",
+          "line": 9
         }
       ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for 'result' in simulate function call.",
-          "line": 246
+          "type": "BUGS",
+          "message": "In compute_supplement_effects function, if 'nr_dose' is missing from supplements dictionary, it will raise a KeyError.",
+          "line": 64
+        },
+        {
+          "severity": "error",
+          "type": "CRASHES",
+          "message": "In hill_effect function, if dose or half_max is zero, the division by zero error will occur.",
+          "line": 15
         },
         {
           "severity": "warning",
-          "type": "numerical",
-          "message": "Potential division by zero in sobol_indices function when computing var_total.",
-          "line": 173
+          "type": "DATA LOSS",
+          "message": "The compute_supplement_effects function does not handle the case when gut_health is outside the range [0,1].",
+          "line": 28
         }
       ],
       "total": 4
     },
-    "/Users/gardenofcomputation/how-to-live-much-longer/tiqm_experiment.py": {
-      "tier1_issues": [],
+    "/Users/gardenofcomputation/how-to-live-much-longer/ten_types_audit.py": {
+      "tier1_issues": [
+        {
+          "severity": "info",
+          "type": "unused_import",
+          "message": "Import 'annotations' appears unused",
+          "line": 17
+        }
+      ],
       "tier2_issues": [
         {
           "severity": "error",
-          "type": "logic_error",
-          "message": "The `simulate` function is called twice in the same experiment with different intervention parameters.",
-          "line": 143
+          "type": "NUMERICAL",
+          "message": "Division by zero in _build_priority_gaps function when calculating 'recommended_next_step' for priority gaps.",
+          "line": 1234
         },
         {
           "severity": "warning",
-          "type": "crash",
-          "message": "The `query_ollama_raw` function does not handle cases where the Ollama API returns an error response.",
-          "line": 83
+          "type": "DATA LOSS",
+          "message": "No error handling for file operations in _write_outputs function, may lead to data loss if write operation fails.",
+          "line": 5678
         },
         {
           "severity": "error",
-          "type": "numerical",
-          "message": "The `snap_all` function can return NaN values if the input parameters are invalid, which can cause issues in the simulation.",
-          "line": 96
+          "type": "CRASHES",
+          "message": "Missing null check for 'report' dictionary in _render_markdown function, may cause KeyError when accessing report keys.",
+          "line": 9012
         },
         {
           "severity": "info",
-          "type": "consistency",
-          "message": "The `run_experiment` function does not check if the `offer_model` and `confirm_model` parameters match the expected model names defined in `constants.py`.",
-          "line": 64
+          "type": "CONSISTENCY",
+          "message": "Parameter 'scoring_model' in run_audit function is not checked against constants.py definitions, may lead to inconsistent scoring models.",
+          "line": 1111
         }
       ],
-      "total": 4
-    },
-    "/Users/gardenofcomputation/how-to-live-much-longer/visualize.py": {
-      "tier1_issues": [],
-      "tier2_issues": [
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Missing null check for 'result' in plot_trajectory function.",
-          "line": 63
-        },
-        {
-          "severity": "warning",
-          "type": "numerical",
-          "message": "Potential division by zero in simulate function (not shown) due to missing checks for state variables being zero.",
-          "line": 0
-        },
-        {
-          "severity": "error",
-          "type": "crash",
-          "message": "Index out of bounds error in plot_trajectory function when plotting heteroplasmy.",
-          "line": 83
-        }
-      ],
-      "total": 3
+      "total": 5
     }
   }
 }

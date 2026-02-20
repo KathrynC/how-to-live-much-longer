@@ -4,17 +4,17 @@
       "task_id": "palindrome_000",
       "category": "palindrome",
       "supradiegetic_score": 1.0,
-      "diegetic_score": 0.9108360327383774,
-      "gain": -0.08916396726162257,
+      "diegetic_score": 0.9555415791726982,
+      "gain": -0.04445842082730178,
       "supradiegetic_std": 0.0,
-      "diegetic_std": 0.0
+      "diegetic_std": 1.1102230246251565e-16
     },
     {
       "task_id": "table_001",
       "category": "table",
       "supradiegetic_score": 1.0,
-      "diegetic_score": 0.8750775570604874,
-      "gain": -0.1249224429395126,
+      "diegetic_score": 0.867691538660673,
+      "gain": -0.13230846133932705,
       "supradiegetic_std": 0.0,
       "diegetic_std": 0.0
     },
@@ -22,62 +22,64 @@
       "task_id": "digits_002",
       "category": "digits",
       "supradiegetic_score": 1.0,
-      "diegetic_score": 0.8007663748953842,
-      "gain": -0.19923362510461584,
+      "diegetic_score": 0.6989642582747557,
+      "gain": -0.3010357417252443,
       "supradiegetic_std": 0.0,
-      "diegetic_std": 1.1102230246251565e-16
+      "diegetic_std": 0.0
     },
     {
       "task_id": "format_003",
       "category": "format",
       "supradiegetic_score": 1.0,
-      "diegetic_score": 0.7800107699309041,
-      "gain": -0.21998923006909588,
+      "diegetic_score": 0.8618429001031414,
+      "gain": -0.13815709989685865,
       "supradiegetic_std": 0.0,
-      "diegetic_std": 0.0
+      "diegetic_std": 1.1102230246251565e-16
     },
     {
       "task_id": "symbol_004",
       "category": "symbol",
       "supradiegetic_score": 1.0,
-      "diegetic_score": 0.928131206333941,
-      "gain": -0.07186879366605903,
+      "diegetic_score": 0.9328410066699473,
+      "gain": -0.06715899333005271,
       "supradiegetic_std": 0.0,
       "diegetic_std": 0.0
     }
   ],
   "summary": {
     "mean_supradiegetic_score": 1.0,
-    "mean_diegetic_score": 0.8589643881918189,
-    "mean_gain": -0.14103561180818114,
+    "mean_diegetic_score": 0.8633762565762432,
+    "mean_gain": -0.13662374342375683,
     "by_category": {
       "palindrome": {
         "sup_score": 1.0,
-        "die_score": 0.9108360327383774,
-        "gain": -0.08916396726162257
+        "die_score": 0.9555415791726982,
+        "gain": -0.04445842082730178
       },
       "table": {
         "sup_score": 1.0,
-        "die_score": 0.8750775570604874,
-        "gain": -0.1249224429395126
+        "die_score": 0.867691538660673,
+        "gain": -0.13230846133932705
       },
       "digits": {
         "sup_score": 1.0,
-        "die_score": 0.8007663748953842,
-        "gain": -0.19923362510461584
+        "die_score": 0.6989642582747557,
+        "gain": -0.3010357417252443
       },
       "format": {
         "sup_score": 1.0,
-        "die_score": 0.7800107699309041,
-        "gain": -0.21998923006909588
+        "die_score": 0.8618429001031414,
+        "gain": -0.13815709989685865
       },
       "symbol": {
         "sup_score": 1.0,
-        "die_score": 0.928131206333941,
-        "gain": -0.07186879366605903
+        "die_score": 0.9328410066699473,
+        "gain": -0.06715899333005271
       }
     }
   },
-  "failure_mode_tags": [],
+  "failure_mode_tags": [
+    "precision_loss"
+  ],
   "n_sims": 50
 }

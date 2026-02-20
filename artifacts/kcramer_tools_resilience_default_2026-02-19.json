@@ -1,0 +1,1183 @@
+{
+  "mode": "resilience",
+  "patient_profile": "default",
+  "output_key": "final_atp",
+  "protocol": "moderate",
+  "result": {
+    "robustness": {
+      "no_treatment": 0.9191317106154672,
+      "conservative": 0.952181228251355,
+      "moderate": 0.993877027084209,
+      "aggressive": 0.9949304132421344,
+      "transplant_focused": 0.9944587418181376
+    },
+    "regret": {
+      "no_treatment": {
+        "per_scenario": {
+          "accelerated_aging_syndrome": 0.06420418671176831,
+          "brain_energy_crisis": 0.053083470793079734,
+          "brain_demand": 0.0522110279061444,
+          "moderate_inflammaging": 0.05140700530669595,
+          "two_decades_older": 0.06891622856672652,
+          "critical_nad_crisis": 0.050995827690198725,
+          "decade_older": 0.05941549591484918,
+          "elevated_damage": 0.0759502153420274,
+          "worst_case_patient": 0.4979425346249455,
+          "severe_nad_depletion": 0.050977730555539336,
+          "high_vulnerability": 0.06615343933741158,
+          "max_vulnerability": 0.08506596948096468,
+          "elevated_vulnerability": 0.057950330358875646,
+          "cardiac_demand": 0.051917944876299416,
+          "near_cliff_vulnerable": 0.25664604570883465,
+          "high_damage": 0.15283550537093116,
+          "muscle_demand": 0.051493406482995385,
+          "inflamed_nad_depleted": 0.051506306350886266,
+          "near_cliff": 0.222012142891035,
+          "severe_inflammation": 0.05201735886494874,
+          "mild_nad_decline": 0.050876342679282316,
+          "inflammatory_storm": 0.05266212145903493,
+          "past_cliff": 0.4815355126727434,
+          "moderate_nad_decline": 0.05092556993065789,
+          "mild_inflammaging": 0.05111419850334953
+        },
+        "worst_case": 0.4979425346249455,
+        "average": 0.11039263673520901,
+        "punishing_scenarios": [
+          "worst_case_patient",
+          "near_cliff_vulnerable",
+          "high_damage",
+          "near_cliff",
+          "past_cliff"
+        ]
+      },
+      "conservative": {
+        "per_scenario": {
+          "accelerated_aging_syndrome": 0.03690222468193305,
+          "brain_energy_crisis": 0.03148000163323428,
+          "brain_demand": 0.030918909214657453,
+          "moderate_inflammaging": 0.030370113437226842,
+          "two_decades_older": 0.03863548838809838,
+          "critical_nad_crisis": 0.030245443914222236,
+          "decade_older": 0.034687382328495664,
+          "elevated_damage": 0.03606121539920515,
+          "worst_case_patient": 0.39546320168301946,
+          "severe_nad_depletion": 0.030221325239414454,
+          "high_vulnerability": 0.034126266642944714,
+          "max_vulnerability": 0.03915425331393407,
+          "elevated_vulnerability": 0.031950829214867915,
+          "cardiac_demand": 0.030741669969456376,
+          "near_cliff_vulnerable": 0.08546100082000108,
+          "high_damage": 0.05325879146628454,
+          "muscle_demand": 0.03047769186291882,
+          "inflamed_nad_depleted": 0.030484590274584722,
+          "near_cliff": 0.07196428226594265,
+          "severe_inflammation": 0.030712638239967727,
+          "mild_nad_decline": 0.03009527060832562,
+          "inflammatory_storm": 0.031071606232265903,
+          "past_cliff": 0.35374896421335156,
+          "moderate_nad_decline": 0.030154388384882713,
+          "mild_inflammaging": 0.030204769407984777
+        },
+        "worst_case": 0.39546320168301946,
+        "average": 0.06434369275348881,
+        "punishing_scenarios": [
+          "worst_case_patient",
+          "near_cliff_vulnerable",
+          "near_cliff",
+          "past_cliff"
+        ]
+      },
+      "moderate": {
+        "per_scenario": {
+          "accelerated_aging_syndrome": 0.0010872178696531565,
+          "brain_energy_crisis": 0.0008983640310448182,
+          "brain_demand": 0.0008419163014783404,
+          "moderate_inflammaging": 0.0009208162471950887,
+          "two_decades_older": 0.0010805791194357095,
+          "critical_nad_crisis": 0.0008874623374511836,
+          "decade_older": 0.0010259726390074997,
+          "elevated_damage": 0.001104874031125358,
+          "worst_case_patient": 0.004715210874103093,
+          "severe_nad_depletion": 0.0008861775649028347,
+          "high_vulnerability": 0.0015138324077622611,
+          "max_vulnerability": 0.0023478095172917435,
+          "elevated_vulnerability": 0.001170234708245288,
+          "cardiac_demand": 0.0008496540399568486,
+          "near_cliff_vulnerable": 0.0023300474920683323,
+          "high_damage": 0.0014892976555630488,
+          "muscle_demand": 0.0008606150077971053,
+          "inflamed_nad_depleted": 0.0009271998233345569,
+          "near_cliff": 0.0017142752242508275,
+          "severe_inflammation": 0.0009665393677547041,
+          "mild_nad_decline": 0.0008795556780494262,
+          "inflammatory_storm": 0.0010141619899386445,
+          "past_cliff": 0.0027884291197534106,
+          "moderate_nad_decline": 0.0008826357889683001,
+          "mild_inflammaging": 0.0008986403874361448
+        },
+        "worst_case": 0.004715210874103093,
+        "average": 0.001363260768942709,
+        "punishing_scenarios": [
+          "worst_case_patient",
+          "high_vulnerability",
+          "max_vulnerability",
+          "near_cliff_vulnerable",
+          "high_damage",
+          "near_cliff",
+          "past_cliff"
+        ]
+      },
+      "aggressive": {
+        "per_scenario": {
+          "accelerated_aging_syndrome": 0.03660668671123224,
+          "brain_energy_crisis": 0.03779908715412372,
+          "brain_demand": 0.03791882991651241,
+          "moderate_inflammaging": 0.03896798932613699,
+          "two_decades_older": 0.03576578624868065,
+          "critical_nad_crisis": 0.03892117194991407,
+          "decade_older": 0.037473781739625234,
+          "elevated_damage": 0.038914765089877124,
+          "worst_case_patient": 0.036684073415198526,
+          "severe_nad_depletion": 0.0389289006082324,
+          "high_vulnerability": 0.03899404833048736,
+          "max_vulnerability": 0.03900725958320905,
+          "elevated_vulnerability": 0.038994166984644196,
+          "cardiac_demand": 0.03813658247659646,
+          "near_cliff_vulnerable": 0.03869064099442332,
+          "high_damage": 0.038785328086168636,
+          "muscle_demand": 0.03846144467683854,
+          "inflamed_nad_depleted": 0.038921910402794246,
+          "near_cliff": 0.038726463306633985,
+          "severe_inflammation": 0.0389376183715342,
+          "mild_nad_decline": 0.03897484443091048,
+          "inflammatory_storm": 0.03890643679275596,
+          "past_cliff": 0.03857664286457718,
+          "moderate_nad_decline": 0.038951959101815925,
+          "mild_inflammaging": 0.038982879161682193
+        },
+        "worst_case": 0.03900725958320905,
+        "average": 0.038401171908984205,
+        "punishing_scenarios": [
+          "moderate_inflammaging",
+          "critical_nad_crisis",
+          "elevated_damage",
+          "severe_nad_depletion",
+          "high_vulnerability",
+          "max_vulnerability",
+          "elevated_vulnerability",
+          "near_cliff_vulnerable",
+          "high_damage",
+          "muscle_demand",
+          "inflamed_nad_depleted",
+          "near_cliff",
+          "severe_inflammation",
+          "mild_nad_decline",
+          "inflammatory_storm",
+          "past_cliff",
+          "moderate_nad_decline",
+          "mild_inflammaging"
+        ]
+      },
+      "transplant_focused": {
+        "per_scenario": {
+          "accelerated_aging_syndrome": 0.0,
+          "brain_energy_crisis": 0.0,
+          "brain_demand": 0.0,
+          "moderate_inflammaging": 0.0,
+          "two_decades_older": 0.0,
+          "critical_nad_crisis": 0.0,
+          "decade_older": 0.0,
+          "elevated_damage": 0.0,
+          "worst_case_patient": 0.0,
+          "severe_nad_depletion": 0.0,
+          "high_vulnerability": 0.0,
+          "max_vulnerability": 0.0,
+          "elevated_vulnerability": 0.0,
+          "cardiac_demand": 0.0,
+          "near_cliff_vulnerable": 0.0,
+          "high_damage": 0.0,
+          "muscle_demand": 0.0,
+          "inflamed_nad_depleted": 0.0,
+          "near_cliff": 0.0,
+          "severe_inflammation": 0.0,
+          "mild_nad_decline": 0.0,
+          "inflammatory_storm": 0.0,
+          "past_cliff": 0.0,
+          "moderate_nad_decline": 0.0,
+          "mild_inflammaging": 0.0
+        },
+        "worst_case": 0.0,
+        "average": 0.0,
+        "punishing_scenarios": []
+      }
+    },
+    "vulnerability": {
+      "no_treatment": [
+        {
+          "scenario": "worst_case_patient",
+          "value": 0.33888310869656973,
+          "baseline": 0.7944682255420749,
+          "impact": 0.4555851168455051,
+          "rel_impact": 0.5734466177481852
+        },
+        {
+          "scenario": "past_cliff",
+          "value": 0.36280702207052007,
+          "baseline": 0.7944682255420749,
+          "impact": 0.4316612034715548,
+          "rel_impact": 0.5433335023273301
+        },
+        {
+          "scenario": "near_cliff_vulnerable",
+          "value": 0.5874440827625753,
+          "baseline": 0.7944682255420749,
+          "impact": 0.20702414277949954,
+          "rel_impact": 0.2605820297447951
+        },
+        {
+          "scenario": "near_cliff",
+          "value": 0.6227271173304343,
+          "baseline": 0.7944682255420749,
+          "impact": 0.17174110821164057,
+          "rel_impact": 0.2161711478070248
+        },
+        {
+          "scenario": "high_damage",
+          "value": 0.6920314680862708,
+          "baseline": 0.7944682255420749,
+          "impact": 0.10243675745580405,
+          "rel_impact": 0.12893751337369128
+        },
+        {
+          "scenario": "two_decades_older",
+          "value": 0.7423530354042359,
+          "baseline": 0.7944682255420749,
+          "impact": 0.05211519013783894,
+          "rel_impact": 0.06559757641947246
+        },
+        {
+          "scenario": "accelerated_aging_syndrome",
+          "value": 0.7502186588402565,
+          "baseline": 0.7944682255420749,
+          "impact": 0.044249566701818344,
+          "rel_impact": 0.05569708803851325
+        },
+        {
+          "scenario": "max_vulnerability",
+          "value": 0.7589055688699474,
+          "baseline": 0.7944682255420749,
+          "impact": 0.035562656672127435,
+          "rel_impact": 0.044762843281570666
+        },
+        {
+          "scenario": "decade_older",
+          "value": 0.7631345244592178,
+          "baseline": 0.7944682255420749,
+          "impact": 0.031333701082857046,
+          "rel_impact": 0.0394398417400239
+        },
+        {
+          "scenario": "elevated_damage",
+          "value": 0.7691789517417833,
+          "baseline": 0.7944682255420749,
+          "impact": 0.025289273800291556,
+          "rel_impact": 0.031831699478020524
+        },
+        {
+          "scenario": "high_vulnerability",
+          "value": 0.7785306960527221,
+          "baseline": 0.7944682255420749,
+          "impact": 0.015937529489352786,
+          "rel_impact": 0.020060625430901816
+        },
+        {
+          "scenario": "elevated_vulnerability",
+          "value": 0.7870544704978956,
+          "baseline": 0.7944682255420749,
+          "impact": 0.007413755044179293,
+          "rel_impact": 0.009331720018281161
+        },
+        {
+          "scenario": "brain_energy_crisis",
+          "value": 0.7876842089295651,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0067840166125097134,
+          "rel_impact": 0.00853906599962623
+        },
+        {
+          "scenario": "brain_demand",
+          "value": 0.7888185116985351,
+          "baseline": 0.7944682255420749,
+          "impact": 0.005649713843539739,
+          "rel_impact": 0.007111315043071576
+        },
+        {
+          "scenario": "cardiac_demand",
+          "value": 0.7899708040385732,
+          "baseline": 0.7944682255420749,
+          "impact": 0.004497421503501631,
+          "rel_impact": 0.005660920549003691
+        },
+        {
+          "scenario": "muscle_demand",
+          "value": 0.7916791324728627,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0027890930692121563,
+          "rel_impact": 0.00351064143227267
+        },
+        {
+          "scenario": "inflammatory_storm",
+          "value": 0.7923702391242878,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0020979864177870233,
+          "rel_impact": 0.0026407430156889446
+        },
+        {
+          "scenario": "severe_inflammation",
+          "value": 0.7931055721844597,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0013626533576152067,
+          "rel_impact": 0.0017151766600677484
+        },
+        {
+          "scenario": "inflamed_nad_depleted",
+          "value": 0.7936267814576972,
+          "baseline": 0.7944682255420749,
+          "impact": 0.000841444084377696,
+          "rel_impact": 0.001059128681708534
+        },
+        {
+          "scenario": "moderate_inflammaging",
+          "value": 0.7938043122031967,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0006639133388781637,
+          "rel_impact": 0.0008356700967180506
+        },
+        {
+          "scenario": "mild_inflammaging",
+          "value": 0.7941405146213666,
+          "baseline": 0.7944682255420749,
+          "impact": 0.00032771092070826846,
+          "rel_impact": 0.00041249090923009226
+        },
+        {
+          "scenario": "critical_nad_crisis",
+          "value": 0.794172669712564,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0002955558295109073,
+          "rel_impact": 0.00037201718081204084
+        },
+        {
+          "scenario": "severe_nad_depletion",
+          "value": 0.7942038949025749,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0002643306394999323,
+          "rel_impact": 0.00033271392234670736
+        },
+        {
+          "scenario": "moderate_nad_decline",
+          "value": 0.7942951320587498,
+          "baseline": 0.7944682255420749,
+          "impact": 0.0001730934833250597,
+          "rel_impact": 0.00021787338720432274
+        },
+        {
+          "scenario": "mild_nad_decline",
+          "value": 0.7943830010861928,
+          "baseline": 0.7944682255420749,
+          "impact": 8.52244558821047e-05,
+          "rel_impact": 0.00010727232775603463
+        }
+      ],
+      "conservative": [
+        {
+          "scenario": "worst_case_patient",
+          "value": 0.44136244163849575,
+          "baseline": 0.8152543445741236,
+          "impact": 0.37389190293562785,
+          "rel_impact": 0.4586199453263181
+        },
+        {
+          "scenario": "past_cliff",
+          "value": 0.4905935705299119,
+          "baseline": 0.8152543445741236,
+          "impact": 0.3246607740442117,
+          "rel_impact": 0.39823249787624193
+        },
+        {
+          "scenario": "near_cliff_vulnerable",
+          "value": 0.7586291276514089,
+          "baseline": 0.8152543445741236,
+          "impact": 0.056625216922714716,
+          "rel_impact": 0.06945711764626641
+        },
+        {
+          "scenario": "two_decades_older",
+          "value": 0.7726337755828641,
+          "baseline": 0.8152543445741236,
+          "impact": 0.042620568991259544,
+          "rel_impact": 0.05227886152943334
+        },
+        {
+          "scenario": "near_cliff",
+          "value": 0.7727749779555266,
+          "baseline": 0.8152543445741236,
+          "impact": 0.04247936661859697,
+          "rel_impact": 0.05210566113669415
+        },
+        {
+          "scenario": "accelerated_aging_syndrome",
+          "value": 0.7775206208700918,
+          "baseline": 0.8152543445741236,
+          "impact": 0.03773372370403183,
+          "rel_impact": 0.046284603026241274
+        },
+        {
+          "scenario": "decade_older",
+          "value": 0.7878626380455713,
+          "baseline": 0.8152543445741236,
+          "impact": 0.027391706528552273,
+          "rel_impact": 0.03359897032239832
+        },
+        {
+          "scenario": "high_damage",
+          "value": 0.7916081819909174,
+          "baseline": 0.8152543445741236,
+          "impact": 0.023646162583206176,
+          "rel_impact": 0.029004644673876066
+        },
+        {
+          "scenario": "max_vulnerability",
+          "value": 0.804817285036978,
+          "baseline": 0.8152543445741236,
+          "impact": 0.010437059537145577,
+          "rel_impact": 0.012802212716324422
+        },
+        {
+          "scenario": "elevated_damage",
+          "value": 0.8090679516846055,
+          "baseline": 0.8152543445741236,
+          "impact": 0.006186392889518055,
+          "rel_impact": 0.007588297971904378
+        },
+        {
+          "scenario": "brain_energy_crisis",
+          "value": 0.8092876780894106,
+          "baseline": 0.8152543445741236,
+          "impact": 0.005966666484713001,
+          "rel_impact": 0.0073187791324557695
+        },
+        {
+          "scenario": "brain_demand",
+          "value": 0.8101106303900221,
+          "baseline": 0.8152543445741236,
+          "impact": 0.005143714184101533,
+          "rel_impact": 0.006309336734401006
+        },
+        {
+          "scenario": "high_vulnerability",
+          "value": 0.8105578687471889,
+          "baseline": 0.8152543445741236,
+          "impact": 0.004696475826934665,
+          "rel_impact": 0.005760749216722092
+        },
+        {
+          "scenario": "cardiac_demand",
+          "value": 0.8111470789454163,
+          "baseline": 0.8152543445741236,
+          "impact": 0.004107265628707335,
+          "rel_impact": 0.005038017467852818
+        },
+        {
+          "scenario": "muscle_demand",
+          "value": 0.8126948470929393,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0025594974811843363,
+          "rel_impact": 0.003139507931750279
+        },
+        {
+          "scenario": "elevated_vulnerability",
+          "value": 0.8130539716419033,
+          "baseline": 0.8152543445741236,
+          "impact": 0.002200372932220307,
+          "rel_impact": 0.0026990017862091225
+        },
+        {
+          "scenario": "inflammatory_storm",
+          "value": 0.8139607543510569,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0012935902230667429,
+          "rel_impact": 0.0015867320814371062
+        },
+        {
+          "scenario": "severe_inflammation",
+          "value": 0.8144102928094407,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0008440517646829404,
+          "rel_impact": 0.0010353232341544407
+        },
+        {
+          "scenario": "inflamed_nad_depleted",
+          "value": 0.8146484975339987,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0006058470401248961,
+          "rel_impact": 0.0007431386832306687
+        },
+        {
+          "scenario": "moderate_inflammaging",
+          "value": 0.8148412040726658,
+          "baseline": 0.8152543445741236,
+          "impact": 0.00041314050145779824,
+          "rel_impact": 0.0005067627105668679
+        },
+        {
+          "scenario": "critical_nad_crisis",
+          "value": 0.8149230534885404,
+          "baseline": 0.8152543445741236,
+          "impact": 0.000331291085583163,
+          "rel_impact": 0.00040636531137558596
+        },
+        {
+          "scenario": "severe_nad_depletion",
+          "value": 0.8149603002186998,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0002940443554237948,
+          "rel_impact": 0.0003606780600199059
+        },
+        {
+          "scenario": "mild_inflammaging",
+          "value": 0.8150499437167313,
+          "baseline": 0.8152543445741236,
+          "impact": 0.00020440085739226177,
+          "rel_impact": 0.0002507203534119621
+        },
+        {
+          "scenario": "moderate_nad_decline",
+          "value": 0.815066313604525,
+          "baseline": 0.8152543445741236,
+          "impact": 0.0001880309695986293,
+          "rel_impact": 0.0002306408679083505
+        },
+        {
+          "scenario": "mild_nad_decline",
+          "value": 0.8151640731571494,
+          "baseline": 0.8152543445741236,
+          "impact": 9.027141697415253e-05,
+          "rel_impact": 0.0001107279189310042
+        }
+      ],
+      "moderate": [
+        {
+          "scenario": "two_decades_older",
+          "value": 0.8101886848515267,
+          "baseline": 0.8444206800921265,
+          "impact": 0.03423199524059972,
+          "rel_impact": 0.04053902994993562
+        },
+        {
+          "scenario": "accelerated_aging_syndrome",
+          "value": 0.8133356276823717,
+          "baseline": 0.8444206800921265,
+          "impact": 0.031085052409754788,
+          "rel_impact": 0.03681228224581544
+        },
+        {
+          "scenario": "decade_older",
+          "value": 0.8215240477350595,
+          "baseline": 0.8444206800921265,
+          "impact": 0.02289663235706696,
+          "rel_impact": 0.027115196130166937
+        },
+        {
+          "scenario": "worst_case_patient",
+          "value": 0.8321104324474121,
+          "baseline": 0.8444206800921265,
+          "impact": 0.012310247644714334,
+          "rel_impact": 0.014578335105875527
+        },
+        {
+          "scenario": "brain_energy_crisis",
+          "value": 0.8398693156916001,
+          "baseline": 0.8444206800921265,
+          "impact": 0.004551364400526392,
+          "rel_impact": 0.0053899253154598694
+        },
+        {
+          "scenario": "brain_demand",
+          "value": 0.8401876233032012,
+          "baseline": 0.8444206800921265,
+          "impact": 0.004233056788925271,
+          "rel_impact": 0.0050129714829620755
+        },
+        {
+          "scenario": "cardiac_demand",
+          "value": 0.8410390948749158,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0033815852172106586,
+          "rel_impact": 0.004004621507897849
+        },
+        {
+          "scenario": "past_cliff",
+          "value": 0.8415541056235101,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0028665744686163785,
+          "rel_impact": 0.0033947231944907305
+        },
+        {
+          "scenario": "max_vulnerability",
+          "value": 0.8416237288336204,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0027969512585060974,
+          "rel_impact": 0.0033122723358704922
+        },
+        {
+          "scenario": "near_cliff_vulnerable",
+          "value": 0.8417600809793416,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0026605991127848228,
+          "rel_impact": 0.0031507981454155657
+        },
+        {
+          "scenario": "muscle_demand",
+          "value": 0.842311923948061,
+          "baseline": 0.8444206800921265,
+          "impact": 0.002108756144065471,
+          "rel_impact": 0.0024972815017218733
+        },
+        {
+          "scenario": "near_cliff",
+          "value": 0.8430249849972185,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0013956950949080005,
+          "rel_impact": 0.0016528433372282284
+        },
+        {
+          "scenario": "high_vulnerability",
+          "value": 0.8431703029823714,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0012503771097550631,
+          "rel_impact": 0.0014807514065366646
+        },
+        {
+          "scenario": "high_damage",
+          "value": 0.8433776758016389,
+          "baseline": 0.8444206800921265,
+          "impact": 0.001043004290487537,
+          "rel_impact": 0.001235171419977238
+        },
+        {
+          "scenario": "elevated_vulnerability",
+          "value": 0.8438345661485259,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0005861139436005303,
+          "rel_impact": 0.0006941018350433875
+        },
+        {
+          "scenario": "inflammatory_storm",
+          "value": 0.8440181985933841,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0004024814987423353,
+          "rel_impact": 0.00047663624095329416
+        },
+        {
+          "scenario": "elevated_damage",
+          "value": 0.8440242930526853,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0003963870394411151,
+          "rel_impact": 0.0004694189149866263
+        },
+        {
+          "scenario": "severe_inflammation",
+          "value": 0.8441563916816537,
+          "baseline": 0.8444206800921265,
+          "impact": 0.0002642884104727683,
+          "rel_impact": 0.00031298192560127064
+        },
+        {
+          "scenario": "inflamed_nad_depleted",
+          "value": 0.8442058879852489,
+          "baseline": 0.8444206800921265,
+          "impact": 0.00021479210687758155,
+          "rel_impact": 0.00025436623230751254
+        },
+        {
+          "scenario": "critical_nad_crisis",
+          "value": 0.8442810350653115,
+          "baseline": 0.8444206800921265,
+          "impact": 0.00013964502681496072,
+          "rel_impact": 0.0001653737646497779
+        },
+        {
+          "scenario": "moderate_inflammaging",
+          "value": 0.8442905012626976,
+          "baseline": 0.8444206800921265,
+          "impact": 0.00013017882942889525,
+          "rel_impact": 0.0001541634785811886
+        },
+        {
+          "scenario": "severe_nad_depletion",
+          "value": 0.8442954478932114,
+          "baseline": 0.8444206800921265,
+          "impact": 0.00012523219891502624,
+          "rel_impact": 0.00014830546180058426
+        },
+        {
+          "scenario": "moderate_nad_decline",
+          "value": 0.8443380662004394,
+          "baseline": 0.8444206800921265,
+          "impact": 8.261389168706668e-05,
+          "rel_impact": 9.78349934277468e-05
+        },
+        {
+          "scenario": "mild_inflammaging",
+          "value": 0.84435607273728,
+          "baseline": 0.8444206800921265,
+          "impact": 6.460735484647984e-05,
+          "rel_impact": 7.651086285502999e-05
+        },
+        {
+          "scenario": "mild_nad_decline",
+          "value": 0.8443797880874256,
+          "baseline": 0.8444206800921265,
+          "impact": 4.089200470080989e-05,
+          "rel_impact": 4.842610521612115e-05
+        }
+      ],
+      "aggressive": [
+        {
+          "scenario": "two_decades_older",
+          "value": 0.7755034777222818,
+          "baseline": 0.8063000118613463,
+          "impact": 0.03079653413906447,
+          "rel_impact": 0.03819488240855977
+        },
+        {
+          "scenario": "accelerated_aging_syndrome",
+          "value": 0.7778161588407926,
+          "baseline": 0.8063000118613463,
+          "impact": 0.028483853020553673,
+          "rel_impact": 0.03532661863020268
+        },
+        {
+          "scenario": "decade_older",
+          "value": 0.7850762386344418,
+          "baseline": 0.8063000118613463,
+          "impact": 0.021223773226904497,
+          "rel_impact": 0.026322427030491227
+        },
+        {
+          "scenario": "worst_case_patient",
+          "value": 0.8001415699063167,
+          "baseline": 0.8063000118613463,
+          "impact": 0.00615844195502957,
+          "rel_impact": 0.007637903837819357
+        },
+        {
+          "scenario": "brain_energy_crisis",
+          "value": 0.8029685925685212,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0033314192928250996,
+          "rel_impact": 0.004131736628819473
+        },
+        {
+          "scenario": "brain_demand",
+          "value": 0.8031107096881671,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0031893021731791427,
+          "rel_impact": 0.003955478266478786
+        },
+        {
+          "scenario": "cardiac_demand",
+          "value": 0.8037521664382762,
+          "baseline": 0.8063000118613463,
+          "impact": 0.002547845423070072,
+          "rel_impact": 0.0031599223435311162
+        },
+        {
+          "scenario": "muscle_demand",
+          "value": 0.8047110942790195,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0015889175823267099,
+          "rel_impact": 0.001970628251212211
+        },
+        {
+          "scenario": "max_vulnerability",
+          "value": 0.804964278767703,
+          "baseline": 0.8063000118613463,
+          "impact": 0.00133573309364321,
+          "rel_impact": 0.0016566204563976945
+        },
+        {
+          "scenario": "near_cliff_vulnerable",
+          "value": 0.8053994874769866,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0009005243843596134,
+          "rel_impact": 0.0011168601898947637
+        },
+        {
+          "scenario": "high_vulnerability",
+          "value": 0.8056900870596463,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0006099248016999681,
+          "rel_impact": 0.0007564489553856693
+        },
+        {
+          "scenario": "past_cliff",
+          "value": 0.8057658918786863,
+          "baseline": 0.8063000118613463,
+          "impact": 0.000534119982659953,
+          "rel_impact": 0.0006624333062167954
+        },
+        {
+          "scenario": "elevated_vulnerability",
+          "value": 0.806010633872127,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0002893779892192416,
+          "rel_impact": 0.00035889617383387057
+        },
+        {
+          "scenario": "near_cliff",
+          "value": 0.8060127969148353,
+          "baseline": 0.8063000118613463,
+          "impact": 0.0002872149465109608,
+          "rel_impact": 0.00035621349657173406
+        },
+        {
+          "scenario": "high_damage",
+          "value": 0.8060816453710333,
+          "baseline": 0.8063000118613463,
+          "impact": 0.00021836649031292676,
+          "rel_impact": 0.0002708253591722354
+        },
+        {
+          "scenario": "inflammatory_storm",
+          "value": 0.8061259237905668,
+          "baseline": 0.8063000118613463,
+          "impact": 0.00017408807077945454,
+          "rel_impact": 0.0002159097956324863
+        },
+        {
+          "scenario": "severe_inflammation",
+          "value": 0.8061853126778742,
+          "baseline": 0.8063000118613463,
+          "impact": 0.00011469918347206676,
+          "rel_impact": 0.00014225372911415852
+        },
+        {
+          "scenario": "inflamed_nad_depleted",
+          "value": 0.8062111774057892,
+          "baseline": 0.8063000118613463,
+          "impact": 8.883445555707414e-05,
+          "rel_impact": 0.00011017543625231942
+        },
+        {
+          "scenario": "elevated_damage",
+          "value": 0.8062144019939336,
+          "baseline": 0.8063000118613463,
+          "impact": 8.560986741268373e-05,
+          "rel_impact": 0.00010617619515477008
+        },
+        {
+          "scenario": "moderate_inflammaging",
+          "value": 0.8062433281837557,
+          "baseline": 0.8063000118613463,
+          "impact": 5.668367759059656e-05,
+          "rel_impact": 7.030097576179133e-05
+        },
+        {
+          "scenario": "critical_nad_crisis",
+          "value": 0.8062473254528486,
+          "baseline": 0.8063000118613463,
+          "impact": 5.268640849764861e-05,
+          "rel_impact": 6.534343014087505e-05
+        },
+        {
+          "scenario": "severe_nad_depletion",
+          "value": 0.8062527248498819,
+          "baseline": 0.8063000118613463,
+          "impact": 4.728701146439196e-05,
+          "rel_impact": 5.8646918974030195e-05
+        },
+        {
+          "scenario": "moderate_nad_decline",
+          "value": 0.8062687428875918,
+          "baseline": 0.8063000118613463,
+          "impact": 3.126897375449467e-05,
+          "rel_impact": 3.878081767890606e-05
+        },
+        {
+          "scenario": "mild_inflammaging",
+          "value": 0.8062718339630339,
+          "baseline": 0.8063000118613463,
+          "impact": 2.817789831233153e-05,
+          "rel_impact": 3.494716346001628e-05
+        },
+        {
+          "scenario": "mild_nad_decline",
+          "value": 0.8062844993345646,
+          "baseline": 0.8063000118613463,
+          "impact": 1.5512526781669145e-05,
+          "rel_impact": 1.9239149886477646e-05
+        }
+      ],
+      "transplant_focused": [
+        {
+          "scenario": "two_decades_older",
+          "value": 0.8112692639709624,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0340283241124445,
+          "rel_impact": 0.04025602887333315
+        },
+        {
+          "scenario": "accelerated_aging_syndrome",
+          "value": 0.8144228455520248,
+          "baseline": 0.8452975880834069,
+          "impact": 0.030874742531382116,
+          "rel_impact": 0.03652529353761229
+        },
+        {
+          "scenario": "decade_older",
+          "value": 0.822550020374067,
+          "baseline": 0.8452975880834069,
+          "impact": 0.022747567709339944,
+          "rel_impact": 0.02691072118272199
+        },
+        {
+          "scenario": "worst_case_patient",
+          "value": 0.8368256433215152,
+          "baseline": 0.8452975880834069,
+          "impact": 0.008471944761891725,
+          "rel_impact": 0.010022440476969378
+        },
+        {
+          "scenario": "brain_energy_crisis",
+          "value": 0.8407676797226449,
+          "baseline": 0.8452975880834069,
+          "impact": 0.004529908360762058,
+          "rel_impact": 0.005358951006867282
+        },
+        {
+          "scenario": "brain_demand",
+          "value": 0.8410295396046795,
+          "baseline": 0.8452975880834069,
+          "impact": 0.004268048478727415,
+          "rel_impact": 0.00504916675369276
+        },
+        {
+          "scenario": "cardiac_demand",
+          "value": 0.8418887489148726,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0034088391685342945,
+          "rel_impact": 0.004032708973254444
+        },
+        {
+          "scenario": "muscle_demand",
+          "value": 0.8431725389558581,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0021250491275488503,
+          "rel_impact": 0.002513965682035246
+        },
+        {
+          "scenario": "max_vulnerability",
+          "value": 0.8439715383509121,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0013260497324948384,
+          "rel_impact": 0.0015687371538601798
+        },
+        {
+          "scenario": "near_cliff_vulnerable",
+          "value": 0.84409012847141,
+          "baseline": 0.8452975880834069,
+          "impact": 0.001207459611996975,
+          "rel_impact": 0.001428443224042221
+        },
+        {
+          "scenario": "past_cliff",
+          "value": 0.8443425347432635,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0009550533401434524,
+          "rel_impact": 0.0011298427365786067
+        },
+        {
+          "scenario": "high_vulnerability",
+          "value": 0.8446841353901337,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0006134526932732864,
+          "rel_impact": 0.0007257239366602286
+        },
+        {
+          "scenario": "near_cliff",
+          "value": 0.8447392602214693,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0005583278619376575,
+          "rel_impact": 0.0006605104164600625
+        },
+        {
+          "scenario": "high_damage",
+          "value": 0.844866973457202,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0004306146262049726,
+          "rel_impact": 0.0005094237015171551
+        },
+        {
+          "scenario": "elevated_vulnerability",
+          "value": 0.8450048008567712,
+          "baseline": 0.8452975880834069,
+          "impact": 0.00029278722663572676,
+          "rel_impact": 0.0003463717757666628
+        },
+        {
+          "scenario": "inflammatory_storm",
+          "value": 0.8450323605833228,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0002652275000841753,
+          "rel_impact": 0.0003137681969323268
+        },
+        {
+          "scenario": "severe_inflammation",
+          "value": 0.8451229310494084,
+          "baseline": 0.8452975880834069,
+          "impact": 0.0001746570339985487,
+          "rel_impact": 0.00020662194765580592
+        },
+        {
+          "scenario": "elevated_damage",
+          "value": 0.8451291670838107,
+          "baseline": 0.8452975880834069,
+          "impact": 0.00016842099959624157,
+          "rel_impact": 0.00019924462339720197
+        },
+        {
+          "scenario": "inflamed_nad_depleted",
+          "value": 0.8451330878085834,
+          "baseline": 0.8452975880834069,
+          "impact": 0.00016450027482350915,
+          "rel_impact": 0.00019460634591007212
+        },
+        {
+          "scenario": "critical_nad_crisis",
+          "value": 0.8451684974027627,
+          "baseline": 0.8452975880834069,
+          "impact": 0.00012909068064426155,
+          "rel_impact": 0.00015271625338119852
+        },
+        {
+          "scenario": "severe_nad_depletion",
+          "value": 0.8451816254581143,
+          "baseline": 0.8452975880834069,
+          "impact": 0.00011596262529267598,
+          "rel_impact": 0.000137185562726619
+        },
+        {
+          "scenario": "moderate_inflammaging",
+          "value": 0.8452113175098926,
+          "baseline": 0.8452975880834069,
+          "impact": 8.627057351429102e-05,
+          "rel_impact": 0.00010205941047329542
+        },
+        {
+          "scenario": "moderate_nad_decline",
+          "value": 0.8452207019894077,
+          "baseline": 0.8452975880834069,
+          "impact": 7.688609399925106e-05,
+          "rel_impact": 9.095742739971545e-05
+        },
+        {
+          "scenario": "mild_inflammaging",
+          "value": 0.8452547131247161,
+          "baseline": 0.8452975880834069,
+          "impact": 4.2874958690819476e-05,
+          "rel_impact": 5.0721733144929935e-05
+        },
+        {
+          "scenario": "mild_nad_decline",
+          "value": 0.8452593437654751,
+          "baseline": 0.8452975880834069,
+          "impact": 3.824431793186811e-05,
+          "rel_impact": 4.524361416738655e-05
+        }
+      ]
+    },
+    "rankings": {
+      "worst_case": [
+        [
+          "transplant_focused",
+          0.8112692639709624
+        ],
+        [
+          "moderate",
+          0.8101886848515267
+        ],
+        [
+          "aggressive",
+          0.7755034777222818
+        ],
+        [
+          "conservative",
+          0.44136244163849575
+        ],
+        [
+          "no_treatment",
+          0.33888310869656973
+        ]
+      ],
+      "average": [
+        [
+          "transplant_focused",
+          0.8406135759073312
+        ],
+        [
+          "moderate",
+          0.8392503151383884
+        ],
+        [
+          "aggressive",
+          0.802212403998347
+        ],
+        [
+          "conservative",
+          0.7762698831538424
+        ],
+        [
+          "no_treatment",
+          0.7302209391721222
+        ]
+      ],
+      "median": [
+        [
+          "transplant_focused",
+          0.8447392602214693
+        ],
+        [
+          "moderate",
+          0.8431703029823714
+        ],
+        [
+          "conservative",
+          0.8105578687471889
+        ],
+        [
+          "aggressive",
+          0.806010633872127
+        ],
+        [
+          "no_treatment",
+          0.7876842089295651
+        ]
+      ]
+    },
+    "summary": {
+      "n_protocols": 5,
+      "n_scenarios": 25,
+      "most_robust": {
+        "protocol": "aggressive",
+        "score": 0.9949304132421344
+      },
+      "most_fragile": {
+        "protocol": "no_treatment",
+        "score": 0.9191317106154672
+      },
+      "output_key": "final_atp"
+    }
+  }
+}

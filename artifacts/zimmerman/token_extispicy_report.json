@@ -20,48 +20,51 @@
     "yamanaka_intensity": 1
   },
   "fragmentation_output_correlation": {
-    "energy_atp_initial": 0.18286100950548104,
-    "energy_atp_final": 0.08710868649913903,
-    "energy_atp_min": 0.1831490172593796,
-    "energy_atp_max": 0.22878975219471973,
-    "energy_atp_mean": 0.15565940098461162,
-    "energy_atp_cv": -0.1375602781365263,
-    "energy_reserve_ratio": -0.16116466292609327,
-    "energy_atp_slope": -0.15116546636112316,
-    "energy_terminal_slope": -0.06624136818541915,
-    "energy_time_to_crisis_years": 0.04199623359362723,
+    "energy_atp_initial": 0.17627604909940137,
+    "energy_atp_final": 0.11550847146040896,
+    "energy_atp_min": 0.18401113568447539,
+    "energy_atp_max": 0.16797374022872216,
+    "energy_atp_mean": 0.1654470489840198,
+    "energy_atp_cv": -0.16833422089341918,
+    "energy_reserve_ratio": -0.1657140941754748,
+    "energy_atp_slope": -0.17056423533487952,
+    "energy_terminal_slope": -0.07046319773157848,
+    "energy_time_to_crisis_years": 0.15154982921070934,
     "damage_het_initial": -0.14067986167087673,
-    "damage_het_final": -0.06517691705761727,
-    "damage_het_max": -0.15303960035793363,
-    "damage_delta_het": 0.11495044729077637,
-    "damage_het_slope": 0.12006489421580091,
-    "damage_het_acceleration": -0.11719519494722956,
-    "damage_cliff_distance_initial": 0.14067986167087676,
-    "damage_cliff_distance_final": 0.06517691705761725,
-    "damage_time_to_cliff_years": 0.2079176865729567,
-    "damage_frac_above_cliff": -0.0975321991583499,
-    "dynamics_ros_dominant_freq": 0.0,
-    "dynamics_ros_amplitude": -0.20222419582183251,
-    "dynamics_membrane_potential_cv": -0.06079041890948437,
-    "dynamics_membrane_potential_slope": -0.1217342604674686,
-    "dynamics_nad_slope": -0.05193419844411746,
-    "dynamics_ros_het_correlation": -0.16289413223040855,
-    "dynamics_ros_atp_correlation": 0.09613935415623048,
-    "dynamics_senescent_final": 0.017766916327374812,
-    "dynamics_senescent_slope": 0.03734976955399404,
-    "intervention_atp_benefit_terminal": -0.09049095939463878,
-    "intervention_atp_benefit_mean": -0.12202008902140787,
-    "intervention_het_benefit_terminal": -0.09043600752354769,
+    "damage_het_final": -0.10303351688974821,
+    "damage_het_max": -0.14664810536219247,
+    "damage_delta_het": 0.10634424318832385,
+    "damage_het_slope": 0.12947538415743318,
+    "damage_het_acceleration": -0.024887706093147315,
+    "damage_cliff_distance_initial": 0.14067986167087673,
+    "damage_cliff_distance_final": 0.10303351688974824,
+    "damage_time_to_cliff_years": 0.14344610250534828,
+    "damage_frac_above_cliff": -0.1568741468172976,
+    "damage_deletion_het_initial": -0.14607264425005495,
+    "damage_deletion_het_final": -0.08572066686821625,
+    "damage_deletion_het_max": -0.148259372339869,
+    "dynamics_ros_dominant_freq": 0.05722273938441006,
+    "dynamics_ros_amplitude": -0.18698192044134465,
+    "dynamics_membrane_potential_cv": -0.000643304326988562,
+    "dynamics_membrane_potential_slope": -0.1358868528454361,
+    "dynamics_nad_slope": -0.04880177571503662,
+    "dynamics_ros_het_correlation": -0.09674046614458422,
+    "dynamics_ros_atp_correlation": 0.0829165102246891,
+    "dynamics_senescent_final": -0.0004928794116642213,
+    "dynamics_senescent_slope": 0.01418521061777404,
+    "intervention_atp_benefit_terminal": -0.08593039515168646,
+    "intervention_atp_benefit_mean": -0.05280817448596792,
+    "intervention_het_benefit_terminal": -0.09702241602677139,
     "intervention_energy_cost_per_year": -0.1060065919365192,
-    "intervention_benefit_cost_ratio": 0.01664821556483398,
+    "intervention_benefit_cost_ratio": -0.0480119605797886,
     "intervention_total_dose": -0.07579889855058507,
-    "intervention_crisis_delay_years": -0.06986920531179275,
-    "final_heteroplasmy": -0.06517691705761727,
-    "final_atp": 0.08710868649913903,
-    "final_ros": -0.015561437237994686,
-    "final_nad": 0.006366975891144877,
-    "final_senescent": 0.017766916327374812,
-    "final_membrane_potential": 0.009866516263472494
+    "intervention_crisis_delay_years": -0.1515449355455986,
+    "final_heteroplasmy": -0.10303351688974821,
+    "final_atp": 0.11550847146040896,
+    "final_ros": -0.09381331115292718,
+    "final_nad": 0.00913199495895753,
+    "final_senescent": -0.0004928794116642213,
+    "final_membrane_potential": 0.021180301220168986
   },
   "hazard_zones": [
     {
@@ -80,7 +83,7 @@
         "inflammation_level": 0.23128053968685225
       },
       "fragmentation": 0.1671309192200557,
-      "output_degradation": 0.29268581743696753
+      "output_degradation": 0.39449211106013865
     },
     {
       "params": {
@@ -98,7 +101,7 @@
         "inflammation_level": 0.39363045683202824
       },
       "fragmentation": 0.16666666666666666,
-      "output_degradation": 0.34758928795039506
+      "output_degradation": 0.3397903727157904
     },
     {
       "params": {
@@ -116,7 +119,7 @@
         "inflammation_level": 0.8368965796609382
       },
       "fragmentation": 0.16666666666666666,
-      "output_degradation": 0.2592232458423845
+      "output_degradation": 0.2969119902684715
     },
     {
       "params": {
@@ -134,7 +137,7 @@
         "inflammation_level": 0.46497345619365305
       },
       "fragmentation": 0.16666666666666666,
-      "output_degradation": 0.41645282821254087
+      "output_degradation": 0.3923105915862589
     },
     {
       "params": {
@@ -152,7 +155,7 @@
         "inflammation_level": 0.5717280523760754
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.834169766040001
+      "output_degradation": 0.45245129743377527
     },
     {
       "params": {
@@ -170,7 +173,7 @@
         "inflammation_level": 0.5995934415226123
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.37620916277230315
+      "output_degradation": 0.2362801241017664
     },
     {
       "params": {
@@ -188,7 +191,7 @@
         "inflammation_level": 0.2705349409101757
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.638207600703437
+      "output_degradation": 0.8197095327411014
     },
     {
       "params": {
@@ -206,7 +209,7 @@
         "inflammation_level": 0.47936956412454035
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.5620321422013209
+      "output_degradation": 0.4562259331657482
     },
     {
       "params": {
@@ -224,7 +227,7 @@
         "inflammation_level": 0.64794848220121
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.2708913305689286
+      "output_degradation": 0.22636451652693673
     },
     {
       "params": {
@@ -242,7 +245,7 @@
         "inflammation_level": 0.15067297381324019
       },
       "fragmentation": 0.16620498614958448,
-      "output_degradation": 0.4206393856741906
+      "output_degradation": 0.4545814857875774
     }
   ],
   "token_edit_vs_string_edit": {

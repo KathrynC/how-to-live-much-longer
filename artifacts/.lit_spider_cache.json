@@ -18,5 +18,500 @@
       "37808212"
     ],
     "_cached_at": 1771247556.034483
+  },
+  "(mitochondrial DNA replication rate) OR (mtDNA copy number turnover rate) OR (mitochondrial biogenesis rate measurement)|15": {
+    "pmids": [
+      "37788894",
+      "39039280",
+      "41453917",
+      "35094997",
+      "30209549",
+      "33321831",
+      "39210608",
+      "34761353",
+      "24631932",
+      "38712963",
+      "32930026",
+      "35227992",
+      "38665433",
+      "34972066",
+      "38510136"
+    ],
+    "_cached_at": 1771551456.647916
+  },
+  "(reactive oxygen species mitochondrial DNA damage rate) OR (ROS induced mtDNA mutation rate) OR (oxidative stress mitochondrial genome damage quantitative)|15": {
+    "pmids": [
+      "38825680",
+      "33719895",
+      "35530135",
+      "34229552",
+      "22057568",
+      "37451151",
+      "40627396",
+      "40814060",
+      "15374670",
+      "41051583",
+      "8723319",
+      "39923879",
+      "39456101",
+      "33894359",
+      "36849000"
+    ],
+    "_cached_at": 1771551458.365494
+  },
+  "(mitochondrial dysfunction apoptosis rate) OR (ATP depletion cell death rate) OR (mitochondrial apoptosis quantitative measurement human)|15": {
+    "pmids": [
+      "39191025",
+      "36465612",
+      "39245438",
+      "40188077",
+      "40524158",
+      "39389308",
+      "40229456",
+      "39342996",
+      "15489566",
+      "39986035",
+      "33217194",
+      "26791479",
+      "37635488",
+      "25355314",
+      "38308473"
+    ],
+    "_cached_at": 1771551460.15823
+  },
+  "(exercise mitochondrial biogenesis rate PGC-1alpha) OR (aerobic exercise mtDNA copy number increase) OR (exercise induced mitochondrial biogenesis quantitative human)|15": {
+    "pmids": [
+      "36169625",
+      "29266014",
+      "29098628",
+      "34322871",
+      "40045401",
+      "37175862",
+      "34798200",
+      "32804305",
+      "34588196",
+      "35849594",
+      "35404238",
+      "31385363",
+      "38635100",
+      "36691038",
+      "11474959"
+    ],
+    "_cached_at": 1771551461.767081
+  },
+  "(rapamycin mitophagy enhancement rate) OR (mTOR inhibition mitophagy quantitative) OR (rapamycin autophagy mitochondrial clearance measurement)|15": {
+    "pmids": [
+      "30290714",
+      "41143604",
+      "36672156",
+      "39905391",
+      "39411209",
+      "39667405",
+      "32604996",
+      "41014382",
+      "37720551",
+      "40451544",
+      "23222264",
+      "32093570",
+      "37914286",
+      "28817115",
+      "31033054"
+    ],
+    "_cached_at": 1771551463.3112571
+  },
+  "(NAD+ sirtuin mitophagy regulation) OR (NAD mitochondrial quality control SIRT1 SIRT3) OR (nicotinamide riboside mitophagy enhancement quantitative)|15": {
+    "pmids": [
+      "34583624",
+      "30209975",
+      "38254035",
+      "33580835",
+      "30593894",
+      "40705152",
+      "38041247",
+      "24792485",
+      "41593189",
+      "32535274",
+      "29081403",
+      "32553688",
+      "36878731",
+      "40875701",
+      "36766827"
+    ],
+    "_cached_at": 1771551464.9332108
+  },
+  "(reactive oxygen species cellular senescence rate) OR (ROS induced senescence quantitative) OR (oxidative stress premature senescence dose response)|15": {
+    "pmids": [
+      "30290714",
+      "38060659",
+      "39212196",
+      "39419366",
+      "31833194",
+      "27247702",
+      "38448951",
+      "31816893",
+      "15820197",
+      "39988732",
+      "39247818",
+      "37880054",
+      "31379458",
+      "41286604",
+      "27667312"
+    ],
+    "_cached_at": 1771551466.5709891
+  },
+  "(ATP production recovery time mitochondrial) OR (cellular ATP homeostasis time constant) OR (mitochondrial ATP restoration rate after stress)|15": {
+    "pmids": [
+      "34108509",
+      "40438932",
+      "39550308",
+      "37556386",
+      "31713718",
+      "28551786",
+      "36374770",
+      "18786387",
+      "39855593",
+      "31327095",
+      "41054844",
+      "10861219",
+      "28756312",
+      "26694849",
+      "30561165"
+    ],
+    "_cached_at": 1771551468.423994
+  },
+  "(reactive oxygen species clearance rate cell) OR (ROS scavenging half-life mitochondrial) OR (antioxidant defense ROS clearance time quantitative)|15": {
+    "pmids": [
+      "34589395",
+      "39666228",
+      "38061207",
+      "28483400",
+      "10483897",
+      "29331649",
+      "22073424",
+      "39115261",
+      "33602082",
+      "33461459",
+      "38124374",
+      "31928284",
+      "36306447",
+      "30038465",
+      "27773814"
+    ],
+    "_cached_at": 1771551470.0349739
+  },
+  "(NAD+ turnover rate half-life human) OR (NAD biosynthesis rate measurement) OR (NAD+ pool size turnover quantitative)|15": {
+    "pmids": [
+      "39880362",
+      "36599986",
+      "35863764",
+      "35932995",
+      "28756747",
+      "12171",
+      "2393709",
+      "178671",
+      "40124268",
+      "8214600",
+      "16678117",
+      "3620161",
+      "2146924",
+      "172128",
+      "25423279"
+    ],
+    "_cached_at": 1771551471.642276
+  },
+  "(Yamanaka reprogramming mtDNA repair rate) OR (partial reprogramming mitochondrial rejuvenation) OR (OSKM factors mitochondrial DNA quality improvement quantitative)|15": {
+    "pmids": [
+      "40904701",
+      "38517750",
+      "40862757",
+      "41589348",
+      "40354373",
+      "40122394",
+      "33748933",
+      "30558644",
+      "41471101",
+      "37425825",
+      "40735996",
+      "28478705",
+      "40667171"
+    ],
+    "_cached_at": 1771551473.1337569
+  },
+  "(senolytic drug senescent cell clearance rate) OR (dasatinib quercetin senescent cell reduction quantitative) OR (navitoclax senescent cell elimination rate measurement)|15": {
+    "pmids": [
+      "38871781",
+      "35658936",
+      "38260383",
+      "33631598",
+      "33870156"
+    ],
+    "_cached_at": 1771551474.706335
+  },
+  "(mitochondrial heteroplasmy threshold) OR (biochemical threshold heteroplasmy) OR (mitochondrial DNA mutation threshold cellular dysfunction)|15": {
+    "pmids": [
+      "32906214",
+      "35220898",
+      "40068680",
+      "20301352",
+      "12475550",
+      "12467494",
+      "34120542",
+      "28551783",
+      "8215979",
+      "37429560",
+      "32073748",
+      "26025377",
+      "16019721",
+      "40949487",
+      "41444209"
+    ],
+    "_cached_at": 1771551476.104809
+  },
+  "(mitochondrial DNA deletion replication advantage) OR (deleted mtDNA replication rate faster) OR (mitochondrial DNA deletion selfish replication quantitative)|15": {
+    "pmids": [
+      "35973607",
+      "11223402",
+      "34131800",
+      "31147703",
+      "36442091",
+      "24569805",
+      "28717049",
+      "24055401",
+      "12409452",
+      "31787044",
+      "18073422",
+      "41249289",
+      "20056105",
+      "29912984",
+      "12881447"
+    ],
+    "_cached_at": 1771551477.8357189
+  },
+  "(heteroplasmy threshold sigmoid shape) OR (mitochondrial biochemical threshold nonlinear) OR (heteroplasmy ATP production dose response curve)|15": {
+    "pmids": [
+      "9396008",
+      "40933716"
+    ],
+    "_cached_at": 1771551479.3830001
+  },
+  "(brain neuron oxidative stress vulnerability) OR (neuronal ROS sensitivity compared other tissues) OR (brain mitochondrial oxidative damage tissue specificity)|15": {
+    "pmids": [
+      "33796072",
+      "33186462",
+      "37742785",
+      "32998277",
+      "39684566",
+      "8732541",
+      "35927358",
+      "18852342",
+      "15761472",
+      "27235209",
+      "38396687",
+      "31488222",
+      "31202707",
+      "12200192",
+      "20919934"
+    ],
+    "_cached_at": 1771551481.034345
+  },
+  "(cardiac mitochondrial oxidative stress vulnerability) OR (heart ROS sensitivity measurement) OR (cardiomyocyte oxidative damage susceptibility quantitative)|15": {
+    "pmids": [
+      "35190722",
+      "40403103",
+      "40239706",
+      "17717116",
+      "28199200",
+      "26744346",
+      "39026280",
+      "37295539",
+      "27100514",
+      "41027502",
+      "34371522",
+      "39901237",
+      "33769614",
+      "24650874",
+      "32113905"
+    ],
+    "_cached_at": 1771551482.799723
+  },
+  "(neuronal mitochondrial biogenesis rate PGC-1alpha) OR (brain mitochondrial turnover rate measurement) OR (post-mitotic neuron mitochondrial biogenesis capacity)|15": {
+    "pmids": [
+      "34158851",
+      "37097395",
+      "39171695",
+      "30201263",
+      "32236796",
+      "30172371",
+      "36566873",
+      "31290617",
+      "23110128",
+      "31190345",
+      "39258790",
+      "40671084",
+      "26611103",
+      "39233265",
+      "24880016"
+    ],
+    "_cached_at": 1771551484.9302962
+  },
+  "(skeletal muscle mitochondrial biogenesis rate PGC-1alpha) OR (muscle exercise mitochondrial content increase) OR (skeletal muscle mitochondrial turnover rate quantitative)|15": {
+    "pmids": [
+      "39390310",
+      "29934848",
+      "27748956",
+      "31021559",
+      "38924407",
+      "33726618",
+      "39288086",
+      "21245132",
+      "21874557",
+      "32352340",
+      "33716067",
+      "23994518",
+      "27470593",
+      "35351374",
+      "17099248"
+    ],
+    "_cached_at": 1771551486.6336792
+  },
+  "(CD38 NAD+ degradation rate) OR (CD38 NMN NR degradation quantitative) OR (CD38 enzyme NAD precursor destruction measurement)|15": {
+    "pmids": [
+      "22682224",
+      "28877980",
+      "31281500",
+      "34313548",
+      "34509469",
+      "30631755",
+      "39218690",
+      "26485210",
+      "35114253",
+      "38580317",
+      "39180173",
+      "38181046",
+      "11513738",
+      "24295520",
+      "35811018"
+    ],
+    "_cached_at": 1771551488.292572
+  },
+  "(mitochondrial DNA deletion accumulation rate age) OR (mtDNA deletion doubling time human aging) OR (Vandiver 2023 mitochondrial deletion aging cell)|15": {
+    "pmids": [
+      "9928425",
+      "12729587",
+      "37815936",
+      "37132288",
+      "37808212",
+      "1898383",
+      "7599206",
+      "24339796",
+      "12826250",
+      "7556507",
+      "18073422",
+      "1472070",
+      "11795533",
+      "9799119",
+      "15477759"
+    ],
+    "_cached_at": 1771551490.134752
+  },
+  "(mtDNA deletion accumulation elderly accelerated) OR (mitochondrial DNA damage rate old age) OR (Vandiver 2023 aging cell mitochondrial deletion doubling)|15": {
+    "pmids": [
+      "39923879",
+      "32965609",
+      "30990467",
+      "25446805",
+      "10902575",
+      "23422312",
+      "25955204",
+      "25702753",
+      "35765148",
+      "34572132",
+      "20164450",
+      "10022226",
+      "17578510",
+      "1898383",
+      "19517797"
+    ],
+    "_cached_at": 1771551491.814004
+  },
+  "(NAD+ age-dependent decline rate human) OR (NAD+ level aging quantitative measurement) OR (Camacho-Pereira 2016 NAD decline aging)|15": {
+    "pmids": [
+      "27304511",
+      "29685734",
+      "39572679",
+      "34509469",
+      "39460833",
+      "27304496",
+      "40073809",
+      "30048742",
+      "36809279",
+      "31207144",
+      "40069789",
+      "39418868",
+      "36182928",
+      "34073099",
+      "30875389"
+    ],
+    "_cached_at": 1771551493.412673
+  },
+  "(cellular senescence accumulation rate aging human) OR (senescent cell fraction increase age quantitative) OR (p16 senescence marker accumulation rate tissue)|15": {
+    "pmids": [
+      "30290714",
+      "39212196",
+      "39304134",
+      "39419366",
+      "37696876",
+      "30355079",
+      "38758779",
+      "28789901",
+      "31379458",
+      "36359836",
+      "28970119",
+      "28600786",
+      "28729036",
+      "32417788",
+      "29106993"
+    ],
+    "_cached_at": 1771551495.255662
+  },
+  "(mitochondrial ROS production rate baseline) OR (electron transport chain superoxide production rate) OR (mitochondrial hydrogen peroxide production quantitative)|15": {
+    "pmids": [
+      "22057568",
+      "29859845",
+      "11035250",
+      "33631425",
+      "30176156",
+      "12237311",
+      "35330793",
+      "21964033",
+      "29702406",
+      "32971363",
+      "25389297",
+      "37318248",
+      "39236857",
+      "30389498",
+      "16678117"
+    ],
+    "_cached_at": 1771551497.3034508
+  },
+  "(damaged mitochondria ROS production increase) OR (mitochondrial dysfunction electron leak superoxide) OR (mtDNA mutation ROS production fold change quantitative)|15": {
+    "pmids": [
+      "36233264",
+      "29859845",
+      "33022416",
+      "27302663",
+      "26432659",
+      "32298788",
+      "21949114",
+      "34921930",
+      "22057568",
+      "38781731",
+      "33924958",
+      "35044230",
+      "34118452",
+      "35026589",
+      "22399429"
+    ],
+    "_cached_at": 1771551499.149308
   }
 }
