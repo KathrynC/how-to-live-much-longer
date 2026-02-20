@@ -13,12 +13,12 @@ Type aliases:
     PatientDict = dict[str, float]
 
 Citation key (Cramer chapter/page references):
-    HETEROPLASMY_CLIFF = 0.7
-        Not given as an explicit number in the book. Cramer discusses a
-        ~25% overall MitoClock damage threshold (Ch. V.K, p.66) which is
-        a different metric (total deletions + point mutations). The 70%
-        heteroplasmy cliff is a standard value from the mitochondrial
-        genetics literature (e.g., Rossignol et al. 2003).
+    HETEROPLASMY_CLIFF = 0.50
+        Post-C11 recalibration. Literature value was 0.70 total het
+        (Rossignol et al. 2003), but C11 split damage into deletions
+        (~60%) and point mutations (~40%). Cliff uses deletion het only,
+        so threshold lowered to 0.50 to maintain biological equivalence.
+        Cramer discusses ~25% MitoClock damage (Ch. V.K, p.66).
     CLIFF_STEEPNESS = 15.0
         Simulation calibration. Not from the book.
     DOUBLING_TIME_YOUNG = 11.8, DOUBLING_TIME_OLD = 3.06
@@ -92,11 +92,18 @@ N_STEPS = int(SIM_YEARS / DT)  # 3000 steps
 # 10-100 copies, mature embryonic cells have 3,000-4,000.
 BASELINE_MTDNA_COPIES = 1000.0
 
-# Heteroplasmy cliff: the fraction of damaged mtDNA at which ATP production
-# collapses nonlinearly. From mitochondrial genetics literature (Rossignol
-# et al. 2003). Cramer's MitoClock uses a different metric (~25% total
-# damage score, Ch. V.K p.66).
-HETEROPLASMY_CLIFF = 0.7
+# Heteroplasmy cliff: the fraction of DELETION-bearing mtDNA at which ATP
+# production collapses nonlinearly. Post-C11 recalibration: the literature
+# value of 0.70 (Rossignol et al. 2003) refers to TOTAL heteroplasmy
+# (all damaged copies). After C11 split into deletions + point mutations,
+# the cliff uses deletion het only. Since deletions are ~60% of total
+# damage (DELETION_FRACTION at age 70), the equivalent deletion cliff is
+# ~0.42 (= 0.70 * 0.60). We use 0.50 as a conservative estimate,
+# accounting for the fact that deletion fraction increases with age
+# (DELETION_FRACTION_OLD = 0.80 → cliff at 0.56). This preserves the
+# cliff's biological meaning: ATP collapse when most ETC complexes lack
+# critical subunits due to large-deletion mtDNA.
+HETEROPLASMY_CLIFF = 0.50
 
 # Cliff steepness: controls the sigmoid sharpness at the cliff edge.
 # Calibrated so 60%→90% het spans ~10% ATP drop to ~80% ATP drop.
@@ -170,6 +177,19 @@ BASELINE_MITOPHAGY_RATE = 0.02  # fraction per year (sim param)
 CD38_BASE_SURVIVAL = 0.4     # fraction of NMN/NR surviving CD38 at min dose
 CD38_SUPPRESSION_GAIN = 0.6  # additional survival from CD38 inhibitor (apigenin)
 
+# NAD-dependent ATP and antioxidant coefficients
+# These control how much NAD+ contributes to ATP production and ROS defense.
+# NOT directly from Cramer — modeling assumptions. See NAD audit
+# (artifacts/finding_nad_audit_hype_guard_2026-02-19.md) for discussion.
+# ATP formula: (1 - NAD_ATP_DEPENDENCE) + NAD_ATP_DEPENDENCE * NAD
+#   At 0.4: 40% of ATP depends on NAD (large effect, hype-vulnerable)
+#   At 0.2: 20% of ATP depends on NAD (conservative estimate)
+# Defense formula: 1.0 + NAD_DEFENSE_BOOST * NAD
+#   At 0.4: 40% ROS defense boost per unit NAD
+#   At 0.2: 20% ROS defense boost (conservative)
+NAD_ATP_DEPENDENCE = 0.2     # reduced from 0.4 — see NAD audit
+NAD_DEFENSE_BOOST = 0.2      # reduced from 0.4 — see NAD audit
+
 # Transplant effectiveness (primary rejuvenation mechanism)
 # Cramer Ch. VIII.G pp.104-107: bioreactor-grown stem cells → mitlet
 # encapsulation. The ONLY method for reversing accumulated mtDNA damage
@@ -177,6 +197,25 @@ CD38_SUPPRESSION_GAIN = 0.6  # additional survival from CD38 inhibitor (apigenin
 TRANSPLANT_ADDITION_RATE = 0.30     # healthy copy addition (was 0.15)
 TRANSPLANT_DISPLACEMENT_RATE = 0.12 # competitive displacement of damaged copies
 TRANSPLANT_HEADROOM = 1.5           # max total copies allowed with transplant (was 1.2)
+
+# Transplant efficacy degradation at high heteroplasmy
+# When deletion het is above this threshold, transplant addition and displacement
+# are scaled down by a sigmoid factor. Rationale: in a severely damaged cell,
+# the transplanted healthy mitochondria face a hostile intracellular environment
+# (low ATP, high ROS, disrupted fission/fusion dynamics, SASP inflammation)
+# that impairs their engraftment and competitive ability.
+# This creates the "point of no return" that Cramer's theory requires:
+# above ~85-90% deletion het, transplant alone cannot overcome the damage.
+TRANSPLANT_HET_PENALTY_MIDPOINT = 0.75  # total het where transplant efficacy halves
+TRANSPLANT_HET_PENALTY_STEEPNESS = 25.0  # sigmoid steepness (higher = sharper cutoff)
+
+# Mitophagy ATP-gating: autophagy is energy-dependent. The cell needs ATP
+# to form autophagosomes, process cargo, and fuse with lysosomes. Below
+# this ATP midpoint, mitophagy efficiency drops sharply (sigmoid).
+# Creates bistable trap: low ATP → impaired mitophagy → damaged mitos
+# persist → ATP stays low = "point of no return."
+MITOPHAGY_ATP_MIDPOINT = 0.6   # ATP level where mitophagy efficiency halves
+MITOPHAGY_ATP_STEEPNESS = 8.0  # sigmoid steepness
 
 # ── C11: Split mutation type constants (Cramer email 2026-02-17) ────────────
 #

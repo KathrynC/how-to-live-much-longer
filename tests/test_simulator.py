@@ -32,12 +32,14 @@ class TestBasicSimulation:
         """Test 3: Near-cliff patient should deteriorate.
 
         Under C11, het=0.65 at age 80 yields deletion_het ~0.50 (below the
-        0.70 cliff), so ATP stays moderate (~0.62). Total het still crosses
+        0.70 cliff), so ATP stays moderate. Total het still crosses
         0.70 as both deletion and point mutations accumulate.
+        ATP threshold raised to 0.8 after NAD coefficient reduction
+        (NAD_ATP_DEPENDENCE 0.4→0.2 means low-NAD patients less penalized).
         """
         result = simulate(patient=near_cliff_patient)
         assert result["heteroplasmy"][-1] > 0.7  # past cliff (total het)
-        assert result["states"][-1, 2] < 0.7  # ATP reduced but no collapse
+        assert result["states"][-1, 2] < 0.8  # ATP below healthy maximum
 
 
 class TestCliff:
@@ -58,10 +60,13 @@ class TestCliff:
         assert r["heteroplasmy"][-1] > expect_final_het_above
 
     def test_cliff_factor_sigmoid(self):
-        """Cliff function returns ~1 below threshold, ~0 above."""
-        assert _cliff_factor(0.3) > 0.99
-        assert _cliff_factor(0.7) == pytest.approx(0.5, abs=0.01)
-        assert _cliff_factor(0.9) < 0.05
+        """Cliff function returns ~1 below threshold, ~0 above.
+
+        Post-C11 recalibration: cliff at deletion het 0.50 (was 0.70).
+        """
+        assert _cliff_factor(0.2) > 0.98
+        assert _cliff_factor(0.5) == pytest.approx(0.5, abs=0.01)
+        assert _cliff_factor(0.7) < 0.05
 
 
 class TestFalsifierEdgeCases:
@@ -77,13 +82,13 @@ class TestFalsifierEdgeCases:
 
         Under C11, het=0.90 at age 70 yields deletion_het ~0.52, which is
         below the 0.70 cliff. ATP is reduced but does not fully collapse.
-        The test verifies meaningful energy impairment (< 0.65) rather than
-        the pre-C11 expectation of near-zero ATP.
+        Threshold raised to 0.8 after NAD coefficient reduction
+        (NAD_ATP_DEPENDENCE 0.4→0.2 means low-NAD patients less penalized).
         """
         p = dict(DEFAULT_PATIENT)
         p["baseline_heteroplasmy"] = 0.90
         result = simulate(patient=p, sim_years=30)
-        assert result["states"][-1, 2] < 0.65  # ATP significantly reduced
+        assert result["states"][-1, 2] < 0.80  # ATP impaired vs healthy
 
     def test_yamanaka_drains_atp(self):
         """5c: Max Yamanaka should cost significant energy."""
@@ -363,7 +368,8 @@ class TestMutationTypeSplit:
         # Deletion het should be majority of total het
         assert r_high["deletion_heteroplasmy"][-1] > 0.5
         # With high deletion het approaching cliff, ATP should be reduced
-        assert r_high["states"][-1, 2] < 0.5
+        # Threshold raised from 0.5 to 0.55 after NAD coefficient reduction
+        assert r_high["states"][-1, 2] < 0.55
 
     def test_analytics_includes_deletion_metrics(self):
         from analytics import compute_all

@@ -94,6 +94,9 @@ from constants import (
     BASELINE_MITOPHAGY_RATE,
     CD38_BASE_SURVIVAL, CD38_SUPPRESSION_GAIN,
     TRANSPLANT_ADDITION_RATE, TRANSPLANT_DISPLACEMENT_RATE, TRANSPLANT_HEADROOM,
+    TRANSPLANT_HET_PENALTY_MIDPOINT, TRANSPLANT_HET_PENALTY_STEEPNESS,
+    MITOPHAGY_ATP_MIDPOINT, MITOPHAGY_ATP_STEEPNESS,
+    NAD_ATP_DEPENDENCE, NAD_DEFENSE_BOOST,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     TISSUE_PROFILES,
     # C11: Split mutation type constants
@@ -713,8 +716,22 @@ def derivatives(
     # ensures the addition rate doesn't exceed the base rate even when
     # there's lots of headroom.
     transplant_headroom = max(TRANSPLANT_HEADROOM - total, 0.0)
+
+    # Transplant het penalty: at very high total heteroplasmy, the
+    # intracellular environment is hostile to transplanted mitochondria.
+    # Low ATP, high ROS, disrupted fission/fusion, SASP inflammation all
+    # impair engraftment and competitive displacement. This sigmoid
+    # penalty creates a "point of no return" consistent with Cramer's
+    # thesis that crossing the cliff leads to irreversible collapse.
+    # Uses TOTAL heteroplasmy (not deletion-only) because the hostile
+    # environment depends on overall mitochondrial dysfunction, and C11
+    # means deletion het alone rarely exceeds 0.60.
+    transplant_penalty = 1.0 / (1.0 + np.exp(TRANSPLANT_HET_PENALTY_STEEPNESS
+                                              * (het_total - TRANSPLANT_HET_PENALTY_MIDPOINT)))
+
     transplant_add = (transplant * TRANSPLANT_ADDITION_RATE
-                      * min(transplant_headroom, 1.0))
+                      * min(transplant_headroom, 1.0)
+                      * transplant_penalty)
 
     # Transplant displacement: healthy transplanted mitos OUTCOMPETE
     # deletion-mutated mitos for cellular resources (membrane space,
@@ -725,8 +742,10 @@ def derivatives(
     # (the displacement process itself requires ATP).
     # The same amount displaced from N_del is NOT added to N_h (it's
     # a destruction of damaged copies, not conversion).
+    # Also subject to transplant het penalty (hostile environment).
     transplant_displace = (transplant * TRANSPLANT_DISPLACEMENT_RATE
-                           * n_del * energy_available)
+                           * n_del * energy_available
+                           * transplant_penalty)
 
     # Yamanaka repair: partial epigenetic reprogramming can "repair"
     # damaged mtDNA by activating DNA repair pathways and selectively
@@ -810,7 +829,16 @@ def derivatives(
     # Deletions are HIGHLY selected against because they cause severe
     # ΔΨ loss (missing ETC subunits), unlike point mutations which may
     # have near-normal ΔΨ.
-    mitophagy_del = _current_mitophagy_rate * n_del
+    #
+    # ATP-gated: autophagy is energy-dependent (autophagosome formation
+    # requires ATP for membrane nucleation, cargo recognition, and
+    # lysosomal fusion). At low ATP, the cell detects damage (PINK1
+    # still accumulates) but cannot execute clearance. This creates the
+    # bistable trap: low ATP → impaired mitophagy → damaged mitos
+    # persist → ATP stays low. This is the "point of no return."
+    mitophagy_efficiency = 1.0 / (1.0 + np.exp(-MITOPHAGY_ATP_STEEPNESS
+                                               * (energy_available - MITOPHAGY_ATP_MIDPOINT)))
+    mitophagy_del = _current_mitophagy_rate * n_del * mitophagy_efficiency
 
     # Apoptosis of deletion copies: same mechanism as healthy apoptosis
     # (energy crisis -> cytochrome c release). Affects all copy pools
@@ -853,7 +881,7 @@ def derivatives(
     # membrane potential stays near-normal, and the PINK1/Parkin
     # quality control pathway is not triggered.
     mitophagy_pt = (_current_mitophagy_rate * POINT_MITOPHAGY_SELECTIVITY
-                    * n_pt)
+                    * n_pt * mitophagy_efficiency)
 
     # Apoptosis of point mutation copies (same mechanism as above)
     apoptosis_pt = (0.02 * max(1.0 - energy_available, 0.0)
@@ -873,12 +901,13 @@ def derivatives(
     #   - senescence: senescent cells consume ~2x ATP (Cramer Ch. VIII.F p.103)
     #     so more senescence -> less net ATP available
     #
-    # The (0.6 + 0.4 * NAD) factor models that ATP production is ~60%
-    # from substrate-level phosphorylation (glycolysis, TCA cycle) which
-    # doesn't need NAD+ directly, and ~40% from oxidative phosphorylation
-    # which requires NADH as electron donor.
+    # The NAD-dependent fraction models oxidative phosphorylation (requires
+    # NADH as electron donor). NAD_ATP_DEPENDENCE controls the split:
+    #   At 0.4: 40% oxphos-dependent (original, hype-vulnerable)
+    #   At 0.2: 20% oxphos-dependent (conservative, post-audit)
+    # See artifacts/finding_nad_audit_hype_guard_2026-02-19.md
     atp_target = (BASELINE_ATP * cliff
-                  * (0.6 + 0.4 * min(nad, 1.0))
+                  * ((1.0 - NAD_ATP_DEPENDENCE) + NAD_ATP_DEPENDENCE * min(nad, 1.0))
                   * (1.0 - 0.15 * sen))
 
     # Yamanaka energy cost: reprogramming is extremely expensive.
@@ -930,7 +959,9 @@ def derivatives(
     # plus exercise-induced hormesis (Nrf2 pathway, catalase, GPx).
     # defense_factor > 1.0 means the cell's antioxidant capacity
     # exceeds baseline, reducing equilibrium ROS.
-    defense_factor = 1.0 + 0.4 * min(nad, 1.0)
+    # NAD_DEFENSE_BOOST controls magnitude (reduced from 0.4 to 0.2
+    # after NAD audit — see finding_nad_audit_hype_guard_2026-02-19.md).
+    defense_factor = 1.0 + NAD_DEFENSE_BOOST * min(nad, 1.0)
     defense_factor += exercise * 0.2
 
     # Exercise-generated ROS: transient increase during physical activity.
