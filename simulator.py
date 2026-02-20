@@ -363,13 +363,12 @@ def _deletion_rate(age: float, genetic_vulnerability: float,
                 (early onset of accelerated damage)
 
     C10 calibration:
-        NATURAL_HEALTH_REF = 0.77 was iteratively determined so that a
-        naturally aging person (no intervention, default patient) produces
-        shift ≈ 0 at age 65, matching the Va23 empirical data point.
-        Natural aging yields ATP_norm ≈ 0.774 at age 65 with baseline
-        mitophagy rate = 0.02; normalizing by 0.77 gives a residual shift
-        of < 0.05 years (18 days), satisfying Cramer's requirement that
-        the AVERAGE transition age is 65.
+        NATURAL_HEALTH_REF = 0.91 was iteratively recalibrated after the
+        NAD coefficient reduction (0.4→0.2) and cliff recalibration
+        (0.70→0.50). Natural aging now yields ATP_norm ≈ 0.908 at age 65
+        with baseline mitophagy = 0.02; normalizing by 0.91 gives a
+        residual shift of < 0.01 years (<1 day), satisfying Cramer's
+        requirement that the AVERAGE transition age is 65.
 
     Args:
         age: Current biological age in years (baseline_age + simulation time).
@@ -390,7 +389,7 @@ def _deletion_rate(age: float, genetic_vulnerability: float,
     # The key insight is that the age-65 transition in Va23 data reflects
     # AVERAGE cellular health at age 65. Interventions that maintain
     # higher ATP and mitophagy effectively delay this transition.
-    NATURAL_HEALTH_REF = 0.77  # calibrated: ATP_norm at age 65, no intervention
+    NATURAL_HEALTH_REF = 0.91  # recalibrated for NAD coeff 0.2 + cliff 0.50
 
     # health_factor combines ATP level (energy for DNA repair) with
     # mitophagy efficiency (clearance of damaged organelles). Both are
