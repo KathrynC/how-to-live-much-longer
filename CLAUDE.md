@@ -24,6 +24,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **HETEROPLASMY_CLIFF recalibrated (0.70→0.50):** C11 split broke cliff dynamics — deletion het maxed at ~0.57, never reaching old 0.70 threshold. Lowered to 0.50 (deletion-only equivalent of literature's 0.70 total het). Cliff now activates properly.
   - **Bistability restored:** ATP-gated mitophagy (autophagy requires energy) + transplant het penalty (hostile environment impairs engraftment). Model now has point of no return at het~0.93-0.95.
   - **REVIEW WITH CRAMER:** Is HETEROPLASMY_CLIFF=0.50 the right deletion threshold? Are NAD coefficients at 0.2 appropriate? Is point of no return at het~0.93 consistent with clinical expectation?
+- **ASK DODDS & DANFORTH (LEMURS data):** The precision medicine expansion uses three sleep coefficients attributed to "UVM LEMURS" but not derived from any LEMURS publication. Current values are literature-approximated but could be grounded in actual LEMURS Oura ring data. Specific requests:
+  1. **Sleep quality → physiological recovery rate:** LEMURS tracks HRV recovery overnight. What fraction of next-day HRV recovery is lost per unit of sleep quality reduction? This maps to `SLEEP_DISRUPTION_IMPACT` (currently 0.7 = 70% repair loss at zero sleep; literature suggests 0.5 may be more conservative). We use this to scale mitophagy/repair efficacy.
+  2. **Alcohol → sleep quality dose-response:** LEMURS surveys likely capture both alcohol consumption and Oura sleep scores. What is the quantitative relationship between drinks/day and Oura sleep score reduction? This maps to `ALCOHOL_SLEEP_DISRUPTION` (currently 0.4 = 40% sleep quality loss at max alcohol).
+  3. **Sleep disturbance → inflammation proxy:** LEMURS has both Oura data and stress/wellness surveys. Is there a quantitative mapping from Oura sleep score → next-day perceived stress or inflammation proxy? This maps to our `(1.0 - sleep_quality) * 0.05` inflammation effect.
+  4. **Grief detection via HRV:** The design docs reference "sustained 20% HRV drop over 14 days triggers intervention boost." Is this threshold from LEMURS data? Can LEMURS validate or refine it?
+  - See `artifacts/finding_sleep_coefficient_audit_2026-02-19.md` for full audit.
+  - Relevant LEMURS papers: Fudolig et al. 2024 (Digital Biomarkers, sleep HR dynamics), Bloomfield et al. 2024 (PLOS Digital Health, stress prediction), Fudolig et al. 2025 (npj Complexity, collective sleep patterns).
 
 ## Project Overview
 
