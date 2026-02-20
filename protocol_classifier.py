@@ -15,21 +15,21 @@ import math
 from typing import Any
 
 # Class prototypes: mean values for key metrics per outcome class.
-# Calibrated from 700-trial dark_matter.py sweep (2026-02-19).
-# Key insight: heteroplasmy is NOT a strong discriminator — most interventions
-# reduce het regardless of outcome. Classes are separated primarily by ATP.
+# Recalibrated from 700-trial dark_matter.py sweep with clinical Yamanaka
+# weighting, cliff=0.50, NAD coefficients=0.2, NATURAL_HEALTH_REF=0.91.
+# Het is NOT a strong discriminator — classes separated primarily by ATP.
 CLASS_PROTOTYPES = {
-    "thriving":    {"final_atp": 0.82, "mean_atp": 0.87, "final_het": 0.20},
-    "stable":      {"final_atp": 0.67, "mean_atp": 0.72, "final_het": 0.22},
-    "declining":   {"final_atp": 0.40, "mean_atp": 0.47, "final_het": 0.21},
+    "thriving":    {"final_atp": 0.85, "mean_atp": 0.88, "final_het": 0.25},
+    "stable":      {"final_atp": 0.72, "mean_atp": 0.72, "final_het": 0.25},
+    "declining":   {"final_atp": 0.62, "mean_atp": 0.61, "final_het": 0.47},
     "collapsed":   {"final_atp": 0.10, "mean_atp": 0.15, "final_het": 0.50},
 }
 
 # Metric keys used for prototype distance computation
 FIT_KEYS = ["final_atp", "mean_atp", "final_het"]
 
-# Standard deviations for z-scoring (from dark_matter population, 2026-02-19)
-FIT_STD = {"final_atp": 0.08, "mean_atp": 0.08, "final_het": 0.08}
+# Standard deviations for z-scoring (from dark_matter population)
+FIT_STD = {"final_atp": 0.09, "mean_atp": 0.09, "final_het": 0.09}
 
 
 def rule_classify(

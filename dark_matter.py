@@ -43,11 +43,29 @@ PROJECT = Path(__file__).resolve().parent
 
 # ── Random vector generation ────────────────────────────────────────────────
 
-def random_intervention(rng):
-    """Generate a random intervention vector snapped to grid."""
+def random_intervention(rng, clinical_weights=True):
+    """Generate a random intervention vector snapped to grid.
+
+    Args:
+        rng: numpy RandomState.
+        clinical_weights: If True, weight Yamanaka sampling toward low
+            doses (clinical feasibility). Grid [0, 0.1, 0.25, 0.5, 0.75, 1.0]
+            gets weights [0.30, 0.25, 0.20, 0.15, 0.07, 0.03] — 75% of
+            draws are at dose <= 0.25, reflecting that high-intensity
+            reprogramming is experimental and extremely costly (3-5 MU ATP).
+    """
+    # Yamanaka clinical weights: heavily favor low doses
+    YAMANAKA_WEIGHTS = np.array([0.30, 0.25, 0.20, 0.15, 0.07, 0.03])
+
     intervention = {}
     for name, spec in INTERVENTION_PARAMS.items():
-        intervention[name] = float(rng.choice(spec["grid"]))
+        grid = spec["grid"]
+        if clinical_weights and name == "yamanaka_intensity":
+            weights = YAMANAKA_WEIGHTS[:len(grid)]
+            weights = weights / weights.sum()
+            intervention[name] = float(rng.choice(grid, p=weights))
+        else:
+            intervention[name] = float(rng.choice(grid))
     return intervention
 
 
