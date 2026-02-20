@@ -76,9 +76,27 @@ The user confirmed these coefficients were discussed with ChatGPT while waiting 
 Claude credits. The values were likely generated in that conversation and are not
 traceable to any specific LEMURS data or published finding.
 
-## Recommendations
+## Fix Applied
 
-1. **Flag `SLEEP_DISRUPTION_IMPACT = 0.7` as unused** — either implement it or remove
+`SLEEP_DISRUPTION_IMPACT = 0.7` was activated as an independent mitophagy/repair
+efficacy modifier in `parameter_resolver.py`. Sleep quality now scales rapamycin
+efficacy (mitophagy) from full (sleep=1.0) to 30% (sleep=0.0):
+
+```python
+sleep_repair_factor = 1.0 - SLEEP_DISRUPTION_IMPACT * (1.0 - sleep_quality)
+intervention['rapamycin_dose'] *= sleep_repair_factor
+```
+
+This makes sleep and alcohol independent variables that happen to interact:
+- **Sleep quality** → modulates mitophagy repair efficiency (via SLEEP_DISRUPTION_IMPACT)
+- **Alcohol** → degrades sleep quality (secondary interaction) AND independently
+  increases inflammation + depletes NAD (Step 6)
+
+All 453 tests pass after this change.
+
+## Remaining Recommendations
+
+1. ~~Flag `SLEEP_DISRUPTION_IMPACT = 0.7` as unused~~ **DONE** — activated as repair modifier
 2. **Add LEMURS citation** — The published PLOS Digital Health paper should be added
    to the Zotero library if we want to cite LEMURS for any sleep-related work
 3. **Validate `ALCOHOL_SLEEP_DISRUPTION = 0.4`** — Cross-reference against
