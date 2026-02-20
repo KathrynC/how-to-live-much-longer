@@ -100,6 +100,64 @@ def ingest_dark_matter(path: Path) -> list[ProtocolRecord]:
     return records
 
 
+CAUSAL_SURGERY_PATIENTS = {
+    "healthy_30": {
+        "baseline_age": 30.0, "baseline_heteroplasmy": 0.10,
+        "baseline_nad_level": 0.9, "genetic_vulnerability": 1.0,
+        "metabolic_demand": 1.0, "inflammation_level": 0.1,
+    },
+    "moderate_60": DARK_MATTER_PATIENTS["moderate_60"],
+    "near_cliff_75": DARK_MATTER_PATIENTS["near_cliff_75"],
+}
+
+CAUSAL_SURGERY_INTERVENTIONS = {
+    "rapamycin_only": {"rapamycin_dose": 0.75, "nad_supplement": 0.0,
+                       "senolytic_dose": 0.0, "yamanaka_intensity": 0.0,
+                       "transplant_rate": 0.0, "exercise_level": 0.0},
+    "nad_only": {"rapamycin_dose": 0.0, "nad_supplement": 0.75,
+                 "senolytic_dose": 0.0, "yamanaka_intensity": 0.0,
+                 "transplant_rate": 0.0, "exercise_level": 0.0},
+    "full_cocktail": {"rapamycin_dose": 0.5, "nad_supplement": 0.75,
+                      "senolytic_dose": 0.5, "yamanaka_intensity": 0.0,
+                      "transplant_rate": 0.0, "exercise_level": 0.5},
+    "transplant_only": {"rapamycin_dose": 0.0, "nad_supplement": 0.0,
+                        "senolytic_dose": 0.0, "yamanaka_intensity": 0.0,
+                        "transplant_rate": 0.75, "exercise_level": 0.0},
+}
+
+
+def ingest_causal_surgery(path: Path) -> list[ProtocolRecord]:
+    """Import protocols from causal_surgery.py JSON artifact."""
+    data = json.loads(path.read_text())
+    records = []
+    for entry in data.get("results", []):
+        iv_name = entry.get("intervention", "none")
+        if iv_name == "none":
+            continue  # Skip baselines
+        patient_key = entry.get("patient", "")
+        patient_dict = dict(CAUSAL_SURGERY_PATIENTS.get(patient_key, {}))
+        intervention = dict(CAUSAL_SURGERY_INTERVENTIONS.get(iv_name, {}))
+        direction = entry.get("direction", "")
+        switch_year = entry.get("switch_year")
+        records.append(ProtocolRecord(
+            intervention=intervention,
+            patient=patient_dict,
+            source="causal_surgery",
+            method=f"{direction}@year{switch_year}",
+            simulation={
+                "final_atp": entry.get("final_atp"),
+                "final_het": entry.get("final_het"),
+            },
+            meta={
+                "patient_key": patient_key,
+                "intervention_name": iv_name,
+                "direction": direction,
+                "switch_year": switch_year,
+            },
+        ))
+    return records
+
+
 def run_pipeline(
     records: list[ProtocolRecord],
     output_dir: Path | None = None,
@@ -202,7 +260,7 @@ def run_pipeline(
 def main() -> None:
     """CLI entry point."""
     ap = argparse.ArgumentParser(description="Protocol curation pipeline")
-    ap.add_argument("--source", choices=["dark_matter", "manual"],
+    ap.add_argument("--source", choices=["dark_matter", "causal_surgery", "manual"],
                     default="manual", help="Data source to ingest")
     ap.add_argument("--artifact", type=str, default=None,
                     help="Path to source artifact (e.g. dark_matter.json)")
@@ -218,6 +276,8 @@ def main() -> None:
 
     if args.source == "dark_matter" and args.artifact:
         records = ingest_dark_matter(Path(args.artifact))
+    elif args.source == "causal_surgery" and args.artifact:
+        records = ingest_causal_surgery(Path(args.artifact))
     elif args.intervention:
         iv = json.loads(args.intervention)
         pt = json.loads(args.patient) if args.patient else {
