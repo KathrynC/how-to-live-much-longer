@@ -180,7 +180,7 @@ Append to `constants.py` after the CLINICAL_SEEDS section (~line 609). Add all c
 # derivatives().
 # ============================================================================
 
-# ── Grief module (UVM LEMURS, bereavement studies) ──────────────────────────
+# ── Grief module (O'Connor 2022/2025 bereavement studies) ───────────────────
 GRIEF_ROS_FACTOR = 0.3
 GRIEF_NAD_DECAY = 0.15
 GRIEF_SENESCENCE_FACTOR = 0.1
