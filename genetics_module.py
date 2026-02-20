@@ -5,10 +5,16 @@ the ParameterResolver applies to the core 6D patient params before the Cramer
 ODE sees them. Never imports from or modifies simulator.py.
 
 References:
-    APOE4: O'Shea et al. 2024
-    Sex differences: Ivanich et al. 2025
+    APOE4 interaction effects: O'Shea et al. 2024 (Alzh. Dement. 20:8062)
+    APOE4 x alcohol: Anttila et al. 2004 (BMJ 329:539); Downer et al. 2014
+    APOE4 amyloid clearance: Castellano et al. 2011 (Sci Transl Med 3:89ra57)
+    APOE4 tau pathology: Shi et al. 2017 (Nature); Therriault et al. 2020 (JAMA Neurol)
+    APOE4 synaptic deficits: Dumanis et al. 2010 (J Neurosci)
+    Sex differences: Ivanich et al. 2025 (J Neurochem PMID 40890565)
     FOXO3: longevity association studies
     CD38: Camacho-Pereira et al. 2016 (via Cramer Ch. VI.A.3)
+    Note: Specific multiplier values are qualitative estimates unless marked
+    otherwise. See artifacts/apoe4_integration_analysis_2026-02-20.md.
 """
 from __future__ import annotations
 
@@ -46,6 +52,8 @@ def compute_genetic_modifiers(
         'mef2_induction': 1.0,
         'amyloid_clearance': 1.0,
         'mitophagy_efficiency': 1.0,
+        'tau_pathology_sensitivity': 1.0,
+        'synaptic_function': 1.0,
     }
 
     apoe_key = {1: 'apoe4_het', 2: 'apoe4_hom'}.get(apoe_genotype)
@@ -58,6 +66,8 @@ def compute_genetic_modifiers(
         mods['mef2_induction'] *= gm.get('mef2_induction', 1.0)
         mods['amyloid_clearance'] *= gm.get('amyloid_clearance', 1.0)
         mods['mitophagy_efficiency'] *= gm.get('mitophagy_efficiency', 1.0)
+        mods['tau_pathology_sensitivity'] *= gm.get('tau_pathology_sensitivity', 1.0)
+        mods['synaptic_function'] *= gm.get('synaptic_function', 1.0)
 
     if foxo3_protective:
         fm = GENOTYPE_MULTIPLIERS.get('foxo3_protective', {})

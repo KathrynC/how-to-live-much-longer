@@ -9,7 +9,7 @@ ODE equations from handoff_batch3_unified_spec_2026-02-19.md:
 dMEF2/dt = engagement * MEF2_INDUCTION_RATE * apoe_mult * (1-MEF2)
            - MEF2 * MEF2_DECAY_RATE * (1 - engagement*0.5)
 dHA/dt   = MEF2 * HA_INDUCTION_RATE * (1-HA) - HA * HA_DECAY_RATE
-dSS/dt   = LEARNING_RATE_BASE * engagement * plasticity
+dSS/dt   = LEARNING_RATE_BASE * engagement * plasticity * apoe_synaptic_mult
            * (1 - SS/MAX_SYNAPTIC_STRENGTH)
            - SYNAPTIC_DECAY_RATE * (SS - 1)
 dCR/dt   = engagement * growth_rate * (1-CR) + education_boost * 0.05
@@ -17,8 +17,8 @@ dAb/dt   = (AMYLOID_PRODUCTION_BASE
            + AMYLOID_PRODUCTION_AGE_FACTOR*(age-63)
            - AMYLOID_CLEARANCE_BASE*apoe_clearance*Ab)
            * (1 + inflammation*AMYLOID_INFLAMMATION_SYNERGY)
-dtau/dt  = TAU_SEEDING_RATE * Ab * TAU_SEEDING_FACTOR
-           + inflammation * TAU_INFLAMMATION_FACTOR
+dtau/dt  = TAU_SEEDING_RATE * Ab * TAU_SEEDING_FACTOR * apoe_tau_mult
+           + inflammation * TAU_INFLAMMATION_FACTOR * apoe_tau_mult
            - TAU_CLEARANCE_BASE * tau
 
 memory_index = BASELINE_MEMORY + (SS-1)*SYNAPSES_TO_MEMORY
@@ -108,23 +108,27 @@ def synaptic_derivative(
     ss: float,
     ha: float,
     engagement: float,
+    apoe_synaptic_mult: float = 1.0,
 ) -> float:
     """Synaptic strength derivative.
 
     Engagement + histone-acetylation-modulated plasticity strengthens
     synapses. Without engagement, synaptic strength decays toward
-    baseline (1.0).
+    baseline (1.0). APOE4 carriers have reduced synaptic maintenance
+    efficiency (fewer dendritic spines, Dumanis et al. 2010).
 
     Args:
         ss: Current synaptic strength (baseline 1.0, max MAX_SYNAPTIC_STRENGTH).
         ha: Current histone acetylation level (0..1).
         engagement: Intellectual engagement level (0..1).
+        apoe_synaptic_mult: APOE genotype multiplier for synaptic growth
+            (<=1.0 for APOE4 carriers). Default 1.0 (non-carrier).
 
     Returns:
         dSS/dt.
     """
     plasticity = PLASTICITY_FACTOR_BASE + ha * (PLASTICITY_FACTOR_HA_MAX - PLASTICITY_FACTOR_BASE)
-    growth = LEARNING_RATE_BASE * engagement * plasticity * (1.0 - ss / MAX_SYNAPTIC_STRENGTH)
+    growth = LEARNING_RATE_BASE * engagement * plasticity * apoe_synaptic_mult * (1.0 - ss / MAX_SYNAPTIC_STRENGTH)
     decay = SYNAPTIC_DECAY_RATE * (ss - 1.0)
     return growth - decay
 
@@ -186,22 +190,27 @@ def tau_derivative(
     tau: float,
     amyloid: float,
     inflammation: float,
+    apoe_tau_mult: float = 1.0,
 ) -> float:
     """Tau pathology derivative.
 
     Tau is seeded by amyloid-beta and promoted by inflammation,
-    cleared at a baseline rate.
+    cleared at a baseline rate. APOE4 exacerbates tau pathology
+    independently of its amyloid effects (Shi et al. 2017, Nature;
+    Therriault et al. 2020, JAMA Neurology).
 
     Args:
         tau: Current tau pathology burden (arbitrary units, >=0).
         amyloid: Current amyloid-beta burden.
         inflammation: Current inflammation level (0..1).
+        apoe_tau_mult: APOE genotype multiplier for tau accumulation
+            (>=1.0 for APOE4 carriers). Default 1.0 (non-carrier).
 
     Returns:
         dtau/dt.
     """
-    seeding = TAU_SEEDING_RATE * amyloid * TAU_SEEDING_FACTOR
-    infl = inflammation * TAU_INFLAMMATION_FACTOR
+    seeding = TAU_SEEDING_RATE * amyloid * TAU_SEEDING_FACTOR * apoe_tau_mult
+    infl = inflammation * TAU_INFLAMMATION_FACTOR * apoe_tau_mult
     clearance = TAU_CLEARANCE_BASE * tau
     return seeding + infl - clearance
 
@@ -318,9 +327,13 @@ def compute_downstream(
         geno = GENOTYPE_MULTIPLIERS[apoe_genotype]
         apoe_mult = geno.get('mef2_induction', 1.0)
         apoe_clearance = geno.get('amyloid_clearance', 1.0)
+        apoe_tau_mult = geno.get('tau_pathology_sensitivity', 1.0)
+        apoe_synaptic_mult = geno.get('synaptic_function', 1.0)
     else:
         apoe_mult = 1.0
         apoe_clearance = 1.0
+        apoe_tau_mult = 1.0
+        apoe_synaptic_mult = 1.0
 
     # Cognitive reserve growth rate from activity type
     growth_rate = CR_GROWTH_RATE_BY_ACTIVITY.get(activity_type, 0.03)
@@ -380,10 +393,10 @@ def compute_downstream(
         # ── Compute derivatives ─────────────────────────────────────────
         d_mef2 = mef2_derivative(mef2_val, engagement, apoe_mult)
         d_ha = ha_derivative(ha_val, mef2_val)
-        d_ss = synaptic_derivative(ss_val, ha_val, engagement)
+        d_ss = synaptic_derivative(ss_val, ha_val, engagement, apoe_synaptic_mult)
         d_cr = cr_derivative(cr_val, engagement, growth_rate, education_boost)
         d_amyloid = amyloid_derivative(amyloid_val, inflammation, current_age, apoe_clearance)
-        d_tau = tau_derivative(tau_val, amyloid_val, inflammation)
+        d_tau = tau_derivative(tau_val, amyloid_val, inflammation, apoe_tau_mult)
 
         # ── Euler step ──────────────────────────────────────────────────
         mef2_val += d_mef2 * dt

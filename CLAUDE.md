@@ -72,7 +72,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (~453 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, cramer bridge, grief bridge, expansion modules, scenarios, protocol dictionary pipeline)
+pytest tests/ -v          # Full pytest suite (~439 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, kcramer bridge, grief bridge, expansion modules, scenarios, protocol dictionary pipeline)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -84,9 +84,6 @@ python tiqm_experiment.py                     # All 10 clinical scenarios
 python tiqm_experiment.py --single            # Quick single test
 python tiqm_experiment.py --style diegetic    # Zimmerman-informed narrative prompts
 python tiqm_experiment.py --contrastive       # Dr. Cautious vs Dr. Bold protocols
-
-# Protocol
-python protocol_mtdna_synthesis.py  # Print 9-step mtDNA synthesis protocol
 
 # Tier 1 — Pure simulation experiments (no Ollama needed)
 python causal_surgery.py          # Treatment timing / point of no return (~30s, ~192 sims)
@@ -238,7 +235,7 @@ zimmerman_analysis.py      ← Full 14-tool analysis runner + CLI (imports zimme
 zimmerman_viz.py           ← Matplotlib visualizations for Zimmerman reports (imports constants)
 
 # Cramer-toolkit integration (Tier 7, no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit)
-cramer_bridge.py           ← Biological stress scenarios + convenience analysis functions (imports cramer toolkit, zimmerman_bridge)
+kcramer_bridge.py          ← Biological stress scenarios + convenience analysis functions (imports kcramer toolkit, zimmerman_bridge)
 
 # Grief→Mito Integration (Phase 2, requires ~/grief-simulator)
 grief_bridge.py            ← GriefDisturbance + grief_trajectory() + grief_scenarios() (imports grief-simulator via importlib)
@@ -251,7 +248,7 @@ disturbances.py            ← 4 disturbance types + simulate_with_disturbances(
 resilience_metrics.py      ← Resistance, recovery time, regime retention, elasticity, composite score (imports numpy)
 resilience_viz.py          ← 5 visualization functions + CLI (imports disturbances, resilience_metrics, simulator, constants)
 
-protocol_mtdna_synthesis.py  ← Standalone (no imports from project)
+archive/orphans/protocol_mtdna_synthesis.py  ← Standalone (archived; no imports from project)
 ```
 
 ### TIQM Pipeline Mapping
@@ -352,8 +349,8 @@ Cramer email corrections (2026-02-15):
 - **zimmerman_viz.py** — Matplotlib visualizations from Zimmerman reports: Sobol horizontal bars (S1/ST, color-coded intervention vs patient), contrastive flip frequency, locality decay curves, causal relation graph (bipartite param→output layout), POSIWID alignment heatmap, dashboard radar chart. Reads from saved JSON reports or accepts dict directly. Outputs to `output/zimmerman/`.
 
 **Tier 7 — Cramer Toolkit Integration (no LLM, requires ~/cramer-toolkit + ~/zimmerman-toolkit):**
-- **cramer_bridge.py** — Domain-specific biological stress scenarios for the cramer-toolkit. Defines 6 scenario banks: INFLAMMATION_SCENARIOS (4), NAD_SCENARIOS (4), VULNERABILITY_SCENARIOS (3), DEMAND_SCENARIOS (3), AGING_SCENARIOS (6), COMBINED_SCENARIOS (5) = 25 total stress scenarios in ALL_STRESS_SCENARIOS. Also defines 5 reference intervention protocols (no_treatment, conservative, moderate, aggressive, transplant_focused). Convenience functions: `run_resilience_analysis()` (full robustness + regret + vulnerability + rankings), `run_vulnerability_analysis()` (sorted impact list), `run_scenario_comparison()` (any analysis function under multiple scenarios).
-- **tests/test_cramer_bridge.py** — 24 tests across 5 classes: scenario bank structure (11), scenario application (4), ScenarioSimulator integration (4), protocol bank (5).
+- **kcramer_bridge.py** — Domain-specific biological stress scenarios for the cramer-toolkit. Defines 6 scenario banks: INFLAMMATION_SCENARIOS (4), NAD_SCENARIOS (4), VULNERABILITY_SCENARIOS (3), DEMAND_SCENARIOS (3), AGING_SCENARIOS (6), COMBINED_SCENARIOS (5) = 25 total stress scenarios in ALL_STRESS_SCENARIOS. Also defines 5 reference intervention protocols (no_treatment, conservative, moderate, aggressive, transplant_focused). Convenience functions: `run_resilience_analysis()` (full robustness + regret + vulnerability + rankings), `run_vulnerability_analysis()` (sorted impact list), `run_scenario_comparison()` (any analysis function under multiple scenarios).
+- **tests/test_kcramer_bridge.py** — 24 tests across 5 classes: scenario bank structure (11), scenario application (4), ScenarioSimulator integration (4), protocol bank (5).
 
 ## Precision Medicine Expansion (2026-02-19)
 
@@ -664,12 +661,12 @@ report = falsifier.falsify(n_random=100, n_boundary=50)
 ### Cramer toolkit resilience analysis
 
 ```python
-from cramer_bridge import (
+from kcramer_bridge import (
     MitoSimulator, ALL_STRESS_SCENARIOS, PROTOCOLS,
     run_resilience_analysis, run_vulnerability_analysis,
     run_scenario_comparison,
 )
-from cramer import ScenarioSimulator, scenario_aware
+from kcramer import ScenarioSimulator, scenario_aware
 
 # Full resilience analysis (robustness + regret + vulnerability + rankings)
 sim = MitoSimulator()
@@ -683,7 +680,7 @@ print(f"Worst scenario: {vuln[0]['scenario']}")
 
 # Make any Zimmerman tool scenario-conditioned
 from zimmerman.sobol import sobol_sensitivity
-from cramer_bridge import INFLAMMATION_SCENARIOS
+from kcramer_bridge import INFLAMMATION_SCENARIOS
 results = scenario_aware(sobol_sensitivity, sim, INFLAMMATION_SCENARIOS, n_base=32)
 # results["baseline"], results["mild_inflammaging"], etc.
 ```
@@ -850,7 +847,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs ~453 tests across 26 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_cramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration)
+- Formal test suite: `pytest tests/ -v` runs ~439 tests across 33 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_kcramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

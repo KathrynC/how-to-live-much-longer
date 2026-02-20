@@ -670,7 +670,7 @@ COPING_DECAY_RATE = 0.3
 LOVE_BUFFER_FACTOR = 0.2
 GRIEF_REDUCTION_FROM_MEF2 = 0.1
 
-# ── Genetic multipliers (APOE4 literature, O'Shea 2024) ────────────────────
+# ── Genetic multipliers (qualitative estimates; see provenance notes below) ─
 GENOTYPE_MULTIPLIERS = {
     'apoe4_het': {
         'mitophagy_efficiency': 0.65,
@@ -678,8 +678,13 @@ GENOTYPE_MULTIPLIERS = {
         'vulnerability': 1.3,
         'grief_sensitivity': 1.3,
         'alcohol_sensitivity': 1.3,
-        'mef2_induction': 1.2,
+        'mef2_induction': 1.0,       # Neutralized: no literature supports APOE4-specific
+                                      # MEF2 effect (DeepSeek audit 2026-02-20, status D)
         'amyloid_clearance': 0.7,
+        'tau_pathology_sensitivity': 1.25,  # Shi et al. 2017 (Nature); Therriault et al. 2020
+                                            # (JAMA Neurol) — APOE4 exacerbates tau independently
+        'synaptic_function': 0.8,    # Dumanis et al. 2010 (J Neuroscience) — reduced dendritic
+                                      # spine density in APOE4 mice at all ages
     },
     'apoe4_hom': {
         'mitophagy_efficiency': 0.45,
@@ -687,8 +692,10 @@ GENOTYPE_MULTIPLIERS = {
         'vulnerability': 1.6,
         'grief_sensitivity': 1.5,
         'alcohol_sensitivity': 1.5,
-        'mef2_induction': 1.3,
+        'mef2_induction': 1.0,       # Neutralized: see het note above
         'amyloid_clearance': 0.5,
+        'tau_pathology_sensitivity': 1.4,   # Hom scaling ~1.6x het, consistent with Cai et al. 2025
+        'synaptic_function': 0.65,   # Hom scaling consistent with structural deficit data
     },
     'foxo3_protective': {
         'mitophagy_efficiency': 1.3,
@@ -700,23 +707,51 @@ GENOTYPE_MULTIPLIERS = {
         'baseline_nad': 0.8,
     },
 }
+# APOE4 multiplier provenance (DeepSeek audit 2026-02-20):
+#   mitophagy_efficiency: qualitative estimate (C). General literature supports
+#     APOE4-associated lysosomal dysfunction. Defensible range 20-50%.
+#   inflammation: qualitative estimate (C). Friday 2025 confirms heightened
+#     inflammatory responses but no specific baseline percentage reported.
+#   vulnerability: model-specific composite (C). Aggregates multiple risk pathways.
+#   grief_sensitivity: model-specific estimate (C). Indirect link via stress biology.
+#   alcohol_sensitivity: conservative estimate (A/B). Anttila 2004 (BMJ 329:539)
+#     reports HR 2.3-3.6x for clinical dementia; 1.3x applied to intermediate
+#     biological variables, not clinical endpoints.
+#   mef2_induction: NEUTRALIZED (D). No literature supports APOE4-specific MEF2 effect.
+#   amyloid_clearance: qualitative estimate (C). Castellano et al. 2011
+#     (Sci Transl Med 3:89ra57) demonstrates isoform-specific clearance.
+#   tau_pathology_sensitivity: quantitative anchor (B/C). Therriault et al. 2020
+#     (JAMA Neurol) shows ~0.33 SD higher tau-PET independently of amyloid.
+#   synaptic_function: qualitative estimate (C). Dumanis et al. 2010
+#     (J Neurosci) shows significantly fewer dendritic spines at all ages.
+#
+# Original citations: O'Shea et al. 2024 (Alzh. Dement. 20:8062) confirms
+# APOE4 x lifestyle interaction effects but does NOT provide these specific
+# numerical multiplier values. See artifacts/apoe4_integration_analysis_2026-02-20.md.
 
-# ── Sex-specific (Ivanich et al. 2025) ─────────────────────────────────────
-FEMALE_APOE4_INFLAMMATION_BOOST = 1.1
+# ── Sex-specific (Ivanich et al. 2025, J Neurochem PMID 40890565) ──────────
+FEMALE_APOE4_INFLAMMATION_BOOST = 1.1  # qualitative estimate (C)
 MENOPAUSE_HETEROPLASMY_ACCELERATION = 1.05
 ESTROGEN_PROTECTION_LOSS_FACTOR = 1.0
 
-# ── Alcohol (Anttila 2004, Downer 2014) ────────────────────────────────────
+# ── Alcohol ───────────────────────────────────────────────────────────────
+# Anttila et al. 2004 (BMJ 329:539, doi:10.1136/bmj.38181.418958.BE)
+# Downer et al. 2014 (Alcohol Alcohol. 49:17, doi:10.1093/alcalc/agt144)
 ALCOHOL_INFLAMMATION_FACTOR = 0.25
 ALCOHOL_NAD_FACTOR = 0.15
-ALCOHOL_APOE4_SYNERGY = 1.3
+ALCOHOL_APOE4_SYNERGY = 1.3  # conservative (A/B); Anttila HR 2.3-3.6x for endpoints
 ALCOHOL_SLEEP_DISRUPTION = 0.4
 
-# ── Coffee (Nature Metabolism 2024) ────────────────────────────────────────
+# ── Coffee ────────────────────────────────────────────────────────────────
+# Membrez et al. 2024 (Nature Metabolism 6:433, doi:10.1038/s42255-024-00997-x)
+# Note: Membrez paper covers trigonelline/NAD+ in aging/sarcopenia.
+# It contains NO APOE4 data — the former APOE4-specific coffee benefit was unsupported.
 COFFEE_TRIGONELLINE_NAD_EFFECT = 0.05
 COFFEE_CHLOROGENIC_ACID_ANTI_INFLAMMATORY = 0.05
 COFFEE_CAFFEINE_MITOCHONDRIAL_BOOST = 0.03
-COFFEE_APOE4_BENEFIT_MULTIPLIER = 1.2
+# DEPRECATED: Membrez et al. 2024 contains no APOE4 data. Set to 1.0 (neutral).
+# DeepSeek audit 2026-02-20, status D. See apoe4_integration_analysis_2026-02-20.md.
+COFFEE_APOE4_BENEFIT_MULTIPLIER = 1.0
 COFFEE_FEMALE_BENEFIT_MULTIPLIER = 1.3
 COFFEE_MAX_BENEFICIAL_CUPS = 3
 COFFEE_SLEEP_DISRUPTION_THRESHOLD_HOURS = 12
@@ -783,7 +818,7 @@ CR_GROWTH_RATE_BY_ACTIVITY = {
 AMYLOID_PRODUCTION_BASE = 0.05
 AMYLOID_PRODUCTION_AGE_FACTOR = 0.001
 AMYLOID_CLEARANCE_BASE = 0.12
-AMYLOID_CLEARANCE_APOE4_FACTOR = 0.7
+AMYLOID_CLEARANCE_APOE4_FACTOR = 0.7  # Castellano et al. 2011 (Sci Transl Med 3:89ra57); estimate (C)
 AMYLOID_INFLAMMATION_SYNERGY = 0.2
 TAU_SEEDING_RATE = 0.1
 TAU_SEEDING_FACTOR = 0.5
