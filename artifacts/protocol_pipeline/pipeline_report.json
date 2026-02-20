@@ -1,0 +1,16 @@
+{
+  "total_processed": 700,
+  "total_reviewed": 76,
+  "summary": {
+    "total": 2100,
+    "by_outcome": {
+      "stable": 1013,
+      "thriving": 888,
+      "declining": 199
+    },
+    "by_source": {
+      "dark_matter": 2100
+    },
+    "mean_confidence": 0.8690447142857186
+  }
+}
