@@ -19,6 +19,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
     - **Deletion mutations** (N_deletion, state[1]): Exponential growth, size-dependent replication advantage (1.10x, book says ≥1.21). These drive the heteroplasmy cliff. Source: Pol γ slippage, NOT ROS.
   - State vector expanded from 7D to 8D. Cliff factor uses deletion heteroplasmy only. ROS→damage coupling weakened to ~33% of previous (point mutations only).
   - Reference: Appendix 2 pp.152-155, Va23 (Vandiver et al. 2023).
+- **NAD AUDIT & CLIFF RECALIBRATION (2026-02-19):** Hype literature guard:
+  - **NAD coefficients reduced (0.4→0.2):** Two non-Cramer modeling assumptions (ATP production, antioxidant defense) inflated NAD+ efficacy. Reduced from 0.4 to 0.2 each. NAD gain at max dose: +0.100 → +0.066 ATP (35% reduction). See `artifacts/finding_nad_audit_hype_guard_2026-02-19.md`.
+  - **HETEROPLASMY_CLIFF recalibrated (0.70→0.50):** C11 split broke cliff dynamics — deletion het maxed at ~0.57, never reaching old 0.70 threshold. Lowered to 0.50 (deletion-only equivalent of literature's 0.70 total het). Cliff now activates properly.
+  - **Bistability restored:** ATP-gated mitophagy (autophagy requires energy) + transplant het penalty (hostile environment impairs engraftment). Model now has point of no return at het~0.93-0.95.
+  - **REVIEW WITH CRAMER:** Is HETEROPLASMY_CLIFF=0.50 the right deletion threshold? Are NAD coefficients at 0.2 appropriate? Is point of no return at het~0.93 consistent with clinical expectation?
 
 ## Project Overview
 
@@ -26,7 +31,7 @@ Computational simulation of mitochondrial aging dynamics and intervention strate
 
 Adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](../Evolutionary-Robotics/) project. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
-**Core thesis (Cramer 2025):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly.
+**Core thesis (Cramer 2025):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of deletion-bearing mtDNA exceeds ~50% (deletion heteroplasmy cliff, recalibrated from 70% total het for C11 mutation split) — ATP production collapses nonlinearly.
 
 ## Environment Setup
 
@@ -462,7 +467,7 @@ All values snapped to discrete grids via `snap_param()` / `snap_all()` in `const
 
 | Constant | Value | Source |
 |---|---|---|
-| Heteroplasmy cliff | 0.70 | Mitochondrial genetics literature (Rossignol 2003); Cramer discusses different metric (MitoClock ~25%, Ch. V.K p.66) |
+| Heteroplasmy cliff (deletion het) | 0.50 | Recalibrated for C11 deletion-only het. Literature value 0.70 (Rossignol 2003) was total het; with deletions ~60% of total, equivalent deletion cliff is ~0.42-0.56. Uses 0.50 as conservative estimate |
 | Cliff steepness (sigmoid) | 15.0 | Simulation calibration (not from book) |
 | Deletion doubling (young) | 11.8 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); also Ch. II.H p.15 |
 | Deletion doubling (old) | 3.06 years | Cramer Appendix 2 p.155, Fig. 23 (Va23 data); transition at age 65 (corrected from 40) |
