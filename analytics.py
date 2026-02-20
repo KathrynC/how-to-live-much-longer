@@ -342,11 +342,35 @@ def compute_intervention(result: dict, baseline_result: dict | None = None) -> d
     Returns:
         Dict with intervention cost-benefit metrics.
     """
-    from simulator import simulate
+    from simulator import simulate, InterventionSchedule
     from constants import DEFAULT_INTERVENTION
 
     intervention = result["intervention"]
     patient = result["patient"]
+
+    # InterventionSchedule → time-weighted average dict for cost/dose metrics
+    if isinstance(intervention, InterventionSchedule):
+        sim_end = float(result["time"][-1])
+        sim_start = float(result["time"][0])
+        total_dur = sim_end - sim_start
+        if total_dur > 0 and intervention.phases:
+            # Collect all keys from all phases
+            all_keys = set()
+            for _, d in intervention.phases:
+                all_keys.update(d.keys())
+            avg = {k: 0.0 for k in all_keys}
+            for i, (start, d) in enumerate(intervention.phases):
+                phase_start = max(start, sim_start)
+                if i + 1 < len(intervention.phases):
+                    phase_end = min(intervention.phases[i + 1][0], sim_end)
+                else:
+                    phase_end = sim_end
+                dur = max(phase_end - phase_start, 0.0)
+                for k in all_keys:
+                    avg[k] += d.get(k, 0.0) * dur
+            intervention = {k: v / total_dur for k, v in avg.items()}
+        else:
+            intervention = intervention.phases[0][1] if intervention.phases else {}
 
     if baseline_result is None:
         baseline_result = simulate(
