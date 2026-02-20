@@ -99,9 +99,10 @@ class TestTimeVaryingAlcohol:
 class TestCoreSchedulePassthrough:
     def test_rapamycin_passed_through(self):
         from parameter_resolver import ParameterResolver
+        # Perfect sleep (1.0) ensures no sleep-related repair degradation
         pr = ParameterResolver(
             patient_expanded={},
-            intervention_expanded={'rapamycin_dose': 0.8},
+            intervention_expanded={'rapamycin_dose': 0.8, 'sleep_intervention': 1.0},
         )
         intervention, _ = pr.resolve(0.0)
         assert intervention['rapamycin_dose'] >= 0.8

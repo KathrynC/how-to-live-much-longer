@@ -171,11 +171,11 @@ class ParameterResolver:
         sleep_quality = max(0.0, sleep_quality - alcohol_t * ALCOHOL_SLEEP_DISRUPTION)
         # Poor sleep increases inflammation
         patient['inflammation_level'] += (1.0 - sleep_quality) * 0.05
-        # Poor sleep reduces repair efficiency (mitophagy) —
-        # scales from 1.0 (perfect sleep) to (1 - SLEEP_DISRUPTION_IMPACT)
-        # at sleep_quality=0. Default: 0.7 impact → floor of 0.3 efficacy.
-        sleep_repair_factor = 1.0 - SLEEP_DISRUPTION_IMPACT * (1.0 - sleep_quality)
-        intervention['rapamycin_dose'] *= sleep_repair_factor
+        # Sleep repair factor computed here, applied after Step 9 (core passthrough)
+        # so it isn't overwritten by max(intervention, expanded).
+        mitophagy_eff = self._genetic_mods.get('mitophagy_efficiency', 1.0)
+        sleep_repair_factor = 1.0 - (SLEEP_DISRUPTION_IMPACT / mitophagy_eff) * (1.0 - sleep_quality)
+        sleep_repair_factor = max(0.0, min(1.0, sleep_repair_factor))
 
         # Step 6: Lifestyle (alcohol, coffee, diet)
         alcohol_effects = compute_alcohol_effects(
@@ -223,6 +223,12 @@ class ParameterResolver:
             intervention['exercise_level'],
             self._intervention_exp.get('exercise_level', 0.0),
         )
+
+        # Step 9b: Apply sleep repair factor (after core passthrough)
+        # Poor sleep reduces mitophagy/repair efficiency. APOE4 carriers
+        # have lower mitophagy_efficiency (0.65 het, 0.45 hom) making
+        # them more vulnerable to sleep disruption.
+        intervention['rapamycin_dose'] *= sleep_repair_factor
 
         # Step 10: Clamp all values
         patient['inflammation_level'] = np.clip(patient['inflammation_level'], 0.0, 1.0)

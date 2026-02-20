@@ -45,6 +45,7 @@ def compute_genetic_modifiers(
         'grief_sensitivity': 1.0,
         'mef2_induction': 1.0,
         'amyloid_clearance': 1.0,
+        'mitophagy_efficiency': 1.0,
     }
 
     apoe_key = {1: 'apoe4_het', 2: 'apoe4_hom'}.get(apoe_genotype)
@@ -56,11 +57,13 @@ def compute_genetic_modifiers(
         mods['grief_sensitivity'] *= gm.get('grief_sensitivity', 1.0)
         mods['mef2_induction'] *= gm.get('mef2_induction', 1.0)
         mods['amyloid_clearance'] *= gm.get('amyloid_clearance', 1.0)
+        mods['mitophagy_efficiency'] *= gm.get('mitophagy_efficiency', 1.0)
 
     if foxo3_protective:
         fm = GENOTYPE_MULTIPLIERS.get('foxo3_protective', {})
         mods['vulnerability'] *= fm.get('vulnerability', 1.0)
         mods['inflammation'] *= fm.get('inflammation', 1.0)
+        mods['mitophagy_efficiency'] *= fm.get('mitophagy_efficiency', 1.0)
 
     if cd38_risk:
         cm = GENOTYPE_MULTIPLIERS.get('cd38_risk', {})
