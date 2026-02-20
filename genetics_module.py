@@ -9,8 +9,9 @@ References:
     APOE4 x alcohol: Anttila et al. 2004 (BMJ 329:539); Downer et al. 2014
     APOE4 amyloid clearance: Castellano et al. 2011 (Sci Transl Med 3:89ra57)
     APOE4 tau pathology: Shi et al. 2017 (Nature); Therriault et al. 2020 (JAMA Neurol)
-    APOE4 synaptic deficits: Dumanis et al. 2010 (J Neurosci)
-    Sex differences: Ivanich et al. 2025 (J Neurochem PMID 40890565)
+    APOE4 synaptic deficits: Dumanis et al. 2009 (J Neurosci 29:15317)
+    Sex-specific APOE4 effects: Ivanich et al. 2025 (J Neurochem PMID 40890565;
+        keto diet x gut microbiota x APOE4, sex- and genotype-specific)
     FOXO3: longevity association studies
     CD38: Camacho-Pereira et al. 2016 (via Cramer Ch. VI.A.3)
     Note: Specific multiplier values are qualitative estimates unless marked

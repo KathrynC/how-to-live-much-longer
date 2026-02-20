@@ -21,7 +21,7 @@ Cramer corrections C7–C11 do not involve APOE4. The only tangential overlap is
 
 | Constant | Status | Meaning |
 |----------|--------|---------|
-| `ALCOHOL_APOE4_SYNERGY` (1.3) | **A/B** | Well-supported. Conservative estimate from Anttila 2004 hazard ratios (actual data suggests 2.3–3.6x for carriers). |
+| `ALCOHOL_APOE4_SYNERGY` (1.3) | **A/B** | Well-supported. Conservative estimate from Anttila 2004 odds ratios (actual data suggests 2.3–3.6x for carriers). |
 | `amyloid_clearance` (0.7/0.5) | **C** | Qualitatively established (Castellano et al. 2011). The 30%/50% figures are reasonable estimates. |
 | `AMYLOID_CLEARANCE_APOE4_FACTOR` (0.7) | **C** | Same as above. Mirrors het multiplier. |
 | `FEMALE_APOE4_INFLAMMATION_BOOST` (1.1) | **C** | Qualitative direction supported by Ivanich 2025. 10% is a conservative placeholder. |
@@ -30,7 +30,7 @@ Cramer corrections C7–C11 do not involve APOE4. The only tangential overlap is
 | `inflammation` (1.2/1.4) | **C/D** | Direction supported. Specific values are qualitative estimates. |
 | `vulnerability` (1.3/1.6) | **C/D** | Model-specific composite concept. Reasonable as aggregation. |
 | `grief_sensitivity` (1.3/1.5) | **C/D** | Highly speculative. Model-specific. Indirect literature link. |
-| `alcohol_sensitivity` (1.3/1.5) | **C/D** | Should be derived more explicitly from Anttila's hazard ratios. |
+| `alcohol_sensitivity` (1.3/1.5) | **C/D** | Should be derived more explicitly from Anttila's odds ratios. |
 | `mef2_induction` (1.2/1.3) | **D** | Unsupported. No literature links APOE4 to MEF2 induction rate. |
 | `COFFEE_APOE4_BENEFIT_MULTIPLIER` (1.2) | **D** | Fabricated attribution. Membrez et al. 2024 contains zero APOE4 data. |
 
@@ -60,7 +60,7 @@ Add a provenance block after the dict:
 #   inflammation: qualitative estimate (C), consistent with Friday 2025
 #   vulnerability: model-specific composite (C)
 #   grief_sensitivity: model-specific estimate (C), indirect literature link
-#   alcohol_sensitivity: conservative (A/B), cf. Anttila 2004 HR 2.3-3.6x
+#   alcohol_sensitivity: conservative (A/B), cf. Anttila 2004 OR 2.3-3.6x
 #   amyloid_clearance: qualitative estimate (C), cf. Castellano et al. 2011
 #     (Sci Transl Med 3:89ra57) — isoform-specific clearance demonstrated
 #   mef2_induction: UNSUPPORTED (D) — flagged for revision
@@ -146,14 +146,14 @@ COFFEE_APOE4_BENEFIT_MULTIPLIER = 1.0
 
 ### 2c. Derive `alcohol_sensitivity` more explicitly from Anttila data
 
-**DeepSeek notes:** Anttila 2004 reports hazard ratios: APOE4 carriers who drank infrequently had 2.3x dementia risk, frequent drinkers 3.6x, compared to carriers who never drank. The model's 1.3x is described as a "simple conservative estimate."
+**DeepSeek notes:** Anttila 2004 reports odds ratios (not hazard ratios as previously stated): APOE4 carriers who drank infrequently had OR 2.3x dementia risk, frequent drinkers OR 3.6x, compared to non-carrier non-drinkers. The model's 1.3x is described as a "simple conservative estimate."
 
-**Assessment:** The 1.3x value is deliberately conservative because Anttila's hazard ratios measure *dementia risk* (a downstream clinical outcome), not the direct biological amplification of alcohol-induced inflammation and NAD+ damage that the model simulates. The model applies 1.3x to *intermediate biological variables*, not to clinical endpoints. A 1.3x biological amplification could easily compound into a 2–3x hazard ratio over 30 simulated years.
+**Assessment:** The 1.3x value is deliberately conservative because Anttila's odds ratios measure *dementia risk* (a downstream clinical outcome), not the direct biological amplification of alcohol-induced inflammation and NAD+ damage that the model simulates. The model applies 1.3x to *intermediate biological variables*, not to clinical endpoints. A 1.3x biological amplification could easily compound into a 2–3x hazard ratio over 30 simulated years.
 
 **Proposed change:** Keep the value at 1.3 but improve the comment:
 ```python
 'alcohol_sensitivity': 1.3,  # Conservative biological amplification estimate.
-                              # Anttila 2004 (BMJ 329:539): HR 2.3-3.6x for clinical dementia,
+                              # Anttila 2004 (BMJ 329:539): OR 2.3-3.6x for clinical dementia,
                               # but this models intermediate inflammation/NAD damage, not endpoint risk.
 ```
 
@@ -227,9 +227,9 @@ def synaptic_derivative(ss, ha, engagement, apoe_synaptic_mult=1.0):
 
 ## Changes NOT Recommended
 
-### Do not increase `ALCOHOL_APOE4_SYNERGY` to match hazard ratios
+### Do not increase `ALCOHOL_APOE4_SYNERGY` to match odds ratios
 
-DeepSeek notes that Anttila's hazard ratios (2.3–3.6x) are much larger than the model's 1.3x multiplier. However, the model applies this multiplier to *intermediate biological variables* (inflammation, NAD damage), not to clinical endpoints. A 1.3x amplification of biological damage, compounded over 30 simulated years through a nonlinear ODE system, can produce hazard ratios consistent with Anttila's observations. Increasing the biological multiplier to 2.3x would likely produce unrealistically extreme outcomes in simulation.
+DeepSeek notes that Anttila's odds ratios (2.3–3.6x) are much larger than the model's 1.3x multiplier. However, the model applies this multiplier to *intermediate biological variables* (inflammation, NAD damage), not to clinical endpoints. A 1.3x amplification of biological damage, compounded over 30 simulated years through a nonlinear ODE system, can produce odds ratios consistent with Anttila's observations. Increasing the biological multiplier to 2.3x would likely produce unrealistically extreme outcomes in simulation.
 
 ### Do not make het-to-hom scaling pathway-specific yet
 

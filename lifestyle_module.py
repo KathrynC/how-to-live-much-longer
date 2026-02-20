@@ -6,7 +6,7 @@ params. Never imports from simulator.py.
 References:
     Alcohol: Anttila et al. 2004, Downer et al. 2014
     Coffee: Nature Metabolism 2024 (trigonelline/NAD+ pathway)
-    Diet/fasting: Ivanich et al. 2025
+    Diet/fasting: Ivanich et al. 2025 (keto x gut microbiota x APOE4)
 """
 from __future__ import annotations
 

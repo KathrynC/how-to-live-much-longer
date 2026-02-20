@@ -4,7 +4,8 @@ Each supplement has a max effect and half-max dose. Effects are categorized
 into nad_boost, inflammation_reduction, mitophagy_boost, and demand_reduction
 for mapping onto the core 12D params.
 
-References: Norwitz et al. 2021
+References: Hill-function parameters are simulation estimates (no single
+    literature source). See constants.py for provenance note.
 """
 from __future__ import annotations
 

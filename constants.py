@@ -336,8 +336,10 @@ DELETION_FRACTION_YOUNG = 0.4
 # compounded over decades, while point mutations grew only linearly.
 # Biology: In 90-year-olds, deep sequencing of post-mitotic tissues (brain,
 # muscle) shows that large deletions account for the majority of mtDNA damage
-# by functional impact. The "common deletion" (4,977 bp) alone can reach
-# >50% in aged substantia nigra neurons (Bender et al. 2006).
+# by functional impact. Total mtDNA deletion burden (multiple clonally
+# expanded deletion types, not just the common 4,977 bp deletion) averages
+# ~43% in aged controls and ~52% in PD substantia nigra neurons (Bender
+# et al. 2006, Nature Genetics 38:515).
 # The 80% deletion fraction reflects this late-life dominance.
 # Too high (>0.95): leaves almost no room for point mutations in the elderly,
 # which contradicts sequencing data showing substantial point mutation load.
@@ -683,8 +685,8 @@ GENOTYPE_MULTIPLIERS = {
         'amyloid_clearance': 0.7,
         'tau_pathology_sensitivity': 1.25,  # Shi et al. 2017 (Nature); Therriault et al. 2020
                                             # (JAMA Neurol) — APOE4 exacerbates tau independently
-        'synaptic_function': 0.8,    # Dumanis et al. 2010 (J Neuroscience) — reduced dendritic
-                                      # spine density in APOE4 mice at all ages
+        'synaptic_function': 0.8,    # Dumanis et al. 2009 (J Neuroscience 29:15317) — reduced
+                                      # dendritic spine density in APOE4 mice at all ages
     },
     'apoe4_hom': {
         'mitophagy_efficiency': 0.45,
@@ -715,21 +717,24 @@ GENOTYPE_MULTIPLIERS = {
 #   vulnerability: model-specific composite (C). Aggregates multiple risk pathways.
 #   grief_sensitivity: model-specific estimate (C). Indirect link via stress biology.
 #   alcohol_sensitivity: conservative estimate (A/B). Anttila 2004 (BMJ 329:539)
-#     reports HR 2.3-3.6x for clinical dementia; 1.3x applied to intermediate
-#     biological variables, not clinical endpoints.
+#     reports OR 2.3-3.6x for clinical dementia (not HR as previously noted);
+#     1.3x applied to intermediate biological variables, not clinical endpoints.
 #   mef2_induction: NEUTRALIZED (D). No literature supports APOE4-specific MEF2 effect.
 #   amyloid_clearance: qualitative estimate (C). Castellano et al. 2011
 #     (Sci Transl Med 3:89ra57) demonstrates isoform-specific clearance.
 #   tau_pathology_sensitivity: quantitative anchor (B/C). Therriault et al. 2020
 #     (JAMA Neurol) shows ~0.33 SD higher tau-PET independently of amyloid.
-#   synaptic_function: qualitative estimate (C). Dumanis et al. 2010
-#     (J Neurosci) shows significantly fewer dendritic spines at all ages.
+#   synaptic_function: qualitative estimate (C). Dumanis et al. 2009
+#     (J Neurosci 29:15317) shows significantly fewer dendritic spines at all ages.
 #
 # Original citations: O'Shea et al. 2024 (Alzh. Dement. 20:8062) confirms
 # APOE4 x lifestyle interaction effects but does NOT provide these specific
 # numerical multiplier values. See artifacts/apoe4_integration_analysis_2026-02-20.md.
 
-# ── Sex-specific (Ivanich et al. 2025, J Neurochem PMID 40890565) ──────────
+# ── Sex-specific modifiers ─────────────────────────────────────────────────
+# Note: Ivanich et al. 2025 (J Neurochem PMID 40890565) covers keto diet x
+# gut microbiota x APOE4 in a sex-specific manner, NOT neuroinflammation
+# directly. These sex-specific constants are qualitative modeling estimates.
 FEMALE_APOE4_INFLAMMATION_BOOST = 1.1  # qualitative estimate (C)
 MENOPAUSE_HETEROPLASMY_ACCELERATION = 1.05
 ESTROGEN_PROTECTION_LOSS_FACTOR = 1.0
@@ -739,7 +744,7 @@ ESTROGEN_PROTECTION_LOSS_FACTOR = 1.0
 # Downer et al. 2014 (Alcohol Alcohol. 49:17, doi:10.1093/alcalc/agt144)
 ALCOHOL_INFLAMMATION_FACTOR = 0.25
 ALCOHOL_NAD_FACTOR = 0.15
-ALCOHOL_APOE4_SYNERGY = 1.3  # conservative (A/B); Anttila HR 2.3-3.6x for endpoints
+ALCOHOL_APOE4_SYNERGY = 1.3  # conservative (A/B); Anttila OR 2.3-3.6x for endpoints
 ALCOHOL_SLEEP_DISRUPTION = 0.4
 
 # ── Coffee ────────────────────────────────────────────────────────────────
@@ -773,7 +778,10 @@ MAX_GUT_HEALTH = 1.0
 MIN_NAD_CONVERSION_EFFICIENCY = 0.7
 MAX_NAD_CONVERSION_EFFICIENCY = 1.0
 
-# ── Supplement dose-response (Norwitz et al. 2021) ─────────────────────────
+# ── Supplement dose-response (simulation estimates; no single literature
+# source). Hill-function parameters are modeling constructs. Norwitz et al.
+# 2021 (Nutrients 13:1362) discusses qualitative supplement recommendations
+# for APOE4 carriers but does not provide these quantitative values. ────────
 MAX_NR_EFFECT = 2.0;           NR_HALF_MAX = 0.5
 MAX_DHA_EFFECT = 0.2;          DHA_HALF_MAX = 0.5
 MAX_COQ10_EFFECT = 0.15;       COQ10_HALF_MAX = 0.5

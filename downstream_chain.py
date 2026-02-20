@@ -115,7 +115,7 @@ def synaptic_derivative(
     Engagement + histone-acetylation-modulated plasticity strengthens
     synapses. Without engagement, synaptic strength decays toward
     baseline (1.0). APOE4 carriers have reduced synaptic maintenance
-    efficiency (fewer dendritic spines, Dumanis et al. 2010).
+    efficiency (fewer dendritic spines, Dumanis et al. 2009).
 
     Args:
         ss: Current synaptic strength (baseline 1.0, max MAX_SYNAPTIC_STRENGTH).
