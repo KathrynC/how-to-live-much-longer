@@ -161,12 +161,21 @@ class ParameterResolver:
         grief_sensitivity = self._genetic_mods.get('grief_sensitivity', 1.0)
         patient['inflammation_level'] += grief_t * GRIEF_ROS_FACTOR * grief_sensitivity
 
-        # Step 5: Sleep
+        # Step 5: Sleep — independent efficacy modifier
+        # Sleep quality modulates repair (mitophagy) via SLEEP_DISRUPTION_IMPACT.
+        # Alcohol has a secondary interaction: it degrades sleep quality.
+        # These are distinct pathways — alcohol also affects NAD/inflammation
+        # independently in Step 6.
         sleep_quality = self._intervention_exp.get('sleep_intervention', 0.5)
         alcohol_t = float(np.interp(t, self._time_points, self._alcohol_trajectory))
         sleep_quality = max(0.0, sleep_quality - alcohol_t * ALCOHOL_SLEEP_DISRUPTION)
-        # Poor sleep increases inflammation, reduces repair
+        # Poor sleep increases inflammation
         patient['inflammation_level'] += (1.0 - sleep_quality) * 0.05
+        # Poor sleep reduces repair efficiency (mitophagy) —
+        # scales from 1.0 (perfect sleep) to (1 - SLEEP_DISRUPTION_IMPACT)
+        # at sleep_quality=0. Default: 0.7 impact → floor of 0.3 efficacy.
+        sleep_repair_factor = 1.0 - SLEEP_DISRUPTION_IMPACT * (1.0 - sleep_quality)
+        intervention['rapamycin_dose'] *= sleep_repair_factor
 
         # Step 6: Lifestyle (alcohol, coffee, diet)
         alcohol_effects = compute_alcohol_effects(

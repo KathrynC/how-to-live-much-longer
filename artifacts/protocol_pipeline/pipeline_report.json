@@ -1,16 +1,17 @@
 {
-  "total_processed": 700,
-  "total_reviewed": 76,
+  "total_processed": 192,
+  "total_reviewed": 48,
   "summary": {
-    "total": 2100,
+    "total": 2292,
     "by_outcome": {
-      "stable": 1013,
-      "thriving": 888,
+      "stable": 1061,
+      "thriving": 1032,
       "declining": 199
     },
     "by_source": {
-      "dark_matter": 2100
+      "dark_matter": 2100,
+      "causal_surgery": 192
     },
-    "mean_confidence": 0.8690447142857186
+    "mean_confidence": 0.8679729057591653
   }
 }
