@@ -37,7 +37,13 @@
 
 Cramer, J. G. (forthcoming 2026). *How to live much longer: The mitochondrial DNA connection*. Springer. ISBN 978-3-032-17740-7.
 
-> **Audit status: FORTHCOMING.** Listed on Springer at https://link.springer.com/book/9783032177407. ISBN prefix 978-3-032 is consistent with Springer Verlag. John G. Cramer is Professor Emeritus of Physics, University of Washington, with a documented interest in mitochondrial aging (AV-233, *Analog*, Nov-Dec 2024; Mitrix Bio trial, July 2025). The project author has direct access to the manuscript with chapter/page-level citations throughout the codebase (30+ specific references). Citation standardized across all files on 2026-02-20.
+> **Audit status: FORTHCOMING.** Listed on Springer at https://link.springer.com/book/9783032177407. ISBN prefix 978-3-032 is consistent with Springer Verlag. John G. Cramer is Professor Emeritus of Physics, University of Washington, with a documented interest in mitochondrial aging (AV-233, *Analog*, Nov-Dec 2024; Mitrix Bio trial, Feb 2026). The project author has direct access to the manuscript with chapter/page-level citations throughout the codebase (30+ specific references). Citation standardized across all files on 2026-02-20.
+
+### Mitrix Bio Press Coverage
+
+Marcus, A. D. (2026, February 20). Longevity treatments for a 91-year-old? A bold bet in Silicon Valley's immortality race. *The Information* (Weekend).
+
+> Documents John G. Cramer's participation as one of two patient-investors in Mitrix Bio's mitochondrial transplant program. Cramer (age 91) received his third IV infusion of mitochondria donated by his 26-year-old granddaughter Selena Shea at a clinic in Dallas. Mitrix Bio (Pleasanton, CA; CEO Tom Benson; $4M funding) focuses on transplanting young mitochondria into older recipients — the cellular energy restoration that the how-to-live-much-longer simulator models. The article contrasts Mitrix's mitochondria-first approach ("if the battery is not working, nothing works" — investor Ronjon Nag) with the cellular reprogramming strategies pursued by Retro Biosciences ($180M, Sam Altman), NewLimit ($200M, Brian Armstrong), and Altos Labs ($3B, Jeff Bezos). Cramer's anti-aging research and his book are referenced. The second patient-investor is Clay Rawlings, 71, of Houston.
 
 ### Zimmerman Dissertation
 
