@@ -469,7 +469,7 @@ TYPE_RULES: dict[str, dict[str, list[dict[str, Any]]]] = {
                 "id": "readme_citation_positioning",
                 "kind": "file_contains",
                 "path": "README.md",
-                "pattern": "forthcoming from Springer Verlag in 2026",
+                "pattern": "Cramer, J.G. (forthcoming 2026)",
                 "description": "Consistent external positioning is maintained.",
             },
         ],

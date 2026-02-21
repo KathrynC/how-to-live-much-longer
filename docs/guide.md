@@ -6,7 +6,7 @@ Mitochondrial aging simulation and LLM-mediated intervention design
 
 ## From Book to Simulator
 
-This project implements a computational simulator for the mitochondrial theory of aging described in John G. Cramer's forthcoming book *How to Live Much Longer* (Springer Verlag, 2026). The simulator models 8 coupled state variables — healthy mtDNA, deletion-mutated mtDNA, ATP, ROS, NAD+, senescent fraction, membrane potential, and point-mutated mtDNA — integrated via 4th-order Runge-Kutta over a 30-year horizon.
+This project implements a computational simulator for the mitochondrial theory of aging described in John G. Cramer's forthcoming book *How to Live Much Longer* (Springer, 2026; ISBN 978-3-032-17740-7). The simulator models 8 coupled state variables — healthy mtDNA, deletion-mutated mtDNA, ATP, ROS, NAD+, senescent fraction, membrane potential, and point-mutated mtDNA — integrated via 4th-order Runge-Kutta over a 30-year horizon.
 
 The project was created by Kathryn Cramer as a computational implementation and extension of John G. Cramer's biological framework, using Claude as a development utility. It adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent Evolutionary-Robotics project: instead of LLM → physics simulation → VLM scoring for robot locomotion, it uses LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
@@ -199,14 +199,14 @@ Power, Danger, and Structure are the three most significant axes from ousiometri
 - Zimmerman, J.W. (2025). "Locality, Relation, and Meaning Construction in Language, as Implemented in Humans and Large Language Models (LLMs)." PhD dissertation, University of Vermont. Graduate College Dissertations and Theses, 2082.
 - Zimmerman, J.W., Hudon, D., Cramer, K., St-Onge, J., Fudolig, M., Trujillo, M.Z., Danforth, C.M., and Dodds, P.S. (2024). "A blind spot for large language models: Supradiegetic linguistic information." *Plutonics*, 17, 107-156.
 - Dodds, P.S., Alshaabi, T., Fudolig, M.I., Zimmerman, J.W., et al. (2023). "Ousiometrics and telegnomics: The essence of meaning conforms to a two-dimensional powerful-weak and dangerous-safe framework." *arXiv*.
-- Cramer, John G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer*.
+- Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7.
 - Saltelli, A. (2002). "Making best use of model evaluations to compute sensitivity indices." *Computer Physics Communications*, 145(2), 280-297.
 - Jansen, M.J.W. (1999). "Analysis of variance designs for model output." *Computer Physics Communications*, 117(1-2), 35-43.
 - Beer, Stafford (1974). "Designing Freedom." CBC Massey Lectures.
 
 ## Assumptions and Scientific Grounding
 
-- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer Verlag in 2026**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
+- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer in 2026; ISBN 978-3-032-17740-7**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
 - **Model-form assumption:** Biological mechanisms are represented in reduced-form computational structures (ODE-style dynamics, scenario perturbations, and optimization surfaces) to make hypotheses testable and comparable.
 - **Parameter assumption:** Constants and intervention ranges are interpreted as theory-informed approximations for simulation and stress-testing, not as universal physiological truths for all populations.
 - **Evidence and scope assumption:** Outputs are hypothesis-generating research artifacts for mechanism exploration, sensitivity analysis, and scenario comparison. They are not clinical prescriptions, medical advice, or proof of efficacy.

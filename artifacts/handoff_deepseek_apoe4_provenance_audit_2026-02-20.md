@@ -9,7 +9,7 @@
 
 The mitochondrial aging simulator (`how-to-live-much-longer/`) models APOE4 genotype effects across six biological pathways. All numerical multipliers were introduced on 2026-02-19 as part of a precision medicine expansion. They are attributed to published papers in code comments, but **no derivation trail exists** showing how each specific number was extracted from its cited source. Some references lack full bibliographic information.
 
-The core model is based on John G. Cramer's *How to Live Much Longer: The Mitochondrial DNA Connection* (2025, ISBN 979-8-9928220-0-4). APOE4 is **not discussed in the Cramer book** — it was added to extend the model toward personalized medicine.
+The core model is based on John G. Cramer's *How to Live Much Longer: The Mitochondrial DNA Connection* (forthcoming 2026, Springer, ISBN 978-3-032-17740-7). APOE4 is **not discussed in the Cramer book** — it was added to extend the model toward personalized medicine.
 
 All APOE4 constants live in `constants.py` lines 673–732. They are consumed by `genetics_module.py`, `lifestyle_module.py`, `downstream_chain.py`, and `parameter_resolver.py`.
 

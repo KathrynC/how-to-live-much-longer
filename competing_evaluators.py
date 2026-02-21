@@ -5,7 +5,7 @@ competing_evaluators.py — D5: Competing Evaluators
 Find protocols robust across 4 competing clinical criteria — the TI
 "transaction" that resonates across all "absorbers."
 
-TIQM analogy (Cramer 2025, The Quantum Handshake):
+TIQM analogy (Cramer, forthcoming 2026; cf. The Quantum Handshake):
     In the Transactional Interpretation, a quantum transaction only completes
     when the offer wave resonates with ALL absorbers. Here, each evaluator
     represents a different clinical "absorber" (stakeholder perspective).
@@ -36,8 +36,8 @@ Scale: ~500 candidates × 1 patient + baselines = ~1000 sims
 Estimated time: ~2 minutes
 
 Reference:
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 import json

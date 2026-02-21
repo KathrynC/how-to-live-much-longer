@@ -1068,7 +1068,7 @@
       "criterion": {
         "kind": "file_contains",
         "path": "README.md",
-        "pattern": "forthcoming from Springer Verlag in 2026"
+        "pattern": "forthcoming from Springer in 2026; ISBN 978-3-032-17740-7"
       },
       "matched": true,
       "evidence_refs": [

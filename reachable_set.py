@@ -6,7 +6,7 @@ Map the achievable outcome space — the "advanced wave" working backward from
 desired futures. Uses Latin hypercube sampling of the 6D intervention space
 to discover what outcomes are achievable per patient type.
 
-TIQM analogy (Cramer 2025, The Quantum Handshake):
+TIQM analogy (Cramer, forthcoming 2026; cf. The Quantum Handshake):
     In the Transactional Interpretation, the "advanced wave" propagates
     backward from the absorber to constrain which transactions are possible.
     Here, we work backward from desired health targets (e.g., het < 0.3) to
@@ -43,8 +43,8 @@ Scale: 400 samples × 3 patients = 1200 sims + target searches ~1200 = ~2400 tot
 Estimated time: ~5 minutes
 
 Reference:
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 import json

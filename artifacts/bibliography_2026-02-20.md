@@ -27,7 +27,7 @@
 | 3 | Norwitz et al. 2021 | Hill-function dose-response parameters for 11 supplements **do not appear in any Norwitz publication**; likely phantom citation | **Critical** |
 | 4 | Bender et al. 2006 | Conflates total deletion burden (~43% controls) with the specific common 4,977 bp deletion; the common deletion was found only 7 times | Significant |
 | 5 | Anttila et al. 2004 | Values 2.3-3.6x are **odds ratios**, not hazard ratios as labeled in code | Medium |
-| 6 | Cramer 2025 book | No web evidence of publication; contradictory metadata across docs (2025 w/ ISBN vs "forthcoming 2026 Springer") | Informational |
+| 6 | Cramer book | Forthcoming from Springer in 2026 (ISBN 978-3-032-17740-7); earlier docs had contradictory metadata, now standardized | Resolved |
 
 ---
 
@@ -35,9 +35,9 @@
 
 ### The Cramer Book (Primary Theoretical Source)
 
-Cramer, J. G. (2025). *How to live much longer: The mitochondrial DNA connection*. Unpublished manuscript / limited circulation. ISBN 979-8-9928220-0-4.
+Cramer, J. G. (forthcoming 2026). *How to live much longer: The mitochondrial DNA connection*. Springer. ISBN 978-3-032-17740-7.
 
-> **Audit status: UNVERIFIABLE.** No Amazon, Goodreads, WorldCat, or Google Books listing found. ISBN prefix 979-8-99 is consistent with self-publication (Bowker), not Springer Verlag. Some project docs say "forthcoming from Springer Verlag in 2026"; others cite it as published in 2025. John G. Cramer is confirmed as Professor Emeritus of Physics, University of Washington, with a documented interest in mitochondrial aging (AV-233, *Analog*, Nov-Dec 2024; Mitrix Bio trial, July 2025). The project author has direct access to a manuscript with chapter/page-level citations throughout the codebase (30+ specific references). **Recommendation:** Standardize citation across all files as unpublished manuscript until publication status is resolved.
+> **Audit status: FORTHCOMING.** Listed on Springer at https://link.springer.com/book/9783032177407. ISBN prefix 978-3-032 is consistent with Springer Verlag. John G. Cramer is Professor Emeritus of Physics, University of Washington, with a documented interest in mitochondrial aging (AV-233, *Analog*, Nov-Dec 2024; Mitrix Bio trial, July 2025). The project author has direct access to the manuscript with chapter/page-level citations throughout the codebase (30+ specific references). Citation standardized across all files on 2026-02-20.
 
 ### Zimmerman Dissertation
 

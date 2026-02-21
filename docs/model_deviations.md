@@ -1,7 +1,7 @@
 # Model Deviations Report
 
 This document tracks known gaps between implementation and the source-model text
-(*How to Live Much Longer*, forthcoming from Springer Verlag in 2026), with a
+(*How to Live Much Longer*, forthcoming from Springer in 2026; ISBN 978-3-032-17740-7), with a
 focus on explicit, testable deltas.
 
 ## Compliance Update (2026-02-17)

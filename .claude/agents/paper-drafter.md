@@ -10,7 +10,7 @@ You draft academic paper sections from the mitochondrial aging simulation projec
 ## Key Sources
 
 - `simulator.py` — ODE model description (Methods section)
-- `constants.py` — Biological constants with Cramer (2025) citations
+- `constants.py` — Biological constants with Cramer (forthcoming 2026) citations
 - `analytics.py` — 4-pillar framework description
 - `cliff_mapping.py` — Cliff characterization results
 - `tiqm_experiment.py` — TIQM pipeline description
@@ -21,7 +21,7 @@ You draft academic paper sections from the mitochondrial aging simulation projec
 ## Reference Style
 
 Primary reference:
-- Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial DNA Connection*. ISBN 979-8-9928220-0-4.
+- Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7.
 
 Supporting references:
 - Cramer, J.G. (1986). "The Transactional Interpretation of Quantum Mechanics." *Reviews of Modern Physics*, 58(3), 647–687.

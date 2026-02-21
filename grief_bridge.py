@@ -1,7 +1,7 @@
 """Grief->Mitochondrial aging bridge.
 
 Connects the grief biological stress simulator (O'Connor 2022, 2025) to the
-mitochondrial aging simulator (Cramer 2025) via the disturbance framework.
+mitochondrial aging simulator (Cramer, forthcoming 2026) via the disturbance framework.
 
 The grief simulator produces time-varying biological stress signals --
 inflammation, cortisol, sympathetic arousal, sleep disruption, and

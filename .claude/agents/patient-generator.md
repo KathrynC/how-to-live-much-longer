@@ -22,7 +22,7 @@ You generate biologically plausible patient profiles for the mitochondrial aging
 
 These parameters are NOT independent. Realistic profiles must respect biological correlations:
 
-### Heteroplasmy vs Age (Cramer 2025)
+### Heteroplasmy vs Age (Cramer, forthcoming 2026)
 - Age 20: het ≈ 0.02–0.05 (minimal damage)
 - Age 40: het ≈ 0.05–0.15 (slow accumulation, doubling time 11.8yr)
 - Age 60: het ≈ 0.15–0.35 (accelerated, doubling time 3.06yr after 40)

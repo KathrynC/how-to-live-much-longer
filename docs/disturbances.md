@@ -198,11 +198,11 @@ delta_atp = result["states"][-1, 2] - baseline["states"][-1, 2]
 
 ## Reference
 
-Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer*. Ch. II.H p.14, Ch. IV pp.46-47, Ch. VI.B p.75, Ch. VII pp.89-92, Ch. VIII.F p.103.
+Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7. Ch. II.H p.14, Ch. IV pp.46-47, Ch. VI.B p.75, Ch. VII pp.89-92, Ch. VIII.F p.103.
 
 ## Assumptions and Scientific Grounding
 
-- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer Verlag in 2026**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
+- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer in 2026; ISBN 978-3-032-17740-7**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
 - **Model-form assumption:** Biological mechanisms are represented in reduced-form computational structures (ODE-style dynamics, scenario perturbations, and optimization surfaces) to make hypotheses testable and comparable.
 - **Parameter assumption:** Constants and intervention ranges are interpreted as theory-informed approximations for simulation and stress-testing, not as universal physiological truths for all populations.
 - **Evidence and scope assumption:** Outputs are hypothesis-generating research artifacts for mechanism exploration, sensitivity analysis, and scenario comparison. They are not clinical prescriptions, medical advice, or proof of efficacy.

@@ -19,7 +19,7 @@ It's a well-equipped lab with almost no experimental data.
   snapping, LLM parsing with flattening detection.
 - **Research campaign**: 5 tiers of scripts mirroring the ER project's atlas
   infrastructure — from pure simulation through LLM-seeded experiments to discovery tools.
-- **Documentation**: Every biological constant cited to Cramer 2025 chapter/page. Every
+- **Documentation**: Every biological constant cited to Cramer, forthcoming 2026 chapter/page. Every
   coefficient in every tool justified with biological rationale.
 
 ## What's Actually Been Run

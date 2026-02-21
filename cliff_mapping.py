@@ -1,7 +1,7 @@
 """Heteroplasmy threshold mapping and cliff characterization.
 
 Maps the nonlinear relationship between heteroplasmy and ATP collapse
-(the "cliff" from Cramer 2025). Provides:
+(the "cliff" from Cramer, forthcoming 2026). Provides:
     - 1D sweeps of baseline heteroplasmy vs terminal ATP
     - Bisection search for precise cliff edge location
     - Intervention-dependent cliff shift analysis

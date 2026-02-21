@@ -1,7 +1,7 @@
 # Appendix 2 Conformance Matrix (Book -> Model)
 
 Source of truth used here:
-- John G. Cramer, *How to Live Much Longer: The Mitochondrial DNA Connection* (forthcoming from Springer Verlag in 2026), especially **Appendix 2**.
+- John G. Cramer, *How to Live Much Longer: The Mitochondrial DNA Connection* (forthcoming from Springer in 2026; ISBN 978-3-032-17740-7), especially **Appendix 2**.
 
 Purpose:
 - Make model-to-book alignment auditable.

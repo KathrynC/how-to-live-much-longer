@@ -415,7 +415,7 @@ def run_matchmaker():
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("Archetype-to-Protocol Matchmaker (Zimmerman 2025 + Cramer 2025)")
+    print("Archetype-to-Protocol Matchmaker (Zimmerman 2025 + Cramer, forthcoming 2026)")
     print("=" * 70)
 
     output = run_matchmaker()

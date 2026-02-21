@@ -2,7 +2,7 @@
 
 A computational simulation of mitochondrial aging dynamics and intervention strategies, based on John G. Cramer's book.
 
-> **Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*.**
+> **Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7.**
 
 ![Fork in the Road: slowing vs reversing vs transplant-enabled reversal](artifacts/readme_fork_in_the_road.png)
 *How to read this figure (same starting state for all curves): Panel 1 shows ATP over time, Panel 2 shows heteroplasmy over time with the cliff threshold, and Panel 3 summarizes end-state geometry (ATP vs heteroplasmy). No treatment drifts toward collapse, slowing delays decline, reversal bends trajectory back, and transplant-enabled reversal exits the cliff basin most strongly.*
@@ -11,7 +11,7 @@ A computational simulation of mitochondrial aging dynamics and intervention stra
 
 This project adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](https://github.com/gardenofcomputation/Evolutionary-Robotics) project for cellular energetics. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
-**Core thesis (Cramer, forthcoming from Springer Verlag in 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
+**Core thesis (Cramer, forthcoming 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
 
 ## At the Outset: Slowing vs Reversing
 
@@ -244,11 +244,11 @@ print(f"Memory index at 95: {downstream[-1]['memory_index']:.3f}")
 | **Dynamics** | ROS FFT frequency, membrane potential CV, NAD slope, ROS-het correlation |
 | **Intervention** | Energy cost, het benefit, ATP benefit, benefit-cost ratio, crisis delay |
 
-## Biological Constants (Cramer Forthcoming Citations, Springer 2026)
+## Biological Constants (Cramer, Forthcoming 2026)
 
-All biological constants in `constants.py` have been traced to specific chapters and pages in Cramer (forthcoming from Springer Verlag in 2026). Key values:
+All biological constants in `constants.py` have been traced to specific chapters and pages in Cramer (forthcoming 2026). Key values:
 
-| Constant | Value | Cramer forthcoming source (Springer 2026) |
+| Constant | Value | Cramer (forthcoming 2026) source |
 |---|---|---|
 | Baseline ATP | 1.0 MU/day | Ch. VIII.A, Table 3, p.100 (1 MU = 10^8 ATP releases) |
 | Yamanaka energy cost | 3-5 MU | Ch. VIII.A, Table 3, p.100; Ch. VII.B p.95: "3 to 10 times" (Ci24, Fo18) |
@@ -619,7 +619,7 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 
 ## References
 
-- Cramer, J.G. (forthcoming from Springer Verlag in 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*.
+- Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7.
 - Cramer, J.G. (1986). "The Transactional Interpretation of Quantum Mechanics." *Reviews of Modern Physics*, 58(3), 647–687.
 - Camacho-Pereira, J. et al. (2016). "CD38 dictates age-related NAD decline and mitochondrial dysfunction through an SIRT3-dependent mechanism." *Cell Metabolism*, 23(6), 1127–1139.
 - McCully, J.D. et al. (2009). "Injection of isolated mitochondria during early reperfusion for cardioprotection." *American Journal of Physiology*, 296(1), H94–H105.
@@ -633,7 +633,7 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 
 ## Assumptions and Scientific Grounding
 
-- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* (**forthcoming from Springer Verlag in 2026**). In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
+- **Primary theoretical grounding:** This codebase operationalizes John G. Cramer's mitochondrial-aging theory as presented in *How to Live Much Longer* **(forthcoming 2026, Springer, ISBN 978-3-032-17740-7)**. In this repository, that work is treated as the model-level ground truth for mechanism selection and parameterization.
 - **Model-form assumption:** Biological mechanisms are represented in reduced-form computational structures (ODE-style dynamics, scenario perturbations, and optimization surfaces) to make hypotheses testable and comparable.
 - **Parameter assumption:** Constants and intervention ranges are interpreted as theory-informed approximations for simulation and stress-testing, not as universal physiological truths for all populations.
 - **Evidence and scope assumption:** Outputs are hypothesis-generating research artifacts for mechanism exploration, sensitivity analysis, and scenario comparison. They are not clinical prescriptions, medical advice, or proof of efficacy.

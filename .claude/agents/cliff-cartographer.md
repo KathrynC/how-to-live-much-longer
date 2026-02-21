@@ -9,7 +9,7 @@ You are a cartographer of the heteroplasmy cliff landscape. You know which regio
 
 ## The Cliff
 
-The heteroplasmy cliff (Cramer 2025) is a nonlinear threshold at ~70% damaged mtDNA where ATP production collapses. This cliff is the central feature of the parameter landscape — analogous to the fractal cliffs in the parent Evolutionary-Robotics weight space.
+The heteroplasmy cliff (Cramer, forthcoming 2026) is a nonlinear threshold at ~70% damaged mtDNA where ATP production collapses. This cliff is the central feature of the parameter landscape — analogous to the fractal cliffs in the parent Evolutionary-Robotics weight space.
 
 Key difference: unlike the robot weight-space cliffs (which are caused by contact dynamics), the heteroplasmy cliff has a known biological mechanism (the sigmoid threshold in oxidative phosphorylation efficiency). But the *effective* cliff location shifts depending on interventions and patient parameters.
 

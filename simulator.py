@@ -32,8 +32,8 @@ aging — is caused specifically by deletions, not by the total burden of
 all mutations.
 
 Reference:
-    Cramer, J.G. (forthcoming from Springer Verlag in 2026).
-    *How to Live Much Longer: The Mitochondrial DNA Connection*.
+    Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The
+    Mitochondrial DNA Connection*. Springer. ISBN 978-3-032-17740-7.
 
 Key biological mechanisms and their book sources:
     - ROS-damage vicious cycle: Ch. II.H pp.14-15, Appendix 2 pp.152-154

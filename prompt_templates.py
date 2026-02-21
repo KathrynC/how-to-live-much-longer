@@ -12,7 +12,7 @@ on LLM meaning construction:
   with semantic context (§3.5.3: tokenization-induced flattening
   collapses qualitative distinctions)
 
-Biological constants embedded in prompts (Cramer 2025):
+Biological constants embedded in prompts (Cramer, forthcoming 2026):
 - Heteroplasmy cliff at ~0.70 (Ch. V.K p.66, Rossignol 2003)
 - Yamanaka energy cost 3-5 MU/day (Ch. VIII.A Table 3 p.100)
 - Baseline ATP = 1.0 MU/day (Ch. VIII.A Table 3 p.100)
@@ -26,8 +26,8 @@ References:
     Construction in Language, as Implemented in Humans and Large
     Language Models (LLMs)." PhD dissertation, University of Vermont.
 
-    Cramer, J.G. (2026, forthcoming). "How to Live Much Longer."
-    Springer Verlag.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The
+    Mitochondrial DNA Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 

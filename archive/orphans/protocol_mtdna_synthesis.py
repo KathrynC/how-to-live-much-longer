@@ -5,8 +5,8 @@ replacing damaged mtDNA in isolated mitochondria via platelet-derived mitlets,
 and infusing modified mitochondria into a recipient.
 
 Based on principles from:
-    Cramer, J.G. (2025). *How to Live Much Longer: The Mitochondrial
-    DNA Connection*. ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). *How to Live Much Longer: The Mitochondrial
+    DNA Connection*. Springer. ISBN 978-3-032-17740-7.
 
 DISCLAIMER: This is a theoretical/computational protocol for research and
 simulation purposes. It describes procedures that would require extensive
@@ -34,8 +34,8 @@ def get_protocol():
         "title": "Synthetic mtDNA Ring Assembly and Mitochondrial Transplant "
                  "via Platelet-Derived Mitlets",
         "version": "1.0",
-        "reference": "Cramer, J.G. (2025). How to Live Much Longer: The "
-                     "Mitochondrial DNA Connection. ISBN 979-8-9928220-0-4.",
+        "reference": "Cramer, J.G. (forthcoming 2026). How to Live Much Longer: The "
+                     "Mitochondrial DNA Connection. Springer. ISBN 978-3-032-17740-7.",
         "disclaimer": (
             "Theoretical/computational protocol for research and simulation "
             "purposes. Requires regulatory approval, safety testing, and "

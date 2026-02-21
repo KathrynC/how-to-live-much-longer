@@ -413,7 +413,7 @@ def run_posiwid(sim: MitoSimulator, seed: int = 42) -> dict:
 def run_prompts(sim: MitoSimulator) -> dict:
     """Build prompt templates for LLM-mediated parameter generation."""
     builder = PromptBuilder(sim, context={
-        "domain": "Mitochondrial aging dynamics (Cramer 2025)",
+        "domain": "Mitochondrial aging dynamics (Cramer, forthcoming 2026)",
         "goal": "Design intervention protocols to delay heteroplasmy cliff",
     })
     scenario = ("70-year-old patient with 30% heteroplasmy, declining NAD+, "

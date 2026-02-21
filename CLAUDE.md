@@ -34,11 +34,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Computational simulation of mitochondrial aging dynamics and intervention strategies, based on John G. Cramer's book *How to Live Much Longer: The Mitochondrial DNA Connection* (2025, ISBN 979-8-9928220-0-4).
+Computational simulation of mitochondrial aging dynamics and intervention strategies, based on John G. Cramer's book *How to Live Much Longer: The Mitochondrial DNA Connection* (forthcoming 2026, Springer, ISBN 978-3-032-17740-7).
 
 Adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](../Evolutionary-Robotics/) project. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
-**Core thesis (Cramer 2025):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of deletion-bearing mtDNA exceeds ~50% (deletion heteroplasmy cliff, recalibrated from 70% total het for C11 mutation split) — ATP production collapses nonlinearly.
+**Core thesis (Cramer, forthcoming 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of deletion-bearing mtDNA exceeds ~50% (deletion heteroplasmy cliff, recalibrated from 70% total het for C11 mutation split) — ATP production collapses nonlinearly.
 
 ## Environment Setup
 
@@ -263,7 +263,7 @@ archive/orphans/protocol_mtdna_synthesis.py  ← Standalone (archived; no import
 
 ### Core Pipeline
 
-1. **constants.py** — All biological constants (from Cramer 2025), 12D parameter space definitions with discrete grids, Ollama model config, 10 clinical scenario seeds
+1. **constants.py** — All biological constants (from Cramer, forthcoming 2026), 12D parameter space definitions with discrete grids, Ollama model config, 10 clinical scenario seeds
 2. **simulator.py** — RK4 ODE integrator. `simulate(intervention, patient, tissue_type, stochastic, resolver)` returns full 30-year trajectory of 8 state variables. Supports tissue-specific profiles (brain/muscle/cardiac), stochastic Euler-Maruyama mode, and optional `ParameterResolver` for precision medicine expanded inputs
 3. **analytics.py** — 4-pillar metrics computed from simulation results. `compute_all(result)` returns energy/damage/dynamics/intervention pillars
 4. **llm_common.py** — Shared LLM utilities: `query_ollama()`, `query_ollama_raw()`, `parse_json_response()`, `parse_intervention_vector()`, `detect_flattening()`, `split_vector()`. Handles markdown fence stripping, think-tag removal, flattening detection, grid snapping

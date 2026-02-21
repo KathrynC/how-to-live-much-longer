@@ -4,7 +4,7 @@ temporal_optimizer.py — D2: Temporal Protocol Optimizer
 
 Discover optimal intervention timelines — not just what to give, but when.
 
-Biological motivation (Cramer 2025):
+Biological motivation (Cramer, forthcoming 2026):
     Mitochondrial aging is highly nonlinear in time. Two key transitions
     create opportunities for temporal optimization:
 
@@ -41,8 +41,8 @@ Scale: 3 patients × (50 gen × 10 lambda + 1 constant) = ~1530 sims + extras �
 Estimated time: ~7 minutes
 
 Reference:
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 import json

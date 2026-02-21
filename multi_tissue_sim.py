@@ -6,7 +6,7 @@ Discover systemic trade-offs by coupling brain + muscle + cardiac tissues
 with shared resources. Wraps existing derivatives() function, calling it
 3 times per RK4 step (once per tissue). State vector: 8 × 3 = 24 states.
 
-Biological motivation (Cramer 2025):
+Biological motivation (Cramer, forthcoming 2026):
     The single-tissue ODE in simulator.py models one "average" tissue, but
     real aging involves differential tissue vulnerability:
 
@@ -46,8 +46,8 @@ Scale: 5 protocols × 4 allocations + 10 allocation sweep = ~30 sims (but each
        is 3× computation). Estimated time: ~2 minutes
 
 Reference:
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 import json

@@ -5,7 +5,7 @@ interaction_mapper.py — D4: Intervention Interaction Mapper
 Discover synergistic and antagonistic intervention combinations by running
 2D grid sweeps of all 15 intervention pairs (C(6,2)) across 3 patient types.
 
-Biological motivation (Cramer 2025):
+Biological motivation (Cramer, forthcoming 2026):
     Mitochondrial interventions act through distinct biochemical pathways
     (Ch. VI-VIII), so combining them may produce super-additive effects:
       - Rapamycin upregulates mitophagy via PINK1/Parkin (Ch. VI.B p.75)
@@ -40,8 +40,8 @@ Scale: 15 pairs × 6×6 grid × 3 patients = ~1620 sims + ~540 singles = ~2160 t
 Estimated time: ~3 minutes
 
 Reference:
-    Cramer, J.G. (2025). "How to Live Much Longer: The Mitochondrial DNA
-    Connection." ISBN 979-8-9928220-0-4.
+    Cramer, J.G. (forthcoming 2026). "How to Live Much Longer: The Mitochondrial DNA
+    Connection." Springer. ISBN 978-3-032-17740-7.
 """
 
 import json
