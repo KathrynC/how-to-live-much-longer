@@ -254,3 +254,51 @@ class TestBiologicalSanity:
         r_treat = sim.run(with_treatment)
         # Treatment should reduce heteroplasmy
         assert r_treat["final_heteroplasmy"] < r_none["final_heteroplasmy"]
+
+
+# ── Standard output schema ───────────────────────────────────────────────────
+
+class TestStandardOutput:
+    """Test shared output schema adapter."""
+
+    @pytest.fixture(scope="class")
+    def std_output(self):
+        """Compute standard output once for all tests."""
+        sim = MitoSimulator()
+        return sim.to_standard_output({})
+
+    def test_validates_against_schema(self, std_output):
+        from zimmerman.output_schema import validate_output
+        errors = validate_output(std_output)
+        assert len(errors) == 0, f"Validation errors: {errors}"
+
+    def test_schema_version(self, std_output):
+        assert std_output["schema_version"] == "1.0"
+
+    def test_simulator_metadata(self, std_output):
+        assert std_output["simulator"]["name"] == "mito"
+        assert std_output["simulator"]["state_dim"] == 8
+        assert std_output["simulator"]["time_unit"] == "years"
+        assert std_output["simulator"]["time_horizon"] == 30.0
+        assert len(std_output["simulator"]["state_names"]) == 8
+
+    def test_trajectory_shape(self, std_output):
+        n = std_output["trajectory"]["n_steps"]
+        assert n > 0
+        assert len(std_output["trajectory"]["times"]) == n
+        assert len(std_output["trajectory"]["states"]) == n
+        assert len(std_output["trajectory"]["states"][0]) == 8
+
+    def test_extra_arrays(self, std_output):
+        assert "heteroplasmy" in std_output["trajectory"]["extra"]
+        assert len(std_output["trajectory"]["extra"]["heteroplasmy"]) == std_output["trajectory"]["n_steps"]
+
+    def test_analytics_present(self, std_output):
+        assert "energy" in std_output["analytics"]["pillars"]
+        assert "damage" in std_output["analytics"]["pillars"]
+        assert "dynamics" in std_output["analytics"]["pillars"]
+        assert "intervention" in std_output["analytics"]["pillars"]
+        assert len(std_output["analytics"]["flat"]) > 0
+
+    def test_parameters_present(self, std_output):
+        assert len(std_output["parameters"]["bounds"]) == 12

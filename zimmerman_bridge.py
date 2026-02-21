@@ -42,6 +42,7 @@ from constants import (
     INTERVENTION_PARAMS, PATIENT_PARAMS,
     INTERVENTION_NAMES, PATIENT_NAMES,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
+    STATE_NAMES,
 )
 from simulator import simulate
 from analytics import compute_all
@@ -173,3 +174,56 @@ class MitoSimulator:
                 spec[name] = info["range"]
 
         return spec
+
+    def to_standard_output(self, params: dict) -> dict:
+        """Run simulation and return shared output schema dict.
+
+        Produces the zimmerman-toolkit SimulatorOutput format
+        for cross-simulator analysis and comparison.
+        """
+        from zimmerman.output_schema import SimulatorOutput
+
+        # Split params into intervention + patient
+        intervention = {}
+        for name in INTERVENTION_NAMES:
+            intervention[name] = float(params.get(name, 0.0))
+
+        if self.intervention_only:
+            patient = dict(self.patient_override)
+        else:
+            patient = {}
+            for name in PATIENT_NAMES:
+                patient[name] = float(params.get(name, DEFAULT_PATIENT[name]))
+
+        # Run simulation
+        result = simulate(intervention=intervention, patient=patient)
+
+        # Get baseline for intervention pillar
+        baseline = self._get_baseline(patient)
+
+        # Compute 4-pillar analytics
+        analytics = compute_all(result, baseline)
+
+        # Build extra arrays
+        extra = {}
+        if "heteroplasmy" in result:
+            extra["heteroplasmy"] = result["heteroplasmy"]
+        if "deletion_heteroplasmy" in result:
+            extra["deletion_heteroplasmy"] = result["deletion_heteroplasmy"]
+
+        output = SimulatorOutput(
+            simulator_name="mito",
+            simulator_description="8-state mitochondrial aging ODE (30-year horizon)",
+            state_dim=8,
+            param_dim=len(self.param_spec()),
+            state_names=list(STATE_NAMES),
+            time_unit="years",
+            time_horizon=30.0,
+            times=result["time"],
+            states=result["states"],
+            extra_arrays=extra,
+            pillars=analytics,
+            input_params=params,
+            param_bounds=dict(self.param_spec()),
+        )
+        return output.to_dict()
