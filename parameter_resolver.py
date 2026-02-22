@@ -30,12 +30,11 @@ from constants import (
     COPING_DECAY_RATE, LOVE_BUFFER_FACTOR, SOCIAL_SUPPORT_BUFFER,
     ALCOHOL_APOE4_SYNERGY,
     PROBIOTIC_GROWTH_RATE, GUT_DECAY_RATE, MAX_GUT_HEALTH,
-    SLEEP_DISRUPTION_IMPACT,
-    ALCOHOL_SLEEP_DISRUPTION,
 )
 from genetics_module import compute_genetic_modifiers, compute_sex_modifiers
 from lifestyle_module import compute_alcohol_effects, compute_coffee_effects, compute_diet_effects
 from supplement_module import compute_supplement_effects
+from sleep_trajectory import SleepTrajectory
 
 
 class ParameterResolver:
@@ -70,6 +69,16 @@ class ParameterResolver:
         self._grief_trajectory = self._precompute_grief()
         self._alcohol_trajectory = self._precompute_alcohol()
         self._gut_health_trajectory = self._precompute_gut_health()
+
+        # Pre-compute age-dependent sleep trajectory (5 coupling channels)
+        self._sleep_trajectory = SleepTrajectory(
+            sleep_intervention=self._intervention_exp.get('sleep_intervention', 0.5),
+            alcohol_trajectory=self._alcohol_trajectory,
+            time_points=self._time_points,
+            baseline_age=self._patient_exp.get('baseline_age', 70.0),
+            genetic_mods=self._genetic_mods,
+            sim_years=duration_years,
+        )
 
     def _precompute_grief(self) -> np.ndarray:
         """Pre-compute grief intensity decay curve."""
@@ -161,23 +170,28 @@ class ParameterResolver:
         grief_sensitivity = self._genetic_mods.get('grief_sensitivity', 1.0)
         patient['inflammation_level'] += grief_t * GRIEF_ROS_FACTOR * grief_sensitivity
 
-        # Step 5: Sleep — independent efficacy modifier
-        # Sleep quality modulates repair (mitophagy) via SLEEP_DISRUPTION_IMPACT.
-        # Alcohol has a secondary interaction: it degrades sleep quality.
-        # These are distinct pathways — alcohol also affects NAD/inflammation
-        # independently in Step 6.
-        sleep_quality = self._intervention_exp.get('sleep_intervention', 0.5)
-        alcohol_t = float(np.interp(t, self._time_points, self._alcohol_trajectory))
-        sleep_quality = max(0.0, sleep_quality - alcohol_t * ALCOHOL_SLEEP_DISRUPTION)
-        # Poor sleep increases inflammation
-        patient['inflammation_level'] += (1.0 - sleep_quality) * 0.05
-        # Sleep repair factor computed here, applied after Step 9 (core passthrough)
-        # so it isn't overwritten by max(intervention, expanded).
-        mitophagy_eff = self._genetic_mods.get('mitophagy_efficiency', 1.0)
-        sleep_repair_factor = 1.0 - (SLEEP_DISRUPTION_IMPACT / mitophagy_eff) * (1.0 - sleep_quality)
-        sleep_repair_factor = max(0.0, min(1.0, sleep_repair_factor))
+        # Step 5: Sleep — age-dependent quality with 5 coupling channels
+        # Replaces the old static sleep_quality computation with the full
+        # SleepTrajectory model. See sleep_trajectory.py for details.
+        effects = self._sleep_trajectory.compute(t)
+
+        # Channel 1: Inflammation boost from poor sleep (age-modulated)
+        patient['inflammation_level'] += effects['inflammation_delta']
+
+        # Channel 2: Sleep repair factor (applied in Step 9b to rapamycin)
+        sleep_repair_factor = effects['sleep_repair_factor']
+
+        # Channel 3: ROS boost (stored for ODE injection)
+        patient['_sleep_ros_boost'] = effects['ros_boost']
+
+        # Channel 4: NAD drain (stored for ODE injection)
+        patient['_sleep_nad_drain'] = effects['nad_drain']
+
+        # Channel 5: Membrane penalty (stored for ODE injection)
+        patient['_sleep_membrane_penalty'] = effects['membrane_penalty']
 
         # Step 6: Lifestyle (alcohol, coffee, diet)
+        alcohol_t = float(np.interp(t, self._time_points, self._alcohol_trajectory))
         alcohol_effects = compute_alcohol_effects(
             alcohol_intake=alcohol_t,
             apoe_sensitivity=self._genetic_mods.get('alcohol_sensitivity', 1.0),

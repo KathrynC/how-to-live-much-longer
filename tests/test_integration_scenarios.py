@@ -1,5 +1,6 @@
 """Integration test -- run all 4 scenarios for the 63yo APOE4 patient end-to-end."""
 import pytest
+import numpy as np
 
 
 class TestFourScenarioComparison:
@@ -41,3 +42,20 @@ class TestFourScenarioComparison:
         a_mi = all_results[0]['downstream'][-1]['memory_index']
         b_mi = all_results[1]['downstream'][-1]['memory_index']
         assert b_mi > a_mi
+
+
+class TestBackwardCompatibilityNoResolver:
+    """Simulation without resolver is unaffected by sleep changes."""
+
+    def test_backward_compatibility_no_resolver(self):
+        """Simulation without resolver produces identical, clean results."""
+        from simulator import simulate
+
+        # Run twice without resolver -- results must be identical
+        r1 = simulate()
+        r2 = simulate()
+        np.testing.assert_array_equal(r1['states'], r2['states'])
+
+        # No NaN or Inf
+        assert not np.any(np.isnan(r1['states']))
+        assert not np.any(np.isinf(r1['states']))

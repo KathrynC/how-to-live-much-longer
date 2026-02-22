@@ -99,13 +99,16 @@ class TestTimeVaryingAlcohol:
 class TestCoreSchedulePassthrough:
     def test_rapamycin_passed_through(self):
         from parameter_resolver import ParameterResolver
-        # Perfect sleep (1.0) ensures no sleep-related repair degradation
+        # Perfect sleep (1.0) with a young patient minimises age-dependent
+        # sleep degradation. The SleepTrajectory still applies a small
+        # age-modulated repair penalty, so we check rapamycin > 0.7
+        # rather than >= 0.8.
         pr = ParameterResolver(
-            patient_expanded={},
+            patient_expanded={'baseline_age': 20.0},
             intervention_expanded={'rapamycin_dose': 0.8, 'sleep_intervention': 1.0},
         )
         intervention, _ = pr.resolve(0.0)
-        assert intervention['rapamycin_dose'] >= 0.8
+        assert intervention['rapamycin_dose'] > 0.7
 
 
 class TestOutputsClamped:
@@ -124,3 +127,63 @@ class TestOutputsClamped:
         )
         _, patient = pr.resolve(0.0)
         assert patient['inflammation_level'] <= 1.0
+
+
+class TestSleepTrajectoryIntegration:
+    """Verify resolver constructs a SleepTrajectory and uses it."""
+
+    def test_sleep_trajectory_integration(self):
+        from parameter_resolver import ParameterResolver
+        from sleep_trajectory import SleepTrajectory
+        pr = ParameterResolver(
+            patient_expanded={'baseline_age': 60.0},
+            intervention_expanded={'sleep_intervention': 0.7},
+        )
+        # Resolver should have a SleepTrajectory instance
+        assert hasattr(pr, '_sleep_trajectory')
+        assert isinstance(pr._sleep_trajectory, SleepTrajectory)
+
+        # resolve() at t=0 should return a patient dict with all 5 channels
+        intervention, patient = pr.resolve(t=0.0)
+        assert 'inflammation_level' in patient
+        assert '_sleep_ros_boost' in patient
+        assert '_sleep_nad_drain' in patient
+        assert '_sleep_membrane_penalty' in patient
+        # inflammation_delta is folded into inflammation_level (not a separate key)
+        # sleep_repair_factor is applied to rapamycin_dose (not stored separately)
+        # Verify rapamycin was modified by sleep repair factor
+        assert isinstance(intervention['rapamycin_dose'], float)
+
+    def test_sleep_age_varying(self):
+        """Same patient/intervention at t=0 vs t=20 should differ due to aging."""
+        from parameter_resolver import ParameterResolver
+        pr = ParameterResolver(
+            patient_expanded={'baseline_age': 50.0},
+            intervention_expanded={'sleep_intervention': 0.5},
+            duration_years=30.0,
+        )
+        _, patient_early = pr.resolve(t=0.0)
+        _, patient_late = pr.resolve(t=20.0)
+
+        # At t=20, patient is 70 years old (50+20) vs 50 at t=0.
+        # Age-dependent sleep degradation should produce different
+        # inflammation contributions from the sleep channel.
+        # The older age should produce larger sleep-related inflammation
+        # and ROS boost, so the late patient should have higher
+        # inflammation and ROS boost than the early one.
+        assert patient_late['_sleep_ros_boost'] > patient_early['_sleep_ros_boost']
+        assert patient_late['_sleep_nad_drain'] > patient_early['_sleep_nad_drain']
+
+    def test_sleep_channels_in_patient_dict(self):
+        """Verify _sleep_ros_boost, _sleep_nad_drain, _sleep_membrane_penalty
+        keys are present and are floats after resolve()."""
+        from parameter_resolver import ParameterResolver
+        pr = ParameterResolver(
+            patient_expanded={},
+            intervention_expanded={},
+        )
+        _, patient = pr.resolve(t=0.0)
+        for key in ('_sleep_ros_boost', '_sleep_nad_drain', '_sleep_membrane_penalty'):
+            assert key in patient, f"Missing key: {key}"
+            assert isinstance(patient[key], float), f"{key} should be float, got {type(patient[key])}"
+            assert patient[key] >= 0.0, f"{key} should be non-negative"

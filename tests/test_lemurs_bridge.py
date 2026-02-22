@@ -446,3 +446,71 @@ class TestLEMURSDisturbanceIntegration:
         assert not np.any(np.isnan(result["states"]))
         # Combined should be worse than LEMURS alone
         assert result["heteroplasmy"][-1] > stressed_student["heteroplasmy"][-1]
+
+
+class TestSleepQualityAt:
+    """Test get_sleep_quality_at() for LEMURS->SleepTrajectory handoff."""
+
+    def test_sleep_quality_at_during_college(self):
+        """During the college window, get_sleep_quality_at returns a float in [0, 1]."""
+        d = LEMURSDisturbance(start_year=0.0, duration=30.0)
+        # t=0.1 is within the college window (year 0.1 of a 4-year college window)
+        q = d.get_sleep_quality_at(0.1)
+        assert q is not None
+        assert isinstance(q, float)
+        assert 0.0 <= q <= 1.0
+
+    def test_sleep_quality_at_outside_college(self):
+        """Outside the active window, get_sleep_quality_at returns None."""
+        # Disturbance active from year 5 to year 15
+        d = LEMURSDisturbance(start_year=5.0, duration=10.0)
+        # Before start_year: should return None
+        assert d.get_sleep_quality_at(1.0) is None
+        # After start_year + duration: should return None
+        assert d.get_sleep_quality_at(16.0) is None
+
+    def test_lemurs_overrides_inflammation(self):
+        """LEMURS override should change the inflammation_delta in SleepTrajectory."""
+        from sleep_trajectory import SleepTrajectory
+
+        # Mock LEMURS override: returns 0.3 (poor sleep) for t in [0, 4], else None
+        def mock_lemurs(t: float) -> float | None:
+            if 0.0 <= t <= 4.0:
+                return 0.3
+            return None
+
+        # Without LEMURS override
+        st_no_lemurs = SleepTrajectory(
+            sleep_intervention=0.5,
+            baseline_age=18.0,
+            sim_years=30.0,
+        )
+        # With LEMURS override
+        st_with_lemurs = SleepTrajectory(
+            sleep_intervention=0.5,
+            baseline_age=18.0,
+            sim_years=30.0,
+            lemurs_override=mock_lemurs,
+        )
+
+        # At t=2.0 (age 20, within college window), inflammation should differ
+        effects_no = st_no_lemurs.compute(t=2.0)
+        effects_with = st_with_lemurs.compute(t=2.0)
+
+        # The mock returns 0.3 (deficit = 0.7), which is much worse than the
+        # epidemiological baseline for age 20 (quality ~0.95, deficit ~0.05).
+        # So LEMURS override should produce higher inflammation_delta.
+        assert effects_with['inflammation_delta'] != effects_no['inflammation_delta']
+        assert effects_with['inflammation_delta'] > effects_no['inflammation_delta']
+
+        # Other channels (repair, ROS, NAD, membrane) should be unchanged
+        assert effects_with['ros_boost'] == pytest.approx(effects_no['ros_boost'], abs=1e-12)
+        assert effects_with['nad_drain'] == pytest.approx(effects_no['nad_drain'], abs=1e-12)
+        assert effects_with['membrane_penalty'] == pytest.approx(effects_no['membrane_penalty'], abs=1e-12)
+        assert effects_with['sleep_repair_factor'] == pytest.approx(effects_no['sleep_repair_factor'], abs=1e-12)
+
+        # At t=10.0 (outside mock's window), results should be identical
+        effects_no_10 = st_no_lemurs.compute(t=10.0)
+        effects_with_10 = st_with_lemurs.compute(t=10.0)
+        assert effects_with_10['inflammation_delta'] == pytest.approx(
+            effects_no_10['inflammation_delta'], abs=1e-12)

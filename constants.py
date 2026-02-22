@@ -666,7 +666,7 @@ CLINICAL_SEEDS = [
 GRIEF_ROS_FACTOR = 0.3
 GRIEF_NAD_DECAY = 0.15
 GRIEF_SENESCENCE_FACTOR = 0.1
-SLEEP_DISRUPTION_IMPACT = 0.5  # literature-approximated; superseded by LEMURS bridge (lemurs_bridge.py) for college-age patients
+SLEEP_DISRUPTION_IMPACT = 0.5  # DEPRECATED: superseded by SLEEP_REPAIR_COEFF in sleep_trajectory.py. Kept for backward compat with tests not using resolver.
 SOCIAL_SUPPORT_BUFFER = 0.5
 COPING_DECAY_RATE = 0.3
 LOVE_BUFFER_FACTOR = 0.2
@@ -700,6 +700,75 @@ LEMURS_GAD_MAX = 21.0              # GAD-7 scale max
 LEMURS_HRV_MIN = 15.0              # ms RMSSD
 LEMURS_HRV_MAX = 120.0             # ms RMSSD
 LEMURS_HRV_REF = 60.0              # Paper 3 reference
+
+# ── Sleep trajectory constants ────────────────────────────────────────────
+# Age-dependent sleep quality model based on epidemiological data.
+# Sleep quality declines ~0.5-1% per year after age 30 (Ohayon et al. 2004,
+# Sleep Medicine Reviews; Mander et al. 2017, Neuron). Deep sleep (N3)
+# declines even faster: ~2% per decade after 20 (Van Cauter et al. 2000).
+#
+# Provenance grades: [A] = published regression, [B] = meta-analysis
+# estimate, [C] = modeling assumption calibrated to published endpoints.
+
+# Baseline sleep quality by age (piecewise linear anchor points)
+# [B] Ohayon 2004 meta-analysis: sleep efficiency 95% at 20 → 80% at 80
+# Normalized to [0, 1] with 1.0 = optimal young-adult sleep
+SLEEP_QUALITY_AGE_20 = 0.95    # [B] Near-optimal
+SLEEP_QUALITY_AGE_40 = 0.88    # [B] Mild decline
+SLEEP_QUALITY_AGE_60 = 0.75    # [B] Moderate decline
+SLEEP_QUALITY_AGE_80 = 0.60    # [B] Substantial decline, fragmented sleep
+
+# Age anchor points for piecewise linear interpolation
+SLEEP_AGE_ANCHORS = [20.0, 40.0, 60.0, 80.0]
+SLEEP_QUALITY_ANCHORS = [0.95, 0.88, 0.75, 0.60]
+
+# Intervention efficacy: how much sleep_intervention can recover lost quality
+# [C] Modeling assumption: behavioral interventions (CBT-I, sleep hygiene)
+# can recover up to 60% of age-related sleep decline (Irwin et al. 2006,
+# Archives of Internal Medicine; Trauer et al. 2015, Annals of Int Med)
+SLEEP_INTERVENTION_RECOVERY = 0.6
+
+# ── Sleep→Mito coupling coefficients ─────────────────────────────────────
+# Channel 1: Sleep→Inflammation (existing, now age-modulated)
+# [B] Irwin et al. 2016 (Biological Psychiatry): sleep disturbance increases
+# CRP by 0.5-1.0 mg/L; IL-6 by 0.2-0.5 pg/mL. Effect stronger in older adults.
+SLEEP_INFLAMMATION_COEFF = 0.08   # [B] per unit sleep deficit → inflammation_level
+SLEEP_INFLAMMATION_AGE_GAIN = 0.001  # [C] additional coeff per year above 40
+
+# Channel 2: Sleep→Repair (existing, refined)
+# [B] Poor sleep reduces autophagy/mitophagy efficiency. Xie et al. 2013
+# (Science): glymphatic clearance drops 60% during wakefulness. Extended to
+# mitochondrial quality control via PINK1/Parkin pathway (sleep-dependent).
+SLEEP_REPAIR_COEFF = 0.5    # [B] replaces old SLEEP_DISRUPTION_IMPACT=0.5
+
+# Channel 3: Sleep→ROS (NEW)
+# [B] Everson et al. 2005 (Sleep): chronic sleep restriction increases
+# oxidative stress markers 20-40% in rodent tissues. Villafuerte et al. 2015
+# (Sleep): one night of sleep deprivation increases 8-oxodG (oxidative DNA
+# damage marker) in human blood cells.
+SLEEP_ROS_COEFF = 0.04     # [B] per unit sleep deficit → ROS boost factor
+
+# Channel 4: Sleep→NAD+ (NEW)
+# [C] Sleep deprivation increases PARP activation via accumulated oxidative
+# DNA damage during extended wakefulness (Massudi et al. 2012, PLoS ONE).
+# PARP consumes NAD+. Also: circadian clock genes (BMAL1, CLOCK) regulate
+# NAMPT, the rate-limiting enzyme in NAD+ salvage pathway (Ramsey et al.
+# 2009, Science). Disrupted sleep → disrupted NAMPT → lower NAD+.
+SLEEP_NAD_DRAIN_COEFF = 0.02   # [C] per unit sleep deficit → NAD drain rate
+
+# Channel 5: Sleep→Membrane potential (NEW)
+# [C] Circadian ATP cycling: mitochondrial membrane potential and ATP
+# production follow circadian rhythms (Schmitt et al. 2018, Cell Metabolism).
+# Chronic sleep disruption desynchronizes this cycling, reducing average ΔΨ.
+# Effect is small but persistent.
+SLEEP_MEMBRANE_COEFF = 0.03    # [C] per unit sleep deficit → membrane penalty
+
+# Age-dependent sensitivity multiplier
+# [C] Older mitochondria are more vulnerable to sleep disruption because
+# they have less reserve capacity (lower baseline ΔΨ, less NAD+, more
+# existing damage). Modeled as linear ramp from 1.0 at age 30 to 1.5 at 80.
+SLEEP_AGE_SENSITIVITY_RATE = 0.01   # [C] per year above 30
+SLEEP_AGE_SENSITIVITY_MAX = 1.5     # [C] cap at 1.5x
 
 # ── Genetic multipliers (qualitative estimates; see provenance notes below) ─
 GENOTYPE_MULTIPLIERS = {

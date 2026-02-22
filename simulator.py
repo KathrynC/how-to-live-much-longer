@@ -954,6 +954,10 @@ def derivatives(
     ros_from_damage = (ROS_PER_DAMAGED * het_total * het_total
                        * (1.0 + inflammation))
 
+    # Sleep→ROS channel: poor sleep increases oxidative stress directly.
+    # Optional — only present when ParameterResolver with SleepTrajectory is active.
+    sleep_ros_boost = patient.get("_sleep_ros_boost", 0.0)
+
     # Antioxidant defense: NAD-dependent (sirtuins, SOD2 upregulation)
     # plus exercise-induced hormesis (Nrf2 pathway, catalase, GPx).
     # defense_factor > 1.0 means the cell's antioxidant capacity
@@ -970,7 +974,7 @@ def derivatives(
     exercise_ros = exercise * 0.03
 
     # ROS equilibrium and relaxation (same time constant as ATP, ~1 year)
-    ros_eq = (ros_baseline + ros_from_damage + exercise_ros) / defense_factor
+    ros_eq = (ros_baseline + ros_from_damage + exercise_ros + sleep_ros_boost * met_demand) / defense_factor
     dros = 1.0 * (ros_eq - ros)
 
     # ── 6. dNAD/dt (equilibrium + drains) ────────────────────────────────
@@ -1004,9 +1008,12 @@ def derivatives(
     # for the NAD+ pool during epigenetic remodeling).
     yama_drain = yama * 0.03
 
+    # Sleep→NAD channel: poor sleep increases PARP-mediated NAD+ consumption.
+    sleep_nad_drain = patient.get("_sleep_nad_drain", 0.0)
+
     # NAD relaxation: approaches target with time constant ~3 years
     # (0.3/year), minus constant drains from ROS and Yamanaka.
-    dnad = 0.3 * (nad_target - nad) - ros_drain - yama_drain
+    dnad = 0.3 * (nad_target - nad) - ros_drain - yama_drain - sleep_nad_drain
 
     # ── 7. dSenescent_fraction/dt (accumulation - clearance) ─────────────
     # Senescent cells are cells that have entered irreversible growth
@@ -1059,6 +1066,9 @@ def derivatives(
     # relatively slow turnover of inner membrane lipid composition.
     psi_eq = cliff * min(nad, 1.0) * (1.0 - 0.3 * sen)
     psi_eq = min(psi_eq, BASELINE_MEMBRANE_POTENTIAL)
+    # Sleep→Membrane channel: circadian desynchronization reduces average ΔΨ.
+    sleep_membrane_penalty = patient.get("_sleep_membrane_penalty", 0.0)
+    psi_eq = max(psi_eq - sleep_membrane_penalty, 0.0)
     dpsi = 0.5 * (psi_eq - psi)
 
     # ── Return derivative vector ─────────────────────────────────────────

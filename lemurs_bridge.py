@@ -310,6 +310,24 @@ class LEMURSDisturbance(Disturbance):
         t_frac = semester_week / 52.0
         return float(np.interp(t_frac, self._semester_times, arr))
 
+    def get_sleep_quality_at(self, t: float) -> float | None:
+        """Return LEMURS-derived sleep quality during college window, else None.
+
+        Returns normalized TST as sleep quality (0-1) during active college
+        semesters. Returns None outside the college age window, signaling
+        that the epidemiological baseline should be used instead.
+        """
+        if not self.is_active(t):
+            return None
+        # Check semester phase to get interpolation position
+        in_semester, week, _n_semesters = self._semester_phase(t)
+        if in_semester:
+            tst_norm = self._interp_semester(self._tst_norm, week)
+        else:
+            # During breaks, use baseline (beginning of semester) value
+            tst_norm = float(self._tst_norm[0])
+        return float(tst_norm)
+
     def modify_state(
         self,
         state: npt.NDArray[np.float64],

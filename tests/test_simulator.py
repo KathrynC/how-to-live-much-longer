@@ -398,3 +398,45 @@ class TestMutationTypeSplit:
         assert n_pt_end > 0.01
         # Total heteroplasmy should have increased
         assert result["heteroplasmy"][-1] > result["heteroplasmy"][0]
+
+
+class TestSleepChannels:
+    """Tests for the 3 sleep→ODE channels injected by ParameterResolver."""
+
+    def test_sleep_ros_channel(self):
+        """Injecting _sleep_ros_boost into patient dict increases ROS."""
+        from constants import DEFAULT_PATIENT
+        # Baseline: no sleep channels
+        r_base = simulate()
+        # With sleep ROS boost
+        patient = dict(DEFAULT_PATIENT)
+        patient['_sleep_ros_boost'] = 0.05
+        r_sleep = simulate(patient=patient)
+        # ROS should be higher with sleep boost (state index 3)
+        assert r_sleep['states'][-1, 3] > r_base['states'][-1, 3]
+
+    def test_sleep_nad_channel(self):
+        """Injecting _sleep_nad_drain increases NAD depletion."""
+        from constants import DEFAULT_PATIENT
+        r_base = simulate()
+        patient = dict(DEFAULT_PATIENT)
+        patient['_sleep_nad_drain'] = 0.03
+        r_sleep = simulate(patient=patient)
+        # NAD should be lower (state index 4)
+        assert r_sleep['states'][-1, 4] < r_base['states'][-1, 4]
+
+    def test_sleep_membrane_channel(self):
+        """Injecting _sleep_membrane_penalty reduces membrane potential."""
+        from constants import DEFAULT_PATIENT
+        r_base = simulate()
+        patient = dict(DEFAULT_PATIENT)
+        patient['_sleep_membrane_penalty'] = 0.03
+        r_sleep = simulate(patient=patient)
+        # Membrane potential should be lower (state index 6)
+        assert r_sleep['states'][-1, 6] < r_base['states'][-1, 6]
+
+    def test_no_sleep_channels_default(self):
+        """Without sleep keys, simulation matches baseline exactly."""
+        r1 = simulate()
+        r2 = simulate()  # Same default patient, no sleep keys
+        np.testing.assert_array_equal(r1['states'], r2['states'])
