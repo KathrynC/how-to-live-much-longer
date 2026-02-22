@@ -11,6 +11,10 @@ from ca_rules import (
     _evaluate_context, _evaluate_inputs, _apply_direction,
     save_rules, load_rules,
 )
+from ca_simulator import (
+    run_single_cell, run_tissue_grid, step_cell, _build_context,
+    CA_DT, CA_N_STEPS, TISSUE_TYPES,
+)
 from constants import N_STATES
 
 
@@ -290,3 +294,103 @@ class TestSaveLoadRules:
         loaded = load_rules(path)
         assert len(loaded) == len(RULE_TABLE)
         assert loaded[0]["name"] == RULE_TABLE[0]["name"]
+
+
+# ── Simulator tests ──────────────────────────────────────────────────────
+
+
+class TestBuildContext:
+    def test_age_epoch_young(self):
+        ctx = _build_context(0, {"baseline_age": 30.0}, {}, None, None)
+        assert ctx["age_epoch"] == "young"
+        assert ctx["age"] == 30.0
+
+    def test_age_epoch_transition(self):
+        ctx = _build_context(80, {"baseline_age": 40.0}, {}, None, None)
+        # step 80 at dt=0.25 = 20 years, age = 60
+        assert ctx["age_epoch"] == "transition"
+
+    def test_age_epoch_old(self):
+        ctx = _build_context(0, {"baseline_age": 75.0}, {}, None, None)
+        assert ctx["age_epoch"] == "old"
+
+    def test_intervention_levels(self):
+        ctx = _build_context(0, {"baseline_age": 50.0},
+                             {"rapamycin_dose": 0.8, "nad_supplement": 0.1},
+                             None, None)
+        assert ctx["rapamycin"] == "high"
+        assert ctx["nad_supplement"] == "none"
+
+
+class TestStepCell:
+    def test_returns_new_state_and_fired(self):
+        state = {
+            "N_healthy": "adequate", "N_deletion": "minimal",
+            "ATP": "healthy", "ROS": "basal", "NAD": "robust",
+            "Senescent_fraction": "minimal",
+            "Membrane_potential": "intact", "N_point": "low",
+        }
+        ctx = {"age": 30, "age_epoch": "young",
+               "rapamycin": "none", "nad_supplement": "none",
+               "senolytic": "none", "exercise": "none",
+               "yamanaka": "none", "transplant": "none"}
+        new_state, fired = step_cell(state, ctx)
+        assert isinstance(new_state, dict)
+        assert isinstance(fired, list)
+
+
+class TestRunSingleCell:
+    def test_default_params(self):
+        result = run_single_cell()
+        assert "trajectory" in result
+        assert "rule_log" in result
+        assert "final_state" in result
+        assert len(result["trajectory"]) == CA_N_STEPS + 1  # init + 120 steps
+
+    def test_trajectory_length(self):
+        result = run_single_cell(sim_years=10, dt=0.5)
+        assert len(result["trajectory"]) == 21  # 10/0.5 + 1
+
+    def test_rule_log_length(self):
+        result = run_single_cell()
+        assert len(result["rule_log"]) == CA_N_STEPS
+
+    def test_final_state_is_dict(self):
+        result = run_single_cell()
+        assert isinstance(result["final_state"], dict)
+        assert len(result["final_state"]) == CA_N_VARS
+
+    def test_deterministic(self):
+        r1 = run_single_cell()
+        r2 = run_single_cell()
+        assert r1["final_state"] == r2["final_state"]
+
+    def test_custom_patient(self):
+        result = run_single_cell(
+            patient={"baseline_age": 20.0, "baseline_heteroplasmy": 0.05}
+        )
+        assert result["patient"]["baseline_age"] == 20.0
+
+
+class TestRunTissueGrid:
+    def test_default(self):
+        result = run_tissue_grid()
+        assert "tissue_states" in result
+        assert "final_tissues" in result
+        assert len(result["final_tissues"]) == 4
+
+    def test_tissue_names(self):
+        result = run_tissue_grid()
+        assert set(result["final_tissues"].keys()) == set(TISSUE_TYPES)
+
+    def test_tissue_coupling(self):
+        r_none = run_tissue_grid(tissue_coupling=0.0)
+        r_high = run_tissue_grid(tissue_coupling=0.8)
+        assert len(r_none["final_tissues"]) == 4
+        assert len(r_high["final_tissues"]) == 4
+
+    def test_population_summary(self):
+        result = run_tissue_grid()
+        summary = result["population_summary"]
+        assert "total_tissues" in summary
+        assert summary["total_tissues"] == 4
