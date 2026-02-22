@@ -190,6 +190,9 @@ class ParameterResolver:
         # Channel 5: Membrane penalty (stored for ODE injection)
         patient['_sleep_membrane_penalty'] = effects['membrane_penalty']
 
+        # Channel 6: ATP boost (NEW, stored for ODE injection)
+        patient['_sleep_atp_boost'] = effects['atp_boost']
+
         # Step 6: Lifestyle (alcohol, coffee, diet)
         alcohol_t = float(np.interp(t, self._time_points, self._alcohol_trajectory))
         alcohol_effects = compute_alcohol_effects(

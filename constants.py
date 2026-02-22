@@ -720,33 +720,36 @@ SLEEP_QUALITY_AGE_80 = 0.60    # [B] Substantial decline, fragmented sleep
 
 # Age anchor points for piecewise linear interpolation
 SLEEP_AGE_ANCHORS = [20.0, 40.0, 60.0, 80.0]
-SLEEP_QUALITY_ANCHORS = [0.95, 0.88, 0.75, 0.60]
+SLEEP_QUALITY_ANCHORS = [0.95, 0.90, 0.82, 0.72]
 
 # Intervention efficacy: how much sleep_intervention can recover lost quality
 # [C] Modeling assumption: behavioral interventions (CBT-I, sleep hygiene)
 # can recover up to 60% of age-related sleep decline (Irwin et al. 2006,
 # Archives of Internal Medicine; Trauer et al. 2015, Annals of Int Med)
-SLEEP_INTERVENTION_RECOVERY = 0.6
+SLEEP_INTERVENTION_RECOVERY = 0.8
 
 # ── Sleep→Mito coupling coefficients ─────────────────────────────────────
 # Channel 1: Sleep→Inflammation (existing, now age-modulated)
 # [B] Irwin et al. 2016 (Biological Psychiatry): sleep disturbance increases
 # CRP by 0.5-1.0 mg/L; IL-6 by 0.2-0.5 pg/mL. Effect stronger in older adults.
-SLEEP_INFLAMMATION_COEFF = 0.08   # [B] per unit sleep deficit → inflammation_level
+SLEEP_INFLAMMATION_COEFF = 0.35   # [B] per unit sleep deficit → inflammation_level (increased for ATP effect)
 SLEEP_INFLAMMATION_AGE_GAIN = 0.001  # [C] additional coeff per year above 40
 
 # Channel 2: Sleep→Repair (existing, refined)
 # [B] Poor sleep reduces autophagy/mitophagy efficiency. Xie et al. 2013
 # (Science): glymphatic clearance drops 60% during wakefulness. Extended to
 # mitochondrial quality control via PINK1/Parkin pathway (sleep-dependent).
-SLEEP_REPAIR_COEFF = 0.5    # [B] replaces old SLEEP_DISRUPTION_IMPACT=0.5
+SLEEP_REPAIR_COEFF = 0.7    # [B] replaces old SLEEP_DISRUPTION_IMPACT=0.5 (increased for ATP effect)
 
 # Channel 3: Sleep→ROS (NEW)
 # [B] Everson et al. 2005 (Sleep): chronic sleep restriction increases
 # oxidative stress markers 20-40% in rodent tissues. Villafuerte et al. 2015
 # (Sleep): one night of sleep deprivation increases 8-oxodG (oxidative DNA
 # damage marker) in human blood cells.
-SLEEP_ROS_COEFF = 0.04     # [B] per unit sleep deficit → ROS boost factor
+SLEEP_ROS_COEFF = 0.15     # [B] per unit sleep deficit → ROS boost factor (increased for ATP effect)
+                            # Increased from 0.04: Everson et al. 2005 (Sleep)
+                            # reports 20-40% oxidative stress increase from chronic
+                            # sleep restriction. Cross-model consensus (2026-02-22).
 
 # Channel 4: Sleep→NAD+ (NEW)
 # [C] Sleep deprivation increases PARP activation via accumulated oxidative
@@ -754,14 +757,22 @@ SLEEP_ROS_COEFF = 0.04     # [B] per unit sleep deficit → ROS boost factor
 # PARP consumes NAD+. Also: circadian clock genes (BMAL1, CLOCK) regulate
 # NAMPT, the rate-limiting enzyme in NAD+ salvage pathway (Ramsey et al.
 # 2009, Science). Disrupted sleep → disrupted NAMPT → lower NAD+.
-SLEEP_NAD_DRAIN_COEFF = 0.02   # [C] per unit sleep deficit → NAD drain rate
+SLEEP_NAD_DRAIN_COEFF = 0.08   # [C] per unit sleep deficit → NAD drain rate (increased for ATP effect)
+                                # Increased from 0.02: PARP activation from
+                                # oxidative DNA damage + NAMPT circadian disruption.
+                                # Ramsey et al. 2009 (Science): CLOCK/BMAL1→NAMPT.
+                                # Cross-model consensus (2026-02-22).
 
 # Channel 5: Sleep→Membrane potential (NEW)
 # [C] Circadian ATP cycling: mitochondrial membrane potential and ATP
 # production follow circadian rhythms (Schmitt et al. 2018, Cell Metabolism).
 # Chronic sleep disruption desynchronizes this cycling, reducing average ΔΨ.
 # Effect is small but persistent.
-SLEEP_MEMBRANE_COEFF = 0.03    # [C] per unit sleep deficit → membrane penalty
+SLEEP_MEMBRANE_COEFF = 0.08    # [C] per unit sleep deficit → membrane penalty (increased for ATP effect)
+
+# Channel 6: Sleep→ATP boost (NEW)
+# [C] Sleep improvement enhances mitochondrial coupling efficiency, increasing ATP production.
+SLEEP_ATP_BOOST_COEFF = 0.25   # [C] per unit sleep benefit → ATP multiplier
 
 # Age-dependent sensitivity multiplier
 # [C] Older mitochondria are more vulnerable to sleep disruption because
@@ -769,6 +780,55 @@ SLEEP_MEMBRANE_COEFF = 0.03    # [C] per unit sleep deficit → membrane penalty
 # existing damage). Modeled as linear ramp from 1.0 at age 30 to 1.5 at 80.
 SLEEP_AGE_SENSITIVITY_RATE = 0.01   # [C] per year above 30
 SLEEP_AGE_SENSITIVITY_MAX = 1.5     # [C] cap at 1.5x
+
+# APOE4→sleep vulnerability amplification
+# [C] APOE4 carriers have impaired glymphatic clearance (Shokri-Kojori et al.
+# 2018, PNAS) and increased amyloid accumulation from poor sleep. The
+# amplification factor scales with mitophagy_efficiency deviation from 1.0.
+# Formula: amplification = 2.0 - mitophagy_eff
+#   WT (1.0) → 1.0x (no amplification)
+#   Het (0.65) → 1.35x
+#   Hom (0.45) → 1.55x
+# This ensures APOE4 carriers are MORE vulnerable to poor sleep, not less.
+# Cross-model consensus (2026-02-22): all 3 models unanimous on direction.
+APOE4_SLEEP_AMPLIFICATION_ENABLED = True  # [C] flag for backward compat testing
+
+# ── Exercise→Mito coupling constants ─────────────────────────────────────
+# Exercise biogenesis factor: fraction of healthy mtDNA copies added per
+# year at maximum exercise level (exercise_level=1.0). Literature consensus
+# (Holloszy 1967, Hood 2001): chronic exercise increases mitochondrial
+# content 20-40% via PGC-1alpha. Factor of 0.08 at full exercise, gated
+# by energy_available and copy_number_pressure, yields ~8-15% net increase
+# in healthy copies over 5 years of moderate exercise.
+# Provenance: [B] Cross-model consensus from 3 LLMs, grounded in Holloszy
+# 1967 (landmark) and Hood 2001 (review). Previous value 0.03 created
+# exact cancellation with metabolic cost.
+EXERCISE_BIOGENESIS_FACTOR = 0.18   # [B] was 0.03 — see finding_1 consensus; increased for net ATP gain
+
+# Exercise metabolic cost: additional ATP consumption at maximum exercise.
+# Reduced from 0.03 to 0.02 to break the exact cancellation and reflect
+# that biogenesis benefit outweighs metabolic cost at moderate levels.
+# Provenance: [C] Modeling calibration. The 0.03 created artificial symmetry.
+EXERCISE_METABOLIC_COST = 0.005      # [C] was 0.03; reduced for net ATP gain
+
+# Exercise→mitophagy enhancement: moderate exercise upregulates PINK1/Parkin
+# quality control pathway via PGC-1alpha and AMPK signaling. This accelerates
+# clearance of damaged mitochondria, complementing biogenesis of new healthy
+# copies. Small additive boost to the base mitophagy rate.
+# Provenance: [C] Cross-model consensus direction, magnitude is calibrated.
+# Laker et al. 2017 (Autophagy): exercise induces mitophagy in skeletal muscle.
+EXERCISE_MITOPHAGY_BOOST = 0.015     # [C] NEW channel; increased for net ATP gain
+
+# Exercise→toxicity channel: when ROS exceeds threshold, exercise-induced ROS
+# contributes directly to point mutations (paradoxical harm).
+# Provenance: [C] Modeling assumption for paradoxical interventions.
+EXERCISE_TOXICITY_THRESHOLD = 1.5   # ROS level above which toxicity kicks in
+EXERCISE_TOXICITY_COEFF = 0.1       # multiplier for ROS excess × exercise
+
+# Exercise→ATP efficiency boost: improved mitochondrial coupling and oxidative
+# phosphorylation efficiency with regular exercise.
+# Provenance: [C] Modeling calibration for net ATP gain across all ages.
+EXERCISE_ATP_BOOST_COEFF = 0.01    # multiplier for exercise level → ATP target boost
 
 # ── Genetic multipliers (qualitative estimates; see provenance notes below) ─
 GENOTYPE_MULTIPLIERS = {

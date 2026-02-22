@@ -1,0 +1,855 @@
+{
+  "sample_size": 50,
+  "classified_count": 20,
+  "layer_analysis": {
+    "layer_counts": {
+      "grounded": 240,
+      "linking": 150
+    },
+    "grounded_percentage": 61.53846153846154,
+    "linking_percentage": 38.46153846153846,
+    "most_common_features": [
+      [
+        "energy.atp_initial",
+        10
+      ],
+      [
+        "energy.atp_final",
+        10
+      ],
+      [
+        "energy.atp_min",
+        10
+      ],
+      [
+        "energy.atp_max",
+        10
+      ],
+      [
+        "energy.atp_mean",
+        10
+      ],
+      [
+        "energy.atp_cv",
+        10
+      ],
+      [
+        "energy.reserve_ratio",
+        10
+      ],
+      [
+        "energy.atp_slope",
+        10
+      ],
+      [
+        "energy.terminal_slope",
+        10
+      ],
+      [
+        "energy.time_to_crisis_years",
+        10
+      ]
+    ],
+    "unique_features_count": 39
+  },
+  "agreement_counts": {
+    "match": 0,
+    "partial": 14,
+    "mismatch": 6
+  },
+  "archetype_distribution": {
+    "conservative": 13,
+    "aggressive": 7
+  },
+  "classifications": [
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "cocktail",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 1.0,
+      "audit_results": {
+        "conservative": {
+          "similarity": 1.0,
+          "grounding_pass": true,
+          "failed_criteria": [],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "grounded"
+        },
+        "aggressive": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "damage.delta_het failed lt -0.1: Aggressive protocols should reduce heteroplasmy",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8079864010098002,
+        "energy.atp_final": 0.87465548727716,
+        "energy.atp_min": 0.8079864010098002,
+        "energy.atp_max": 0.9100354903746789,
+        "energy.atp_mean": 0.8941574210773378
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "full_experimental",
+      "lakoff_best_archetype": "aggressive",
+      "lakoff_best_score": 0.3333333333333333,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose",
+            "intervention.benefit_cost_ratio failed gt 2.0: Conservative protocols prioritize efficiency",
+            "energy.atp_final failed gt 0.7: Conservative aim: maintain adequate ATP"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "intervention.energy_cost_per_year gt 0.2: Energy cost too high for conservative protocol"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8079864010098002,
+        "energy.atp_final": 0.6271965058236003,
+        "energy.atp_min": 0.6271965058236003,
+        "energy.atp_max": 0.8079864010098002,
+        "energy.atp_mean": 0.6644931029383206
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "cocktail",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 0.6666666666666666,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.het_initial gt 0.5: Patient too damaged for conservative approach"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "damage.delta_het failed lt -0.1: Aggressive protocols should reduce heteroplasmy",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.551239930219609,
+        "energy.atp_final": 0.7570204988091753,
+        "energy.atp_min": 0.551239930219609,
+        "energy.atp_max": 0.7622230254123238,
+        "energy.atp_mean": 0.7231995473357272
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "full_experimental",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 0.3333333333333333,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose",
+            "intervention.benefit_cost_ratio failed gt 2.0: Conservative protocols prioritize efficiency"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "intervention.energy_cost_per_year gt 0.2: Energy cost too high for conservative protocol"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8079864010098002,
+        "energy.atp_final": 0.7452389006114751,
+        "energy.atp_min": 0.7452389006114751,
+        "energy.atp_max": 0.8079864010098002,
+        "energy.atp_mean": 0.7675236347949778
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "transplant_focused",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 0.6666666666666666,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "partial"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8079864010098002,
+        "energy.atp_final": 0.8440277971372621,
+        "energy.atp_min": 0.8079864010098002,
+        "energy.atp_max": 0.9077814909082643,
+        "energy.atp_mean": 0.8806535654248643
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "full_experimental",
+      "lakoff_best_archetype": "aggressive",
+      "lakoff_best_score": 0.6666666666666666,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose",
+            "intervention.benefit_cost_ratio failed gt 2.0: Conservative protocols prioritize efficiency",
+            "energy.atp_final failed gt 0.7: Conservative aim: maintain adequate ATP"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "intervention.energy_cost_per_year gt 0.2: Energy cost too high for conservative protocol"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "partial"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8264114130713434,
+        "energy.atp_final": 0.502322852536941,
+        "energy.atp_min": 0.502322852536941,
+        "energy.atp_max": 0.8264114130713434,
+        "energy.atp_mean": 0.5662159941091093
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "cocktail",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 1.0,
+      "audit_results": {
+        "conservative": {
+          "similarity": 1.0,
+          "grounding_pass": true,
+          "failed_criteria": [],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.het_initial gt 0.5: Patient too damaged for conservative approach"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.551239930219609,
+        "energy.atp_final": 0.8303350342824709,
+        "energy.atp_min": 0.551239930219609,
+        "energy.atp_max": 0.8566545078787317,
+        "energy.atp_mean": 0.821640738921309
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "full_experimental",
+      "lakoff_best_archetype": "aggressive",
+      "lakoff_best_score": 0.6666666666666666,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose",
+            "intervention.benefit_cost_ratio failed gt 2.0: Conservative protocols prioritize efficiency",
+            "energy.atp_final failed gt 0.7: Conservative aim: maintain adequate ATP"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "intervention.energy_cost_per_year gt 0.2: Energy cost too high for conservative protocol"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "partial"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8264114130713434,
+        "energy.atp_final": 0.6029731254239201,
+        "energy.atp_min": 0.6029731254239201,
+        "energy.atp_max": 0.8264114130713434,
+        "energy.atp_mean": 0.6530968654468006
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "full_experimental",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 0.3333333333333333,
+      "audit_results": {
+        "conservative": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed lt 1.5: Conservative protocols use low total intervention dose",
+            "intervention.benefit_cost_ratio failed gt 2.0: Conservative protocols prioritize efficiency"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "intervention.energy_cost_per_year gt 0.2: Energy cost too high for conservative protocol"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "partial"
+        },
+        "transplant_focused": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose",
+            "intervention.atp_benefit_terminal failed gt 0.1: Transplant should provide substantial ATP benefit"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.8264114130713434,
+        "energy.atp_final": 0.7113570460279965,
+        "energy.atp_min": 0.7113570460279965,
+        "energy.atp_max": 0.8264114130713434,
+        "energy.atp_mean": 0.7779611989324668
+      }
+    },
+    {
+      "protocol_id": "unknown",
+      "existing_archetype": "transplant_focused",
+      "lakoff_best_archetype": "conservative",
+      "lakoff_best_score": 1.0,
+      "audit_results": {
+        "conservative": {
+          "similarity": 1.0,
+          "grounding_pass": true,
+          "failed_criteria": [],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.het_initial gt 0.5: Patient too damaged for conservative approach"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Conservative protocols use low total intervention dose",
+            "'intervention.benefit_cost_ratio' is a linking feature used in grounding criterion: Conservative protocols prioritize efficiency"
+          ],
+          "verdict": "violated"
+        },
+        "aggressive": {
+          "similarity": 0.3333333333333333,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.total_dose failed gt 3.0: Aggressive protocols use high total dose",
+            "intervention.crisis_delay_years failed gt 5.0: Aggressive protocols should significantly delay crisis"
+          ],
+          "icm_violated": true,
+          "icm_violations": [
+            "damage.cliff_distance_initial lt 0.1: Too close to cliff for aggressive intervention safety"
+          ],
+          "layer_warnings": [
+            "'intervention.total_dose' is a linking feature used in grounding criterion: Aggressive protocols use high total dose",
+            "'intervention.crisis_delay_years' is a linking feature used in grounding criterion: Aggressive protocols should significantly delay crisis"
+          ],
+          "verdict": "violated"
+        },
+        "transplant_focused": {
+          "similarity": 0.6666666666666666,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.transplant_rate failed gt 0.5: Transplant-focused protocols prioritize transplant dose"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.transplant_rate' is a linking feature used in grounding criterion: Transplant-focused protocols prioritize transplant dose",
+            "'intervention.atp_benefit_terminal' is a linking feature used in grounding criterion: Transplant should provide substantial ATP benefit"
+          ],
+          "verdict": "partial"
+        },
+        "metabolic_optimizer": {
+          "similarity": 0.0,
+          "grounding_pass": false,
+          "failed_criteria": [
+            "intervention.exercise_level failed gt 0.5: Metabolic optimizer includes substantial exercise",
+            "intervention.nad_supplement failed gt 0.5: Metabolic optimizer includes NAD+ support",
+            "dynamics.ros_het_correlation failed lt -0.3: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "icm_violated": false,
+          "icm_violations": [],
+          "layer_warnings": [
+            "'intervention.exercise_level' is a linking feature used in grounding criterion: Metabolic optimizer includes substantial exercise",
+            "'intervention.nad_supplement' is a linking feature used in grounding criterion: Metabolic optimizer includes NAD+ support",
+            "'dynamics.ros_het_correlation' is a linking feature used in grounding criterion: Metabolic optimizer should break ROS-damage vicious cycle"
+          ],
+          "verdict": "partial"
+        }
+      },
+      "features_sample": {
+        "energy.atp_initial": 0.551239930219609,
+        "energy.atp_final": 0.7969261712921073,
+        "energy.atp_min": 0.551239930219609,
+        "energy.atp_max": 0.8512405139854325,
+        "energy.atp_mean": 0.814802401600453
+      }
+    }
+  ]
+}

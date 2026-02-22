@@ -6,78 +6,133 @@
       "id": "protocol_program",
       "name": "Protocol Program",
       "stage": "global",
-      "problem": "Protocol classification can drift when analysis stages are run ad hoc.",
-      "solution": "Establish a global pipeline structure that all downstream stages must follow.",
+      "problem": "Protocol classification can drift when analysis stages are run ad hoc, lacking a **control point** and **support structure**.",
+      "solution": "Establish a global pipeline structure that all downstream stages must follow, creating a **control point** for coordination and a **support structure** for stage execution.",
       "confidence_tier": "core",
       "larger_patterns": [],
       "smaller_patterns": ["ingest_protocols", "review_governance"],
-      "order_hint": 0
+      "order_hint": 0,
+      "systemviz_tags": ["driver.control_point", "signal.framing", "domain.support_structure"]
     },
     {
       "id": "ingest_protocols",
       "name": "Ingest Protocols",
       "stage": "ingest",
-      "problem": "Protocol records arrive from diverse sources with varying completeness.",
-      "solution": "Normalize all records to ProtocolRecord schema with provenance metadata.",
+      "problem": "Protocol records arrive from diverse sources with varying completeness, lacking a **standard** and **gate** for quality control.",
+      "solution": "Normalize all records to ProtocolRecord schema with provenance metadata, acting as a **conduit** for data flow and a **gate** for quality control.",
       "confidence_tier": "core",
       "larger_patterns": ["protocol_program"],
       "smaller_patterns": ["analytics_profile"],
-      "order_hint": 10
+      "order_hint": 10,
+      "systemviz_tags": ["driver.conduit", "boundary.gate", "state.standard"]
     },
     {
       "id": "analytics_profile",
       "name": "Analytics Profile",
       "stage": "analytics",
-      "problem": "Classification is unreliable without simulation analytics.",
-      "solution": "Compute 4-pillar health analytics and enrichment fields before classification.",
+      "problem": "Classification is unreliable without simulation analytics, missing **monitor** and **indicator** signals for system state.",
+      "solution": "Compute 4-pillar health analytics and enrichment fields before classification, providing **monitor** signals and **fault detection** capabilities.",
       "confidence_tier": "core",
       "larger_patterns": ["ingest_protocols"],
-      "smaller_patterns": ["robustness_assessment", "classify_outcomes"],
-      "order_hint": 20
+      "smaller_patterns": ["robustness_assessment", "classify_outcomes", "feedback_loop", "causal_cascade"],
+      "order_hint": 20,
+      "systemviz_tags": ["signal.monitor", "signal.indicator", "state.fault_detection"]
     },
     {
       "id": "robustness_assessment",
       "name": "Robustness Assessment",
       "stage": "robustness",
-      "problem": "Protocols that perform well under baseline conditions may fail under stress.",
-      "solution": "Evaluate biological stress resilience via cramer-toolkit before final classification.",
+      "problem": "Protocols that perform well under baseline conditions may fail under stress, lacking **buffer** capacity and **redundancy**.",
+      "solution": "Evaluate biological stress resilience via cramer-toolkit before final classification, assessing **buffer** capacity and **fault recovery** mechanisms.",
       "confidence_tier": "adaptable",
-      "larger_patterns": ["analytics_profile"],
-      "smaller_patterns": ["review_governance"],
-      "order_hint": 30
+      "larger_patterns": ["analytics_profile", "causal_cascade"],
+      "smaller_patterns": ["review_governance", "tipping_point"],
+      "order_hint": 30,
+      "systemviz_tags": ["boundary.buffer", "state.redundancy", "state.fault_recovery"]
     },
     {
       "id": "classify_outcomes",
       "name": "Classify Outcomes",
       "stage": "classify",
-      "problem": "Single-method classification misses edge cases and ambiguity.",
-      "solution": "Run multi-method pipeline (rule + analytics-fit) and aggregate with confidence.",
+      "problem": "Single-method classification misses edge cases and ambiguity, without **group** differentiation and **rank** assignment.",
+      "solution": "Run multi-method pipeline (rule + analytics-fit) and aggregate with confidence, enabling **group** formation and **rank** assignment.",
       "confidence_tier": "core",
-      "larger_patterns": ["analytics_profile"],
-      "smaller_patterns": ["review_governance", "report_synthesis"],
-      "order_hint": 40
+      "larger_patterns": ["analytics_profile", "feedback_loop"],
+      "smaller_patterns": ["review_governance", "report_synthesis", "equifinality_check"],
+      "order_hint": 40,
+      "systemviz_tags": ["relation.group", "relation.rank", "relation.differentiation"]
     },
     {
       "id": "review_governance",
       "name": "Review Governance",
       "stage": "review",
-      "problem": "Low-confidence or paradoxical protocols need human clinical judgment.",
-      "solution": "Route flagged protocols to review queue with structured audit metadata.",
+      "problem": "Low-confidence or paradoxical protocols need human clinical judgment, requiring **mediation** and **permissions** governance.",
+      "solution": "Route flagged protocols to review queue with structured audit metadata, providing **mediation** and **alert** signals for human oversight.",
       "confidence_tier": "core",
-      "larger_patterns": ["protocol_program", "robustness_assessment", "classify_outcomes"],
+      "larger_patterns": ["protocol_program", "robustness_assessment", "classify_outcomes", "tipping_point", "equifinality_check"],
       "smaller_patterns": ["report_synthesis"],
-      "order_hint": 50
+      "order_hint": 50,
+      "systemviz_tags": ["relation.mediation", "boundary.permissions", "signal.alert"]
     },
     {
       "id": "report_synthesis",
       "name": "Report Synthesis",
       "stage": "report",
-      "problem": "Progress is hard to evaluate without integrated quality diagnostics.",
-      "solution": "Generate summary reports with outcome distributions, confidence histograms, and coverage.",
+      "problem": "Progress is hard to evaluate without integrated quality diagnostics, missing **aggregate** views and **reference points**.",
+      "solution": "Generate summary reports with outcome distributions, confidence histograms, and coverage, creating **aggregate** summaries and **status display** for monitoring.",
       "confidence_tier": "core",
       "larger_patterns": ["classify_outcomes", "review_governance"],
       "smaller_patterns": [],
-      "order_hint": 60
+      "order_hint": 60,
+      "systemviz_tags": ["relation.aggregate", "domain.reference_points", "signal.status_display"]
+    },
+    {
+      "id": "feedback_loop",
+      "name": "Feedback Loop",
+      "stage": "analytics",
+      "problem": "Protocol evaluation lacks iterative refinement based on outcomes.",
+      "solution": "Incorporate feedback signals from classification results to improve protocol generation.",
+      "confidence_tier": "experimental",
+      "larger_patterns": ["analytics_profile"],
+      "smaller_patterns": ["classify_outcomes"],
+      "order_hint": 25,
+      "systemviz_tags": ["signal.feed_back", "driver.cycle", "relation.coupling"]
+    },
+    {
+      "id": "tipping_point",
+      "name": "Tipping Point",
+      "stage": "robustness",
+      "problem": "Critical thresholds in protocol efficacy are not systematically identified.",
+      "solution": "Detect nonlinear regime shifts and cliff edges in stress-response landscapes.",
+      "confidence_tier": "experimental",
+      "larger_patterns": ["robustness_assessment"],
+      "smaller_patterns": ["review_governance"],
+      "order_hint": 35,
+      "systemviz_tags": ["state.tipping_point", "driver.inflection", "boundary.reactive_boundary"]
+    },
+    {
+      "id": "causal_cascade",
+      "name": "Causal Cascade",
+      "stage": "analytics",
+      "problem": "Chain reactions of intervention effects are not mapped.",
+      "solution": "Trace higher-order effects and knock-on consequences across the ODE system.",
+      "confidence_tier": "experimental",
+      "larger_patterns": ["analytics_profile"],
+      "smaller_patterns": ["robustness_assessment"],
+      "order_hint": 22,
+      "systemviz_tags": ["driver.cascade", "relation.network", "state.transition"]
+    },
+    {
+      "id": "equifinality_check",
+      "name": "Equifinality Check",
+      "stage": "classify",
+      "problem": "Multiple pathways to the same outcome are not recognized.",
+      "solution": "Detect protocol clusters that achieve similar health outcomes via different mechanisms.",
+      "confidence_tier": "experimental",
+      "larger_patterns": ["classify_outcomes"],
+      "smaller_patterns": ["review_governance"],
+      "order_hint": 45,
+      "systemviz_tags": ["driver.equifinality", "relation.cluster", "domain.levels_of_scale"]
     }
   ]
 }

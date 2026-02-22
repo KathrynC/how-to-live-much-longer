@@ -29,10 +29,10 @@ class TestAgeBaselineQuality:
         st = SleepTrajectory(sleep_intervention=0.0, baseline_age=0.0)
         # Age 30 is midpoint between anchors at 20 (0.95) and 40 (0.88)
         q30 = st._age_baseline_quality(30.0)
-        expected = 0.5 * (0.95 + 0.88)  # 0.915
+        expected = 0.5 * (SLEEP_QUALITY_ANCHORS[0] + SLEEP_QUALITY_ANCHORS[1])
         assert q30 == pytest.approx(expected, abs=1e-9)
         # Must be between the two anchor values
-        assert 0.88 < q30 < 0.95
+        assert SLEEP_QUALITY_ANCHORS[1] < q30 < SLEEP_QUALITY_ANCHORS[0]
 
     def test_age_clamped_below(self):
         """Ages below 20 clamp to the age-20 anchor."""
@@ -61,9 +61,11 @@ class TestSleepIntervention:
         q_high = high.compute(t=0.0)['sleep_quality']
 
         assert q_high > q_mid > q_low
-        # At intervention=0.0, quality equals baseline for age 70
+        # At intervention=0.5, quality equals baseline (neutral)
         baseline_q_70 = low._age_baseline_quality(70.0)
-        assert q_low == pytest.approx(baseline_q_70, abs=1e-9)
+        assert q_mid == pytest.approx(baseline_q_70, abs=1e-9)
+        assert q_low < baseline_q_70
+        assert q_high > baseline_q_70
 
     def test_intervention_clipped(self):
         """Intervention values outside [0, 1] are clipped."""
@@ -191,20 +193,58 @@ class TestGenotype:
         r_explicit = st_explicit.compute(t=0.0)['sleep_repair_factor']
         assert r_default == pytest.approx(r_explicit, abs=1e-9)
 
+    def test_apoe4_amplification_channels(self):
+        """APOE4 carriers have larger inflammation and ROS penalties than WT."""
+        wt = SleepTrajectory(
+            sleep_intervention=0.1,
+            baseline_age=70.0,
+            genetic_mods={'mitophagy_efficiency': 1.0},
+        )
+        apoe4 = SleepTrajectory(
+            sleep_intervention=0.1,
+            baseline_age=70.0,
+            genetic_mods={'mitophagy_efficiency': 0.65},
+        )
+        wt_effects = wt.compute(t=0.0)
+        apoe4_effects = apoe4.compute(t=0.0)
+        # APOE4 should have larger inflammation delta and ROS boost
+        assert apoe4_effects['inflammation_delta'] > wt_effects['inflammation_delta']
+        assert apoe4_effects['ros_boost'] > wt_effects['ros_boost']
+        # Repair factor lower
+        assert apoe4_effects['sleep_repair_factor'] < wt_effects['sleep_repair_factor']
+
+    def test_apoe4_hom_worse_than_het(self):
+        """APOE4 homozygote is worse than heterozygote."""
+        het = SleepTrajectory(
+            sleep_intervention=0.1,
+            baseline_age=70.0,
+            genetic_mods={'mitophagy_efficiency': 0.65},
+        )
+        hom = SleepTrajectory(
+            sleep_intervention=0.1,
+            baseline_age=70.0,
+            genetic_mods={'mitophagy_efficiency': 0.45},
+        )
+        het_effects = het.compute(t=0.0)
+        hom_effects = hom.compute(t=0.0)
+        assert hom_effects['inflammation_delta'] > het_effects['inflammation_delta']
+        assert hom_effects['ros_boost'] > het_effects['ros_boost']
+        assert hom_effects['sleep_repair_factor'] < het_effects['sleep_repair_factor']
+
 
 class TestBoundaryConditions:
     """Verify boundary and extreme conditions."""
 
     def test_perfect_sleep_zero_effects(self):
-        """With intervention=1.0 and age=20, deficit~0.05, effects near-zero."""
+        """With intervention=1.0 and age=20, deficit=0, effects near-zero."""
         st = SleepTrajectory(
             sleep_intervention=1.0,
             baseline_age=20.0,
         )
         effects = st.compute(t=0.0)
         # At age 20, baseline quality = 0.95.
-        # Recovery = (0.95 - 0.95) * 0.6 * 1.0 = 0.0 -> quality = 0.95
-        # Deficit = 0.05, sensitivity = 1.0 (age 20 < 30)
+        # Recovery = (0.95 - 0.95) * 0.6 * (1.0 - 0.5) * 2.0 = 0.0 -> quality = 0.95
+        # Deficit = 0 (baseline_q - quality), sensitivity = 1.0 (age 20 < 30)
         assert effects['sleep_quality'] == pytest.approx(0.95, abs=1e-9)
         assert effects['inflammation_delta'] < 0.01
         assert effects['ros_boost'] < 0.01
@@ -219,9 +259,10 @@ class TestBoundaryConditions:
             baseline_age=80.0,
         )
         effects = st.compute(t=0.0)
-        # At age 80, baseline quality = 0.60 (worst anchor)
-        # No recovery. deficit = 0.40. sensitivity = 1.5
-        assert effects['sleep_quality'] == pytest.approx(0.60, abs=1e-9)
+        # At age 80, baseline quality = 0.72 (worst anchor)
+        # intervention=0.0 → intervention_centered = -0.5 → negative recovery
+        # quality = 0.72 - 0.184 = 0.536, deficit = 0.184, sensitivity = 1.5
+        assert effects['sleep_quality'] == pytest.approx(0.536, abs=1e-9)
         assert effects['inflammation_delta'] > 0.0
         assert effects['ros_boost'] > 0.0
         assert effects['nad_drain'] > 0.0
@@ -229,7 +270,7 @@ class TestBoundaryConditions:
         assert effects['sleep_repair_factor'] < 1.0
 
     def test_output_keys(self):
-        """Verify all 6 expected keys present in compute() return."""
+        """Verify all 7 expected keys present in compute() return."""
         st = SleepTrajectory()
         effects = st.compute(t=0.0)
         expected_keys = {
@@ -239,11 +280,12 @@ class TestBoundaryConditions:
             'ros_boost',
             'nad_drain',
             'membrane_penalty',
+            'atp_boost',
         }
         assert set(effects.keys()) == expected_keys
 
     def test_clamp_bounds(self):
-        """sleep_repair_factor stays in [0, 1] even with extreme inputs."""
+        """sleep_repair_factor stays in [0, 2] even with extreme inputs."""
         # Very low mitophagy efficiency -> repair factor could go negative
         st_extreme = SleepTrajectory(
             sleep_intervention=0.0,
@@ -251,7 +293,7 @@ class TestBoundaryConditions:
             genetic_mods={'mitophagy_efficiency': 0.1},
         )
         effects = st_extreme.compute(t=0.0)
-        assert 0.0 <= effects['sleep_repair_factor'] <= 1.0
+        assert 0.0 <= effects['sleep_repair_factor'] <= 2.0
 
         # Very high mitophagy efficiency -> should not exceed 1.0
         st_high = SleepTrajectory(
@@ -260,7 +302,7 @@ class TestBoundaryConditions:
             genetic_mods={'mitophagy_efficiency': 10.0},
         )
         effects_high = st_high.compute(t=0.0)
-        assert 0.0 <= effects_high['sleep_repair_factor'] <= 1.0
+        assert 0.0 <= effects_high['sleep_repair_factor'] <= 2.0
 
     def test_quality_non_negative_under_heavy_alcohol(self):
         """Sleep quality stays non-negative even with heavy alcohol."""
@@ -272,3 +314,46 @@ class TestBoundaryConditions:
         )
         effects = st.compute(t=0.0)
         assert effects['sleep_quality'] >= 0.0
+
+
+class TestSleepNeutrality:
+    """Verify sleep intervention neutrality and benefit/penalty direction."""
+
+    def test_neutral_at_default_intervention(self):
+        """sleep_intervention=0.5 yields zero deficit and near-zero effects."""
+        for age in [50.0, 70.0, 80.0]:
+            st = SleepTrajectory(sleep_intervention=0.5, baseline_age=age)
+            effects = st.compute(t=0.0)
+            # deficit should be zero, benefit zero
+            assert effects['inflammation_delta'] == pytest.approx(0.0, abs=1e-9)
+            assert effects['ros_boost'] == pytest.approx(0.0, abs=1e-9)
+            assert effects['nad_drain'] == pytest.approx(0.0, abs=1e-9)
+            assert effects['membrane_penalty'] == pytest.approx(0.0, abs=1e-9)
+            # repair factor should be 1.0
+            assert effects['sleep_repair_factor'] == pytest.approx(1.0, abs=1e-9)
+
+    def test_good_sleep_benefits(self):
+        """sleep_intervention=0.9 yields negative inflammation delta, repair factor >1.0 (benefit)."""
+        st = SleepTrajectory(sleep_intervention=0.9, baseline_age=70.0)
+        effects = st.compute(t=0.0)
+        assert effects['inflammation_delta'] < 0.0
+        assert effects['sleep_repair_factor'] > 1.0
+        # ROS boost zero (no deficit)
+        assert effects['ros_boost'] == pytest.approx(0.0, abs=1e-9)
+
+    def test_poor_sleep_penalties(self):
+        """sleep_intervention=0.1 yields positive penalties."""
+        st = SleepTrajectory(sleep_intervention=0.1, baseline_age=70.0)
+        effects = st.compute(t=0.0)
+        assert effects['inflammation_delta'] > 0.0
+        assert effects['ros_boost'] > 0.0
+        assert effects['nad_drain'] > 0.0
+        assert effects['membrane_penalty'] > 0.0
+        assert effects['sleep_repair_factor'] < 1.0
+
+    def test_age_anchors_at_70(self):
+        """Verify interpolated quality at age 70 matches literature (~0.77)."""
+        st = SleepTrajectory(sleep_intervention=0.5, baseline_age=70.0)
+        baseline_q = st._age_baseline_quality(70.0)
+        # Should be approx 0.77 (between 0.72 and 0.82)
+        assert 0.75 <= baseline_q <= 0.82

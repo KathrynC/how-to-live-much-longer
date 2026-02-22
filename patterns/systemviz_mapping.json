@@ -1,0 +1,132 @@
+{
+  "version": "v1",
+  "description": "Mapping of mitochondrial aging simulator components to Peter Stoyko's SystemViz visual vocabulary.",
+  "mappings": [
+    {
+      "category": "state_variable",
+      "id": "N_healthy",
+      "name": "Healthy mtDNA copies",
+      "systemviz_terms": ["state.stock", "state.redundancy", "state.capacity"]
+    },
+    {
+      "category": "state_variable",
+      "id": "N_deletion",
+      "name": "Deletion-mutant mtDNA copies",
+      "systemviz_terms": ["state.stock", "state.fault", "state.mutation", "driver.repeller"]
+    },
+    {
+      "category": "state_variable",
+      "id": "ATP",
+      "name": "ATP production level",
+      "systemviz_terms": ["state.capacity", "signal.status_display", "domain.resources"]
+    },
+    {
+      "category": "state_variable",
+      "id": "ROS",
+      "name": "Reactive oxygen species",
+      "systemviz_terms": ["driver.amplifier", "driver.repeller", "state.fault"]
+    },
+    {
+      "category": "state_variable",
+      "id": "NAD",
+      "name": "NAD+ level",
+      "systemviz_terms": ["state.stock", "domain.resources", "driver.enabler"]
+    },
+    {
+      "category": "state_variable",
+      "id": "Senescent_fraction",
+      "name": "Senescent cell fraction",
+      "systemviz_terms": ["state.load", "state.fault", "boundary.container"]
+    },
+    {
+      "category": "state_variable",
+      "id": "Membrane_potential",
+      "name": "Mitochondrial membrane potential (ΔΨ)",
+      "systemviz_terms": ["signal.indicator", "state.capacity", "boundary.semi_permiable"]
+    },
+    {
+      "category": "state_variable",
+      "id": "N_point",
+      "name": "Point-mutant mtDNA copies",
+      "systemviz_terms": ["state.stock", "state.mutation", "state.accumulation"]
+    },
+    {
+      "category": "intervention",
+      "id": "rapamycin_dose",
+      "name": "Rapamycin (mTOR inhibition)",
+      "systemviz_terms": ["driver.enabler", "driver.dampener", "boundary.gate"]
+    },
+    {
+      "category": "intervention",
+      "id": "nad_supplement",
+      "name": "NAD+ precursor supplementation",
+      "systemviz_terms": ["domain.resources", "driver.enabler", "state.maintenance"]
+    },
+    {
+      "category": "intervention",
+      "id": "senolytic_dose",
+      "name": "Senolytic (dasatinib + quercetin)",
+      "systemviz_terms": ["state.fault_recovery", "state.maintenance", "driver.control_point"]
+    },
+    {
+      "category": "intervention",
+      "id": "yamanaka_intensity",
+      "name": "Yamanaka factor partial reprogramming",
+      "systemviz_terms": ["state.reset", "driver.genator", "driver.side_effect"]
+    },
+    {
+      "category": "intervention",
+      "id": "transplant_rate",
+      "name": "Healthy mtDNA transplant rate",
+      "systemviz_terms": ["state.replication", "state.assembly", "driver.amplifier"]
+    },
+    {
+      "category": "intervention",
+      "id": "exercise_level",
+      "name": "Exercise hormetic adaptation",
+      "systemviz_terms": ["driver.cycle", "driver.amplifier", "state.transition"]
+    },
+    {
+      "category": "biological_process",
+      "id": "mitophagy",
+      "name": "Mitophagy (damaged mitochondrion removal)",
+      "systemviz_terms": ["state.fault_recovery", "state.maintenance", "boundary.gate"]
+    },
+    {
+      "category": "biological_process",
+      "id": "apoptosis",
+      "name": "Apoptosis (programmed cell death)",
+      "systemviz_terms": ["state.fault_recovery", "state.separation", "driver.control_point"]
+    },
+    {
+      "category": "biological_process",
+      "id": "replication",
+      "name": "mtDNA replication",
+      "systemviz_terms": ["state.replication", "driver.cycle", "state.assembly"]
+    },
+    {
+      "category": "biological_process",
+      "id": "cliff_factor",
+      "name": "Heteroplasmy cliff factor",
+      "systemviz_terms": ["state.tipping_point", "state.criticality", "boundary.reactive_boundary"]
+    },
+    {
+      "category": "system_boundary",
+      "id": "mitochondrial_membrane",
+      "name": "Mitochondrial inner membrane",
+      "systemviz_terms": ["boundary.semi_permiable", "boundary.container", "boundary.protector"]
+    },
+    {
+      "category": "system_boundary",
+      "id": "nuclear_cytoplasmic_boundary",
+      "name": "Nuclear-cytoplasmic boundary",
+      "systemviz_terms": ["boundary.divider", "boundary.gate", "boundary.notional_boundary"]
+    },
+    {
+      "category": "system_boundary",
+      "id": "cell_membrane",
+      "name": "Cell membrane",
+      "systemviz_terms": ["boundary.container", "boundary.semi_permiable", "boundary.edge"]
+    }
+  ]
+}

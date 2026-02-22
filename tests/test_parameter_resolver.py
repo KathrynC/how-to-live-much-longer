@@ -159,18 +159,15 @@ class TestSleepTrajectoryIntegration:
         from parameter_resolver import ParameterResolver
         pr = ParameterResolver(
             patient_expanded={'baseline_age': 50.0},
-            intervention_expanded={'sleep_intervention': 0.5},
+            intervention_expanded={'sleep_intervention': 0.0},  # worse than baseline
             duration_years=30.0,
         )
         _, patient_early = pr.resolve(t=0.0)
         _, patient_late = pr.resolve(t=20.0)
 
         # At t=20, patient is 70 years old (50+20) vs 50 at t=0.
-        # Age-dependent sleep degradation should produce different
-        # inflammation contributions from the sleep channel.
-        # The older age should produce larger sleep-related inflammation
-        # and ROS boost, so the late patient should have higher
-        # inflammation and ROS boost than the early one.
+        # Age-dependent sleep degradation: older age has lower baseline quality,
+        # leading to larger deficit (since intervention=0.0) and larger ROS boost.
         assert patient_late['_sleep_ros_boost'] > patient_early['_sleep_ros_boost']
         assert patient_late['_sleep_nad_drain'] > patient_early['_sleep_nad_drain']
 

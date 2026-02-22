@@ -97,6 +97,8 @@ from constants import (
     TRANSPLANT_HET_PENALTY_MIDPOINT, TRANSPLANT_HET_PENALTY_STEEPNESS,
     MITOPHAGY_ATP_MIDPOINT, MITOPHAGY_ATP_STEEPNESS,
     NAD_ATP_DEPENDENCE, NAD_DEFENSE_BOOST,
+    EXERCISE_BIOGENESIS_FACTOR, EXERCISE_METABOLIC_COST, EXERCISE_MITOPHAGY_BOOST,
+    EXERCISE_TOXICITY_THRESHOLD, EXERCISE_TOXICITY_COEFF, EXERCISE_ATP_BOOST_COEFF,
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     TISSUE_PROFILES,
     # C11: Split mutation type constants
@@ -653,7 +655,8 @@ def derivatives(
     # boost is also subject to CD38 degradation.
     _current_mitophagy_rate = (BASELINE_MITOPHAGY_RATE
                                + rapa * 0.08
-                               + nad_supp * 0.03 * cd38_survival)
+                               + nad_supp * 0.03 * cd38_survival
+                               + exercise * EXERCISE_MITOPHAGY_BOOST)
 
     # The deletion rate depends on age, genetic vulnerability, current
     # ATP level, and mitophagy rate. See _deletion_rate() docstring for
@@ -766,7 +769,7 @@ def derivatives(
     #   - copy_number_pressure: homeostasis prevents overshoot
     #   - tissue_mods["biogenesis_rate"]: tissue-specific PGC-1alpha
     #     responsiveness (muscle = 1.5, brain = 0.3, cardiac = 0.5)
-    exercise_biogenesis = (exercise * 0.03 * energy_available
+    exercise_biogenesis = (exercise * EXERCISE_BIOGENESIS_FACTOR * energy_available
                            * max(copy_number_pressure, 0.0)
                            * tissue_mods["biogenesis_rate"])
 
@@ -838,6 +841,10 @@ def derivatives(
     mitophagy_efficiency = 1.0 / (1.0 + np.exp(-MITOPHAGY_ATP_STEEPNESS
                                                * (energy_available - MITOPHAGY_ATP_MIDPOINT)))
     mitophagy_del = _current_mitophagy_rate * n_del * mitophagy_efficiency
+    # Exercise-enhanced mitophagy: moderate exercise upregulates PINK1/Parkin
+    # quality control via AMPK signaling, enhancing clearance of damaged mitos.
+    exercise_mitophagy = (exercise * EXERCISE_MITOPHAGY_BOOST
+                          * n_del * mitophagy_efficiency * energy_available)
 
     # Apoptosis of deletion copies: same mechanism as healthy apoptosis
     # (energy crisis -> cytochrome c release). Affects all copy pools
@@ -847,7 +854,7 @@ def derivatives(
 
     # Sum all terms for dN_del/dt
     dn_del = (replication_del + age_deletions
-              - mitophagy_del - repair_deletion - apoptosis_del
+              - mitophagy_del - exercise_mitophagy - repair_deletion - apoptosis_del
               - transplant_displace)
 
     # ── 3. dN_point/dt (C11: NEW equation) ────────────────────────────────
@@ -891,6 +898,12 @@ def derivatives(
     # the dN_h equation -- healthy copies convert to point-mutated copies).
     dn_pt = (replication_pt + point_from_replication + ros_point_damage
              - mitophagy_pt - repair_point - apoptosis_pt)
+    
+    # Exercise toxicity: when ROS exceeds threshold, exercise-induced ROS
+    # contributes directly to point mutations (paradoxical harm).
+    if ros > EXERCISE_TOXICITY_THRESHOLD and exercise > 0:
+        exercise_toxicity = exercise * EXERCISE_TOXICITY_COEFF * (ros - EXERCISE_TOXICITY_THRESHOLD)
+        dn_pt += exercise_toxicity
 
     # ── 4. dATP/dt (equilibrium equation, uses DELETION cliff) ───────────
     # ATP production relaxes toward a target level with time constant ~1 year.
@@ -908,6 +921,10 @@ def derivatives(
     atp_target = (BASELINE_ATP * cliff
                   * ((1.0 - NAD_ATP_DEPENDENCE) + NAD_ATP_DEPENDENCE * min(nad, 1.0))
                   * (1.0 - 0.15 * sen))
+    # Sleep→ATP channel: better sleep improves mitochondrial coupling efficiency
+    atp_target *= (1.0 + patient.get('_sleep_atp_boost', 0.0))
+    # Exercise→ATP efficiency boost: improved mitochondrial coupling with regular exercise
+    atp_target *= (1.0 + exercise * EXERCISE_ATP_BOOST_COEFF)
 
     # Yamanaka energy cost: reprogramming is extremely expensive.
     # At intensity 1.0: cost = 0.15 + 0.20 = 0.35 MU/day.
@@ -920,7 +937,7 @@ def derivatives(
     # At max exercise (1.0): 0.03 MU/day additional ATP consumption.
     # This is deliberately small because exercise benefits (biogenesis,
     # hormesis) outweigh the metabolic cost at moderate levels.
-    exercise_cost = exercise * 0.03
+    exercise_cost = exercise * EXERCISE_METABOLIC_COST
 
     # Net ATP target after subtracting intervention energy costs.
     # Floor at 0.0 to prevent targeting negative ATP.
@@ -965,13 +982,13 @@ def derivatives(
     # NAD_DEFENSE_BOOST controls magnitude (reduced from 0.4 to 0.2
     # after NAD audit — see finding_nad_audit_hype_guard_2026-02-19.md).
     defense_factor = 1.0 + NAD_DEFENSE_BOOST * min(nad, 1.0)
-    defense_factor += exercise * 0.2
+    defense_factor += exercise * 0.3
 
     # Exercise-generated ROS: transient increase during physical activity.
     # This is the "hormetic signal" that triggers adaptive upregulation
     # of antioxidant defenses. At moderate exercise, the net effect is
     # beneficial (defense_factor increase > exercise_ros increase).
-    exercise_ros = exercise * 0.03
+    exercise_ros = exercise * 0.02
 
     # ROS equilibrium and relaxation (same time constant as ATP, ~1 year)
     ros_eq = (ros_baseline + ros_from_damage + exercise_ros + sleep_ros_boost * met_demand) / defense_factor

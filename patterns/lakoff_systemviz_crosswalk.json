@@ -1,0 +1,304 @@
+{
+  "systemviz_categories": {
+    "driver": {
+      "term_count": 11,
+      "example_terms": [
+        "control_point",
+        "conduit",
+        "amplifier"
+      ],
+      "lakoff_layer": "linking"
+    },
+    "signal": {
+      "term_count": 6,
+      "example_terms": [
+        "framing",
+        "monitor",
+        "indicator"
+      ],
+      "lakoff_layer": "grounded"
+    },
+    "state": {
+      "term_count": 17,
+      "example_terms": [
+        "stock",
+        "standard",
+        "fault_detection"
+      ],
+      "lakoff_layer": "grounded"
+    },
+    "boundary": {
+      "term_count": 10,
+      "example_terms": [
+        "gate",
+        "buffer",
+        "reactive_boundary"
+      ],
+      "lakoff_layer": "linking"
+    },
+    "relation": {
+      "term_count": 8,
+      "example_terms": [
+        "group",
+        "rank",
+        "differentiation"
+      ],
+      "lakoff_layer": "linking"
+    },
+    "domain": {
+      "term_count": 4,
+      "example_terms": [
+        "support_structure",
+        "reference_points",
+        "resources"
+      ],
+      "lakoff_layer": "linking"
+    }
+  },
+  "lakoff_archetypes": {
+    "conservative": {
+      "description": "Low-risk, maintenance-focused intervention with minimal energy cost",
+      "relevant_systemviz_terms": [
+        "driver.control_point",
+        "driver.equifinality",
+        "signal.monitor",
+        "signal.indicator",
+        "signal.framing",
+        "state.standard",
+        "state.fault_detection",
+        "boundary.gate",
+        "relation.cluster",
+        "domain.support_structure"
+      ],
+      "grounding_criteria_count": 3,
+      "has_icm": true
+    },
+    "aggressive": {
+      "description": "High-intensity intervention aiming for damage reversal",
+      "relevant_systemviz_terms": [
+        "driver.cascade",
+        "driver.inflection",
+        "state.tipping_point",
+        "state.criticality",
+        "state.transition",
+        "boundary.reactive_boundary"
+      ],
+      "grounding_criteria_count": 3,
+      "has_icm": true
+    },
+    "transplant_focused": {
+      "description": "Protocol centered on mtDNA transplant as primary rejuvenation",
+      "relevant_systemviz_terms": [
+        "driver.control_point",
+        "driver.cascade",
+        "state.tipping_point",
+        "boundary.reactive_boundary"
+      ],
+      "grounding_criteria_count": 3,
+      "has_icm": true
+    },
+    "metabolic_optimizer": {
+      "description": "Protocol optimizing metabolic flexibility via combined interventions",
+      "relevant_systemviz_terms": [
+        "driver.conduit",
+        "driver.cycle",
+        "driver.equifinality",
+        "signal.indicator",
+        "signal.feed_back",
+        "state.transition",
+        "relation.coupling",
+        "relation.network",
+        "relation.cluster",
+        "domain.levels_of_scale"
+      ],
+      "grounding_criteria_count": 3,
+      "has_icm": true
+    }
+  },
+  "mapping_matrix": [
+    {
+      "systemviz_term": "boundary.gate",
+      "category": "boundary",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "boundary.reactive_boundary",
+      "category": "boundary",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "aggressive",
+        "transplant_focused"
+      ]
+    },
+    {
+      "systemviz_term": "domain.levels_of_scale",
+      "category": "domain",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "domain.support_structure",
+      "category": "domain",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "driver.cascade",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "aggressive",
+        "transplant_focused"
+      ]
+    },
+    {
+      "systemviz_term": "driver.conduit",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "driver.control_point",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "conservative",
+        "transplant_focused"
+      ]
+    },
+    {
+      "systemviz_term": "driver.cycle",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "driver.equifinality",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "conservative",
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "driver.inflection",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "aggressive"
+      ]
+    },
+    {
+      "systemviz_term": "relation.cluster",
+      "category": "relation",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "conservative",
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "relation.coupling",
+      "category": "relation",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "relation.network",
+      "category": "relation",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "signal.feed_back",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "signal.framing",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "signal.indicator",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "conservative",
+        "metabolic_optimizer"
+      ]
+    },
+    {
+      "systemviz_term": "signal.monitor",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "state.criticality",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "aggressive"
+      ]
+    },
+    {
+      "systemviz_term": "state.fault_detection",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "state.standard",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "conservative"
+      ]
+    },
+    {
+      "systemviz_term": "state.tipping_point",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "aggressive",
+        "transplant_focused"
+      ]
+    },
+    {
+      "systemviz_term": "state.transition",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": [
+        "aggressive",
+        "metabolic_optimizer"
+      ]
+    }
+  ]
+}

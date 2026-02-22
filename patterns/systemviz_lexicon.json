@@ -1,0 +1,93 @@
+{
+  "version": "1.1",
+  "source": "Peter Stoyko, SystemViz: Visual Vocabulary (www.systemviz.com)",
+  "license": "Creative Commons Attribution 4.0 International",
+  "categories": {
+    "driver": {
+      "description": "The active cause of some happening within the system.",
+      "terms": {
+        "control_point": "Contact between a subject and object whereby power or influence can be exerted.",
+        "conduit": "A path along which actors are expected to move.",
+        "amplifier": "A combination of factors or process that increases the magnitude of an effect.",
+        "repeller": "An object that pushes other objects away from itself.",
+        "enabler": "A contributory cause; can encourage change.",
+        "dampener": "A combination of factors or process that reduces the magnitude of an effect.",
+        "cycle": "A repeating process or iterative effort towards a goal.",
+        "genator": "The original impetus or trigger of a sequence of events.",
+        "cascade": "A sequence of knock-on effects; a chain reaction.",
+        "inflection": "A turning point or critical juncture.",
+        "equifinality": "Multiple activities lead to the same outcome."
+      }
+    },
+    "signal": {
+      "description": "Communication that can potentially trigger some action.",
+      "terms": {
+        "framing": "Interpretive paradigm which makes the system understandable.",
+        "monitor": "Active scanning of a process or domain to compare with an expected state.",
+        "indicator": "Indirect or partial signal of status; a symptom of a deeper cause.",
+        "feed_back": "Information about the outputs of an action are routed back as inputs.",
+        "status_display": "Regularly updated information about a particular object.",
+        "alert": "A warning signal intended to mobilize a response."
+      }
+    },
+    "state": {
+      "description": "A condition of a system or objects within it.",
+      "terms": {
+        "stock": "A discrete collection of consumable or expendable resources for future use.",
+        "standard": "A set of items made more or less uniform; conformity to criteria.",
+        "fault_detection": "Self-diagnosis, self-monitoring, and system-problem identification.",
+        "redundancy": "Multiple stockpiles or parallel sub-systems that act as a back-up.",
+        "fault_recovery": "Correction or compensation that minimize impact of faults.",
+        "tipping_point": "The threshold beyond which rapid, large-scale change happens.",
+        "criticality": "The threshold beyond which a dynamic becomes self-sustaining.",
+        "load": "A stock of items being moved under containment conditions.",
+        "mutation": "A reconfiguration of an object caused by an error or exogenous factor.",
+        "transition": "Changing from one state to another.",
+        "accumulation": "The build-up of items or experiences over time.",
+        "capacity": "The finite ability to handle a particular quantity of activity.",
+        "reset": "Returning to original conditions or earlier state.",
+        "replication": "When an object is copied, reproduced, or divided.",
+        "assembly": "Building blocks with which system structures are formed.",
+        "separation": "The division of a part into two or more parts.",
+        "maintenance": "The restoration of operations after a malfunction."
+      }
+    },
+    "boundary": {
+      "description": "Separates different parts of a system.",
+      "terms": {
+        "gate": "A controlled opening in a barrier.",
+        "buffer": "A boundary or zone that diminishes, delays, or otherwise alters a driver.",
+        "reactive_boundary": "A boundary that responds to forces and acts as an actant.",
+        "permissions": "The control of activity within a bounded area.",
+        "container": "A boundary that groups and isolates objects.",
+        "semi_permiable": "A barrier that blocks some objects while allowing others.",
+        "divider": "A boundary that keeps two or more distinct objects apart.",
+        "protector": "A barrier preventing damage by blocking unwanted forces.",
+        "notional_boundary": "A conceptual boundary or delineation.",
+        "edge": "Outer boundary that defines the scope of domain or system."
+      }
+    },
+    "relation": {
+      "description": "The dynamic between two or more objects in a system.",
+      "terms": {
+        "group": "An affiliated collective of actors that share patterns of behavior.",
+        "rank": "The hierarchical status bestowed on an object or actor.",
+        "differentiation": "A contrast between other items or actors in a system.",
+        "mediation": "The mitigation or reconciliation of conflict between parties.",
+        "aggregate": "A group of objects or actors of the same type.",
+        "coupling": "The tightness or looseness of ties between parts of a system.",
+        "network": "An arrangement of interconnected parts that interact directly.",
+        "cluster": "Elements defined as a group by virtue of proximity."
+      }
+    },
+    "domain": {
+      "description": "The context in which the system (or parts thereof) exists.",
+      "terms": {
+        "support_structure": "Constructed supports that enables activity.",
+        "reference_points": "Features in the context that can act as orienting devices.",
+        "resources": "The availability and access to the factor inputs needed.",
+        "levels_of_scale": "System attributes at different orders of analysis."
+      }
+    }
+  }
+}
