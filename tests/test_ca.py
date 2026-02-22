@@ -394,3 +394,186 @@ class TestRunTissueGrid:
         summary = result["population_summary"]
         assert "total_tissues" in summary
         assert summary["total_tissues"] == 4
+
+
+# ── Analytics tests ──────────────────────────────────────────────────────
+
+from ca_analytics import (
+    compute_ca_analytics, _classify_attractor,
+    compute_tissue_analytics,
+)
+
+
+class TestClassifyAttractor:
+    def test_point_of_no_return(self):
+        state = {
+            "N_deletion": "past_cliff", "ATP": "collapsed",
+            "ROS": "pathological", "Senescent_fraction": "severe",
+            "N_healthy": "depleted", "NAD": "depleted",
+            "Membrane_potential": "collapsed", "N_point": "high",
+        }
+        assert _classify_attractor(state) == "point_of_no_return"
+
+    def test_cliff_approaching(self):
+        state = {
+            "N_deletion": "approaching_cliff", "ATP": "compromised",
+            "ROS": "elevated", "Senescent_fraction": "minimal",
+            "N_healthy": "reduced", "NAD": "declining",
+            "Membrane_potential": "impaired", "N_point": "low",
+        }
+        assert _classify_attractor(state) == "cliff_approaching"
+
+    def test_healthy_aging(self):
+        state = {
+            "N_deletion": "minimal", "ATP": "healthy",
+            "ROS": "basal", "Senescent_fraction": "minimal",
+            "N_healthy": "adequate", "NAD": "robust",
+            "Membrane_potential": "intact", "N_point": "low",
+        }
+        assert _classify_attractor(state) == "healthy_aging"
+
+    def test_slow_decline(self):
+        state = {
+            "N_deletion": "growing", "ATP": "compromised",
+            "ROS": "elevated", "Senescent_fraction": "emerging",
+            "N_healthy": "reduced", "NAD": "declining",
+            "Membrane_potential": "impaired", "N_point": "moderate",
+        }
+        assert _classify_attractor(state) == "slow_decline"
+
+    def test_slow_decline_from_atp_crisis(self):
+        """ATP in crisis alone triggers slow_decline."""
+        state = {
+            "N_deletion": "minimal", "ATP": "crisis",
+            "ROS": "basal", "Senescent_fraction": "minimal",
+            "N_healthy": "adequate", "NAD": "robust",
+            "Membrane_potential": "intact", "N_point": "low",
+        }
+        assert _classify_attractor(state) == "slow_decline"
+
+    def test_cliff_approaching_past_cliff_not_full_collapse(self):
+        """Past cliff but not all 4 conditions -> cliff_approaching."""
+        state = {
+            "N_deletion": "past_cliff", "ATP": "crisis",
+            "ROS": "elevated", "Senescent_fraction": "minimal",
+            "N_healthy": "reduced", "NAD": "declining",
+            "Membrane_potential": "impaired", "N_point": "moderate",
+        }
+        assert _classify_attractor(state) == "cliff_approaching"
+
+
+class TestComputeCAAnalytics:
+    def test_all_sections_present(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        assert "rule_stats" in analytics
+        assert "cascade_stats" in analytics
+        assert "attractor_stats" in analytics
+        assert "epoch_diagnostic" in analytics
+
+    def test_rule_stats_keys(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        rs = analytics["rule_stats"]
+        assert "total_firings" in rs
+        assert "unique_rules" in rs
+        assert "mean_rules_per_step" in rs
+        assert "top_10" in rs
+        assert rs["total_firings"] >= 0
+        assert rs["unique_rules"] >= 0
+
+    def test_cascade_stats_keys(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        cs = analytics["cascade_stats"]
+        assert "n_cascades" in cs
+        assert "max_cascade_length" in cs
+        assert "cascades" in cs
+        assert cs["n_cascades"] >= 0
+        assert cs["max_cascade_length"] >= 0
+        assert len(cs["cascades"]) <= 5  # capped at 5
+
+    def test_attractor_stats_keys(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        att = analytics["attractor_stats"]
+        assert "final_attractor" in att
+        assert att["final_attractor"] in (
+            "healthy_aging", "slow_decline", "cliff_approaching",
+            "point_of_no_return",
+        )
+        assert "attractor_transitions" in att
+        assert "time_in_attractor" in att
+        assert "first_reached" in att
+
+    def test_fidelity_stats_none_without_ode(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        assert analytics["fidelity_stats"] is None
+
+    def test_epoch_diagnostic_keys(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        ed = analytics["epoch_diagnostic"]
+        # Default patient starts at 70, so age 65 is already passed
+        assert "transition_step" in ed
+
+    def test_epoch_diagnostic_with_young_patient(self):
+        """A patient starting at 50 should cross age 65 within 30yr sim."""
+        ca_result = run_single_cell(patient={"baseline_age": 50.0})
+        analytics = compute_ca_analytics(ca_result)
+        ed = analytics["epoch_diagnostic"]
+        assert ed["transition_step"] is not None
+        assert ed["transition_age"] == pytest.approx(65.0, abs=0.25)
+        assert "n_variables_changed" in ed
+        assert "changes" in ed
+
+    def test_attractor_stats_fractions_sum_to_one(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        fracs = analytics["attractor_stats"]["time_in_attractor"]
+        total = sum(fracs.values())
+        assert total == pytest.approx(1.0, abs=0.01)
+
+    def test_rule_stats_mean_per_step(self):
+        ca_result = run_single_cell()
+        analytics = compute_ca_analytics(ca_result)
+        rs = analytics["rule_stats"]
+        # mean_rules_per_step = total / n_steps; should be consistent
+        expected = rs["total_firings"] / CA_N_STEPS
+        assert rs["mean_rules_per_step"] == pytest.approx(expected, abs=0.01)
+
+
+class TestTissueAnalytics:
+    def test_compute_tissue_analytics(self):
+        tissue_result = run_tissue_grid()
+        analytics = compute_tissue_analytics(tissue_result)
+        assert "tissue_attractors" in analytics
+        assert "n_distinct_attractors" in analytics
+        assert "most_vulnerable" in analytics
+        assert "most_resilient" in analytics
+        assert len(analytics["tissue_attractors"]) == 4
+
+    def test_tissue_attractors_valid(self):
+        tissue_result = run_tissue_grid()
+        analytics = compute_tissue_analytics(tissue_result)
+        valid = {"healthy_aging", "slow_decline", "cliff_approaching",
+                 "point_of_no_return"}
+        for tissue, att in analytics["tissue_attractors"].items():
+            assert att in valid, f"{tissue}: {att}"
+
+    def test_attractor_distribution_sums(self):
+        tissue_result = run_tissue_grid()
+        analytics = compute_tissue_analytics(tissue_result)
+        total = sum(analytics["attractor_distribution"].values())
+        assert total == 4  # 4 tissues
+
+    def test_most_vulnerable_is_valid_tissue(self):
+        tissue_result = run_tissue_grid()
+        analytics = compute_tissue_analytics(tissue_result)
+        assert analytics["most_vulnerable"] in TISSUE_TYPES
+
+    def test_most_resilient_is_valid_tissue(self):
+        tissue_result = run_tissue_grid()
+        analytics = compute_tissue_analytics(tissue_result)
+        assert analytics["most_resilient"] in TISSUE_TYPES
