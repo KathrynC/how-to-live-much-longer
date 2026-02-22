@@ -120,6 +120,13 @@ python lemurs_mito_viz.py                                     # Generate all LEM
 python -m pytest tests/test_lemurs_bridge.py -v               # LEMURS bridge tests (53 tests)
 python -c "from lemurs_mito_simulator import LEMURSMitoSimulator; s = LEMURSMitoSimulator(); print(len(s.param_spec()), 'params'); r = s.run({}); print(len(r), 'metrics')"
 
+# Semantic CA
+python -c "from ca_simulator import run_single_cell; r = run_single_cell(); print(r['final_state'])"
+python -c "from ca_zimmerman_bridge import MitoCASimulator; s = MitoCASimulator(); print(len(s.param_spec()), 'params')"
+python -c "from ca_stochastic import run_single_cell_stochastic, compute_ensemble_analytics; r = run_single_cell_stochastic(n_trials=10); a = compute_ensemble_analytics(r); print(a['attractor_probabilities'])"
+python -m pytest tests/test_ca.py tests/test_ca_stochastic.py tests/test_ca_zimmerman_bridge.py tests/test_ca_visualize.py -v  # CA test suite (132 tests)
+python -c "from ca_visualize import generate_all_plots; generate_all_plots()"  # generate CA plots to output/ca/
+
 # Zimmerman-informed experiments (2026-02-15 upgrade)
 python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
 python pds_mapping.py            # PDS→patient parameter mapping (Zimmerman §4.6.4)
@@ -260,7 +267,34 @@ resilience_metrics.py      ← Resistance, recovery time, regime retention, elas
 resilience_viz.py          ← 5 visualization functions + CLI (imports disturbances, resilience_metrics, simulator, constants)
 
 archive/orphans/protocol_mtdna_synthesis.py  ← Standalone (archived; no imports from project)
+
+# Semantic Cellular Automaton (CA layer)
+ca_schema.py               ← 8-variable bin schema, discretize/exemplar (imports constants)
+ca_rules.py                ← 32 tiered rules (6 tiers + cross-tier compounds) (imports ca_schema)
+ca_simulator.py            ← single-cell stepper + 4-tissue population grid (imports ca_schema, ca_rules, simulator, constants)
+ca_analytics.py            ← rule/cascade/attractor/fidelity/epoch metrics (imports ca_schema, ca_simulator, simulator)
+ca_stochastic.py           ← stochastic rule engine + Monte Carlo ensemble (imports ca_schema, ca_rules, ca_simulator)
+ca_zimmerman_bridge.py     ← 3 Zimmerman protocol adapters (imports ca_simulator, ca_analytics, ca_stochastic)
+ca_visualize.py            ← trajectory heatmap, rule timeline, tissue grid, fidelity, cliff approach (imports ca_schema, ca_rules, ca_simulator, ca_analytics)
 ```
+
+### Semantic Cellular Automaton
+
+The CA layer discretizes the 8D continuous ODE state into clinically meaningful bins and simulates state transitions using tiered rules. Provides an interpretable complement to the continuous ODE — mirrors the LEMURS CA architecture from `~/lemurs-simulator/ca_*.py`.
+
+- **ca_schema.py**: `BIN_SCHEMA` maps 8 vars to 3-4 bins each (e.g., N_deletion: minimal/growing/approaching_cliff/past_cliff at 0.1, 0.3, 0.5). Total discrete state space: 11,664. `discretize_state()` and `continuous_exemplar()` for round-tripping.
+- **ca_rules.py**: 32 rules in `RULE_TABLE`, organized by ODE coupling tier (1-6) + cross-tier compounds. Each rule: `{tier, name, inputs, context, outputs, confidence, citation}`. JSON-serializable. Conflict resolution: highest confidence wins. `"+"` suffix = at-or-above threshold; `"-"` suffix = at-or-below.
+- **ca_simulator.py**: `run_single_cell()` for one patient over 30 years at quarterly resolution (120 steps). `run_tissue_grid()` for 4-tissue grid (brain, muscle, cardiac, skin) with 3-channel systemic coupling (SASP inflammation, circulating NAD, senolytic clearance). Age epochs: young (<50), transition (50-70), old (≥70).
+- **ca_analytics.py**: `compute_ca_analytics()` returns 5 sections: rule_stats, cascade_stats, attractor_stats (healthy_aging/slow_decline/cliff_approaching/point_of_no_return), fidelity_stats (CA-vs-ODE bin agreement), epoch_diagnostic (pre/post age-65 transition comparison). `compute_tissue_analytics()` adds per-tissue attractor classification and divergence metrics.
+- **ca_stochastic.py**: `apply_rules_stochastic()` fires each rule with P=confidence instead of highest-wins. `run_single_cell_stochastic()` runs N Monte Carlo trajectories with independent RNG streams. `compute_ensemble_analytics()` returns attractor probabilities, cliff-crossing probability, time-to-crisis distribution.
+- **ca_zimmerman_bridge.py**: `MitoCASimulator` (12D param_spec), `MitoTissueSimulator` (13D, adds tissue_coupling), `MitoCAEnsembleSimulator` (12D, returns distributional metrics from N stochastic trials). All Zimmerman-protocol compatible.
+- **ca_visualize.py**: `plot_ca_trajectory()` heatmap (8 vars × 120 steps), `plot_rule_timeline()` (rule firings by tier), `plot_ca_fidelity()` (CA-vs-ODE agreement bars), `plot_tissue_grid()` (2×2 tissue comparison), `plot_cliff_approach()` (N_deletion trajectory toward cliff threshold).
+
+Key CA dynamics:
+- **Point of no return** is an absorbing state — when all 4 conditions met (N_del past_cliff & ATP collapsed & ROS pathological & Sen severe), state freezes (deterministic even in stochastic mode)
+- **4-tissue coupling** via 3 systemic channels: SASP inflammation (Sen severe in any tissue → ROS +1 in all), circulating NAD (equilibrates across tissues), senolytic clearance (clears in all tissues equally). Transplant is tissue-LOCAL.
+- **Age epochs** replace LEMURS semester calendar: young (<50), transition (50-70), old (≥70). The age-65 transition diagnostic parallels LEMURS spring break diagnostic.
+- **Stochastic rules** — every rule fires with probability equal to its confidence; ensemble of N trajectories produces attractor probabilities, cliff crossing probability, and time-to-crisis confidence intervals
 
 ### TIQM Pipeline Mapping
 
@@ -895,7 +929,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs ~439 tests across 33 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_kcramer_bridge, test_grief_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration)
+- Formal test suite: `pytest tests/ -v` runs ~631 tests across 37 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_kcramer_bridge, test_grief_bridge, test_lemurs_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration, test_ca, test_ca_stochastic, test_ca_zimmerman_bridge, test_ca_visualize)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

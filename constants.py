@@ -864,3 +864,14 @@ TAU_CLEARANCE_BASE = 0.05
 AMYLOID_TOXICITY = 0.3
 TAU_TOXICITY = 0.5
 RESILIENCE_WEIGHTS = {'MEF2': 0.3, 'synaptic_gain': 0.3, 'CR': 0.4}
+
+
+# ── CA age epoch helper ──────────────────────────────────────────────────────
+
+def age_epoch(age: float) -> str:
+    """Classify biological age into CA epoch: young, transition, or old."""
+    if age < 50.0:
+        return "young"
+    elif age < 70.0:
+        return "transition"
+    return "old"
