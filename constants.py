@@ -666,11 +666,40 @@ CLINICAL_SEEDS = [
 GRIEF_ROS_FACTOR = 0.3
 GRIEF_NAD_DECAY = 0.15
 GRIEF_SENESCENCE_FACTOR = 0.1
-SLEEP_DISRUPTION_IMPACT = 0.5  # literature-approximated; awaiting LEMURS data from Dodds & Danforth
+SLEEP_DISRUPTION_IMPACT = 0.5  # literature-approximated; superseded by LEMURS bridge (lemurs_bridge.py) for college-age patients
 SOCIAL_SUPPORT_BUFFER = 0.5
 COPING_DECAY_RATE = 0.3
 LOVE_BUFFER_FACTOR = 0.2
 GRIEF_REDUCTION_FROM_MEF2 = 0.1
+
+# ── LEMURS bridge constants ──────────────────────────────────────────────
+# Sleep-stress-anxiety dynamics from UVM LEMURS study (9 papers, 2023-2025)
+# Injected via LEMURSDisturbance in lemurs_bridge.py
+
+# Coupling coefficients (empirically grounded in LEMURS papers)
+LEMURS_TST_INFL_COEFF = 0.12       # TST sleep loss → inflammation_level
+LEMURS_PSS_DEMAND_COEFF = 0.08     # PSS stress → metabolic_demand
+LEMURS_GAD_ROS_COEFF = 0.02        # GAD-7 anxiety → ROS (state[3])
+LEMURS_HRV_VULN_COEFF = 0.05       # HRV decline → genetic_vulnerability
+LEMURS_DAC_REPAIR_COEFF = 0.15     # DAC depletion → repair capacity reduction
+
+# Timescale mapping
+LEMURS_COLLEGE_START_AGE = 18.0     # Age when college semesters begin
+LEMURS_COLLEGE_END_AGE = 22.0       # Age when college semesters end
+LEMURS_SEMESTER_WEEKS = 15          # Weeks per semester
+LEMURS_SEMESTERS_PER_YEAR = 2       # Fall + Spring
+LEMURS_ALLOSTATIC_RATE = 0.03       # Per-semester allostatic ratchet (3%)
+LEMURS_POST_COLLEGE_DECAY = 0.5     # Post-college decay rate (half-life ~1.4 yr)
+
+# Reference normalization values (from LEMURS constants.py bounds)
+LEMURS_TST_MIN = 4.0               # hours
+LEMURS_TST_MAX = 12.0              # hours
+LEMURS_TST_REF = 7.0               # Paper 3 reference
+LEMURS_PSS_MAX = 40.0              # PSS-10 scale max
+LEMURS_GAD_MAX = 21.0              # GAD-7 scale max
+LEMURS_HRV_MIN = 15.0              # ms RMSSD
+LEMURS_HRV_MAX = 120.0             # ms RMSSD
+LEMURS_HRV_REF = 60.0              # Paper 3 reference
 
 # ── Genetic multipliers (qualitative estimates; see provenance notes below) ─
 GENOTYPE_MULTIPLIERS = {

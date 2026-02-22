@@ -24,10 +24,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **HETEROPLASMY_CLIFF recalibrated (0.70→0.50):** C11 split broke cliff dynamics — deletion het maxed at ~0.57, never reaching old 0.70 threshold. Lowered to 0.50 (deletion-only equivalent of literature's 0.70 total het). Cliff now activates properly.
   - **Bistability restored:** ATP-gated mitophagy (autophagy requires energy) + transplant het penalty (hostile environment impairs engraftment). Model now has point of no return at het~0.93-0.95.
   - **REVIEW WITH CRAMER:** Is HETEROPLASMY_CLIFF=0.50 the right deletion threshold? Are NAD coefficients at 0.2 appropriate? Is point of no return at het~0.93 consistent with clinical expectation?
-- **ASK DODDS & DANFORTH (LEMURS data):** The precision medicine expansion uses three sleep coefficients attributed to "UVM LEMURS" but not derived from any LEMURS publication. Current values are literature-approximated but could be grounded in actual LEMURS Oura ring data. Specific requests:
-  1. **Sleep quality → physiological recovery rate:** LEMURS tracks HRV recovery overnight. What fraction of next-day HRV recovery is lost per unit of sleep quality reduction? This maps to `SLEEP_DISRUPTION_IMPACT` (currently 0.5, literature-approximated). We use this to scale mitophagy/repair efficacy.
-  2. **Alcohol → sleep quality dose-response:** LEMURS surveys likely capture both alcohol consumption and Oura sleep scores. What is the quantitative relationship between drinks/day and Oura sleep score reduction? This maps to `ALCOHOL_SLEEP_DISRUPTION` (currently 0.4).
-  3. **Sleep disturbance → stress/inflammation proxy:** LEMURS has both Oura data and stress/wellness surveys. Is there a quantitative mapping from Oura sleep score → next-day perceived stress? This maps to our `(1.0 - sleep_quality) * 0.05` inflammation effect.
+- **ASK DODDS & DANFORTH (LEMURS data):** ~~The precision medicine expansion uses three sleep coefficients attributed to "UVM LEMURS" but not derived from any LEMURS publication.~~ **PARTIALLY ADDRESSED (2026-02-21):** The LEMURS→Mito bridge (`lemurs_bridge.py`) now injects empirically-grounded LEMURS semester dynamics via the Disturbance framework, replacing the static placeholders with time-varying trajectories from the full 14-state LEMURS ODE. Specifically:
+  1. **Sleep quality → physiological recovery rate:** Now addressed by LEMURS_TST_INFL_COEFF=0.12, grounded in Paper 3 (β=-0.877/hr TST→PSS, within-person amplification 2.2x). The static `SLEEP_DISRUPTION_IMPACT=0.5` remains in constants.py for the precision medicine resolver but is superseded by the bridge's time-varying TST→inflammation channel.
+  2. **Alcohol → sleep quality dose-response:** Still needs LEMURS Oura data. The LEMURS bridge captures within-person sleep dynamics but doesn't model alcohol specifically. `ALCOHOL_SLEEP_DISRUPTION=0.4` remains a placeholder.
+  3. **Sleep disturbance → stress/inflammation proxy:** Now addressed by the full LEMURS PSS/TST/HRV coupling (5 channels: TST→inflammation, PSS→metabolic_demand, GAD→ROS, HRV→vulnerability, DAC→repair). The `(1.0 - sleep_quality) * 0.05` placeholder remains but the bridge provides the mechanistic version.
   - Note: LEMURS is NOT about grief — grief coefficients come from O'Connor (2022/2025) bereavement studies via the grief-simulator project. These are separate research threads that were incorrectly conflated in constants.py (now fixed).
   - See `artifacts/finding_sleep_coefficient_audit_2026-02-19.md` for full audit.
   - Relevant LEMURS papers: Fudolig et al. 2024 (Digital Biomarkers, sleep HR dynamics), Bloomfield et al. 2024 (PLOS Digital Health, stress prediction), Fudolig et al. 2025 (npj Complexity, collective sleep patterns).
@@ -72,7 +72,7 @@ Different models are used for offer vs confirmation waves to prevent self-confir
 # Standalone tests (no Ollama needed)
 python simulator.py       # ODE integrator test with 10 scenarios (incl. tissue types, stochastic, phased schedule, Cramer corrections)
 python analytics.py       # 4-pillar analytics test
-pytest tests/ -v          # Full pytest suite (~439 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, kcramer bridge, grief bridge, expansion modules, scenarios, protocol dictionary pipeline)
+pytest tests/ -v          # Full pytest suite (~499 tests: simulator, analytics, LLM parsing, schemas, zimmerman bridge, resilience, kcramer bridge, grief bridge, expansion modules, scenarios, protocol dictionary pipeline)
 python cliff_mapping.py   # Heteroplasmy cliff mapping (~2 min)
 python visualize.py       # Generate all plots to output/
 python generate_patients.py           # Normal population (100 patients, ~30s)
@@ -114,6 +114,11 @@ python resilience_viz.py --disturbance inflammation            # Inflammation bu
 python grief_mito_viz.py                                      # Generate all grief→mito plots
 python -m pytest tests/test_grief_bridge.py -v                # Grief bridge tests (41 tests)
 python -c "from grief_mito_simulator import GriefMitoSimulator; s = GriefMitoSimulator(); print(s.run({}))"
+
+# LEMURS→Mito integration (requires ~/lemurs-simulator)
+python lemurs_mito_viz.py                                     # Generate all LEMURS→mito plots
+python -m pytest tests/test_lemurs_bridge.py -v               # LEMURS bridge tests (53 tests)
+python -c "from lemurs_mito_simulator import LEMURSMitoSimulator; s = LEMURSMitoSimulator(); print(len(s.param_spec()), 'params'); r = s.run({}); print(len(r), 'metrics')"
 
 # Zimmerman-informed experiments (2026-02-15 upgrade)
 python sobol_sensitivity.py      # Sobol global sensitivity analysis (~3 min, ~6656 sims)
@@ -242,6 +247,12 @@ grief_bridge.py            ← GriefDisturbance + grief_trajectory() + grief_sce
 grief_mito_simulator.py    ← GriefMitoSimulator: Zimmerman adapter for 26D combined system
 grief_mito_scenarios.py    ← Grief stress scenario bank (16 scenarios) for cramer-toolkit
 grief_mito_viz.py          ← Side-by-side grief/mito visualization (trajectory + comparison + overview)
+
+# LEMURS→Mito Integration (Phase 2, requires ~/lemurs-simulator)
+lemurs_bridge.py           ← LEMURSDisturbance + lemurs_trajectory() + lemurs_scenarios() (imports lemurs-simulator via importlib)
+lemurs_mito_simulator.py   ← LEMURSMitoSimulator: Zimmerman adapter for 24D combined system
+lemurs_mito_scenarios.py   ← LEMURS stress scenario bank (14 scenarios) for cramer-toolkit
+lemurs_mito_viz.py         ← Side-by-side LEMURS/mito visualization (trajectory + comparison + overview)
 
 # Resilience suite (agroecology-inspired, no LLM, imports simulator + constants)
 disturbances.py            ← 4 disturbance types + simulate_with_disturbances() custom RK4 loop (imports simulator, constants)
@@ -711,6 +722,43 @@ result = sim.run({"grief_B": 0.9, "baseline_age": 70.0})
 from grief_mito_scenarios import GRIEF_STRESS_SCENARIOS, GRIEF_PROTOCOLS
 for s in GRIEF_STRESS_SCENARIOS:
     r = simulate_with_disturbances(disturbances=[s["disturbance"]])
+```
+
+### LEMURS->Mito integration
+
+```python
+from lemurs_bridge import LEMURSDisturbance, lemurs_trajectory, lemurs_scenarios
+from disturbances import simulate_with_disturbances
+
+# Single college student scenario
+d = LEMURSDisturbance(
+    lemurs_patient={"emotional_stability": 2.0, "trauma_load": 3.0},
+    lemurs_intervention={"nature_rx": 0.8, "exercise_rx": 0.7},
+)
+result = simulate_with_disturbances(
+    patient={"baseline_age": 18.0, "baseline_heteroplasmy": 0.05},
+    disturbances=[d],
+)
+
+# All 8 student archetypes x 2 intervention levels
+for s in lemurs_scenarios():
+    result = simulate_with_disturbances(
+        patient={"baseline_age": 18.0, "baseline_heteroplasmy": 0.05},
+        disturbances=[s],
+    )
+
+# Zimmerman adapter (24D combined system)
+from lemurs_mito_simulator import LEMURSMitoSimulator
+sim = LEMURSMitoSimulator()
+result = sim.run({"lemurs_nature_rx": 0.8, "lemurs_emotional_stability": 3.0})
+
+# Scenario bank for cramer-toolkit
+from lemurs_mito_scenarios import LEMURS_STRESS_SCENARIOS, LEMURS_PROTOCOLS
+for s in LEMURS_STRESS_SCENARIOS:
+    r = simulate_with_disturbances(
+        patient={"baseline_age": 18.0, "baseline_heteroplasmy": 0.05},
+        disturbances=[s["disturbance"]],
+    )
 ```
 
 ## Key Data Files
