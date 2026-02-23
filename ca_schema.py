@@ -19,7 +19,7 @@ from constants import STATE_NAMES, N_STATES
 BIN_SCHEMA: dict[str, dict] = {
     "N_healthy": {
         "index": 0,
-        "thresholds": [0.3, 0.7],
+        "thresholds": [0.3, 0.56],
         "labels": ["depleted", "reduced", "adequate"],
         "centers": [0.15, 0.5, 0.85],
         "unit": "normalized copies",
@@ -35,7 +35,7 @@ BIN_SCHEMA: dict[str, dict] = {
     },
     "ATP": {
         "index": 2,
-        "thresholds": [0.2, 0.5, 0.8],
+        "thresholds": [0.2, 0.5, 0.79],
         "labels": ["collapsed", "crisis", "compromised", "healthy"],
         "centers": [0.1, 0.35, 0.65, 0.9],
         "unit": "MU/day",
@@ -100,11 +100,26 @@ def _classify(value: float, thresholds: list[float], labels: list[str]) -> str:
 
 
 def discretize_state(continuous_state: np.ndarray) -> dict[str, str]:
-    """Convert an 8D continuous state vector to named clinical bins."""
+    """Convert an 8D continuous state vector to named clinical bins.
+    
+    For N_deletion and N_point, computes heteroplasmy fraction (N_var / total).
+    Other variables use raw values.
+    """
+    # Extract copy counts
+    n_healthy = float(continuous_state[BIN_SCHEMA["N_healthy"]["index"]])
+    n_deletion = float(continuous_state[BIN_SCHEMA["N_deletion"]["index"]])
+    n_point = float(continuous_state[BIN_SCHEMA["N_point"]["index"]])
+    
     result = {}
     for var_name in CA_VAR_ORDER:
         schema = BIN_SCHEMA[var_name]
-        val = float(continuous_state[schema["index"]])
+        idx = schema["index"]
+        if var_name == "N_deletion":
+            val = n_deletion / (n_healthy + n_deletion + n_point) if (n_healthy + n_deletion + n_point) > 1e-12 else 1.0
+        elif var_name == "N_point":
+            val = n_point / (n_healthy + n_deletion + n_point) if (n_healthy + n_deletion + n_point) > 1e-12 else 1.0
+        else:
+            val = float(continuous_state[idx])
         result[var_name] = _classify(val, schema["thresholds"], schema["labels"])
     return result
 

@@ -19,6 +19,7 @@ Mirrors ~/lemurs-simulator/ca_analytics.py architecture.
 from __future__ import annotations
 
 from collections import Counter
+import numpy as np
 
 from ca_schema import (
     BIN_SCHEMA, CA_VAR_ORDER, CA_N_VARS,
@@ -39,6 +40,15 @@ _HIGHER_IS_WORSE = {"N_deletion", "ROS", "Senescent_fraction", "N_point"}
 # NAD: depleted(0) < declining(1) < robust(2)
 # Membrane_potential: collapsed(0) < impaired(1) < intact(2)
 _LOWER_IS_WORSE = {"N_healthy", "ATP", "NAD", "Membrane_potential"}
+
+
+# ── Helper functions ─────────────────────────────────────────────────────
+
+def _bin_center(var_name: str, label: str) -> float:
+    """Return the continuous exemplar value for a given bin label."""
+    schema = BIN_SCHEMA[var_name]
+    idx = schema["labels"].index(label)
+    return schema["centers"][idx]
 
 
 # ── 1. Rule stats ────────────────────────────────────────────────────────
@@ -407,6 +417,7 @@ def compute_ca_analytics(
         "attractor_stats": _attractor_stats(trajectory),
         "fidelity_stats": _fidelity_stats(trajectory, ode_result, patient),
         "epoch_diagnostic": _epoch_diagnostic(trajectory, patient),
+        "lakoff_archetype": classify_lakoff_archetype(ca_result),
     }
 
 
@@ -466,3 +477,348 @@ def compute_tissue_analytics(tissue_result: dict) -> dict:
         "most_vulnerable": most_vulnerable,
         "most_resilient": most_resilient,
     }
+
+
+def _compute_ca_features_for_archetype(
+    ca_result: dict,
+    intervention: dict,
+) -> dict[str, float]:
+    """Compute key features from CA trajectory for archetype classification.
+    
+    Returns a dict with features that approximate the Lakoff criteria.
+    """
+    trajectory = ca_result.get("trajectory", [])
+    if not trajectory:
+        return {}
+    
+    # Convert trajectory to continuous values using bin centers
+    atp_vals = []
+    ros_vals = []
+    nad_vals = []
+    del_vals = []
+    healthy_vals = []
+    point_vals = []
+    senescent_vals = []
+    
+    for state in trajectory:
+        atp_vals.append(_bin_center("ATP", state.get("ATP", "healthy")))
+        ros_vals.append(_bin_center("ROS", state.get("ROS", "basal")))
+        nad_vals.append(_bin_center("NAD", state.get("NAD", "robust")))
+        del_vals.append(_bin_center("N_deletion", state.get("N_deletion", "minimal")))
+        healthy_vals.append(_bin_center("N_healthy", state.get("N_healthy", "adequate")))
+        point_vals.append(_bin_center("N_point", state.get("N_point", "low")))
+        senescent_vals.append(_bin_center("Senescent_fraction", state.get("Senescent_fraction", "minimal")))
+    
+    atp_vals = np.array(atp_vals)
+    ros_vals = np.array(ros_vals)
+    nad_vals = np.array(nad_vals)
+    del_vals = np.array(del_vals)
+    healthy_vals = np.array(healthy_vals)
+    point_vals = np.array(point_vals)
+    senescent_vals = np.array(senescent_vals)
+    
+    # Total copies (normalized)
+    total_vals = healthy_vals + del_vals + point_vals
+    # Avoid division by zero
+    total_vals = np.where(total_vals < 1e-12, 1.0, total_vals)
+    
+    # Deletion heteroplasmy
+    del_het_vals = del_vals / total_vals
+    # Total heteroplasmy (deletions + points)
+    total_het_vals = (del_vals + point_vals) / total_vals
+    
+    # Initial and final values
+    del_het_initial = del_het_vals[0]
+    del_het_final = del_het_vals[-1]
+    atp_initial = atp_vals[0]
+    atp_final = atp_vals[-1]
+    senescent_final = senescent_vals[-1]
+    
+    # Delta heteroplasmy
+    delta_het = del_het_final - del_het_initial  # positive = worse
+    
+    # ATP coefficient of variation
+    atp_cv = atp_vals.std() / (atp_vals.mean() + 1e-12)
+    
+    # ROS amplitude (max - min)
+    ros_amplitude = ros_vals.max() - ros_vals.min()
+    
+    # NAD slope (linear regression over time)
+    n_steps = len(nad_vals)
+    if n_steps > 1:
+        x = np.arange(n_steps)
+        slope, _ = np.polyfit(x, nad_vals, 1)
+        nad_slope = slope / 0.25  # per year (CA_DT = 0.25 yr)
+    else:
+        nad_slope = 0.0
+    
+    # Time to ATP crisis (first step where ATP <= crisis threshold ~0.35)
+    crisis_threshold = 0.35  # between crisis (0.35) and collapsed (0.1)
+    crisis_step = None
+    for i, val in enumerate(atp_vals):
+        if val <= crisis_threshold:
+            crisis_step = i
+            break
+    if crisis_step is not None:
+        time_to_crisis_years = crisis_step * 0.25  # CA_DT
+    else:
+        time_to_crisis_years = 30.0  # beyond simulation horizon
+    
+    # Cliff distance
+    cliff_distance_initial = max(0.5 - del_het_initial, 0.0)  # HETEROPLASMY_CLIFF = 0.5
+    
+    # Intervention parameters
+    transplant_rate = intervention.get("transplant_rate", 0.0)
+    yamanaka_intensity = intervention.get("yamanaka_intensity", 0.0)
+    exercise_level = intervention.get("exercise_level", 0.0)
+    
+    # Approximate energy cost per year (simplified)
+    energy_cost_per_year = (yamanaka_intensity * (0.15 + 0.2 * yamanaka_intensity) +
+                           exercise_level * 0.03)  # EXERCISE_METABOLIC_COST ≈ 0.03
+    
+    # Heteroplasmy benefit (reduction)
+    het_benefit_terminal = del_het_initial - del_het_final  # positive = benefit
+    
+    return {
+        "energy.atp_cv": atp_cv,
+        "damage.delta_het": delta_het,
+        "dynamics.ros_amplitude": ros_amplitude,
+        "dynamics.senescent_final": senescent_final,
+        "energy.atp_final": atp_final,
+        "energy.time_to_crisis_years": time_to_crisis_years,
+        "damage.deletion_het_final": del_het_final,
+        "intervention.het_benefit_terminal": het_benefit_terminal,
+        "damage.deletion_het_initial": del_het_initial,
+        "intervention.transplant_rate": transplant_rate,
+        "dynamics.nad_slope": nad_slope,
+        "damage.het_initial": total_het_vals[0],
+        "intervention.energy_cost_per_year": energy_cost_per_year,
+        "energy.atp_initial": atp_initial,
+        "damage.cliff_distance_initial": cliff_distance_initial,
+    }
+
+
+def _fallback_archetype_heuristic(final_attractor: str, intervention: dict) -> str:
+    """Original simple heuristic based on final attractor."""
+    transplant_rate = intervention.get("transplant_rate", 0.0)
+    
+    if final_attractor == "point_of_no_return":
+        # Only transplant can potentially rescue
+        return "transplant_focused"
+    elif final_attractor == "cliff_approaching":
+        # Need aggressive intervention to reverse damage
+        return "aggressive"
+    elif final_attractor == "slow_decline":
+        # Gradual decline suggests metabolic optimizer may help
+        return "metabolic_optimizer"
+    else:  # healthy_aging
+        # Maintain health with conservative approach
+        return "conservative"
+
+
+def _load_lakoff_archetypes():
+    """Load Lakoff archetype definitions from JSON file.
+    
+    Returns a list of archetype dicts with name, grounding_criteria, icm.
+    """
+    import json
+    from pathlib import Path
+    
+    # Path relative to this file
+    json_path = Path(__file__).parent / "patterns" / "lakoff_archetypes_adjusted.json"
+    if not json_path.exists():
+        # Try absolute path from project root
+        json_path = Path(__file__).parent.parent / "patterns" / "lakoff_archetypes_adjusted.json"
+        if not json_path.exists():
+            raise FileNotFoundError(f"Lakoff archetypes file not found: {json_path}")
+    
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+    
+    return data  # list of archetype dicts
+
+
+def _evaluate_criteria(features, criteria):
+    """Evaluate a list of grounding criteria against features.
+    
+    Returns (passed_count, total_count, failed_descriptions).
+    """
+    passed = 0
+    total = len(criteria)
+    failed = []
+    
+    for crit in criteria:
+        feature_name = crit["feature"]
+        predicate = crit["predicate"]
+        target = crit["value"]
+        tolerance = crit.get("tolerance", 0.0)
+        
+        if feature_name not in features:
+            # Feature missing - treat as failed
+            failed.append(f"{feature_name} not available")
+            continue
+        
+        value = features[feature_name]
+        
+        if predicate == "lt":
+            if value < target + tolerance:
+                passed += 1
+            else:
+                failed.append(f"{feature_name} {value:.4f} >= {target}")
+        elif predicate == "gt":
+            if value > target - tolerance:
+                passed += 1
+            else:
+                failed.append(f"{feature_name} {value:.4f} <= {target}")
+        elif predicate == "between":
+            # value is target, tolerance is upper bound? Actually tolerance is used as upper bound?
+            # In JSON, value is lower bound, tolerance is upper bound? Let's check.
+            # Example: "value": 0.0, "tolerance": 0.2 means between 0.0 and 0.2?
+            # We'll assume tolerance is the upper bound offset from value.
+            upper = target + tolerance
+            if target <= value <= upper:
+                passed += 1
+            else:
+                failed.append(f"{feature_name} {value:.4f} not in [{target}, {upper}]")
+        else:
+            # Unknown predicate - treat as failed
+            failed.append(f"Unknown predicate {predicate}")
+    
+    return passed, total, failed
+
+
+def _evaluate_violation_conditions(features, violation_conditions):
+    """Evaluate ICM violation conditions.
+    
+    Returns (violated_count, total_count, violation_descriptions).
+    """
+    if not violation_conditions:
+        return 0, 0, []
+    
+    violated = 0
+    total = len(violation_conditions)
+    descriptions = []
+    
+    for cond in violation_conditions:
+        feature_name = cond["feature"]
+        predicate = cond["predicate"]
+        threshold = cond["value"]
+        tolerance = cond.get("tolerance", 0.0)
+        
+        if feature_name not in features:
+            # Feature missing - cannot evaluate, assume not violated
+            continue
+        
+        value = features[feature_name]
+        
+        if predicate == "lt":
+            if value < threshold + tolerance:
+                violated += 1
+                descriptions.append(f"{feature_name} {value:.4f} < {threshold}")
+        elif predicate == "gt":
+            if value > threshold - tolerance:
+                violated += 1
+                descriptions.append(f"{feature_name} {value:.4f} > {threshold}")
+        # Assume no "between" in violation conditions
+    
+    return violated, total, descriptions
+
+
+def classify_lakoff_archetype(ca_result: dict, intervention: dict | None = None) -> str:
+    """Classify a CA simulation result into a Lakoff archetype.
+
+    Uses the precise grounding criteria from patterns/lakoff_archetypes_adjusted.json.
+    Selects archetype with highest percentage of satisfied grounding criteria,
+    after filtering out archetypes with ICM violations.
+
+    Parameters
+    ----------
+    ca_result : dict
+        Output from ca_simulator.run_single_cell() or ca_analytics.compute_ca_analytics().
+    intervention : dict or None
+        Intervention parameter dict. If None, uses ca_result["intervention"].
+
+    Returns
+    -------
+    str
+        One of "conservative", "aggressive", "transplant_focused", "metabolic_optimizer".
+    """
+    if intervention is None:
+        intervention = ca_result.get("intervention", {})
+    
+    # Compute features from CA trajectory
+    features = _compute_ca_features_for_archetype(ca_result, intervention)
+    if not features:
+        # Fallback to original heuristic using final attractor
+        if "attractor_stats" in ca_result:
+            final_attractor = ca_result["attractor_stats"]["final_attractor"]
+        else:
+            final_attractor = _classify_attractor(ca_result.get("final_state", {}))
+        return _fallback_archetype_heuristic(final_attractor, intervention)
+    
+    # Add intervention-specific features that may not be in computed features
+    features["intervention.transplant_rate"] = intervention.get("transplant_rate", 0.0)
+    features["intervention.energy_cost_per_year"] = features.get("intervention.energy_cost_per_year", 0.0)
+    features["damage.het_initial"] = features.get("damage.het_initial", 0.0)
+    features["energy.atp_initial"] = features.get("energy.atp_initial", 1.0)
+    features["damage.cliff_distance_initial"] = features.get("damage.cliff_distance_initial", 0.5)
+    
+    # Load archetype definitions
+    try:
+        archetypes = _load_lakoff_archetypes()
+    except FileNotFoundError:
+        # Fallback to simplified heuristic
+        final_attractor = ca_result.get("attractor_stats", {}).get("final_attractor",
+            _classify_attractor(ca_result.get("final_state", {})))
+        return _fallback_archetype_heuristic(final_attractor, intervention)
+    
+    best_archetype = None
+    best_score = -1.0
+    best_details = None
+    
+    for arch in archetypes:
+        name = arch["name"]
+        grounding_criteria = arch.get("grounding_criteria", [])
+        icm = arch.get("icm", {})
+        violation_conditions = icm.get("violation_conditions", [])
+        
+        # Evaluate violation conditions (ICM)
+        violated, total_viol, viol_desc = _evaluate_violation_conditions(features, violation_conditions)
+        if violated > 0:
+            # Archetype invalid due to ICM violation
+            continue
+        
+        # Evaluate grounding criteria
+        passed, total, failed_desc = _evaluate_criteria(features, grounding_criteria)
+        if total == 0:
+            score = 0.0
+        else:
+            score = passed / total
+        
+        if score > best_score:
+            best_score = score
+            best_archetype = name
+            best_details = {
+                "passed": passed,
+                "total": total,
+                "failed": failed_desc,
+                "violations": viol_desc
+            }
+    
+    if best_archetype is None:
+        # No archetype satisfied ICM constraints, fallback to heuristic
+        final_attractor = ca_result.get("attractor_stats", {}).get("final_attractor",
+            _classify_attractor(ca_result.get("final_state", {})))
+        return _fallback_archetype_heuristic(final_attractor, intervention)
+    
+    # Require minimum match quality (≥50% of grounding criteria)
+    if best_score < 0.5:
+        # Poor match, fallback to heuristic
+        final_attractor = ca_result.get("attractor_stats", {}).get("final_attractor",
+            _classify_attractor(ca_result.get("final_state", {})))
+        return _fallback_archetype_heuristic(final_attractor, intervention)
+    
+    return best_archetype
+
+
+

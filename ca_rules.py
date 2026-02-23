@@ -37,7 +37,7 @@ from ca_schema import BIN_SCHEMA, _classify, bin_index
 
 RULE_TABLE: list[dict] = [
     # =================================================================
-    # TIER 1: Energy-Damage Coupling (4 rules)
+    # TIER 1: Energy-Damage Coupling (5 rules)
     # =================================================================
     {
         "tier": 1,
@@ -75,9 +75,18 @@ RULE_TABLE: list[dict] = [
         "confidence": 0.80,
         "citation": "Pre-cliff ATP degradation, Cramer Ch VIII.A",
     },
+    {
+        "tier": 1,
+        "name": "deletion_acceleration_energy_crisis",
+        "inputs": {"N_deletion": "growing+", "ATP": "crisis-"},
+        "context": {"rapamycin": "none"},
+        "outputs": {"N_deletion": "+1", "N_healthy": "-1"},
+        "confidence": 0.80,
+        "citation": "C10: ATP collapse + poor mitophagy accelerates deletion expansion",
+    },
 
     # =================================================================
-    # TIER 2: ROS-Damage Vicious Cycle (4 rules)
+    # TIER 2: ROS-Damage Vicious Cycle (5 rules)
     # =================================================================
     {
         "tier": 2,
@@ -114,6 +123,15 @@ RULE_TABLE: list[dict] = [
         "outputs": {"Membrane_potential": "-1"},
         "confidence": 0.85,
         "citation": "Cramer Ch IV: ROS damages membrane potential",
+    },
+    {
+        "tier": 2,
+        "name": "point_mutation_pol_gamma_errors",
+        "inputs": {"N_healthy": "adequate", "age_epoch": ["transition", "old"]},
+        "context": {},
+        "outputs": {"N_point": "+1"},
+        "confidence": 0.60,
+        "citation": "C11: Pol γ copying errors cause point mutations",
     },
 
     # =================================================================

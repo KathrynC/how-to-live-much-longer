@@ -310,7 +310,20 @@ See the citation key at the top of `constants.py` for full details on each const
 | `scenario_runner.py` | Pipeline: ParameterResolver → simulate() → compute_downstream() |
 | `scenario_analysis.py` | Milestone extraction (dementia age, cliff crossing), scenario comparison |
 | `scenario_plot.py` | Multi-panel trajectory plots, milestone bars, summary heatmaps |
-| `run_scenario_comparison.py` | CLI main script for 4-scenario batch comparison |
+ | `run_scenario_comparison.py` | CLI main script for 4-scenario batch comparison |
+
+### Semantic Cellular Automaton Modules
+
+| File | Description |
+|---|---|
+| `ca_schema.py` | 8‑variable bin schema, `discretize_state()` (heteroplasmy fractions), `continuous_exemplar()` |
+| `ca_rules.py` | 45 tiered rules (tiers 1–6 + cross‑tier compounds); JSON‑serializable |
+| `ca_simulator.py` | Single‑cell stepper, 4‑tissue population grid with systemic coupling (SASP, NAD, senolytic clearance) |
+| `ca_analytics.py` | Rule/cascade/attractor/fidelity/epoch metrics; CA‑vs‑ODE bin‑agreement computation |
+| `ca_stochastic.py` | Stochastic rule engine, Monte‑Carlo ensemble, attractor probabilities, cliff‑crossing confidence |
+| `ca_zimmerman_bridge.py` | 3 Zimmerman protocol adapters (`MitoCASimulator`, `MitoTissueSimulator`, `MitoCAEnsembleSimulator`) |
+| `ca_visualize.py` | Trajectory heatmap, rule timeline, tissue grid, fidelity bars, cliff‑approach plots |
+| `validate_fixed_mapping.py` | Validation script for CA‑ODE bridge with corrected copy‑count vs fraction mapping |
 
 ### Research Campaign Scripts
 
@@ -433,6 +446,56 @@ baseline = simulate()
 metrics = compute_resilience(result, baseline)
 print(f"Resilience score: {metrics['summary_score']:.3f}")
 ```
+
+## Semantic Cellular Automaton Bridge
+
+A discrete‑time, interpretable complement to the continuous ODE that maps the 8‑D state vector into clinically meaningful bins (e.g., N_deletion: minimal/growing/approaching_cliff/past_cliff) and simulates transitions using tiered rules.
+
+### Key Components
+
+| Component | Description |
+|---|---|
+| **Bin schema** (`ca_schema.py`) | 8 variables × 3–4 bins each; thresholds from biological constants (Cramer 2026) |
+| **Tiered rules** (`ca_rules.py`) | 45 tuned rules organized by ODE‑coupling tier (1–6) + cross‑tier compounds |
+| **Single‑cell simulator** (`ca_simulator.py`) | Quarterly resolution over 30 years (120 steps); supports 4‑tissue grid with systemic coupling (SASP inflammation, circulating NAD, senolytic clearance) |
+| **Stochastic ensemble** (`ca_stochastic.py`) | Monte‑Carlo rule‑firing with confidence‑as‑probability; produces attractor probabilities, cliff‑crossing confidence intervals |
+| **Analytics** (`ca_analytics.py`) | Rule/cascade/attractor/fidelity/epoch metrics; CA‑vs‑ODE bin‑agreement (fidelity) |
+| **Validation** (`validate_fixed_mapping.py`) | Continuous‑discrete mapping verification; bin‑agreement = 0.801, RMSE = 0.154 with tuned rules |
+
+### Mapping Fix (2026‑02‑22)
+
+The original `discretize_state()` incorrectly used raw copy counts for N_deletion and N_point, while the bin schema defines thresholds for **deletion heteroplasmy fraction** and **point‑mutation fraction**. This mismatch invalidated all bin‑level statistics and threshold adjustments.
+
+**Fix applied:** `discretize_state()` now computes:
+
+- Deletion heteroplasmy fraction = `N_deletion / (N_healthy + N_deletion + N_point)`
+- Point‑mutation fraction = `N_point / (N_healthy + N_deletion + N_point)`
+
+Validation with normal patients (5 × 4 interventions = 20 runs) shows **0.801 bin‑agreement** and **0.154 overall RMSE** using the 45‑rule tuned set (`final_tuned_rules.json`). Edge‑patient validation (cliff‑boundary category) confirms that the corrected mapping captures ATP collapse and cliff‑crossing events.
+
+### Usage
+
+```bash
+# Quick CA simulation (default patient, no treatment)
+python -c "from ca_simulator import run_single_cell; r = run_single_cell(); print(r['final_state'])"
+
+# Validate CA‑ODE bridge with fixed mapping
+python validate_fixed_mapping.py
+
+# Generate CA visualizations (trajectory heatmap, rule timeline, fidelity bars)
+python ca_visualize.py
+
+# Run stochastic ensemble (10 trials)
+python -c "from ca_stochastic import run_single_cell_stochastic; r = run_single_cell_stochastic(n_trials=10); print(r['attractor_probabilities'])"
+```
+
+### Zimmerman Protocol Adapters
+
+- `MitoCASimulator` (12D param_spec) – single‑cell CA
+- `MitoTissueSimulator` (13D) – 4‑tissue grid with coupling
+- `MitoCAEnsembleSimulator` (12D) – distributional metrics from N stochastic trials
+
+All satisfy the Zimmerman `Simulator` protocol and are interchangeable with the continuous ODE for sensitivity analysis, falsification, and resilience testing.
 
 ## Scenario-Based Resilience (K-Cramer Toolkit)
 

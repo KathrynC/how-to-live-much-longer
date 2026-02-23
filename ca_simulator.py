@@ -125,7 +125,7 @@ def step_cell(state, context, rules=None):
 
 # ── Single-cell simulation ───────────────────────────────────────────────
 
-def run_single_cell(patient=None, intervention=None, sim_years=30.0, dt=0.25):
+def run_single_cell(patient=None, intervention=None, sim_years=30.0, dt=0.25, rules=None):
     """Run a single-cell CA simulation over the specified time horizon.
 
     Parameters
@@ -138,6 +138,8 @@ def run_single_cell(patient=None, intervention=None, sim_years=30.0, dt=0.25):
         Simulation horizon in years.
     dt : float
         Timestep in years (default 0.25 = quarterly).
+    rules : list[dict] or None
+        Rule table (defaults to RULE_TABLE from ca_rules).
 
     Returns
     -------
@@ -159,7 +161,7 @@ def run_single_cell(patient=None, intervention=None, sim_years=30.0, dt=0.25):
 
     for step in range(n_steps):
         ctx = _build_context(step, pat, intv, prev_state, state)
-        new_state, fired = step_cell(state, ctx)
+        new_state, fired = step_cell(state, ctx, rules)
         rule_log.append([r["name"] for r in fired])
         prev_state = state
         state = new_state
@@ -181,7 +183,7 @@ def run_single_cell(patient=None, intervention=None, sim_years=30.0, dt=0.25):
 # ── Tissue grid simulation ──────────────────────────────────────────────
 
 def run_tissue_grid(patient=None, intervention=None, sim_years=30.0, dt=0.25,
-                    tissue_coupling=0.5):
+                    tissue_coupling=0.5, rules=None):
     """Run a 4-tissue CA simulation with inter-tissue coupling.
 
     Each tissue type gets modified patient parameters from TISSUE_PROFILES.
@@ -202,6 +204,8 @@ def run_tissue_grid(patient=None, intervention=None, sim_years=30.0, dt=0.25,
         Timestep in years.
     tissue_coupling : float
         Coupling strength between 0.0 (independent) and 1.0 (strong).
+    rules : list[dict] or None
+        Rule table (defaults to RULE_TABLE from ca_rules).
 
     Returns
     -------
@@ -243,7 +247,7 @@ def run_tissue_grid(patient=None, intervention=None, sim_years=30.0, dt=0.25,
                 prev_states[tissue], tissue_states[tissue],
             )
             ctx["tissue_type"] = tissue
-            new_state, fired = step_cell(tissue_states[tissue], ctx)
+            new_state, fired = step_cell(tissue_states[tissue], ctx, rules)
             new_states[tissue] = new_state
             tissue_rule_logs[tissue].append([r["name"] for r in fired])
 
