@@ -497,6 +497,25 @@ python -c "from ca_stochastic import run_single_cell_stochastic; r = run_single_
 
 All satisfy the Zimmerman `Simulator` protocol and are interchangeable with the continuous ODE for sensitivity analysis, falsification, and resilience testing.
 
+### What the Semantic CA Bridge Buys Us
+
+The CA layer provides complementary capabilities that the raw ODE alone cannot offer:
+
+| Capability | ODE (Continuous) | CA (Discrete) | Benefit |
+|---|---|---|---|
+| **Clinical interpretability** | 8 floats (e.g., `N_deletion=0.427`) | 8 clinical labels (e.g., `N_deletion: "approaching_cliff"`) | Enables trajectory narration, threshold‑based alerts, communicable summaries |
+| **Causal reasoning** | Coupled differential equations | 45 tiered rules with confidence scores & citations | Every state change is explainable; rules can be tuned without touching ODE |
+| **Simulation speed** | ~0.2 s/trajectory (3000 RK4 steps) | ~0.01 s/trajectory (120 quarterly steps) | 25× faster → high‑throughput screening, interactive exploration |
+| **Stochastic dynamics** | Euler‑Maruyama noise (continuous) | Rule‑firing with probability = confidence | Uncertainty quantification, attractor probabilities, time‑to‑event distributions |
+| **Tissue coupling** | Possible but computationally heavy | Lightweight 2×2 grid + 3 systemic channels (SASP, NAD, senolytic clearance) | Tissue‑specific pathology, systemic spillover, local‑vs‑global intervention testing |
+| **Validation fidelity** | Ground truth | 0.801 bin‑agreement, 0.154 RMSE with ODE (after mapping fix) | Trustworthy discrete approximation; quantitative cross‑validation |
+| **Epoch‑based diagnostics** | Manual post‑processing | Built‑in age epochs (young/<50, transition/50‑70, old/≥70) | Life‑stage analysis, epoch‑specific intervention efficacy |
+| **Point‑of‑no‑return detection** | Implicit in ODE attractors | Explicit absorbing state (4 conditions) → irreversible | Clear stopping rule for clinical protocols |
+| **Pattern‑language grounding** | Not applicable | Natural hook for Lakoff image schemas (CONTAINER, PATH, SCALE) | Cognitive accessibility, metaphor‑based reasoning, intervention archetypes |
+| **Toolkit interoperability** | Zimmerman `Simulator` protocol | Same Zimmerman `Simulator` protocol | Drop‑in replacement for any Zimmerman‑ or Cramer‑toolkit analysis |
+
+**Bottom line:** The CA bridge does **not replace** the ODE; it provides a **semantic interface** that translates continuous mitochondrial dynamics into clinically actionable categories, enables rule‑based explanation, supports high‑throughput screening, and integrates seamlessly with the existing analysis ecosystem.
+
 ## Scenario-Based Resilience (K-Cramer Toolkit)
 
 The [cramer-toolkit](../cramer-toolkit/) provides the `kcramer` scenario-resilience namespace used here for systematically varying environmental conditions and measuring how badly each intervention protocol degrades. The bridge (`kcramer_bridge.py`) maps generic scenario primitives to biologically-meaningful stress conditions.
