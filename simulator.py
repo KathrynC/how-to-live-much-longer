@@ -1320,12 +1320,22 @@ def simulate(
     states = np.zeros((n_steps + 1, N_STATES))      # (3001, 8) for default
     het_arr = np.zeros(n_steps + 1)                  # total heteroplasmy
     del_het_arr = np.zeros(n_steps + 1)              # deletion heteroplasmy
+    applied_intensity = np.zeros(n_steps + 1)        # total intervention dose at each time point
 
     # ── Record initial conditions ─────────────────────────────────────────
     states[0] = state
     # state[0] = N_h, state[1] = N_del, state[7] = N_pt
     het_arr[0] = _total_heteroplasmy(state[0], state[1], state[7])
     del_het_arr[0] = _deletion_heteroplasmy(state[0], state[1], state[7])
+    # Compute initial intervention intensity at t=0
+    if resolver is not None:
+        try:
+            init_intervention, _ = resolver.resolve(0.0, state=state)
+        except TypeError:
+            init_intervention, _ = resolver.resolve(0.0)
+    else:
+        init_intervention = _resolve_intervention(intervention, 0.0)
+    applied_intensity[0] = sum(init_intervention.get(k, 0.0) for k in DEFAULT_INTERVENTION)
 
     # Set up RNG for single-trajectory stochastic mode
     if stochastic:
@@ -1336,10 +1346,17 @@ def simulate(
         t = i * dt
         # Resolve time-varying intervention (handles both dict and schedule)
         if resolver is not None:
-            current_intervention, current_patient = resolver.resolve(t)
+            # Pass current state to resolver if it accepts it
+            try:
+                current_intervention, current_patient = resolver.resolve(t, state=state)
+            except TypeError:
+                # Fallback for resolvers that only accept time
+                current_intervention, current_patient = resolver.resolve(t)
         else:
             current_intervention = _resolve_intervention(intervention, t)
             current_patient = patient
+
+        applied_intensity[i + 1] = sum(current_intervention.get(k, 0.0) for k in DEFAULT_INTERVENTION)
 
         if stochastic:
             # ── Euler-Maruyama integration ────────────────────────────────
@@ -1389,6 +1406,7 @@ def simulate(
         "states": states,
         "heteroplasmy": het_arr,               # total (N_del + N_pt) / total
         "deletion_heteroplasmy": del_het_arr,   # deletion only: N_del / total
+        "applied_intervention_intensity": applied_intensity,
         "intervention": intervention,
         "patient": patient,
         "tissue_type": tissue_type,
@@ -1447,6 +1465,18 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
     all_states = np.zeros((n_trajectories, n_steps + 1, N_STATES))
     all_het = np.zeros((n_trajectories, n_steps + 1))
     all_del_het = np.zeros((n_trajectories, n_steps + 1))
+    applied_intensity = np.zeros((n_trajectories, n_steps + 1))
+
+    # Compute initial intervention intensity at t=0 (same for all trajectories)
+    if resolver is not None:
+        try:
+            init_intervention, _ = resolver.resolve(0.0, state=state0)
+        except TypeError:
+            init_intervention, _ = resolver.resolve(0.0)
+    else:
+        init_intervention = _resolve_intervention(intervention, 0.0)
+    init_intensity = sum(init_intervention.get(k, 0.0) for k in DEFAULT_INTERVENTION)
+    applied_intensity[:, 0] = init_intensity
 
     for traj in range(n_trajectories):
         state = state0.copy()
@@ -1457,10 +1487,18 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
         for i in range(n_steps):
             t = i * dt
             if resolver is not None:
-                current_intervention, current_patient = resolver.resolve(t)
+                # Pass current state to resolver if it accepts it
+                try:
+                    current_intervention, current_patient = resolver.resolve(t, state=state)
+                except TypeError:
+                    # Fallback for resolvers that only accept time
+                    current_intervention, current_patient = resolver.resolve(t)
             else:
                 current_intervention = _resolve_intervention(intervention, t)
                 current_patient = patient
+            
+            applied_intensity[traj, i + 1] = sum(current_intervention.get(k, 0.0) for k in DEFAULT_INTERVENTION)
+            
             deriv = derivatives(state, t, current_intervention, current_patient, tissue_mods)
 
             # Wiener increments for this step
@@ -1485,6 +1523,7 @@ def _simulate_stochastic(intervention, patient, n_steps, dt, tissue_mods,
         "states": all_states,
         "heteroplasmy": all_het,
         "deletion_heteroplasmy": all_del_het,
+        "applied_intervention_intensity": applied_intensity,
         "intervention": intervention,
         "patient": patient,
         "n_trajectories": n_trajectories,

@@ -376,6 +376,12 @@ A mitochondrial aging simulation was run with these results:
   Intervention benefit (ATP): {atp_benefit:+.3f} vs no treatment
   Intervention benefit (heteroplasmy): {het_benefit:+.3f} vs no treatment
 
+  Mutual learning (symmathesy):
+    Mutual information: {mutual_information:.3f} (shared information between intervention intensity and health)
+    Relationship diversity: {relationship_diversity:.3f} (diversity of intensity-health pairs)
+    Adaptation coherence: {adaptation_coherence:+.3f} (correlation between intensity and health)
+    Learning rate: {learning_rate:.3f} (rate of mutual adaptation over time)
+
   Intervention used:
     Rapamycin: {rapamycin_dose}
     NAD+ supplement: {nad_supplement}
@@ -393,11 +399,13 @@ cellular health over decades).
 clinical resonance from 0.0 (no connection) to 1.0 (perfect match).
 3. Does the simulation trajectory look physiologically plausible? Rate \
 trajectory resonance from 0.0 (unrealistic) to 1.0 (highly plausible).
-4. What would you change to better serve this patient?
+4. How well does the intervention adapt to the patient's changing state? Rate \
+mutual learning resonance from 0.0 (no adaptation) to 1.0 (highly adaptive).
+5. What would you change to better serve this patient?
 
 Output a JSON object:
 {{"trajectory_description": "...", "resonance_behavior": 0.X, \
-"resonance_trajectory": 0.X, "suggestion": "..."}}"""
+"resonance_trajectory": 0.X, "resonance_symmathesy": 0.X, "suggestion": "..."}}"""
 
 
 # ── Template selection ──────────────────────────────────────────────────────

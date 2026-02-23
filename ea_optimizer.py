@@ -111,6 +111,7 @@ FITNESS_METRICS = {
     "atp": "Terminal ATP improvement over baseline",
     "het": "Heteroplasmy reduction from baseline",
     "crisis_delay": "Years of ATP crisis delay",
+    "symmathesy": "Mutual learning score (mutual_information + relationship_diversity + |adaptation_coherence|)",
 }
 
 
@@ -139,6 +140,17 @@ class MitoFitness(FitnessFunction):
         self._baseline_analytics = compute_all(self._baseline)
         self._eval_count = 0
 
+    def _compute_symmathesy_score(self, sym_dict: dict) -> float:
+        """Compute composite symmathesy score from metrics dict."""
+        mi = sym_dict.get("mutual_information", 0.0)
+        rd = sym_dict.get("relationship_diversity", 0.0)
+        ac = abs(sym_dict.get("adaptation_coherence", 0.0))
+        # learning_rate is time-based, not needed for static score
+        # Normalize MI to [0,1] (max possible ~1.585)
+        mi_norm = mi / 1.585 if 1.585 > 0 else mi
+        # RD already [0,1], AC already [0,1]
+        return mi_norm + rd + ac  # max ~3, but typical range 0-2
+
     def evaluate(self, params: dict) -> dict:
         """Evaluate an intervention protocol.
 
@@ -161,6 +173,9 @@ class MitoFitness(FitnessFunction):
         atp_benefit = final_atp - base_atp
         het_benefit = base_het - final_het
 
+        # Symmathesy metrics
+        sym = analytics.get("symmathesy", {})
+
         # Compute selected fitness metric
         if self.metric == "atp":
             fitness = atp_benefit
@@ -169,6 +184,8 @@ class MitoFitness(FitnessFunction):
         elif self.metric == "crisis_delay":
             fitness = float(analytics.get("intervention", {}).get(
                 "crisis_delay_years", 0.0))
+        elif self.metric == "symmathesy":
+            fitness = self._compute_symmathesy_score(sym)
         else:  # combined
             fitness = atp_benefit + 0.5 * het_benefit
 
@@ -180,6 +197,11 @@ class MitoFitness(FitnessFunction):
             "final_het": final_het,
             "base_atp": base_atp,
             "base_het": base_het,
+            # Symmathesy metrics
+            "symmathesy_mi": sym.get("mutual_information", 0.0),
+            "symmathesy_rd": sym.get("relationship_diversity", 0.0),
+            "symmathesy_ac": sym.get("adaptation_coherence", 0.0),
+            "symmathesy_lr": sym.get("learning_rate", 0.0),
             # Behavioral descriptors (for novelty seeker)
             "behavior": [final_atp, final_het],
         }

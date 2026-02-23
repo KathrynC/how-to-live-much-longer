@@ -438,6 +438,146 @@ def compute_intervention(result: dict, baseline_result: dict | None = None) -> d
     }
 
 
+# ── Symmathesy metrics ─────────────────────────────────────────────────────
+
+def _intervention_time_series(intervention, time):
+    """Extract intervention intensity time series.
+    
+    Args:
+        intervention: dict or InterventionSchedule.
+        time: np.array of time points.
+    
+    Returns:
+        intensity: np.array of total_dose at each time point.
+    """
+    from simulator import InterventionSchedule
+    if isinstance(intervention, InterventionSchedule):
+        # Piecewise constant, evaluate at each time point
+        intensity = np.array([sum(intervention.at(t).values()) for t in time])
+    else:
+        # Constant intervention
+        total = sum(intervention.get(k, 0.0) for k in intervention)
+        intensity = np.full_like(time, total)
+    return intensity
+
+
+def compute_symmathesy_metrics(result: dict) -> dict[str, float]:
+    """Compute symmathesy metrics quantifying mutual learning.
+    
+    Metrics:
+    - adaptation_coherence: Pearson correlation between intervention intensity
+      and patient health trajectory.
+    - relationship_diversity: Entropy of joint (intensity, health) states.
+    - learning_rate: Inverse of time to reach stable configuration.
+    - mutual_information: MI between intervention changes and state changes.
+    
+    Args:
+        result: Dict from simulate() with at least "time", "states",
+            "heteroplasmy", "intervention".
+    
+    Returns:
+        Dict with symmathesy metrics.
+    """
+    time = result["time"]
+    states = result["states"]
+    het = result["heteroplasmy"]
+    intervention = result["intervention"]
+    
+    # Ensure 2D shape (n_steps, 8)
+    if states.ndim == 3:
+        # Stochastic trajectories, take mean across trajectories
+        states = states.mean(axis=0)
+        het = het.mean(axis=0)
+    
+    # Health metric: ATP + (1 - heteroplasmy) scaled 0-2
+    atp = states[:, 2]
+    health = atp + (1.0 - het)
+    
+    # Intervention intensity time series
+    if "applied_intervention_intensity" in result:
+        intensity = result["applied_intervention_intensity"]
+        if intensity.ndim == 2:
+            # Stochastic trajectories, take mean across trajectories
+            intensity = intensity.mean(axis=0)
+        # Ensure length matches time (should be n_steps+1)
+        if len(intensity) != len(time):
+            # If mismatch, fall back to original method
+            intensity = _intervention_time_series(intervention, time)
+    else:
+        intensity = _intervention_time_series(intervention, time)
+    
+    # 1. Adaptation coherence
+    if len(time) > 1 and np.std(intensity) > EPS and np.std(health) > EPS:
+        adaptation_coherence = float(np.corrcoef(intensity, health)[0, 1])
+    else:
+        adaptation_coherence = 0.0
+    
+    # 2. Relationship diversity: discretize intensity and health into 3 bins each
+    # Bin edges: intensity quartiles, health quartiles
+    if len(time) > 10:
+        i_bins = np.digitize(intensity, np.percentile(intensity, [33, 67]))
+        h_bins = np.digitize(health, np.percentile(health, [33, 67]))
+        joint_states = i_bins * 3 + h_bins  # 0-8
+        counts = np.bincount(joint_states, minlength=9)
+        probs = counts / len(time)
+        # Remove zero probabilities for entropy calculation
+        probs_nonzero = probs[probs > 0]
+        entropy = -np.sum(probs_nonzero * np.log2(probs_nonzero))
+        max_entropy = np.log2(9)  # 9 possible joint states
+        relationship_diversity = float(entropy / max_entropy)
+    else:
+        relationship_diversity = 0.0
+    
+    # 3. Learning rate: time to reach stable configuration
+    # Stability defined as intensity and health change < threshold over last 20% of simulation
+    tail_start = int(0.8 * len(time))
+    if tail_start < len(time) - 5:
+        intensity_tail = intensity[tail_start:]
+        health_tail = health[tail_start:]
+        intensity_stable = np.std(intensity_tail) < 0.01 * np.mean(intensity)
+        health_stable = np.std(health_tail) < 0.01 * np.mean(health)
+        if intensity_stable and health_stable:
+            # Find first index where both remain within threshold until end
+            stable_time = time[tail_start]
+            learning_rate = 1.0 / stable_time if stable_time > 0 else 999.0
+        else:
+            learning_rate = 0.0  # never stabilizes
+    else:
+        learning_rate = 0.0
+    
+    # 4. Mutual information between intervention changes and health changes
+    if len(time) > 2:
+        intensity_changes = np.diff(intensity)
+        health_changes = np.diff(health)
+        # Discretize into 3 bins each
+        i_change_bins = np.digitize(intensity_changes, np.percentile(intensity_changes, [33, 67]))
+        h_change_bins = np.digitize(health_changes, np.percentile(health_changes, [33, 67]))
+        # Compute joint distribution
+        joint_counts = np.zeros((3, 3), dtype=int)
+        for i, h in zip(i_change_bins, h_change_bins):
+            joint_counts[i, h] += 1
+        joint_probs = joint_counts / joint_counts.sum()
+        # Marginal probabilities
+        p_i = joint_probs.sum(axis=1)
+        p_h = joint_probs.sum(axis=0)
+        # Mutual information
+        mi = 0.0
+        for i in range(3):
+            for h in range(3):
+                if joint_probs[i, h] > 0 and p_i[i] > 0 and p_h[h] > 0:
+                    mi += joint_probs[i, h] * np.log2(joint_probs[i, h] / (p_i[i] * p_h[h]))
+        mutual_information = float(mi)
+    else:
+        mutual_information = 0.0
+    
+    return {
+        "adaptation_coherence": adaptation_coherence,
+        "relationship_diversity": relationship_diversity,
+        "learning_rate": learning_rate,
+        "mutual_information": mutual_information,
+    }
+
+
 # ── Combined analytics ──────────────────────────────────────────────────────
 
 def compute_all(result: dict, baseline_result: dict | None = None) -> dict[str, dict[str, float]]:
@@ -448,13 +588,14 @@ def compute_all(result: dict, baseline_result: dict | None = None) -> dict[str, 
         baseline_result: Optional no-treatment baseline for intervention pillar.
 
     Returns:
-        Dict with keys "energy", "damage", "dynamics", "intervention".
+        Dict with keys "energy", "damage", "dynamics", "intervention", "symmathesy".
     """
     return {
         "energy": compute_energy(result),
         "damage": compute_damage(result),
         "dynamics": compute_dynamics(result),
         "intervention": compute_intervention(result, baseline_result),
+        "symmathesy": compute_symmathesy_metrics(result),
     }
 
 
@@ -497,6 +638,10 @@ if __name__ == "__main__":
 
     print("\nPillar 4 — Intervention:")
     for k, v in analytics["intervention"].items():
+        print(f"  {k:30s} = {v}")
+
+    print("\nPillar 5 — Symmathesy:")
+    for k, v in analytics["symmathesy"].items():
         print(f"  {k:30s} = {v}")
 
     # Test JSON serialization

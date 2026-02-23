@@ -67,6 +67,12 @@ A mitochondrial aging simulation was run with these results:
   Intervention benefit (ATP): {atp_benefit:+.3f} vs no treatment
   Intervention benefit (heteroplasmy): {het_benefit:+.3f} vs no treatment
 
+  Mutual learning (symmathesy):
+    Mutual information: {mutual_information:.3f} (shared information between intervention intensity and health)
+    Relationship diversity: {relationship_diversity:.3f} (diversity of intensity-health pairs)
+    Adaptation coherence: {adaptation_coherence:+.3f} (correlation between intensity and health)
+    Learning rate: {learning_rate:.3f} (rate of mutual adaptation over time)
+
   Intervention used:
     Rapamycin: {rapamycin_dose}
     NAD+ supplement: {nad_supplement}
@@ -84,11 +90,13 @@ cellular health over decades).
 clinical resonance from 0.0 (no connection) to 1.0 (perfect match).
 3. Does the simulation trajectory look physiologically plausible? Rate \
 trajectory resonance from 0.0 (unrealistic) to 1.0 (highly plausible).
-4. What would you change to better serve this patient?
+4. How well does the intervention adapt to the patient's changing state? Rate \
+mutual learning resonance from 0.0 (no adaptation) to 1.0 (highly adaptive).
+5. What would you change to better serve this patient?
 
 Output a JSON object:
 {{"trajectory_description": "...", "resonance_behavior": 0.X, \
-"resonance_trajectory": 0.X, "suggestion": "..."}}"""
+"resonance_trajectory": 0.X, "resonance_symmathesy": 0.X, "suggestion": "..."}}"""
 
 
 # ── Run single experiment ────────────────────────────────────────────────────
@@ -178,6 +186,7 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
     damage = analytics["damage"]
     dynamics = analytics["dynamics"]
     interv = analytics["intervention"]
+    sym = analytics["symmathesy"]
 
     confirm_prompt = CONFIRMATION_PROMPT.format(
         sim_years=SIM_YEARS,
@@ -199,6 +208,10 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
         psi_cv=dynamics["membrane_potential_cv"],
         atp_benefit=interv["atp_benefit_terminal"],
         het_benefit=interv["het_benefit_terminal"],
+        mutual_information=sym["mutual_information"],
+        relationship_diversity=sym["relationship_diversity"],
+        adaptation_coherence=sym["adaptation_coherence"],
+        learning_rate=sym["learning_rate"],
         rapamycin_dose=intervention["rapamycin_dose"],
         nad_supplement=intervention["nad_supplement"],
         senolytic_dose=intervention["senolytic_dose"],
@@ -219,6 +232,7 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
         if confirmation:
             print(f"  Resonance (behavior): {confirmation.get('resonance_behavior', '?')}")
             print(f"  Resonance (trajectory): {confirmation.get('resonance_trajectory', '?')}")
+            print(f"  Resonance (symmathesy): {confirmation.get('resonance_symmathesy', '?')}")
             if "trajectory_description" in confirmation:
                 desc = confirmation["trajectory_description"]
                 print(f"  Description: {desc[:100]}...")
@@ -240,7 +254,9 @@ def run_experiment(seed, offer_model=None, confirm_model=None, verbose=True):
         "resonance_behavior": (confirmation.get("resonance_behavior", 0.0)
                                if confirmation else 0.0),
         "resonance_trajectory": (confirmation.get("resonance_trajectory", 0.0)
-                                  if confirmation else 0.0),
+                                 if confirmation else 0.0),
+        "resonance_symmathesy": (confirmation.get("resonance_symmathesy", 0.0)
+                                 if confirmation else 0.0),
         "simulation_time_sec": sim_time,
     }
 
@@ -307,10 +323,13 @@ def run_all_experiments(seeds=None, output_dir="output"):
     if artifacts:
         res_b = [a["resonance_behavior"] for a in artifacts]
         res_t = [a["resonance_trajectory"] for a in artifacts]
+        res_s = [a["resonance_symmathesy"] for a in artifacts]
         print(f"\n  Resonance (behavior):  mean={np.mean(res_b):.3f}, "
               f"min={np.min(res_b):.3f}, max={np.max(res_b):.3f}")
         print(f"  Resonance (trajectory): mean={np.mean(res_t):.3f}, "
               f"min={np.min(res_t):.3f}, max={np.max(res_t):.3f}")
+        print(f"  Resonance (symmathesy): mean={np.mean(res_s):.3f}, "
+              f"min={np.min(res_s):.3f}, max={np.max(res_s):.3f}")
 
     print(f"\n  Total time: {total_time:.1f}s")
     print("=" * 60)
