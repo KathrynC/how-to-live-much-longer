@@ -1,59 +1,55 @@
-# Household Steering Manual: The Scholar & The Biologist (EA REFINED)
+# Westport Household Steering Report: The Homestead Scholar
 **Location:** Westport, NY
-**Profiles:** 
-- **User (Scholar, 63.83):** APOE4 Het, Osteopenia, Mild Connective Tissue Vulnerability.
-- **Peter (Biologist, 28.0):** APOE4 Het, Severe Connective Tissue Profile, Genetic Sleep Penalty.
-**Optimization:** 37-State Omni-Twin Optimized.
+**Profiles:** User (Scholar, 63.83) & Peter (Biologist, 28.0)
+**Model:** 37-State Universal Omni-Twin (Cramer-Zimmerman v2026)
 
 ---
 
-## 1. The EA-Refined Shared Foundation
-The evolutionary optimizer has established a **Zero-Margin** metabolic policy for the house.
-
-*   **Fructose Intake: 0.00 (Strict Zero).** Protects User's energy budget and Peter's structural metabolic debt.
-*   **Shared Diet:** Mediterranean-Keto Hybrid (High Polyphenol / Ketone Fuel).
-*   **Shared Activity:** Full Farm Synergy (Mandatory BDNF signals from animals).
+## 1. Household Overview
+The Westport household operates as a "Closed-Loop Homestead Scholar Ecosystem," uniquely characterized by the synergy between high-intensity intellectual research and functional agricultural engagement. This Digital Twin environment is designed to maximize the 37-state biological ceiling by leveraging self-sustaining food sources (7-acre orchard and home-grown eggs) alongside advanced clinical interventions (Rapamycin and NAD+ fuel). The primary biological goal is to push the family’s inherent "Structural Connective Tissue" vulnerability and age-related heteroplasmy beyond the 20-year horizon, ensuring that both the Scholar and the Biologist reach their respective 80-year and 50-year peaks with functionally superior cognitive and energetic reserves.
 
 ---
 
-## 2. Refined Individual Steering
+## 2. In-Depth Member Interventions
 
-### For the User (The Scholar)
-Your profile now accounts for **Mild Structural Drag (1.2x)**.
+### **User (The Sustainable Scholar)**
+*   **Cognitive (MEF2/CR):** Maximize 1.0 Intellectual Engagement. Prioritize deep focus in the 08:00–12:00 window when **Neural Recovery Zone (NRZ)** integrity is highest.
+*   **Structural (B/CTS):** High-dose Vitamin D/K2 + Calcium (to reverse 0.0037 density collapse) + 5g daily salt/electrolytes to stabilize Broca-area vascular flow.
+*   **Metabolic (IS/ATP):** Strict zero-fructose policy + 16:8 Intermittent Fasting to shield the "Metabolic Governor."
+*   **Clinical:** Monthly **Rapamycin pulse (5-6mg)** + **Apigenin** (CD38 guard) + **NR (600mg)**.
 
-*   **Primary Foundation:** **Sleep Quality (0.97+).** Must clear the increased metabolic exhaust caused by structural drag.
-*   **The CTS Guard (Vascular Stability):** High-dose **Electrolytes/Salt (5g daily)** to prevent CBF bottlenecks in your Broca Recovery Zone.
-*   **Skeletal Guard:** Mandatory high-dose Vitamin D/K2 + Calcium to reverse bone density collapse.
-*   **Structural Fuel:** Increase **Glycine & Collagen** intake (from Essex Farm proteins) to support the underlying collagen matrix.
-
-### For Peter (The Biologist)
-Peter faces **Severe Structural Drag (1.4x)**.
-
-*   **Connective Tissue Guard:** High-dose **Vitamin C (2-3g)** + **Collagen/Glycine** to manage joint stability.
-*   **Vascular Stability:** High electrolytes/salt (7g+ daily) to prevent POTS-driven exhaustion.
-*   **Energy Debt:** Maximum Magnesium (800mg) and NR (NAD+) to fill the structural energy leak.
-*   **Sleep Quality:** 0.90 intensity sleep hygiene to overcome genetic/CTS sleep drag.
+### **Peter (The Wildlife Biologist)**
+*   **Structural (Severe CTS):** High-dose **Vitamin C (3g)** + **Collagen/Glycine** daily to manage the 1.4x metabolic structural drag.
+*   **Neuro-Metabolic (SS/Energy):** High-dose **NR (900mg)** + **Magnesium (800mg)** to fill the energy debt associated with processing speed challenges and genetic sleep penalties.
+*   **Growth (BDNF):** Mandatory daily resistance-based farm chores (heavy lifting/pruning) to provide the structural signal needed for joint stability.
+*   **Sleep:** 0.9+ intensity hygiene (Blackout curtains, 66°F room) to overcome the 0.7 genetic sleep penalty.
 
 ---
 
-## 3. The "Scholar-Biologist" Joint Routine
-*   **07:00:** High-protein/High-Glycine breakfast (Home Eggs + Bone Broth).
-*   **08:00 - 10:00:** Farm Chores (Functional Exercise Engine).
-*   **20:00:** Magnesium Loading + Joint-Centric Stretching.
-
-**Verdict:** Both Digital Twins are now **Structural-Aware.** By stabilizing the **Vascular (CBF)** and **Skeletal (Bone)** anchors, the household pushes the "Heteroplasmy Cliff" beyond the 20-year horizon.
+## 3. The Household Picture
+The Westport Digital Twin represents a **"Symbiotic Shield."** You provide the metabolic steering and intellectual atmosphere (MEF2 stimulus), while Peter provides the functional growth signal (BDNF) and physical maintenance of the Homestead engine. Together, you maintain a "Biological Floor" that prevents the energy crisis (ATP < 0.50) that the base model predicts for your profiles.
 
 ---
 
-## Appendix C: Genetic Refinement (GEDMatch & Raw Data)
-While GEDMatch does not offer a public API, its "One-to-Many" comparison tool can be used to validate mitochondrial lineages across the family tree.
+## 4. Food Sourcing & Dietary Management
+*   **The Shared Table:** A **Mediterranean-Keto Hybrid** diet (High Polyphenol / Ketone Fuel).
+*   **Inventory First:** 100% of eggs from the coop (Choline) and 100% of fruit from the 7-acre orchard (Quercetin senolytic pulse).
+*   **The Essex Engine:** 90% of proteins/fats from **Essex Farm** (Grass-finished beef/lamb and raw Jersey dairy) to ensure an anti-inflammatory lipid profile.
+*   **The Co-op Shield:** All bulk supplements, high-polyphenol EVOO, and Magnesium sourced from the **Middlebury Natural Foods Co-op**.
 
-### 1. Lineage Validation
-*   **Action:** Verify the "Mt" column in GEDMatch for John, Selena, and Peter.
-*   **Model Impact:** If a shared haplogroup (e.g., H13a1) is confirmed, the `genetic_vulnerability` variable in the 37-state model can be synchronized across all twins, ensuring the "Structural Shield" protocol is calibrated to the same familial baseline.
+---
 
-### 2. Manual SNP Extraction
-To reach the absolute ceiling of the 37-state model, manually check raw data files (from 23andMe or Ancestry) for these high-leverage SNPs:
-*   **CD38 (rs1659127):** If 'Risk' variant detected, increase **Apigenin** dose to 200mg.
-*   **FOXO3 (rs2802292):** If 'Protective' G-allele detected, the model's `mitophagy_efficiency` is boosted by 1.3x.
-*   **COL5A1 (rs12722):** Specifically for the connective tissue profile (EDS proxy). If 'Risk' detected, increase **Vitamin C** to 3g.
+## 5. Input Device Plan
+*   **User:** Oura Ring (Critical for tracking Deep Sleep window vs. research load) + Apple Watch Series 9 (monitoring SpO2 for NRZ oxygenation).
+*   **Peter:** Oura Ring (Tracking HRV as a proxy for structural EDS stress) + Stelo CGM (identifying glucose-driven anxiety triggers).
+
+---
+
+## 6. Prototype: The Weekly Mito-Newsletter
+> **SUBJECT: Westport Steering - Week 1: The Spring Biogenesis Flush**
+> 
+> **THESE WEEKS GOALS:**
+> *   **The Task:** Pruning the 7-acre orchard. (Peter: Heavy load / User: Zone 2 Aerobic).
+> *   **The Table:** High-Glycine focus. Slow-cook Essex Farm lamb shanks with rosemary to support joint repair.
+> *   **The Guard:** With Oura showing lower HRV this week, increase Magnesium loading to 1000mg for the next 3 nights.
+> *   **The Strike:** User's scheduled Rapamycin pulse is Thursday AM. Follow with 24-hour fast.
