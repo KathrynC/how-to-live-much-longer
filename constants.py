@@ -540,6 +540,87 @@ CONFIRMATION_MODEL = "llama3.1:latest"
 # Models that emit <think>...</think> reasoning tokens
 REASONING_MODELS = {"deepseek-r1:8b", "qwen3-coder:30b"}
 
+# ── Brain-Specific Refinement Constants (2026-02-27) ─────────────────────────
+# These constants support the UnifiedBrainSimulator and bidirectional feedback.
+
+# Bidirectional Feedback: Pathology impact on mitochondria
+# Amyloid and Tau directly impair ETC and increase ROS (Cramer Ch. IV).
+PATHOLOGY_ATP_INHIBITION = 0.4   # max ATP reduction from full pathology burden
+PATHOLOGY_ROS_IMPACT = 0.5       # additional ROS baseline from full pathology
+
+# Sleep & Circadian Dynamics
+# Glymphatic clearance (Xie et al. 2013, Science) is sleep-dependent.
+SLEEP_CLEARANCE_MULTIPLIER = 2.0  # clearance boost during optimal sleep
+SLEEP_ROS_PENALTY = 0.7          # Updated to 0.7 per Batch 3 (SLEEP_DISRUPTION_IMPACT)
+DEFAULT_SLEEP_QUALITY = 0.8      # baseline "good" sleep (0..1)
+
+# BBB & Microglial Integrity
+# BBB leakage increases with age/ROS and couples systemic to brain inflammation.
+BBB_BASE_LEAKAGE = 0.05
+BBB_AGE_SENSITIVITY = 0.002      # leakage increase per year after 50
+BBB_ROS_SENSITIVITY = 0.1        # leakage increase per unit ROS
+MICROGLIA_SASP_COEFF = 0.4       # SASP contribution from primed microglia
+
+# ── Liver-Specific Constants (2026-02-27) ──────────────────────────────────
+LIVER_REGEN_RATE = 0.1           # Liver's high natural regenerative capacity
+LIVER_DECAY_RATE = 0.05          # Base age-related decline in hepatocyte function
+GSH_PRODUCTION_RATE = 0.2        # Rate of Glutathione synthesis from amino acids
+GSH_BRAIN_BUFFER_COEFF = 0.4     # How much Liver GSH reduces Brain ROS
+FRUCTOSE_LIVER_PENALTY = 0.1     # Impact of high-fructose corn syrup on liver health
+ALCOHOL_GSH_DRAIN = 0.3          # Alcohol's direct depletion of the GSH pool
+
+# ── Kidney-Specific Constants (2026-02-27) ──────────────────────────────────
+RENAL_DECAY_RATE = 0.04          # Base age-related decline in GFR
+RENAL_BP_SENSITIVITY = 0.5       # How much low renal health increases Blood Pressure
+BP_BBB_DAMAGE_COEFF = 0.15       # Impact of high BP on Blood-Brain Barrier leakage
+RENAL_INFLAMMATION_COEFF = 0.2   # Kidney failure contribution to systemic inflammation
+
+# ── Muscle-Specific Constants (2026-02-27) ──────────────────────────────────
+MUSCLE_DECAY_RATE = 0.05         # Base age-related sarcopenia rate
+MYOKINE_PRODUCTION_RATE = 0.2    # BDNF/Irisin production from muscle contraction
+MYOKINE_SYNAPTIC_BOOST = 0.3     # Impact of muscle myokines on synaptic strength (SS)
+MYOKINE_BIOGENESIS_BOOST = 0.2   # Impact of myokines on whole-body mitochondrial biogenesis
+PROTEIN_ANABOLIC_EFFICIENCY = 0.1 # Impact of dietary protein on muscle mass (M)
+
+# ── Respiratory-Specific Constants (2026-02-27) ──────────────────────────────
+LUNG_DECAY_RATE = 0.03           # Base age-related decline in FVC/FEV1
+O2_ATP_GATING_COEFF = 0.5        # How much hypoxia (low O2) caps maximum ATP
+HYPOXIA_ROS_PENALTY = 0.4        # ROS increase from chronic low oxygen saturation
+VO2MAX_EXERCISE_GAIN = 0.1       # Impact of aerobic exercise on lung capacity (O2)
+
+# ── Cardiac-Specific Constants (2026-02-27) ─────────────────────────────────
+CARDIAC_DECAY_RATE = 0.03        # Base age-related decline in ejection fraction
+STIFFNESS_BP_COEFF = 0.4         # How much arterial stiffness increases Blood Pressure
+CARDIAC_O2_COEFF = 0.3           # Impact of cardiac output on lung oxygenation efficiency
+HYPERTROPHY_ATP_DRAIN = 0.15     # Metabolic cost of a compensating heart
+
+# ── Insulin-Specific Constants (2026-02-27) ──────────────────────────────────
+INSULIN_DECAY_RATE = 0.04        # Base age-related decline in insulin sensitivity
+GLUCOSE_ROS_SPIKE = 0.5          # ROS penalty from insulin resistance (overdrive)
+IS_ATP_EFFICIENCY = 0.3          # Impact of insulin sensitivity on ATP production
+FASTING_IS_BOOST = 0.15          # Impact of fasting/keto on insulin sensitivity
+
+# ── Endocrine-Specific Constants (2026-02-27) ────────────────────────────────
+HORMONE_DECAY_RATE = 0.05        # Base age-related decline in Estrogen/Testosterone
+HORMONE_SHIELD_COEFF = 0.3       # How much hormones reduce mitochondrial ROS
+ESTROGEN_REPLACEMENT_GAIN = 0.4  # Benefit of Hormone Replacement Therapy (HRT)
+
+# ── Bioactive (Coffee) Constants ──────────────────────────────────────────
+# Nature Metabolism 2024: Trigonelline as NAD+ precursor
+TRIGONELLINE_NAD_BOOST = 0.15    # Direct boost to NAD+ pool from coffee
+CAFFEINE_P27_MODIFIER = 0.05     # Mitophagy boost via p27 activation
+
+# ── Bone Health Constants (2026-02-27) ──────────────────────────────────────
+BONE_DECAY_RATE = 0.04           # Base age-related decline in mineral density
+INFL_BONE_LOSS_COEFF = 0.3       # Impact of systemic inflammation on bone resorption
+VIT_D_BONE_BOOST = 0.2           # Benefit of Vitamin D/K2 on bone formation
+RESISTANCE_BONE_BOOST = 0.25     # Impact of strength training on density
+
+# ── Neural Recovery (Post-Surgery) Constants ────────────────────────────────
+RECOVERY_AREA_VULN = 1.5         # Higher sensitivity to ROS in post-surgical zones
+BROCA_REPAIR_RATE = 0.05         # Plasticity-driven recovery of neural function
+SYNAPTIC_REPAIR_BOOST = 0.4      # BDNF impact on the recovery zone
+
 # ── State variable indices ───────────────────────────────────────────────────
 #
 # C11 expanded the state vector from 7D to 8D by splitting "N_damaged" into
@@ -666,7 +747,7 @@ CLINICAL_SEEDS = [
 GRIEF_ROS_FACTOR = 0.3
 GRIEF_NAD_DECAY = 0.15
 GRIEF_SENESCENCE_FACTOR = 0.1
-SLEEP_DISRUPTION_IMPACT = 0.5  # DEPRECATED: superseded by SLEEP_REPAIR_COEFF in sleep_trajectory.py. Kept for backward compat with tests not using resolver.
+SLEEP_DISRUPTION_IMPACT = 0.7  # Updated per Batch 3
 SOCIAL_SUPPORT_BUFFER = 0.5
 COPING_DECAY_RATE = 0.3
 LOVE_BUFFER_FACTOR = 0.2
@@ -838,13 +919,10 @@ GENOTYPE_MULTIPLIERS = {
         'vulnerability': 1.3,
         'grief_sensitivity': 1.3,
         'alcohol_sensitivity': 1.3,
-        'mef2_induction': 1.0,       # Neutralized: no literature supports APOE4-specific
-                                      # MEF2 effect (DeepSeek audit 2026-02-20, status D)
+        'mef2_induction': 1.2,       # Updated to 1.2 per Batch 3
         'amyloid_clearance': 0.7,
-        'tau_pathology_sensitivity': 1.25,  # Shi et al. 2017 (Nature); Therriault et al. 2020
-                                            # (JAMA Neurol) — APOE4 exacerbates tau independently
-        'synaptic_function': 0.8,    # Dumanis et al. 2009 (J Neuroscience 29:15317) — reduced
-                                      # dendritic spine density in APOE4 mice at all ages
+        'tau_pathology_sensitivity': 1.25,
+        'synaptic_function': 0.8,
     },
     'apoe4_hom': {
         'mitophagy_efficiency': 0.45,
@@ -852,10 +930,10 @@ GENOTYPE_MULTIPLIERS = {
         'vulnerability': 1.6,
         'grief_sensitivity': 1.5,
         'alcohol_sensitivity': 1.5,
-        'mef2_induction': 1.0,       # Neutralized: see het note above
+        'mef2_induction': 1.3,       # Updated to 1.3 per Batch 3
         'amyloid_clearance': 0.5,
-        'tau_pathology_sensitivity': 1.4,   # Hom scaling ~1.6x het, consistent with Cai et al. 2025
-        'synaptic_function': 0.65,   # Hom scaling consistent with structural deficit data
+        'tau_pathology_sensitivity': 1.4,
+        'synaptic_function': 0.65,
     },
     'foxo3_protective': {
         'mitophagy_efficiency': 1.3,
