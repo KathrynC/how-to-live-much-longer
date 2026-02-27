@@ -64,7 +64,7 @@ To support the 33-state model, your food sourcing must prioritize **Nutrient Den
 ### Sourcing Tiers
 1.  **Essex Farm (Essex, NY) — *The Primary Engine (80-90% of Calories)***
 2.  **Middlebury Natural Foods Co-op (VT) — *Anti-Inflammatory Specialty Hub***
-3.  **Tops Friendly Markets (Elizabethtown, NY) — *Logistical Backup***
+3.  **Tops Friendly Markets (Elizabethtown, NY) — *Logistical Backup for Westport***
 
 ---
 

@@ -42,3 +42,18 @@ Peter faces **Severe Structural Drag (1.4x)**.
 *   **20:00:** Magnesium Loading + Joint-Centric Stretching.
 
 **Verdict:** Both Digital Twins are now **Structural-Aware.** By stabilizing the **Vascular (CBF)** and **Skeletal (Bone)** anchors, the household pushes the "Heteroplasmy Cliff" beyond the 20-year horizon.
+
+---
+
+## Appendix C: Genetic Refinement (GEDMatch & Raw Data)
+While GEDMatch does not offer a public API, its "One-to-Many" comparison tool can be used to validate mitochondrial lineages across the family tree.
+
+### 1. Lineage Validation
+*   **Action:** Verify the "Mt" column in GEDMatch for John, Selena, and Peter.
+*   **Model Impact:** If a shared haplogroup (e.g., H13a1) is confirmed, the `genetic_vulnerability` variable in the 37-state model can be synchronized across all twins, ensuring the "Structural Shield" protocol is calibrated to the same familial baseline.
+
+### 2. Manual SNP Extraction
+To reach the absolute ceiling of the 37-state model, manually check raw data files (from 23andMe or Ancestry) for these high-leverage SNPs:
+*   **CD38 (rs1659127):** If 'Risk' variant detected, increase **Apigenin** dose to 200mg.
+*   **FOXO3 (rs2802292):** If 'Protective' G-allele detected, the model's `mitophagy_efficiency` is boosted by 1.3x.
+*   **COL5A1 (rs12722):** Specifically for the connective tissue profile (EDS proxy). If 'Risk' detected, increase **Vitamin C** to 3g.

@@ -1,6 +1,6 @@
-"""ea_household_optimizer_elizabethtown.py
+"""ea_household_optimizer_westport.py
 
-Optimizes the Elizabethtown Household (User + Peter) as a single unit.
+Optimizes the Westport Household (User + Peter) as a single unit.
 Uses the 35-state Omni-Twin model.
 Goal: Maximize combined Memory Index while honoring shared resources.
 """
@@ -63,7 +63,7 @@ def evaluate_household_fitness(params):
     }
 
 def run_optimization(budget=100):
-    print(f"Optimizing Elizabethtown Household (Budget: {budget})...\n")
+    print(f"Optimizing Westport Household (Budget: {budget})...\n")
     param_names = ["shared_fructose", "user_exercise", "user_sleep", "peter_exercise", "peter_sleep"]
     current_params = {name: 0.5 for name in param_names}
     current_result = evaluate_household_fitness(current_params)
@@ -85,7 +85,7 @@ def run_optimization(budget=100):
         if (i+1) % 20 == 0:
             print(f"Trial {i+1:3d} | Fitness: {current_result['fitness']:.4f} | User MI: {current_result['user_mi']:.4f} | Peter MI: {current_result['peter_mi']:.4f}")
 
-    print("\nOPTIMAL ELIZABETHTOWN CONFIGURATION:")
+    print("\nOPTIMAL WESTPORT CONFIGURATION:")
     for k, v in current_params.items():
         print(f"  {k:<20}: {v:.4f}")
     return current_params, current_result
