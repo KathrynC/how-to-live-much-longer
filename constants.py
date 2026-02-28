@@ -621,6 +621,21 @@ RECOVERY_AREA_VULN = 1.5         # Higher sensitivity to ROS in post-surgical zo
 BROCA_REPAIR_RATE = 0.05         # Plasticity-driven recovery of neural function
 SYNAPTIC_REPAIR_BOOST = 0.4      # BDNF impact on the recovery zone
 
+# ── Physical Intervention Constants (2026-02-27) ─────────────────────────────
+# Red Light Therapy (Photobiomodulation)
+RED_LIGHT_ATP_BOOST = 0.12       # Boost to cytochrome c oxidase activity
+RED_LIGHT_INFL_REDUCTION = 0.15  # Reduction in brain neuro-inflammation
+
+# Sauna (Heat Shock Proteins & Cardiovascular)
+SAUNA_MITOPHAGY_BOOST = 0.2      # HSP70-mediated mitophagy/autophagy induction
+SAUNA_CBF_GAIN = 0.15            # Improvement in cerebral blood flow via vasodilation
+SAUNA_BP_REDUCTION = 0.1         # Moderate impact on blood pressure
+
+# Restorative Yoga (Parasympathetic & Structural)
+YOGA_INFL_REDUCTION = 0.2        # Cortisol/Stress-driven inflammation reduction
+YOGA_STIFFNESS_REDUCTION = 0.15  # Myofascial release / Arterial stiffness reduction
+YOGA_EDS_STABILITY_BOOST = 1.3   # Protective factor for EDS subjects (joint/proprioception)
+
 # ── State variable indices ───────────────────────────────────────────────────
 #
 # C11 expanded the state vector from 7D to 8D by splitting "N_damaged" into

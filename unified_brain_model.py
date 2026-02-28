@@ -70,7 +70,11 @@ from constants import (
     TRIGONELLINE_NAD_BOOST, CAFFEINE_P27_MODIFIER,
     # Bone & Neural Recovery (Phase 8)
     BONE_DECAY_RATE, INFL_BONE_LOSS_COEFF, VIT_D_BONE_BOOST, RESISTANCE_BONE_BOOST,
-    RECOVERY_AREA_VULN, BROCA_REPAIR_RATE, SYNAPTIC_REPAIR_BOOST
+    RECOVERY_AREA_VULN, BROCA_REPAIR_RATE, SYNAPTIC_REPAIR_BOOST,
+    # Physical Interventions (Red Light, Sauna, Yoga)
+    RED_LIGHT_ATP_BOOST, RED_LIGHT_INFL_REDUCTION,
+    SAUNA_MITOPHAGY_BOOST, SAUNA_CBF_GAIN, SAUNA_BP_REDUCTION,
+    YOGA_INFL_REDUCTION, YOGA_STIFFNESS_REDUCTION, YOGA_EDS_STABILITY_BOOST
 )
 
 from simulator import derivatives as core_derivatives, initial_state as core_initial_state
@@ -102,10 +106,20 @@ def unified_derivatives(
     profile = patient.get("profile", "scholar")
     
     # ── Subject Profile Modifiers ──
-    # Subject A (Scholar): Mild drag (1.2x) from osteopenia + mild CTS
-    # Subject B (Biologist): Severe drag (1.4x) from probable metabolic variant
-    structural_drag = 1.4 if profile == "biologist" else 1.2
-    processing_speed_cost = 1.5 if profile == "biologist" else 1.0
+    # Profiles:
+    # - scholar/artist: Mild drag (1.2x)
+    # - eds: Severe drag (1.4x) from structural metabolic variants
+    # Support for explicit clinical gradient override
+    base_drag = 1.4 if profile == "eds" else 1.2
+    structural_drag = patient.get("structural_drag_override", base_drag)
+    processing_speed_cost = 1.5 if structural_drag > 1.3 else 1.0
+    
+    # -- Post-Viral Factor (COVID-19 History) --
+    post_viral = patient.get("post_viral_load", 0.0) # 0.0 = Never, 1.0 = Severe/Long-COVID
+    viral_infl_boost = 0.15 * post_viral
+    viral_demand_mult = 1.0 + (0.1 * post_viral)
+    if profile == "eds":
+        processing_speed_cost *= (1.0 + 0.1 * post_viral) # COVID exacerbates EDS/dysautonomia interaction
     
     exercise = intervention.get("exercise_level", 0.0)
     alcohol = intervention.get("alcohol_intake", 0.0)
@@ -161,12 +175,37 @@ def unified_derivatives(
     elif soc_type == "integrated": soc_mef2_mod = 1.4; soc_cr_mod = 1.6; soc_grief_mod = 1.8
     
     # ── Animal Profiles ──
-    ani_gut_mod = 1.0; ani_grief_mod = 1.0; ani_ex_mod = 1.0; ani_bdnf_mod = 1.0
+    ani_gut_mod = 1.0; ani_grief_mod = 1.0; ani_ex_mod = 1.0; ani_bdnf_mod = 1.0; ani_mitophagy_boost = 0.0
     if ani_type == "livestock": ani_gut_mod = 1.4; ani_grief_mod = 1.2
     elif ani_type == "active": ani_ex_mod = 1.3; ani_bdnf_mod = 1.2
     elif ani_type == "emotional": ani_grief_mod = 1.5
-    elif ani_type == "full_farm": ani_gut_mod = 1.5; ani_grief_mod = 1.8; ani_ex_mod = 1.4; ani_bdnf_mod = 1.3
+    elif ani_type == "full_farm": 
+        ani_gut_mod = 1.8
+        ani_grief_mod = 2.0
+        ani_ex_mod = 1.5
+        ani_bdnf_mod = 1.8
+        ani_mitophagy_boost = 0.15  # Large effect size for turnover
 
+    # -- Physical Interventions --
+    red_light = intervention.get("red_light_therapy", 0.0)
+    sauna = intervention.get("sauna_use", 0.0)
+    yoga = intervention.get("restorative_yoga", 0.0)
+    
+    # Red Light (PBM) Effects
+    pbm_atp_boost = RED_LIGHT_ATP_BOOST * red_light
+    pbm_infl_reduction = RED_LIGHT_INFL_REDUCTION * red_light
+    
+    # Sauna Effects
+    sauna_mitophagy = SAUNA_MITOPHAGY_BOOST * sauna
+    sauna_cbf = SAUNA_CBF_GAIN * sauna
+    sauna_bp = SAUNA_BP_REDUCTION * sauna
+    
+    # Restorative Yoga Effects
+    yoga_infl = YOGA_INFL_REDUCTION * yoga
+    yoga_stiff = YOGA_STIFFNESS_REDUCTION * yoga
+    if profile == "eds":
+        yoga_infl *= YOGA_EDS_STABILITY_BOOST # Yoga is high-value for EDS parasympathetic/joint stability
+    
     # ── 3. Bone Health & Neural Recovery ──────────────────────────────────
     # Bone Density: Decay vs. Resistance training and Vitamin D/K2
     vit_d = intervention.get("vitamin_d_dose", 0.0)
@@ -185,9 +224,9 @@ def unified_derivatives(
     d_is = (FASTING_IS_BOOST * fasting + 0.05 * exercise) * diet_is_mod * (1.0 - is_sens) - (INSULIN_DECAY_RATE + 0.2 * fructose) * (1.0/diet_is_mod) * is_sens
 
     # ── 5. Systemic Pumps (Cardiac, Lung, SpO2) ─────────────────────────────
-    d_art_s = 0.02 * max(blood_pressure - 1.0, 0) + 0.01 * (age/100) - 0.03 * exercise * ex_cbf_mod * ani_ex_mod * (art_s)
+    d_art_s = 0.02 * max(blood_pressure - 1.0, 0) + 0.01 * (age/100) - 0.03 * exercise * ex_cbf_mod * ani_ex_mod * (art_s) - yoga_stiff * art_s
     energy_mult = min(atp / BASELINE_ATP, 1.0)
-    d_h_pump = 0.1 * exercise * energy_mult * ex_biogen_mod * ani_ex_mod * (1.0 - h_pump) - (CARDIAC_DECAY_RATE + 0.05 * art_s) * h_pump
+    d_h_pump = 0.1 * (exercise + 0.5 * sauna) * energy_mult * ex_biogen_mod * ani_ex_mod * (1.0 - h_pump) - (CARDIAC_DECAY_RATE + 0.05 * art_s) * h_pump
     d_lung = VO2MAX_EXERCISE_GAIN * exercise * ex_lung_mod * ani_ex_mod * (1.0 - lung_o2) - (LUNG_DECAY_RATE + 0.2 * pollution) * lung_o2
     spo2_target = lung_o2 * (0.6 + 0.2 * cbf + 0.2 * h_pump)
     d_spo2 = 2.0 * (spo2_target - spo2)
@@ -199,7 +238,7 @@ def unified_derivatives(
 
     # ── 7. Vascular, Kidney, Liver ──────────────────────────────────────────
     d_renal = 0.02 * muscle_energy_mult * (1.0 - renal_k) - (RENAL_DECAY_RATE + 0.1 * max(blood_pressure - 1.0, 0)) * renal_k
-    bp_target = 1.0 + (salt_intake * 0.2) + (grief_g * 0.15) + RENAL_BP_SENSITIVITY * (1.0 - renal_k) + STIFFNESS_BP_COEFF * art_s
+    bp_target = 1.0 + (salt_intake * 0.2) + (grief_g * 0.15) + RENAL_BP_SENSITIVITY * (1.0 - renal_k) + STIFFNESS_BP_COEFF * art_s - sauna_bp
     d_bp = 0.5 * (bp_target - blood_pressure - 0.1 * exercise * ex_bp_mod * ani_ex_mod)
     d_liver = LIVER_REGEN_RATE * (1.0 - liver_l) - (LIVER_DECAY_RATE + 0.1 * alcohol * apoe_alc + FRUCTOSE_LIVER_PENALTY * fructose) * liver_l
     gsh_production = GSH_PRODUCTION_RATE * liver_l * atp * spo2
@@ -211,19 +250,19 @@ def unified_derivatives(
     excitability_demand = 1.0 + 0.2 * (neuronal_excitability - 1.0)
     bbb_leakage = min(BBB_BASE_LEAKAGE + BBB_AGE_SENSITIVITY * max(age - 50, 0) + BBB_ROS_SENSITIVITY * ros + BP_BBB_DAMAGE_COEFF * max(blood_pressure - 1.0, 0), 1.0)
     systemic_infl = (patient.get("inflammation_level", 0.25) * (1.0 + alcohol * ALCOHOL_INFLAMMATION_FACTOR * apoe_alc) + RENAL_INFLAMMATION_COEFF * (1.0 - renal_k) + 0.2 * (1.0 - is_sens)) * diet_infl_mod
-    brain_infl = min(1.0, systemic_infl * (1.0 + bbb_leakage) + MICROGLIA_SASP_COEFF * sen + 0.3 * m1_mic)
+    brain_infl = min(1.0, systemic_infl * (1.0 + bbb_leakage) + MICROGLIA_SASP_COEFF * sen + 0.3 * m1_mic + viral_infl_boost - pbm_infl_reduction - yoga_infl)
     
     # ── 9. Core Mitochondrial Engine (Wrapped) ─────────────────────────────
     pathology_burden = min(1.0, (ab * AMYLOID_TOXICITY + tau * TAU_TOXICITY))
     mod_patient = dict(patient)
     mod_patient["inflammation_level"] = brain_infl
-    mod_patient["metabolic_demand"] = max(0.1, (TISSUE_PROFILES["brain"]["metabolic_demand"] * excitability_demand * structural_drag) - supp_effects['demand_reduction'])
+    mod_patient["metabolic_demand"] = max(0.1, (TISSUE_PROFILES["brain"]["metabolic_demand"] * excitability_demand * structural_drag * viral_demand_mult) - supp_effects['demand_reduction'])
     tissue_mods = dict(TISSUE_PROFILES["brain"])
     tissue_mods["biogenesis_rate"] *= (1.0 + MYOKINE_BIOGENESIS_BOOST * bdnf_pool) * ex_biogen_mod
     gut_nad_efficiency = (0.7 + 0.3 * gut_m) * (0.8 + 0.2 * liver_l)
     mod_intervention = dict(intervention)
     mod_intervention["nad_supplement"] = (intervention.get("nad_supplement", 0.0) + supp_effects['nad_boost'] + TRIGONELLINE_NAD_BOOST * trig_load) * gut_nad_efficiency
-    mod_intervention["rapamycin_dose"] = intervention.get("rapamycin_dose", 0.0) + supp_effects['mitophagy_boost'] + CAFFEINE_P27_MODIFIER * coffee_intake
+    mod_intervention["rapamycin_dose"] = intervention.get("rapamycin_dose", 0.0) + supp_effects['mitophagy_boost'] + CAFFEINE_P27_MODIFIER * coffee_intake + ani_mitophagy_boost
     d_core = core_derivatives(core_state, t, mod_intervention, mod_patient, tissue_mods)
     
     # Feedbacks on Core
