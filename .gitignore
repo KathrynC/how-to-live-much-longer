@@ -26,3 +26,5 @@ docs/steering/
 local_docs/
 logs/
 artifacts/
+!artifacts/family_ecosystem_design.md
+!artifacts/spatial_bridge_design.md
