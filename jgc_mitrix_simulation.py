@@ -58,7 +58,7 @@ JGC_PATIENT = {
 NO_TREATMENT = dict(DEFAULT_INTERVENTION)
 
 # Mitrix protocol: transplant-focused with conservative support
-# Cramer receives IV mitochondria from 26-year-old granddaughter Selena Shea
+# Patient receives IV mitochondria from 26-year-old donor relative
 MITRIX_TRANSPLANT = {
     "rapamycin_dose": 0.25,           # mild mitophagy support
     "nad_supplement": 0.5,            # moderate NAD restoration

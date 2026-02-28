@@ -101,9 +101,9 @@ def unified_derivatives(
     age = patient["baseline_age"] + t
     profile = patient.get("profile", "scholar")
     
-    # ── User/Son Profile Modifiers ──
-    # User (Scholar): Mild drag (1.2x) from osteopenia + mild CTS
-    # Peter (Biologist): Severe drag (1.4x) from probable EDS
+    # ── Subject Profile Modifiers ──
+    # Subject A (Scholar): Mild drag (1.2x) from osteopenia + mild CTS
+    # Subject B (Biologist): Severe drag (1.4x) from probable metabolic variant
     structural_drag = 1.4 if profile == "biologist" else 1.2
     processing_speed_cost = 1.5 if profile == "biologist" else 1.0
     

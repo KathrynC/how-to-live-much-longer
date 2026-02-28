@@ -1,83 +1,51 @@
-# GEMINI.md - Normalbaum Information Ecosystem (tldraw Agent)
+# GEMINI Context: How to Live Much Longer
 
-This workspace contains a highly customized **tldraw AI agent** designed to model and analyze **information ecosystems**. It extends the standard tldraw agent template with advanced features for epistemic analysis, structural graph metrics, and agent self-awareness (the **Normalbaum** framework).
+**This is the primary repository to start with.**
+
+This project is a computational simulation of mitochondrial aging dynamics and intervention strategies, based on John G. Cramer's forthcoming book, *How to Live Much Longer: The Mitochondrial DNA Connection* (Springer, 2026).
 
 ## Project Overview
 
-The core of this project is an AI agent that manipulates a [tldraw](https://tldraw.dev) infinite canvas via a chat interface. It models the canvas as an information ecosystem where shapes represent **epistemic claims** and arrows represent **evidential relationships**.
+- **Core Thesis:** Aging is a cellular energy crisis caused by mitochondrial DNA (mtDNA) damage. When heteroplasmy (damaged mtDNA fraction) exceeds ~70% (the "heteroplasmy cliff"), ATP production collapses.
+- **Technology Stack:** Python (NumPy, Matplotlib, Pydantic), RK4 ODE solvers, Semantic Cellular Automaton (CA) bridge.
+- **Key Modules:**
+  - `simulator.py`: 8-variable ODE model of cellular energetics.
+  - `parameter_resolver.py`: Maps ~50D precision medicine inputs to 12D core simulation parameters.
+  - `ca_simulator.py`: Semantic CA bridge for clinical interpretability and high-throughput screening.
+  - `downstream_chain.py`: Models cognitive reserve, amyloid/tau accumulation, and memory index.
 
-### The Normalbaum Framework
-The project is built around the "Normalbaum" (Normal Tree) concept—the idea that aggressive optimization or pruning of information to enforce conformity produces structures that appear healthy but are actually fragile and lacking in genuine diversity.
-
-Key capabilities include:
-- **Ecosystem Simulation**: Tagging claims with epistemic statuses (`established`, `contested`, `heterodox`, `suppressed`) and relationship types (`supports`, `contradicts`, `derives-from`).
-- **Spectral Analysis**: Computing graph Laplacian eigenvalues and SVD dominance ratios to identify bottlenecks and structural homogenization.
-- **Diversity Tracking**: Measuring spatial entropy and color/type distribution to monitor "normalization" tendencies.
-- **Epistemic Humility**: Tracking agent overwrites of user content and providing a meta-layer of self-reflection on the power dynamic between agent and user.
-
-## Architecture
-
-The application is a **monorepo-style Vite + React** frontend integrated with a **Cloudflare Worker** backend.
-
-- **`client/`**: React frontend featuring the tldraw canvas, chat panel UI, and agent lifecycle management.
-- **`shared/`**: Core logic shared between client and worker, including action utilities, prompt part utilities, shape format converters, and mathematical graph/matrix logic.
-- **`worker/`**: Cloudflare Worker backend using **Durable Objects** for model streaming via the **Vercel AI SDK**.
-
-### Key Technologies
-- **Frontend**: React, tldraw SDK, Vite
-- **Backend**: Cloudflare Workers, Durable Objects, itty-router
-- **AI**: Vercel AI SDK (`ai` package), supporting Anthropic (Claude), Google (Gemini), and OpenAI.
-- **Math**: Custom graph theory and matrix math (Laplacian, Eigenvalues, SVD) in `shared/math/`.
-
-## Development Commands
+## Operational Commands
 
 ```bash
-# Install dependencies
-npm install
+# Setup
+conda env create -f environment.yml
+conda activate mito-aging
 
-# Run development server (Local: http://localhost:5173/)
-npm run dev
+# Core Simulation & Analytics
+python simulator.py          # Run baseline ODE test
+python run_scenario_comparison.py  # Run 4-scenario precision medicine comparison
 
-# Build for production
-npm run build
+# Resilience & Stress Testing
+python resilience_viz.py     # Disturbance shocks (radiation, chemo, etc.)
+python kcramer_tools_runner.py --mode resilience # Scenario-based robustness
 
-# Preview production build
-npm run preview
+# Semantic CA Bridge
+python ca_visualize.py       # Discretized state transitions and rule analysis
+python hyper_sobol.py        # 45-D sensitivity analysis of CA rules
 ```
 
-## Configuration & Environment
+## Critical Conventions
 
-Create a `.dev.vars` file in the root directory with your API keys:
-```env
-ANTHROPIC_API_KEY=your_key
-GOOGLE_API_KEY=your_key
-OPENAI_API_KEY=your_key
-```
+- **Cramer Ground Truth:** All biological constants in `constants.py` are traced to specific chapters/pages in the Cramer (2026) manuscript.
+- **Slowing vs. Reversing:** The model distinguishes between rate-reduction (slowing) and state-restoration (reversing). Reversal typically requires multi-angle "cocktail" interventions.
+- **12D Parameter Space:** Interventions (6D) and Patient Profiles (6D) form the core simulation vector.
+- **TIQM Pipeline:** This project adapts the Transactional Interpretation of Quantum Mechanics (TIQM) pipeline for intervention protocol design.
 
-## Key Extension Points
+## Project Structure
 
-Most customizations happen in `shared/AgentUtils.ts`, which registers:
+- `artifacts/`: JSON results, plots, and analysis reports.
+- `docs/`: Technical documentation and optimization references.
+- `tests/`: Extensive pytest suite (~385 tests) covering book conformance and precision medicine logic.
+- `scripts/`: Utility scripts, including Zotero indexing for literature grounding.
 
-- **`PROMPT_PART_UTILS`**: Determines what the agent **sees** (e.g., `EcosystemPartUtil`, `DiversityPartUtil`, `ScreenshotPartUtil`).
-- **`AGENT_ACTION_UTILS`**: Determines what the agent can **do** (e.g., `SetEpistemicStatusActionUtil`, `SpectralAnalysisActionUtil`, `PruneActionUtil`).
-
-### Mathematical Submodels
-The agent uses specialized math utilities in `shared/math/`:
-- `GraphMatrix.ts`: Adjacency, Laplacian, and weighted matrix construction.
-- `Eigen.ts`: Symmetric eigenvalue decomposition and SVD.
-
-## Directory Structure Notes
-
-The root directory contains many peripheral files (STL 3D models, Excel data, Mathematica notebooks) that appear to be part of a broader research context (likely "Evolutionary Robotics") but are not core to the tldraw agent code itself.
-
-The primary codebase resides in:
-- `client/`
-- `shared/`
-- `worker/`
-
-## Documentation
-
-- `README.md`: Basic project intro.
-- `CLAUDE.md`: Detailed architecture and request flow guide for AI coding assistants.
-- `ODD_tldraw_agent.md`: Comprehensive model description using the ODD (Overview, Design concepts, Details) protocol.
-- `NormalBaum.txt`: Detailed breakdown of the Normalbaum features and design philosophy.
+**Note:** Ensure `Ollama` is running locally if executing Tier 2+ research campaigns (`tiqm_experiment.py`).

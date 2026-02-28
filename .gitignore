@@ -2,3 +2,26 @@ output/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Sensitive Household/Family Data
+ea_household_optimizer_*.py
+son_biologist_sim_*.py
+selena_rescue_sim_*.py
+household_omni_twin_*.py
+*bridge.py
+*scenarios.py
+*simulator.py
+*viz.py
+!simulator.py
+!ca_simulator.py
+!grief_mito_simulator.py
+!lemurs_mito_simulator.py
+!visualize.py
+!ca_visualize.py
+!resilience_viz.py
+!zimmerman_viz.py
+
+# Steering and Logs
+docs/steering/
+logs/
+artifacts/
