@@ -48,15 +48,23 @@ The simulation uses a 4th-order Runge-Kutta (RK4) scheme:
 4.  **Downstream Chain Update:** Propagate energy state to cognitive reserve and amyloid/tau accumulation models.
 
 ---
-
 ## II. DESIGN CONCEPTS
 
 ### 4. Design Concepts
 
-#### 4.1 Basic Principles
-Aging is defined as an **Energy Crisis** driven by the exponential expansion of deletion-mutated mtDNA. The model assumes that metabolic energy (ATP) is the primary currency of cellular resilience.
+#### 4.1 Basic Principles (ODD+D)
+*   **Theoretical Background:** The model is grounded in the **Mitochondrial Theory of Aging (MTA)** and the **Energy-Resilience Hypothesis**. It posits that aging is a solvable energy crisis.
+*   **Decision-Making Objectives:** The agent (patient/clinician) objective is to maximize **Metabolic Stability** (ATP output) over a 30-year horizon while minimizing the metabolic cost of interventions.
+*   **Decision Rules:** Interventions are selected based on **Threshold Logic**: if heteroplasmy > 0.5, activate state-restoration (Transplantation); if ROS > 1.2, activate rate-reduction (Senolytics).
 
-#### 4.2 Emergence
+#### 4.2 Individual Decision-Making
+*   **Information:** The system has perfect information regarding its 8 state variables (though the patient/agent may only sense ATP/Energy).
+*   **Perception:** The model simulates the lag in perceiving mitochondrial damage until the "Energy Crisis" (ATP collapse) occurs.
+*   **Prediction:** The model uses its internal ODE system to predict the 30-year outcome of a given intervention cocktail.
+
+#### 4.3 Emergence
+...
+
 *   **The Energy Crash:** Emerges from the failure of respiratory chain complex assembly as deletion heteroplasmy crosses the threshold.
 *   **Bistability:** The system tends to "lock in" to a low-energy state once the cliff is passed.
 
