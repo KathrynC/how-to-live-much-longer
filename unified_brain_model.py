@@ -74,7 +74,12 @@ from constants import (
     # Physical Interventions (Red Light, Sauna, Yoga)
     RED_LIGHT_ATP_BOOST, RED_LIGHT_INFL_REDUCTION,
     SAUNA_MITOPHAGY_BOOST, SAUNA_CBF_GAIN, SAUNA_BP_REDUCTION,
-    YOGA_INFL_REDUCTION, YOGA_STIFFNESS_REDUCTION, YOGA_EDS_STABILITY_BOOST
+    YOGA_INFL_REDUCTION, YOGA_STIFFNESS_REDUCTION, YOGA_EDS_STABILITY_BOOST,
+    # Phase 11 Precision Interventions
+    UROLITHIN_A_MITOPHAGY_BOOST, SPERMIDINE_BIOGENESIS_BOOST,
+    SPERMIDINE_MITOPHAGY_BOOST, MOLECULAR_H2_ROS_REDUCTION,
+    VNS_AUTONOMIC_STABILIZER, AKKERMANSIA_GUT_BOOST,
+    AKKERMANSIA_IS_BOOST, SIDE_SLEEPING_CLEARANCE_BOOST
 )
 
 from simulator import derivatives as core_derivatives, initial_state as core_initial_state
@@ -191,6 +196,18 @@ def unified_derivatives(
     sauna = intervention.get("sauna_use", 0.0)
     yoga = intervention.get("restorative_yoga", 0.0)
     
+    # -- Phase 11 Precision Interventions --
+    urolithin_a = intervention.get("urolithin_a", 0.0)
+    spermidine = intervention.get("spermidine", 0.0)
+    molecular_h2 = intervention.get("molecular_hydrogen", 0.0)
+    vns_intensity = intervention.get("vns_intensity", 0.0)
+    akkermansia = intervention.get("akkermansia_probiotic", 0.0)
+    side_sleeping = intervention.get("side_sleeping", 0.0) # 0 or 1
+    
+    # VNS: Autonomic Stabilization reduces drag and systemic inflammation
+    vns_mod = 1.0 - (VNS_AUTONOMIC_STABILIZER * vns_intensity)
+    structural_drag *= vns_mod
+    
     # Red Light (PBM) Effects
     pbm_atp_boost = RED_LIGHT_ATP_BOOST * red_light
     pbm_infl_reduction = RED_LIGHT_INFL_REDUCTION * red_light
@@ -221,7 +238,7 @@ def unified_derivatives(
     
     coffee_intake = intervention.get("coffee_intake", 0.0)
     d_trig = 0.5 * coffee_intake * (1.0 - trig_load) - 0.2 * trig_load
-    d_is = (FASTING_IS_BOOST * fasting + 0.05 * exercise) * diet_is_mod * (1.0 - is_sens) - (INSULIN_DECAY_RATE + 0.2 * fructose) * (1.0/diet_is_mod) * is_sens
+    d_is = (FASTING_IS_BOOST * fasting + 0.05 * exercise + AKKERMANSIA_IS_BOOST * akkermansia) * diet_is_mod * (1.0 - is_sens) - (INSULIN_DECAY_RATE + 0.2 * fructose) * (1.0/diet_is_mod) * is_sens
 
     # ── 5. Systemic Pumps (Cardiac, Lung, SpO2) ─────────────────────────────
     d_art_s = 0.02 * max(blood_pressure - 1.0, 0) + 0.01 * (age/100) - 0.03 * exercise * ex_cbf_mod * ani_ex_mod * (art_s) - yoga_stiff * art_s
@@ -249,7 +266,7 @@ def unified_derivatives(
     neuronal_excitability = (nav / max(kcnq * kv4, 0.1)) * (1.2 - 0.2 * is_sens)
     excitability_demand = 1.0 + 0.2 * (neuronal_excitability - 1.0)
     bbb_leakage = min(BBB_BASE_LEAKAGE + BBB_AGE_SENSITIVITY * max(age - 50, 0) + BBB_ROS_SENSITIVITY * ros + BP_BBB_DAMAGE_COEFF * max(blood_pressure - 1.0, 0), 1.0)
-    systemic_infl = (patient.get("inflammation_level", 0.25) * (1.0 + alcohol * ALCOHOL_INFLAMMATION_FACTOR * apoe_alc) + RENAL_INFLAMMATION_COEFF * (1.0 - renal_k) + 0.2 * (1.0 - is_sens)) * diet_infl_mod
+    systemic_infl = (patient.get("inflammation_level", 0.25) * (1.0 + alcohol * ALCOHOL_INFLAMMATION_FACTOR * apoe_alc) + RENAL_INFLAMMATION_COEFF * (1.0 - renal_k) + 0.2 * (1.0 - is_sens)) * diet_infl_mod * vns_mod
     brain_infl = min(1.0, systemic_infl * (1.0 + bbb_leakage) + MICROGLIA_SASP_COEFF * sen + 0.3 * m1_mic + viral_infl_boost - pbm_infl_reduction - yoga_infl)
     
     # ── 9. Core Mitochondrial Engine (Wrapped) ─────────────────────────────
@@ -258,11 +275,11 @@ def unified_derivatives(
     mod_patient["inflammation_level"] = brain_infl
     mod_patient["metabolic_demand"] = max(0.1, (TISSUE_PROFILES["brain"]["metabolic_demand"] * excitability_demand * structural_drag * viral_demand_mult) - supp_effects['demand_reduction'])
     tissue_mods = dict(TISSUE_PROFILES["brain"])
-    tissue_mods["biogenesis_rate"] *= (1.0 + MYOKINE_BIOGENESIS_BOOST * bdnf_pool) * ex_biogen_mod
+    tissue_mods["biogenesis_rate"] *= (1.0 + MYOKINE_BIOGENESIS_BOOST * bdnf_pool) * ex_biogen_mod + (SPERMIDINE_BIOGENESIS_BOOST * spermidine)
     gut_nad_efficiency = (0.7 + 0.3 * gut_m) * (0.8 + 0.2 * liver_l)
     mod_intervention = dict(intervention)
     mod_intervention["nad_supplement"] = (intervention.get("nad_supplement", 0.0) + supp_effects['nad_boost'] + TRIGONELLINE_NAD_BOOST * trig_load) * gut_nad_efficiency
-    mod_intervention["rapamycin_dose"] = intervention.get("rapamycin_dose", 0.0) + supp_effects['mitophagy_boost'] + CAFFEINE_P27_MODIFIER * coffee_intake + ani_mitophagy_boost
+    mod_intervention["rapamycin_dose"] = intervention.get("rapamycin_dose", 0.0) + supp_effects['mitophagy_boost'] + CAFFEINE_P27_MODIFIER * coffee_intake + ani_mitophagy_boost + (UROLITHIN_A_MITOPHAGY_BOOST * urolithin_a) + (SPERMIDINE_MITOPHAGY_BOOST * spermidine)
     d_core = core_derivatives(core_state, t, mod_intervention, mod_patient, tissue_mods)
     
     # Feedbacks on Core
@@ -279,6 +296,7 @@ def unified_derivatives(
     d_core[3] += HYPOXIA_ROS_PENALTY * (1.0 - spo2)
     d_core[3] -= GSH_BRAIN_BUFFER_COEFF * gsh_pool * ros 
     d_core[3] += 0.2 * engagement * processing_speed_cost
+    d_core[3] -= MOLECULAR_H2_ROS_REDUCTION * molecular_h2 * ros # H2 selective scavenging
     d_core[4] -= GRIEF_NAD_DECAY * grief_g * nad
     d_core[4] -= ALCOHOL_NAD_FACTOR * alcohol * apoe_alc
     d_core[5] += GRIEF_SENESCENCE_FACTOR * grief_g * (1.0 - sen)
@@ -298,7 +316,7 @@ def unified_derivatives(
     m1_activation = 0.1 * (ros + sen) * (1.0 - m1_mic) + 0.05 * m2_mic * ros
     m1_decay = 0.05 * m1_mic
     d_m1 = m1_activation - m1_decay
-    sleep_clearance_factor = 1.0 + (SLEEP_CLEARANCE_MULTIPLIER - 1.0) * eff_sleep_quality
+    sleep_clearance_factor = 1.0 + (SLEEP_CLEARANCE_MULTIPLIER - 1.0 + SIDE_SLEEPING_CLEARANCE_BOOST * side_sleeping) * eff_sleep_quality
     ab_production = (AMYLOID_PRODUCTION_BASE + AMYLOID_PRODUCTION_AGE_FACTOR * max(age - 63.0, 0)) * (1.0 + brain_infl * AMYLOID_INFLAMMATION_SYNERGY)
     ab_clearance = AMYLOID_CLEARANCE_BASE * apoe_clearance * ab * sleep_clearance_factor * (1.0 + m2_mic)
     d_ab = ab_production - ab_clearance
@@ -307,7 +325,7 @@ def unified_derivatives(
     d_tau = tau_production - tau_clearance
     
     # ── 11. Systemic & Psychosocial ─────────────────────────────────────────
-    d_gut = (intervention.get("probiotic_intensity", 0.0) * PROBIOTIC_GROWTH_RATE * ani_gut_mod + (0.1 if intervention.get("diet_type") == "keto" else 0.0)) * (1.0 - gut_m) - (GUT_DECAY_RATE + 0.1 * alcohol) * gut_m
+    d_gut = (intervention.get("probiotic_intensity", 0.0) * PROBIOTIC_GROWTH_RATE * ani_gut_mod + (0.1 if intervention.get("diet_type") == "keto" else 0.0) + AKKERMANSIA_GUT_BOOST * akkermansia) * (1.0 - gut_m) - (GUT_DECAY_RATE + 0.1 * alcohol) * gut_m
     d_grief = - (0.05 + intervention.get("therapy_intensity", 0.0) * COPING_DECAY_RATE + patient.get("social_support", 0.0) * 0.2 * soc_grief_mod * ani_grief_mod + mef2 * GRIEF_REDUCTION_FROM_MEF2) * grief_g
     d_cbf = (0.05 * exercise * ex_cbf_mod * ani_ex_mod + 0.05 * h_pump) * (1.0 - cbf) - 0.02 * (ros + brain_infl + max(blood_pressure - 1.0, 0)) * cbf
     

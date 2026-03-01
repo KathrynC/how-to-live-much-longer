@@ -73,11 +73,18 @@ FERM v2.0 introduces "Closed-Loop" simulation by piping live data from wearables
 - **Viome:** Microbiome sequencing to validate "Full Farm" synergy.
 - **Core Temp Sensor:** Real-time monitoring of heat-shock protein (HSP) induction during saunas.
 
-## 5. Technical Implementation
-- **Implementation Language:** Python (utilizing `unified_brain_model.py`).
-- **Data Ingestion:** REST API connectors for Oura/Apple Health/Dexcom.
-- **Dose-Response Correction:** The simulator uses telemetry to self-calibrate internal constants based on real-world recovery velocity.
-- **Security:** Fully git-ignored; zero exposure of private familial data to public repositories.
+## 6. Phase 11: Candidate Intervention Expansion
+FERM v3.0 expands the intervention library to include surgical-precision metabolic and structural tools.
+
+### 6.1 Metabolic & Chemical Candidates
+- **Urolithin A:** Potent PINK1/Parkin mitophagy stimulator. (Focus: EDS Generation).
+- **Spermidine:** Dual SIRT1/PGC-1α biogenesis and autophagy inducer. (Focus: Cliff Generation).
+- **Molecular Hydrogen (H2):** Selective hydroxyl radical scavenger and NRF2 activator. (Focus: Ratio/Seizure Shield).
+- **Akkermansia muciniphila:** Keystone probiotic for gut barrier and insulin sensitivity. (Focus: Full Farm ROI).
+
+### 6.2 Structural & Behavioral Candidates
+- **Vagus Nerve Stimulation (VNS):** Autonomic balancer and mitochondrial fusion promoter. (Focus: EDS Allostatic Load).
+- **Side Sleeping (Lateral Position):** Position-dependent glymphatic clearance optimization. (Focus: Global family amyloid washout).
 
 ---
 

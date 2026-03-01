@@ -636,6 +636,16 @@ YOGA_INFL_REDUCTION = 0.2        # Cortisol/Stress-driven inflammation reduction
 YOGA_STIFFNESS_REDUCTION = 0.15  # Myofascial release / Arterial stiffness reduction
 YOGA_EDS_STABILITY_BOOST = 1.3   # Protective factor for EDS subjects (joint/proprioception)
 
+# ── Phase 11: Precision Intervention Constants (2026-02-28) ──────────────────
+UROLITHIN_A_MITOPHAGY_BOOST = 0.12 # Surgical PINK1/Parkin activation
+SPERMIDINE_BIOGENESIS_BOOST = 0.1  # SIRT1/PGC-1alpha activation
+SPERMIDINE_MITOPHAGY_BOOST = 0.08  # General autophagy induction
+MOLECULAR_H2_ROS_REDUCTION = 0.2   # Selective hydroxyl scavenging
+VNS_AUTONOMIC_STABILIZER = 0.15    # Autonomic balance / EDS drag reduction
+AKKERMANSIA_GUT_BOOST = 0.2        # Gut barrier / Mucin thickness
+AKKERMANSIA_IS_BOOST = 0.15        # GLP-1 mediated insulin sensitivity
+SIDE_SLEEPING_CLEARANCE_BOOST = 0.5 # Position-dependent glymphatic gain
+
 # ── State variable indices ───────────────────────────────────────────────────
 #
 # C11 expanded the state vector from 7D to 8D by splitting "N_damaged" into
