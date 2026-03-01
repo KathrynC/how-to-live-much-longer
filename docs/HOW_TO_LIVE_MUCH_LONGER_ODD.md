@@ -11,65 +11,93 @@
 
 ## I. OVERVIEW
 
-### 1. Purpose
-The purpose of this model is to simulate the 8-variable coupled dynamics of mitochondrial DNA (mtDNA) aging and evaluate the efficacy of various pharmacological and lifestyle interventions. It specifically targets the discovery of protocols that can slow or reverse the "heteroplasmy cliff"—the nonlinear collapse of cellular energy (ATP) that occurs when damaged mtDNA exceeds a critical threshold.
+### 1. Purpose and Patterns
+
+#### 1.1 Purpose
+The purpose of this model is to simulate the 8-variable coupled dynamics of mitochondrial DNA (mtDNA) aging and evaluate the efficacy of various pharmacological and lifestyle interventions. It specifically targets the discovery of protocols that can slow or reverse the "heteroplasmy cliff"—the nonlinear collapse of cellular energy (ATP).
+
+#### 1.2 Patterns
+The model reproduces and is validated against the following empirical biological patterns:
+*   **The Heteroplasmy Cliff:** ATP production remains stable until ~70% heteroplasmy, then collapses nonlinearly (Rossignol et al., 2003).
+*   **Clonal Expansion of Deletions:** mtDNA deletions expand exponentially, doubling faster in older age due to reduced mitochondrial turnover.
+*   **ROS-Damage Vicious Cycle:** The mutual reinforcement of oxidative stress and genomic damage observed in aging tissues.
+*   **Rejuvenation Thresholds:** The observation that single-angle interventions (e.g., only NAD+) are insufficient to reverse established heteroplasmy without "Mitlet" transplantation.
 
 ### 2. Entities, State Variables, and Scales
-The primary entity is a **Cellular Metabolic Unit**.
 
-**State Variables (8D):**
-1.  **N_healthy:** Healthy wild-type mtDNA copies (normalized to 1.0).
-2.  **N_deletion:** mtDNA with large-scale deletions (exponential growth, drives the cliff).
-3.  **ATP:** Adenosine triphosphate production rate (MU/day).
-4.  **ROS:** Reactive Oxygen Species level (normalized).
-5.  **NAD:** Nicotinamide Adenine Dinucleotide cofactor availability (normalized).
-6.  **Senescent_fraction:** Fraction of cells in growth arrest.
-7.  **Membrane_potential:** Mitochondrial inner membrane ΔΨ (normalized).
-8.  **N_point:** Point-mutated mtDNA (linear growth, functionally mild).
+#### 2.1 Entities and State Variables
+*   **Cellular Metabolic Unit:**
+    *   *N_healthy:* Healthy wild-type mtDNA copies.
+    *   *N_deletion:* mtDNA with deletions (clonal expansion).
+    *   *N_point:* Point-mutated mtDNA (linear drift).
+    *   *ATP:* Current production rate (normalized to MU/day).
+    *   *ROS:* Oxidative stress level.
+    *   *NAD:* Cofactor availability.
+    *   *Senescent_fraction:* Fraction of unit in arrest.
+    *   *Membrane_potential:* Mitochondrial inner membrane ΔΨ.
 
-**Scales:**
+#### 2.2 Scales
 *   **Temporal:** dt = 0.01 years (~3.65 days). Default horizon: 30–100 years.
 *   **Spatial:** Non-spatial (mean-field approximation of cellular state).
 
 ### 3. Process Overview and Scheduling
-The model uses a 4th-order Runge-Kutta (RK4) integration scheme. In each time step:
-1.  **Compute Derivatives:** The rates of change for all 8 variables are calculated based on coupled ODEs.
-2.  **Intervention Application:** Pharmacological effects (Rapamycin, NMN, Senolytics, Yamanaka factors, Transplantation) modify the derivative functions.
-3.  **Update State:** The RK4 solver updates the 8D vector.
-4.  **Homeostasis Check:** Copy number homeostasis logic adjusts replication rates to maintain total N.
+The simulation uses a 4th-order Runge-Kutta (RK4) scheme:
+1.  **Calculate Derivatives:** Evaluate coupled ODEs based on current state and intervention levels.
+2.  **RK4 Step:** Solver updates the 8D state vector.
+3.  **Homeostatic Adjustment:** Adjust replication rates to maintain target copy number (N_total).
+4.  **Downstream Chain Update:** Propagate energy state to cognitive reserve and amyloid/tau accumulation models.
 
 ---
 
 ## II. DESIGN CONCEPTS
 
-### 4. Basic Principles
-*   **The Heteroplasmy Cliff:** The central catastrophe where ATP production collapses nonlinearly once deletion heteroplasmy exceeds ~70%.
-*   **ROS-Damage Vicious Cycle:** mtDNA damage increases ROS, which in turn accelerates mtDNA damage.
-*   **Clonal Expansion:** Deletions replicate faster than wild-type mtDNA due to their smaller size (replication advantage).
+### 4. Design Concepts
 
-### 5. Emergence
-*   **Energy Failure:** ATP collapse emerges from the coupling of N_deletion expansion and respiratory chain assembly failure.
-*   **Bistability:** Past the cliff, the system enters a stable "low-energy" state that is difficult to reverse without state-restoration (transplantation).
+#### 4.1 Basic Principles
+Aging is defined as an **Energy Crisis** driven by the exponential expansion of deletion-mutated mtDNA. The model assumes that metabolic energy (ATP) is the primary currency of cellular resilience.
 
-### 6. Adaptation
-*   **Mitophagy:** The cell selectively removes damaged mitochondria when ATP is sufficient.
-*   **Biogenesis:** Total mtDNA replication increases in response to low copy number or high energy demand (exercise).
+#### 4.2 Emergence
+*   **The Energy Crash:** Emerges from the failure of respiratory chain complex assembly as deletion heteroplasmy crosses the threshold.
+*   **Bistability:** The system tends to "lock in" to a low-energy state once the cliff is passed.
 
-### 7. Objectives
-*   The system does not have explicit agent goals but strives for **Metabolic Homeostasis**.
-*   The *optimizer* uses a fitness function: `Fitness = Avg_ATP - (Final_Heteroplasmy * 10)`.
+#### 4.3 Adaptation
+Agents (cells) adapt via **Mitophagy** (selective removal of damaged copies) and **Biogenesis** (increased replication under energy stress).
+
+#### 4.4 Objectives
+The system strives for **Metabolic Homeostasis** (maintaining ATP=1.0 and N_total=1.0).
+
+#### 4.5 Learning
+Not applicable (physiological model).
+
+#### 4.6 Prediction
+The model generates decadal projections of survival probability and "Biological Age."
+
+#### 4.7 Sensing
+The biogenesis engine senses the "Energy Gap" (target_atp - current_atp) and "Copy Pressure."
+
+#### 4.8 Interaction
+None (non-spatial model).
+
+#### 4.9 Stochasticity
+Individual variability is introduced via the "Patient Profile" parameters (initial damage, genetic vulnerability).
+
+#### 4.10 Collectives
+None.
+
+#### 4.11 Observation
+Trajectories are tracked via `simulator.py`, producing plots of Heteroplasmy vs. ATP and survival probability.
 
 ---
 
 ## III. DETAILS
 
-### 8. Initialization
-Individuals are initialized based on a "Patient Profile" (Age, current heteroplasmy, ROS baseline). Defaults are based on Chapter II of *How to Live Much Longer* (Cramer, 2026).
+### 5. Initialization
+Initialized with real-world patient data. Base case represents a healthy 20-year-old; clinical cases represent older individuals with accumulated damage.
 
-### 9. Input Data
-The model is grounded in biological constants derived from the Cramer (2026) manuscript, including doubling times, ROS production rates, and ETC assembly thresholds.
+### 6. Input Data
+Ground truth constants from Cramer (2026) *How to Live Much Longer*.
 
-### 10. Submodels
+### 7. Submodels
 *   **Mitochondrial Transplantation:** Models the "Mitlet" protocol (displacement of damaged copies by healthy donors).
 *   **Yamanaka Reprogramming:** Models partial epigenetic reset gated by ATP availability.
-*   **CD38 Suppression:** Models the degradation of NMN/NR supplements by aging-related enzymes.
+*   **Downstream Chain:** Models the impact of energy failure on cognitive function and amyloid accumulation.
