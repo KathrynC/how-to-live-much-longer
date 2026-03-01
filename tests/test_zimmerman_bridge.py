@@ -123,7 +123,7 @@ class TestRunOutput:
 
     def test_has_pillar_prefixes(self, sim_full, default_params):
         result = sim_full.run(default_params)
-        prefixes = {"energy_", "damage_", "dynamics_", "intervention_"}
+        prefixes = {"energy_", "damage_", "dynamics_", "intervention_", "symmathesy_"}
         found = set()
         for k in result:
             for p in prefixes:

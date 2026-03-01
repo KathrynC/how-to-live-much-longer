@@ -11,7 +11,6 @@ Usage:
 from __future__ import annotations
 
 import json
-import subprocess
 
 from constants import (
     OLLAMA_URL, REASONING_MODELS,
@@ -19,6 +18,7 @@ from constants import (
     DEFAULT_INTERVENTION, DEFAULT_PATIENT,
     snap_all,
 )
+from llm_provider import LLMRequest, OllamaProvider
 from schemas import FullProtocol
 
 
@@ -30,6 +30,14 @@ MODELS = [
     {"name": "llama3.1:latest", "type": "ollama"},
     {"name": "gpt-oss:20b", "type": "ollama"},
 ]
+
+_OLLAMA_PROVIDER = OllamaProvider(OLLAMA_URL)
+
+
+def set_ollama_provider(provider) -> None:
+    """Override the default provider (useful for testing)."""
+    global _OLLAMA_PROVIDER
+    _OLLAMA_PROVIDER = provider
 
 
 # ── Text cleaning ──────────────────────────────────────────────────────────
@@ -171,6 +179,38 @@ def validate_llm_output(raw_dict: dict) -> tuple[dict, list[str]]:
     return snap_all(recognized), warnings
 
 
+def parse_intervention_vector_detailed(
+    response: str,
+    min_intervention_keys: int = 4,
+) -> tuple[dict | None, list[str], str]:
+    """Parse response and return (vector, warnings, parse_status).
+
+    parse_status values:
+      - ok
+      - ok_with_warnings
+      - no_json_object
+      - insufficient_intervention_keys
+    """
+    warnings: list[str] = []
+    obj = parse_json_response(response)
+    if obj is None:
+        return None, warnings, "no_json_object"
+
+    recognized = {k: v for k, v in obj.items() if k in ALL_PARAM_NAMES}
+    intervention_present = [k for k in INTERVENTION_NAMES if k in recognized]
+    if len(intervention_present) < min_intervention_keys:
+        warnings.append(
+            f"insufficient intervention coverage: got {len(intervention_present)} "
+            f"keys, need >= {min_intervention_keys}"
+        )
+        return None, warnings, "insufficient_intervention_keys"
+
+    snapped, validate_warnings = validate_llm_output(recognized)
+    warnings.extend(validate_warnings)
+    status = "ok_with_warnings" if warnings else "ok"
+    return snapped, warnings, status
+
+
 def parse_intervention_vector(response: str) -> dict | None:
     """Parse a 12D intervention+patient vector from LLM response.
 
@@ -184,17 +224,8 @@ def parse_intervention_vector(response: str) -> dict | None:
     Returns:
         Dict with snapped parameter values, or None.
     """
-    obj = parse_json_response(response)
-    if obj is None:
-        return None
-
-    # Check we got at least the 6 intervention params
-    recognized = {k: v for k, v in obj.items() if k in ALL_PARAM_NAMES}
-    if len(recognized) < 6:
-        return None
-
-    snapped, _ = validate_llm_output(recognized)
-    return snapped
+    parsed, _warnings, _status = parse_intervention_vector_detailed(response)
+    return parsed
 
 
 def split_vector(snapped):
@@ -215,6 +246,86 @@ def split_vector(snapped):
 
 # ── Ollama query ───────────────────────────────────────────────────────────
 
+def _effective_max_tokens(model: str, max_tokens: int) -> int:
+    return 3000 if model in REASONING_MODELS else max_tokens
+
+
+def query_ollama_raw_detailed(
+    model,
+    prompt,
+    temperature=0.8,
+    max_tokens=800,
+    timeout=180,
+    retries=2,
+    backoff_sec=0.4,
+):
+    """Query Ollama and return a structured provider result dict."""
+    req = LLMRequest(
+        model=model,
+        prompt=prompt,
+        temperature=temperature,
+        max_tokens=_effective_max_tokens(model, max_tokens),
+        timeout=timeout,
+        retries=retries,
+        backoff_sec=backoff_sec,
+    )
+    result = _OLLAMA_PROVIDER.generate(req)
+    return {
+        "ok": result.ok,
+        "response_text": result.response_text,
+        "error_type": result.error_type,
+        "error_message": result.error_message,
+        "status_code": result.status_code,
+        "attempts_used": result.attempts_used,
+        "latency_sec": result.latency_sec,
+        "raw_payload": result.raw_payload,
+    }
+
+
+def query_ollama_detailed(
+    model,
+    prompt,
+    temperature=0.8,
+    max_tokens=800,
+    timeout=180,
+    retries=2,
+    backoff_sec=0.4,
+    min_intervention_keys=4,
+):
+    """Query Ollama and return parsed vector + parse/provider metadata."""
+    raw_result = query_ollama_raw_detailed(
+        model=model,
+        prompt=prompt,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        timeout=timeout,
+        retries=retries,
+        backoff_sec=backoff_sec,
+    )
+    if not raw_result["ok"] or raw_result["response_text"] is None:
+        return {
+            "ok": False,
+            "vector": None,
+            "warnings": [],
+            "parse_status": "provider_error",
+            "raw_response": None,
+            "provider": raw_result,
+        }
+
+    vector, warnings, parse_status = parse_intervention_vector_detailed(
+        raw_result["response_text"],
+        min_intervention_keys=min_intervention_keys,
+    )
+    return {
+        "ok": True,
+        "vector": vector,
+        "warnings": warnings,
+        "parse_status": parse_status,
+        "raw_response": raw_result["response_text"],
+        "provider": raw_result,
+    }
+
+
 def query_ollama(model, prompt, temperature=0.8, max_tokens=800, timeout=180):
     """Query Ollama and return (parsed_vector, raw_response).
 
@@ -228,28 +339,17 @@ def query_ollama(model, prompt, temperature=0.8, max_tokens=800, timeout=180):
     Returns:
         (snapped_vector_dict_or_None, raw_response_string)
     """
-    effective_max = 3000 if model in REASONING_MODELS else max_tokens
-    payload = json.dumps({
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": temperature, "num_predict": effective_max},
-    })
-    try:
-        r = subprocess.run(
-            ["curl", "-s", OLLAMA_URL, "-d", payload],
-            capture_output=True, text=True, timeout=timeout,
-        )
-        if r.returncode != 0:
-            return None, f"curl error: {r.stderr}"
-        data = json.loads(r.stdout)
-        if "error" in data:
-            return None, f"ollama error: {data['error']}"
-        resp = data["response"]
-        vector = parse_intervention_vector(resp)
-        return vector, resp
-    except Exception as e:
-        return None, str(e)
+    detailed = query_ollama_detailed(
+        model=model,
+        prompt=prompt,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        timeout=timeout,
+    )
+    if not detailed["ok"]:
+        provider = detailed["provider"]
+        return None, f"{provider.get('error_type')}: {provider.get('error_message')}"
+    return detailed["vector"], detailed["raw_response"]
 
 
 def query_ollama_raw(model, prompt, temperature=0.8, max_tokens=800, timeout=180):
@@ -262,23 +362,11 @@ def query_ollama_raw(model, prompt, temperature=0.8, max_tokens=800, timeout=180
     Returns:
         Raw response string, or None.
     """
-    effective_max = 3000 if model in REASONING_MODELS else max_tokens
-    payload = json.dumps({
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": temperature, "num_predict": effective_max},
-    })
-    try:
-        r = subprocess.run(
-            ["curl", "-s", OLLAMA_URL, "-d", payload],
-            capture_output=True, text=True, timeout=timeout,
-        )
-        if r.returncode != 0:
-            return None
-        data = json.loads(r.stdout)
-        if "error" in data:
-            return None
-        return data["response"]
-    except Exception:
-        return None
+    detailed = query_ollama_raw_detailed(
+        model=model,
+        prompt=prompt,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        timeout=timeout,
+    )
+    return detailed["response_text"] if detailed["ok"] else None

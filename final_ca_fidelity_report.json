@@ -1,0 +1,35 @@
+{
+  "overall_agreement": 0.985,
+  "per_variable_agreement": {
+    "N_healthy": 1.0,
+    "N_deletion": 1.0,
+    "ATP": 1.0,
+    "ROS": 1.0,
+    "NAD": 1.0,
+    "Senescent_fraction": 0.959,
+    "Membrane_potential": 0.967,
+    "N_point": 0.95
+  },
+  "bin_thresholds": {
+    "ATP": [
+      0.2,
+      0.5,
+      0.79
+    ],
+    "N_healthy": [
+      0.3,
+      0.56
+    ],
+    "N_point": [
+      0.1,
+      0.3
+    ],
+    "ROS": [
+      0.1,
+      0.25
+    ]
+  },
+  "rule_count": 45,
+  "target_achieved": true,
+  "notes": "Added N_point stabilization rule, adjusted confidences. N_point fidelity improved from 0.058 to 0.950."
+}

@@ -1,0 +1,13 @@
+Loading protocol dictionary from /Users/gardenofcomputation/how-to-live-much-longer/artifacts/protocol_pipeline/protocol_dictionary.json
+Found 2292 records
+Backup created at /Users/gardenofcomputation/how-to-live-much-longer/artifacts/protocol_pipeline/protocol_dictionary.json.bak
+Loaded 4 adjusted archetypes: ['conservative', 'aggressive', 'transplant_focused', 'metabolic_optimizer']
+Classifying records...
+Updated 2292 records with Lakoff archetype classification
+Saving updated dictionary to /Users/gardenofcomputation/how-to-live-much-longer/artifacts/protocol_pipeline/protocol_dictionary.json
+
+Archetype distribution in updated dictionary:
+  aggressive: 1733 records (75.6%)
+  conservative: 503 records (21.9%)
+  transplant_focused: 50 records (2.2%)
+  metabolic_optimizer: 6 records (0.3%)

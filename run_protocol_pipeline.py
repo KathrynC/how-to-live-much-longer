@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from protocol_record import ProtocolRecord
+from protocol_record import ProtocolRecord, protocol_fingerprint
 from protocol_dictionary import ProtocolDictionary
 from protocol_enrichment import enrich_record
 from protocol_classifier import multi_classify
@@ -184,6 +184,7 @@ def run_pipeline(
 
     pd = ProtocolDictionary(dict_path)
     classify_pipe = classify_pipeline or ["rule", "analytics_fit"]
+    baseline_cache: dict[str, dict[str, float]] = {}
 
     # Load rewrite rules if available
     rules_data = None
@@ -193,6 +194,28 @@ def run_pipeline(
     processed = 0
     reviewed = 0
 
+    from simulator import simulate
+
+    def _append_record_error(record: ProtocolRecord, stage: str, exc: Exception) -> None:
+        errors = record.meta.setdefault("errors", [])
+        errors.append({
+            "stage": stage,
+            "error_type": type(exc).__name__,
+            "message": str(exc),
+        })
+
+    def _baseline_for_patient(patient: dict[str, Any]) -> tuple[float, float]:
+        patient_key = protocol_fingerprint(patient)
+        cached = baseline_cache.get(patient_key)
+        if cached is None:
+            baseline_result = simulate(patient=patient)
+            cached = {
+                "final_atp": float(baseline_result["states"][-1, 2]),
+                "final_het": float(baseline_result["heteroplasmy"][-1]),
+            }
+            baseline_cache[patient_key] = cached
+        return cached["final_atp"], cached["final_het"]
+
     for rec in records:
         # Step 1: Simulate if needed
         if not rec.analytics and rec.intervention:
@@ -201,18 +224,43 @@ def run_pipeline(
                     rec.intervention, rec.patient,
                     source=rec.source, method=rec.method,
                 )
-            except Exception:
-                pass  # Keep record without analytics
+            except Exception as exc:
+                _append_record_error(rec, "ingest_from_simulation", exc)
 
         # Step 2: Enrich
-        rec = enrich_record(rec)
+        try:
+            rec = enrich_record(rec)
+        except Exception as exc:
+            _append_record_error(rec, "enrich_record", exc)
 
         # Step 3: Classify
         sim = rec.simulation
-        final_atp = sim.get("final_atp", 0.0) or 0.0
-        final_het = sim.get("final_het", 0.0) or 0.0
-        baseline_atp = 0.6  # approximate no-treatment baseline
-        baseline_het = rec.patient.get("baseline_heteroplasmy", 0.30)
+        energy = rec.analytics.get("energy", {}) if rec.analytics else {}
+        damage = rec.analytics.get("damage", {}) if rec.analytics else {}
+
+        final_atp = sim.get("final_atp")
+        if final_atp is None:
+            final_atp = energy.get("atp_final", energy.get("final_atp", 0.0))
+        final_het = sim.get("final_het")
+        if final_het is None:
+            final_het = damage.get("het_final", damage.get("final_het", 0.0))
+
+        try:
+            final_atp = float(final_atp)
+        except (TypeError, ValueError):
+            final_atp = 0.0
+        try:
+            final_het = float(final_het)
+        except (TypeError, ValueError):
+            final_het = 0.0
+
+        baseline_het = float(rec.patient.get("baseline_heteroplasmy", 0.30))
+        baseline_atp = 0.6
+        if rec.patient:
+            try:
+                baseline_atp, baseline_het = _baseline_for_patient(rec.patient)
+            except Exception as exc:
+                _append_record_error(rec, "baseline_simulation", exc)
 
         cls_result = multi_classify(
             final_atp=final_atp, final_het=final_het,
@@ -226,14 +274,17 @@ def run_pipeline(
 
         # Step 4: Apply rewrite rules
         if rules_data is not None:
-            flat = rec.to_dict()
-            # Merge simulation fields into flat dict for rule matching
-            flat.update(rec.simulation)
-            flat.update(rec.intervention)
-            updated, _trace = apply_rules(flat, rules_data)
-            # Extract flags back
-            if "flags" in updated:
-                rec.meta["flags"] = updated["flags"]
+            try:
+                flat = rec.to_dict()
+                # Merge simulation fields into flat dict for rule matching
+                flat.update(rec.simulation)
+                flat.update(rec.intervention)
+                updated, _trace = apply_rules(flat, rules_data)
+                # Extract flags back
+                if "flags" in updated:
+                    rec.meta["flags"] = updated["flags"]
+            except Exception as exc:
+                _append_record_error(rec, "apply_rewrite_rules", exc)
 
         # Step 5: Route to review if needed
         if needs_review(rec.confidence, rec.outcome_class):

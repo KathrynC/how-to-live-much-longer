@@ -117,3 +117,21 @@ class TestProtocolRecord:
         fp1 = protocol_fingerprint({"rapamycin_dose": 0.5})
         fp2 = protocol_fingerprint({"rapamycin_dose": 0.75})
         assert fp1 != fp2
+
+    def test_fingerprint_supports_mixed_types(self):
+        """Fingerprinting should support non-numeric fields for expanded profiles."""
+        from protocol_record import protocol_fingerprint
+
+        fp1 = protocol_fingerprint({
+            "baseline_age": 63.0,
+            "sex": "F",
+            "menopause_status": "post",
+            "education_level": "doctoral",
+        })
+        fp2 = protocol_fingerprint({
+            "sex": "F",
+            "baseline_age": 63.0,
+            "menopause_status": "post",
+            "education_level": "doctoral",
+        })
+        assert fp1 == fp2

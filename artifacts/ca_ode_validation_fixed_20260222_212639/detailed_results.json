@@ -1,0 +1,1032 @@
+[
+  {
+    "patient_id": 0,
+    "patient_category": "normal",
+    "intervention": "no_treatment",
+    "fidelity": {
+      "per_variable_agreement": {
+        "N_healthy": 1.0,
+        "N_deletion": 1.0,
+        "ATP": 1.0,
+        "ROS": 0.537,
+        "NAD": 1.0,
+        "Senescent_fraction": 1.0,
+        "Membrane_potential": 0.983,
+        "N_point": 0.628
+      },
+      "overall_agreement": 0.894
+    },
+    "bin_stats": {
+      "N_healthy": {
+        "adequate": {
+          "mean": 0.7338440716377651,
+          "median": 0.7357570935732884,
+          "std": 0.04090834800980835,
+          "count": 121,
+          "min": 0.6600644786862311,
+          "max": 0.8
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "mean": 0.21826858627209952,
+          "median": 0.2239967101053876,
+          "std": 0.04287942802750527,
+          "count": 121,
+          "min": 0.13714285714285715,
+          "max": 0.28072700461260075
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "mean": 0.8481856924736624,
+          "median": 0.849759774641019,
+          "std": 0.02746705936136998,
+          "count": 121,
+          "min": 0.7979866880201543,
+          "max": 0.8874030740633809
+        }
+      },
+      "ROS": {
+        "basal": {
+          "mean": 0.07016129032258066,
+          "median": 0.07016129032258066,
+          "std": 0.0,
+          "count": 1,
+          "min": 0.07016129032258066,
+          "max": 0.07016129032258066
+        },
+        "elevated": {
+          "mean": 0.1021259555906107,
+          "median": 0.10172277796361061,
+          "std": 0.014977545427102683,
+          "count": 120,
+          "min": 0.07244635085708609,
+          "max": 0.12855171372075003
+        }
+      },
+      "NAD": {
+        "declining": {
+          "mean": 0.47071513187053426,
+          "median": 0.47344641702572865,
+          "std": 0.08485257464032912,
+          "count": 121,
+          "min": 0.3210928461198541,
+          "max": 0.6
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "mean": 0.26613971805995035,
+          "median": 0.2626699433698601,
+          "std": 0.07111883103372456,
+          "count": 121,
+          "min": 0.15,
+          "max": 0.3954258836960929
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "mean": 0.4481075258621646,
+          "median": 0.45191052282947164,
+          "std": 0.08592335806363445,
+          "count": 121,
+          "min": 0.29650826936349134,
+          "max": 0.5705312528224304
+        }
+      },
+      "N_point": {
+        "low": {
+          "mean": 0.0632619045641061,
+          "median": 0.0632619045641061,
+          "std": 0.00040476170696324837,
+          "count": 2,
+          "min": 0.06285714285714286,
+          "max": 0.06366666627106936
+        },
+        "moderate": {
+          "mean": 0.12159119107199406,
+          "median": 0.12054439166002061,
+          "std": 0.03456550515615021,
+          "count": 119,
+          "min": 0.06449839585315127,
+          "max": 0.1828215586692437
+        }
+      }
+    },
+    "exemplar_comparison": {
+      "N_healthy": {
+        "adequate": {
+          "center": 0.85,
+          "mean": 0.7338440716377651,
+          "median": 0.7357570935732884,
+          "diff_mean": 0.11615592836223487,
+          "diff_median": 0.11424290642671153,
+          "relative_diff_mean": 2.8394180068137875,
+          "relative_diff_median": 2.7926544106052895
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "center": 0.2,
+          "mean": 0.21826858627209952,
+          "median": 0.2239967101053876,
+          "diff_mean": -0.018268586272099513,
+          "diff_median": -0.023996710105387592,
+          "relative_diff_mean": -0.4260453754170243,
+          "relative_diff_median": -0.5596321036202657
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "center": 0.9,
+          "mean": 0.8481856924736624,
+          "median": 0.849759774641019,
+          "diff_mean": 0.051814307526337644,
+          "diff_median": 0.05024022535898098,
+          "relative_diff_mean": 1.8864155780379654,
+          "relative_diff_median": 1.8291076014698329
+        }
+      },
+      "ROS": {
+        "basal": {
+          "center": 0.05,
+          "mean": 0.07016129032258066,
+          "median": 0.07016129032258066,
+          "diff_mean": -0.020161290322580655,
+          "diff_median": -0.020161290322580655,
+          "relative_diff_mean": -2016129.0322580654,
+          "relative_diff_median": -2016129.0322580654
+        },
+        "elevated": {
+          "center": 0.175,
+          "mean": 0.1021259555906107,
+          "median": 0.10172277796361061,
+          "diff_mean": 0.07287404440938929,
+          "diff_median": 0.07327722203638938,
+          "relative_diff_mean": 4.865549973363465,
+          "relative_diff_median": 4.892468760542214
+        }
+      },
+      "NAD": {
+        "declining": {
+          "center": 0.5,
+          "mean": 0.47071513187053426,
+          "median": 0.47344641702572865,
+          "diff_mean": 0.029284868129465735,
+          "diff_median": 0.02655358297427135,
+          "relative_diff_mean": 0.3451264125140991,
+          "relative_diff_median": 0.31293782136190634
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "center": 0.25,
+          "mean": 0.26613971805995035,
+          "median": 0.2626699433698601,
+          "diff_mean": -0.016139718059950348,
+          "diff_median": -0.012669943369860104,
+          "relative_diff_mean": -0.22694011636518224,
+          "relative_diff_median": -0.17815171318458378
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "center": 0.5,
+          "mean": 0.4481075258621646,
+          "median": 0.45191052282947164,
+          "diff_mean": 0.051892474137835376,
+          "diff_median": 0.04808947717052836,
+          "relative_diff_mean": 0.6039390134172121,
+          "relative_diff_median": 0.5596786794357679
+        }
+      },
+      "N_point": {
+        "low": {
+          "center": 0.05,
+          "mean": 0.0632619045641061,
+          "median": 0.0632619045641061,
+          "diff_mean": -0.0132619045641061,
+          "diff_median": -0.0132619045641061,
+          "relative_diff_mean": -32.76391194335682,
+          "relative_diff_median": -32.76391194335682
+        },
+        "moderate": {
+          "center": 0.2,
+          "mean": 0.12159119107199406,
+          "median": 0.12054439166002061,
+          "diff_mean": 0.07840880892800595,
+          "diff_median": 0.0794556083399794,
+          "relative_diff_mean": 2.2684114087058456,
+          "relative_diff_median": 2.298695910679692
+        }
+      }
+    },
+    "continuous_rmse": {
+      "per_variable": {
+        "N_healthy": 0.12314906670610318,
+        "N_deletion": 0.046608868172775306,
+        "ATP": 0.05864436728616755,
+        "ROS": 0.07411186895385168,
+        "NAD": 0.08976392886038814,
+        "Senescent_fraction": 0.072927214581788,
+        "Membrane_potential": 0.10037754894934152,
+        "N_point": 0.08499563548008165
+      },
+      "overall": 0.08436947173890161
+    },
+    "critical_events": {},
+    "ode_summary": {
+      "final_state": [
+        0.6600644786862311,
+        0.28072700461260075,
+        0.7979866880201543,
+        0.12855171372075003,
+        0.3210928461198541,
+        0.3954258836960929,
+        0.29650826936349134,
+        0.1828215586692437
+      ],
+      "final_heteroplasmy": 0.41255178248012453,
+      "final_deletion_heteroplasmy": 0.24984313471556954
+    },
+    "ca_summary": {
+      "final_state": {
+        "N_healthy": "adequate",
+        "N_deletion": "growing",
+        "ATP": "healthy",
+        "ROS": "elevated",
+        "NAD": "declining",
+        "Senescent_fraction": "emerging",
+        "Membrane_potential": "impaired",
+        "N_point": "moderate"
+      },
+      "final_attractor": "unknown"
+    }
+  },
+  {
+    "patient_id": 0,
+    "patient_category": "normal",
+    "intervention": "conservative",
+    "fidelity": {
+      "per_variable_agreement": {
+        "N_healthy": 1.0,
+        "N_deletion": 1.0,
+        "ATP": 1.0,
+        "ROS": 0.066,
+        "NAD": 1.0,
+        "Senescent_fraction": 1.0,
+        "Membrane_potential": 1.0,
+        "N_point": 0.595
+      },
+      "overall_agreement": 0.833
+    },
+    "bin_stats": {
+      "N_healthy": {
+        "adequate": {
+          "mean": 0.7467933634161407,
+          "median": 0.74931324380626,
+          "std": 0.03252830856659305,
+          "count": 121,
+          "min": 0.687362164543956,
+          "max": 0.8
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "mean": 0.14065257793541852,
+          "median": 0.13714285714285715,
+          "std": 0.014414790435569069,
+          "count": 121,
+          "min": 0.1224057358185325,
+          "max": 0.16502858660740463
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "mean": 0.8829763500471846,
+          "median": 0.8853471359187258,
+          "std": 0.016595189492364756,
+          "count": 121,
+          "min": 0.8175623240706765,
+          "max": 0.9030390081106164
+        }
+      },
+      "ROS": {
+        "basal": {
+          "mean": 0.07016129032258066,
+          "median": 0.07016129032258066,
+          "std": 0.0,
+          "count": 1,
+          "min": 0.07016129032258066,
+          "max": 0.07016129032258066
+        },
+        "elevated": {
+          "mean": 0.08777563687191889,
+          "median": 0.08669925398612861,
+          "std": 0.007391842248795619,
+          "count": 120,
+          "min": 0.07240808756544445,
+          "max": 0.10155090724060084
+        }
+      },
+      "NAD": {
+        "declining": {
+          "mean": 0.5493643802078466,
+          "median": 0.561179833503445,
+          "std": 0.07251943114259121,
+          "count": 121,
+          "min": 0.41099527883826814,
+          "max": 0.6389602890031075
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "mean": 0.15479818293647085,
+          "median": 0.15223452362826748,
+          "std": 0.006164450460209348,
+          "count": 121,
+          "min": 0.14893747840310595,
+          "max": 0.16914444139503332
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "mean": 0.5324740339140179,
+          "median": 0.5509865123877038,
+          "std": 0.06185013657737185,
+          "count": 121,
+          "min": 0.4070701152109995,
+          "max": 0.6030985959495506
+        }
+      },
+      "N_point": {
+        "low": {
+          "mean": 0.0631999315321071,
+          "median": 0.0631999315321071,
+          "std": 0.00034278867496423393,
+          "count": 2,
+          "min": 0.06285714285714286,
+          "max": 0.06354272020707133
+        },
+        "moderate": {
+          "mean": 0.10517212761398417,
+          "median": 0.10588360431979213,
+          "std": 0.022942347337678134,
+          "count": 119,
+          "min": 0.06424715749874123,
+          "max": 0.1433576554882609
+        }
+      }
+    },
+    "exemplar_comparison": {
+      "N_healthy": {
+        "adequate": {
+          "center": 0.85,
+          "mean": 0.7467933634161407,
+          "median": 0.74931324380626,
+          "diff_mean": 0.10320663658385931,
+          "diff_median": 0.10068675619374001,
+          "relative_diff_mean": 3.172824207699862,
+          "relative_diff_median": 3.095356926845473
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "center": 0.2,
+          "mean": 0.14065257793541852,
+          "median": 0.13714285714285715,
+          "diff_mean": 0.05934742206458149,
+          "diff_median": 0.06285714285714286,
+          "relative_diff_mean": 4.117117148437204,
+          "relative_diff_median": 4.360597507964139
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "center": 0.9,
+          "mean": 0.8829763500471846,
+          "median": 0.8853471359187258,
+          "diff_mean": 0.017023649952815467,
+          "diff_median": 0.014652864081274197,
+          "relative_diff_mean": 1.0258177348604838,
+          "relative_diff_median": 0.8829579956550565
+        }
+      },
+      "ROS": {
+        "basal": {
+          "center": 0.05,
+          "mean": 0.07016129032258066,
+          "median": 0.07016129032258066,
+          "diff_mean": -0.020161290322580655,
+          "diff_median": -0.020161290322580655,
+          "relative_diff_mean": -2016129.0322580654,
+          "relative_diff_median": -2016129.0322580654
+        },
+        "elevated": {
+          "center": 0.175,
+          "mean": 0.08777563687191889,
+          "median": 0.08669925398612861,
+          "diff_mean": 0.0872243631280811,
+          "diff_median": 0.08830074601387138,
+          "relative_diff_mean": 11.800068533876997,
+          "relative_diff_median": 11.945686012360236
+        }
+      },
+      "NAD": {
+        "declining": {
+          "center": 0.5,
+          "mean": 0.5493643802078466,
+          "median": 0.561179833503445,
+          "diff_mean": -0.049364380207846614,
+          "diff_median": -0.061179833503445025,
+          "relative_diff_mean": -0.6807054691828637,
+          "relative_diff_median": -0.8436335490113651
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "center": 0.25,
+          "mean": 0.15479818293647085,
+          "median": 0.15223452362826748,
+          "diff_mean": 0.09520181706352915,
+          "diff_median": 0.09776547637173252,
+          "relative_diff_mean": 15.443657669319538,
+          "relative_diff_median": 15.859534991390367
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "center": 0.5,
+          "mean": 0.5324740339140179,
+          "median": 0.5509865123877038,
+          "diff_mean": -0.03247403391401793,
+          "diff_median": -0.0509865123877038,
+          "relative_diff_mean": -0.5250437664427249,
+          "relative_diff_median": -0.8243555627458681
+        }
+      },
+      "N_point": {
+        "low": {
+          "center": 0.05,
+          "mean": 0.0631999315321071,
+          "median": 0.0631999315321071,
+          "diff_mean": -0.013199931532107093,
+          "diff_median": -0.013199931532107093,
+          "relative_diff_mean": -38.50636684486693,
+          "relative_diff_median": -38.50636684486693
+        },
+        "moderate": {
+          "center": 0.2,
+          "mean": 0.10517212761398417,
+          "median": 0.10588360431979213,
+          "diff_mean": 0.09482787238601584,
+          "diff_median": 0.09411639568020788,
+          "relative_diff_mean": 4.133309885740487,
+          "relative_diff_median": 4.102298394840226
+        }
+      }
+    },
+    "continuous_rmse": {
+      "per_variable": {
+        "N_healthy": 0.108211370443019,
+        "N_deletion": 0.061072929265043055,
+        "ATP": 0.02377403987553425,
+        "ROS": 0.08719380618210036,
+        "NAD": 0.08772633542186664,
+        "Senescent_fraction": 0.09540118668902421,
+        "Membrane_potential": 0.06985701305730403,
+        "N_point": 0.09676892629389966
+      },
+      "overall": 0.08265068958293757
+    },
+    "critical_events": {},
+    "ode_summary": {
+      "final_state": [
+        0.687362164543956,
+        0.16502858660740463,
+        0.8563848418389832,
+        0.10155090724060084,
+        0.41099527883826814,
+        0.16914444139503332,
+        0.4070701152109995,
+        0.1433576554882609
+      ],
+      "final_heteroplasmy": 0.30970297320021306,
+      "final_deletion_heteroplasmy": 0.16573321685176576
+    },
+    "ca_summary": {
+      "final_state": {
+        "N_healthy": "adequate",
+        "N_deletion": "growing",
+        "ATP": "healthy",
+        "ROS": "elevated",
+        "NAD": "declining",
+        "Senescent_fraction": "emerging",
+        "Membrane_potential": "impaired",
+        "N_point": "moderate"
+      },
+      "final_attractor": "unknown"
+    }
+  },
+  {
+    "patient_id": 1,
+    "patient_category": "normal",
+    "intervention": "no_treatment",
+    "fidelity": {
+      "per_variable_agreement": {
+        "N_healthy": 1.0,
+        "N_deletion": 1.0,
+        "ATP": 1.0,
+        "ROS": 1.0,
+        "NAD": 1.0,
+        "Senescent_fraction": 0.959,
+        "Membrane_potential": 0.975,
+        "N_point": 0.926
+      },
+      "overall_agreement": 0.982
+    },
+    "bin_stats": {
+      "N_healthy": {
+        "adequate": {
+          "mean": 0.6494285423731639,
+          "median": 0.6499471323210363,
+          "std": 0.030285501125947214,
+          "count": 121,
+          "min": 0.5964484796610702,
+          "max": 0.7
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "mean": 0.21843403140116377,
+          "median": 0.21982342164221153,
+          "std": 0.006874643930975255,
+          "count": 121,
+          "min": 0.2057142857142857,
+          "max": 0.22747110129094583
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "mean": 0.8445845909845174,
+          "median": 0.8458152369362143,
+          "std": 0.024730797142301576,
+          "count": 121,
+          "min": 0.8000635856989781,
+          "max": 0.8805091290466934
+        }
+      },
+      "ROS": {
+        "elevated": {
+          "mean": 0.14101846272504426,
+          "median": 0.14140183848052384,
+          "std": 0.012503840137697992,
+          "count": 121,
+          "min": 0.10241935483870968,
+          "max": 0.16143579725147103
+        }
+      },
+      "NAD": {
+        "declining": {
+          "mean": 0.4671919613323532,
+          "median": 0.46937713443030676,
+          "std": 0.08524060145612221,
+          "count": 121,
+          "min": 0.3176454475682566,
+          "max": 0.6
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "mean": 0.27468262460356635,
+          "median": 0.27148601446298576,
+          "std": 0.075880050989969,
+          "count": 121,
+          "min": 0.15,
+          "max": 0.41161304836607726
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "mean": 0.4426734819066208,
+          "median": 0.4456203792081132,
+          "std": 0.0850844794788626,
+          "count": 121,
+          "min": 0.29345204523277907,
+          "max": 0.5661478020853961
+        }
+      },
+      "N_point": {
+        "low": {
+          "mean": 0.09428571428571428,
+          "median": 0.09428571428571428,
+          "std": 0.0,
+          "count": 1,
+          "min": 0.09428571428571428,
+          "max": 0.09428571428571428
+        },
+        "moderate": {
+          "mean": 0.13508738470809187,
+          "median": 0.13507910324291778,
+          "std": 0.02360926799899375,
+          "count": 120,
+          "min": 0.09485290349608229,
+          "max": 0.17564324505889886
+        }
+      }
+    },
+    "exemplar_comparison": {
+      "N_healthy": {
+        "adequate": {
+          "center": 0.85,
+          "mean": 0.6494285423731639,
+          "median": 0.6499471323210363,
+          "diff_mean": 0.20057145762683604,
+          "diff_median": 0.2000528676789637,
+          "relative_diff_mean": 6.622686894493115,
+          "relative_diff_median": 6.605563526631971
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "center": 0.2,
+          "mean": 0.21843403140116377,
+          "median": 0.21982342164221153,
+          "diff_mean": -0.01843403140116376,
+          "diff_median": -0.019823421642211514,
+          "relative_diff_mean": -2.6814486352695086,
+          "relative_diff_median": -2.883551934577064
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "center": 0.9,
+          "mean": 0.8445845909845174,
+          "median": 0.8458152369362143,
+          "diff_mean": 0.055415409015482586,
+          "diff_median": 0.054184763063785724,
+          "relative_diff_mean": 2.2407440524128943,
+          "relative_diff_median": 2.190982395034884
+        }
+      },
+      "ROS": {
+        "elevated": {
+          "center": 0.175,
+          "mean": 0.14101846272504426,
+          "median": 0.14140183848052384,
+          "diff_mean": 0.03398153727495573,
+          "diff_median": 0.033598161519476144,
+          "relative_diff_mean": 2.7176859048001885,
+          "relative_diff_median": 2.6870252881694965
+        }
+      },
+      "NAD": {
+        "declining": {
+          "center": 0.5,
+          "mean": 0.4671919613323532,
+          "median": 0.46937713443030676,
+          "diff_mean": 0.03280803866764681,
+          "diff_median": 0.030622865569693236,
+          "relative_diff_mean": 0.3848874158362276,
+          "relative_diff_median": 0.35925206361824874
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "center": 0.25,
+          "mean": 0.27468262460356635,
+          "median": 0.27148601446298576,
+          "diff_mean": -0.02468262460356635,
+          "diff_median": -0.02148601446298576,
+          "relative_diff_mean": -0.3252847227788771,
+          "relative_diff_median": -0.2831575803006552
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "center": 0.5,
+          "mean": 0.4426734819066208,
+          "median": 0.4456203792081132,
+          "diff_mean": 0.057326518093379186,
+          "diff_median": 0.054379620791886796,
+          "relative_diff_mean": 0.673759911406893,
+          "relative_diff_median": 0.6391249583203557
+        }
+      },
+      "N_point": {
+        "low": {
+          "center": 0.05,
+          "mean": 0.09428571428571428,
+          "median": 0.09428571428571428,
+          "diff_mean": -0.044285714285714275,
+          "diff_median": -0.044285714285714275,
+          "relative_diff_mean": -4428571.428571427,
+          "relative_diff_median": -4428571.428571427
+        },
+        "moderate": {
+          "center": 0.2,
+          "mean": 0.13508738470809187,
+          "median": 0.13507910324291778,
+          "diff_mean": 0.06491261529190814,
+          "diff_median": 0.06492089675708224,
+          "relative_diff_mean": 2.7494536382974006,
+          "relative_diff_median": 2.749804409937874
+        }
+      }
+    },
+    "continuous_rmse": {
+      "per_variable": {
+        "N_healthy": 0.20284506696738627,
+        "N_deletion": 0.019674202471174938,
+        "ATP": 0.060683439945728966,
+        "ROS": 0.03620898912919706,
+        "NAD": 0.09133634291901152,
+        "Senescent_fraction": 0.079793571768413,
+        "Membrane_potential": 0.10259482601427576,
+        "N_point": 0.0689044519683337
+      },
+      "overall": 0.09779419056916258
+    },
+    "critical_events": {
+      "senescent_severe": {
+        "ode": 28.85
+      }
+    },
+    "ode_summary": {
+      "final_state": [
+        0.5964484796610702,
+        0.22747110129094583,
+        0.8000635856989781,
+        0.16143579725147103,
+        0.3176454475682566,
+        0.41161304836607726,
+        0.29345204523277907,
+        0.17564324505889886
+      ],
+      "final_heteroplasmy": 0.40329065453404805,
+      "final_deletion_heteroplasmy": 0.2275705892332394
+    },
+    "ca_summary": {
+      "final_state": {
+        "N_healthy": "adequate",
+        "N_deletion": "growing",
+        "ATP": "healthy",
+        "ROS": "elevated",
+        "NAD": "declining",
+        "Senescent_fraction": "emerging",
+        "Membrane_potential": "impaired",
+        "N_point": "moderate"
+      },
+      "final_attractor": "unknown"
+    }
+  },
+  {
+    "patient_id": 1,
+    "patient_category": "normal",
+    "intervention": "conservative",
+    "fidelity": {
+      "per_variable_agreement": {
+        "N_healthy": 1.0,
+        "N_deletion": 1.0,
+        "ATP": 1.0,
+        "ROS": 1.0,
+        "NAD": 1.0,
+        "Senescent_fraction": 1.0,
+        "Membrane_potential": 1.0,
+        "N_point": 0.934
+      },
+      "overall_agreement": 0.992
+    },
+    "bin_stats": {
+      "N_healthy": {
+        "adequate": {
+          "mean": 0.6757791224009849,
+          "median": 0.675707994409644,
+          "std": 0.011767426895301174,
+          "count": 121,
+          "min": 0.6550661133789566,
+          "max": 0.7
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "mean": 0.15132601883579477,
+          "median": 0.14364524723524638,
+          "std": 0.019893946479661466,
+          "count": 121,
+          "min": 0.13062336262178673,
+          "max": 0.2057142857142857
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "mean": 0.8800937957148175,
+          "median": 0.8826402126664898,
+          "std": 0.01563308712294287,
+          "count": 121,
+          "min": 0.8112809080145177,
+          "max": 0.8980803641613326
+        }
+      },
+      "ROS": {
+        "elevated": {
+          "mean": 0.12276188110230994,
+          "median": 0.12221247024124765,
+          "std": 0.003672989215054978,
+          "count": 121,
+          "min": 0.10241935483870968,
+          "max": 0.12874780062074934
+        }
+      },
+      "NAD": {
+        "declining": {
+          "mean": 0.5461817719348776,
+          "median": 0.5574997160123899,
+          "std": 0.0725858004372432,
+          "count": 121,
+          "min": 0.40810958146603604,
+          "max": 0.6360631263961112
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "mean": 0.15981576663948527,
+          "median": 0.15795660124908698,
+          "std": 0.007923265687915118,
+          "count": 121,
+          "min": 0.15,
+          "max": 0.1764574799722924
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "mean": 0.527630750473051,
+          "median": 0.5456455062874993,
+          "std": 0.06095570009901085,
+          "count": 121,
+          "min": 0.40403631907614024,
+          "max": 0.5971258828070961
+        }
+      },
+      "N_point": {
+        "low": {
+          "mean": 0.09428571428571428,
+          "median": 0.09428571428571428,
+          "std": 0.0,
+          "count": 1,
+          "min": 0.09428571428571428,
+          "max": 0.09428571428571428
+        },
+        "moderate": {
+          "mean": 0.1216554969200239,
+          "median": 0.12223905652944297,
+          "std": 0.01524956458183191,
+          "count": 120,
+          "min": 0.0946697391020313,
+          "max": 0.14673066278459615
+        }
+      }
+    },
+    "exemplar_comparison": {
+      "N_healthy": {
+        "adequate": {
+          "center": 0.85,
+          "mean": 0.6757791224009849,
+          "median": 0.675707994409644,
+          "diff_mean": 0.17422087759901506,
+          "diff_median": 0.17429200559035596,
+          "relative_diff_mean": 14.805337742544662,
+          "relative_diff_median": 14.811382218667521
+        }
+      },
+      "N_deletion": {
+        "growing": {
+          "center": 0.2,
+          "mean": 0.15132601883579477,
+          "median": 0.14364524723524638,
+          "diff_mean": 0.04867398116420524,
+          "diff_median": 0.05635475276475363,
+          "relative_diff_mean": 2.4466717424443423,
+          "relative_diff_median": 2.8327574166741423
+        }
+      },
+      "ATP": {
+        "healthy": {
+          "center": 0.9,
+          "mean": 0.8800937957148175,
+          "median": 0.8826402126664898,
+          "diff_mean": 0.019906204285182527,
+          "diff_median": 0.01735978733351018,
+          "relative_diff_mean": 1.2733372107033425,
+          "relative_diff_median": 1.1104509360485737
+        }
+      },
+      "ROS": {
+        "elevated": {
+          "center": 0.175,
+          "mean": 0.12276188110230994,
+          "median": 0.12221247024124765,
+          "diff_mean": 0.05223811889769005,
+          "diff_median": 0.05278752975875234,
+          "relative_diff_mean": 14.222197130773996,
+          "relative_diff_median": 14.371778121374362
+        }
+      },
+      "NAD": {
+        "declining": {
+          "center": 0.5,
+          "mean": 0.5461817719348776,
+          "median": 0.5574997160123899,
+          "diff_mean": -0.0461817719348776,
+          "diff_median": -0.0574997160123899,
+          "relative_diff_mean": -0.6362369126512102,
+          "relative_diff_median": -0.7921619344886071
+        }
+      },
+      "Senescent_fraction": {
+        "emerging": {
+          "center": 0.25,
+          "mean": 0.15981576663948527,
+          "median": 0.15795660124908698,
+          "diff_mean": 0.09018423336051473,
+          "diff_median": 0.09204339875091302,
+          "relative_diff_mean": 11.382190512197772,
+          "relative_diff_median": 11.616836568150863
+        }
+      },
+      "Membrane_potential": {
+        "impaired": {
+          "center": 0.5,
+          "mean": 0.527630750473051,
+          "median": 0.5456455062874993,
+          "diff_mean": -0.02763075047305097,
+          "diff_median": -0.045645506287499304,
+          "relative_diff_mean": -0.4532922416648107,
+          "relative_diff_median": -0.748830687286834
+        }
+      },
+      "N_point": {
+        "low": {
+          "center": 0.05,
+          "mean": 0.09428571428571428,
+          "median": 0.09428571428571428,
+          "diff_mean": -0.044285714285714275,
+          "diff_median": -0.044285714285714275,
+          "relative_diff_mean": -4428571.428571427,
+          "relative_diff_median": -4428571.428571427
+        },
+        "moderate": {
+          "center": 0.2,
+          "mean": 0.1216554969200239,
+          "median": 0.12223905652944297,
+          "diff_mean": 0.0783445030799761,
+          "diff_median": 0.07776094347055704,
+          "relative_diff_mean": 5.137487781024032,
+          "relative_diff_median": 5.0992205096134375
+        }
+      }
+    },
+    "continuous_rmse": {
+      "per_variable": {
+        "N_healthy": 0.17461782992325614,
+        "N_deletion": 0.05258255936058114,
+        "ATP": 0.02531107232096147,
+        "ROS": 0.05236708809684869,
+        "NAD": 0.08603170627251527,
+        "Senescent_fraction": 0.09053161926081443,
+        "Membrane_potential": 0.06692574800676161,
+        "N_point": 0.07958624774387364
+      },
+      "overall": 0.08877621410050915
+    },
+    "critical_events": {},
+    "ode_summary": {
+      "final_state": [
+        0.6550661133789566,
+        0.13062336262178673,
+        0.8565248973516671,
+        0.12874780062074934,
+        0.40810958146603604,
+        0.1764574799722924,
+        0.40403631907614024,
+        0.14673066278459615
+      ],
+      "final_heteroplasmy": 0.2974560649962913,
+      "final_deletion_heteroplasmy": 0.14009067070553552
+    },
+    "ca_summary": {
+      "final_state": {
+        "N_healthy": "adequate",
+        "N_deletion": "growing",
+        "ATP": "healthy",
+        "ROS": "elevated",
+        "NAD": "declining",
+        "Senescent_fraction": "emerging",
+        "Membrane_potential": "impaired",
+        "N_point": "moderate"
+      },
+      "final_attractor": "unknown"
+    }
+  }
+]

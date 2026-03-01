@@ -1,0 +1,160 @@
+{
+  "N_healthy": {
+    "index": 0,
+    "thresholds": [
+      0.7361255769018966,
+      0.8316118542738544
+    ],
+    "labels": [
+      "depleted",
+      "reduced",
+      "adequate"
+    ],
+    "centers": [
+      0.15,
+      0.5,
+      0.85
+    ],
+    "unit": "normalized copies",
+    "source": "C2 copy homeostasis + empirical threshold adjustment"
+  },
+  "N_deletion": {
+    "index": 1,
+    "thresholds": [
+      0.12418350169773404,
+      0.193894343242821,
+      0.193994343242821
+    ],
+    "labels": [
+      "minimal",
+      "growing",
+      "approaching_cliff",
+      "past_cliff"
+    ],
+    "centers": [
+      0.05,
+      0.2,
+      0.4,
+      0.7
+    ],
+    "unit": "deletion het fraction",
+    "source": "HETEROPLASMY_CLIFF=0.50, Cramer Appendix 2 + empirical threshold adjustment"
+  },
+  "ATP": {
+    "index": 2,
+    "thresholds": [
+      0.8641329661717732,
+      0.8642329661717731,
+      0.9026807697570327
+    ],
+    "labels": [
+      "collapsed",
+      "crisis",
+      "compromised",
+      "healthy"
+    ],
+    "centers": [
+      0.1,
+      0.35,
+      0.65,
+      0.9
+    ],
+    "unit": "MU/day",
+    "source": "ATP_CRISIS_FRACTION=0.5, Cramer Ch. VIII.A Table 3 + empirical threshold adjustment"
+  },
+  "ROS": {
+    "index": 3,
+    "thresholds": [
+      0.09971844767440971,
+      0.12004036874648658
+    ],
+    "labels": [
+      "basal",
+      "elevated",
+      "pathological"
+    ],
+    "centers": [
+      0.05,
+      0.175,
+      0.4
+    ],
+    "unit": "normalized",
+    "source": "BASELINE_ROS=0.1, Cramer Ch. II.H + empirical threshold adjustment"
+  },
+  "NAD": {
+    "index": 4,
+    "thresholds": [
+      0.6268781267068285,
+      0.8441575196435882
+    ],
+    "labels": [
+      "depleted",
+      "declining",
+      "robust"
+    ],
+    "centers": [
+      0.15,
+      0.5,
+      0.85
+    ],
+    "unit": "normalized",
+    "source": "NAD_DECLINE_RATE=0.01/yr, Cramer Ch. VI.A.3 + empirical threshold adjustment"
+  },
+  "Senescent_fraction": {
+    "index": 5,
+    "thresholds": [
+      0.07510141043476232,
+      0.1694622337857986
+    ],
+    "labels": [
+      "minimal",
+      "emerging",
+      "severe"
+    ],
+    "centers": [
+      0.05,
+      0.25,
+      0.6
+    ],
+    "unit": "fraction",
+    "source": "SENESCENCE_RATE=0.005/yr, Cramer Ch. VII.A + empirical threshold adjustment"
+  },
+  "Membrane_potential": {
+    "index": 6,
+    "thresholds": [
+      0.5122762322394383,
+      0.6858847734220477
+    ],
+    "labels": [
+      "collapsed",
+      "impaired",
+      "intact"
+    ],
+    "centers": [
+      0.15,
+      0.5,
+      0.85
+    ],
+    "unit": "normalized \u0394\u03a8",
+    "source": "MITOPHAGY_ATP_MIDPOINT=0.6, Cramer Ch. VI.B + empirical threshold adjustment"
+  },
+  "N_point": {
+    "index": 7,
+    "thresholds": [
+      0.10048195849279429,
+      0.11934570156500005
+    ],
+    "labels": [
+      "low",
+      "moderate",
+      "high"
+    ],
+    "centers": [
+      0.05,
+      0.2,
+      0.5
+    ],
+    "unit": "point het fraction",
+    "source": "POINT_ERROR_RATE=0.001, Cramer Ch. II.H + empirical threshold adjustment"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "test_config": {
+    "intervention_profile": "D: C + Experimental",
+    "sample_size": 5,
+    "patient_filter": "damaged (het \u2265 0.5)"
+  },
+  "results": [
+    {
+      "patient_id": 3,
+      "patient_label": "baseline_heteroplasmy_max",
+      "patient_category": "single_extreme",
+      "baseline_age": 70.0,
+      "baseline_het": 0.9,
+      "atp_final": 0.7670631466149576,
+      "het_final": 0.13336395445848082,
+      "het_delta": -0.16663604554151917,
+      "deletion_het_final": 0.04261341045484035,
+      "ros_amplitude": 0.002086152111089693,
+      "classification": {
+        "best_archetype": "conservative",
+        "best_score": 0.75,
+        "similarity_vector": {
+          "conservative": 0.75,
+          "aggressive": 0.75,
+          "transplant_focused": 0.6666666666666666,
+          "metabolic_optimizer": 0.75
+        },
+        "grounding_ratio": 0.6153846153846154,
+        "grounded_features": 24,
+        "linking_features": 15
+      }
+    },
+    {
+      "patient_id": 13,
+      "patient_label": "all_max",
+      "patient_category": "corner",
+      "baseline_age": 90.0,
+      "baseline_het": 0.9,
+      "atp_final": 0.7316280888344366,
+      "het_final": 0.36638830629583097,
+      "het_delta": 0.06638830629583098,
+      "deletion_het_final": 0.06684424682473597,
+      "ros_amplitude": 0.008889004587678209,
+      "classification": {
+        "best_archetype": "conservative",
+        "best_score": 1.0,
+        "similarity_vector": {
+          "conservative": 1.0,
+          "aggressive": 0.25,
+          "transplant_focused": 0.3333333333333333,
+          "metabolic_optimizer": 0.5
+        },
+        "grounding_ratio": 0.6153846153846154,
+        "grounded_features": 24,
+        "linking_features": 15
+      }
+    },
+    {
+      "patient_id": 15,
+      "patient_label": "young_but_doomed",
+      "patient_category": "corner",
+      "baseline_age": 20.0,
+      "baseline_het": 0.9,
+      "atp_final": 0.8433110123021257,
+      "het_final": 0.28037407315442503,
+      "het_delta": -0.01962592684557496,
+      "deletion_het_final": 0.019608311581835642,
+      "ros_amplitude": 0.003199327351380848,
+      "classification": {
+        "best_archetype": "conservative",
+        "best_score": 1.0,
+        "similarity_vector": {
+          "conservative": 1.0,
+          "aggressive": 0.5,
+          "transplant_focused": 0.6666666666666666,
+          "metabolic_optimizer": 1.0
+        },
+        "grounding_ratio": 0.6153846153846154,
+        "grounded_features": 24,
+        "linking_features": 15
+      }
+    },
+    {
+      "patient_id": 16,
+      "patient_label": "checkerboard_A",
+      "patient_category": "corner",
+      "baseline_age": 20.0,
+      "baseline_het": 0.9,
+      "atp_final": 0.8441217595480036,
+      "het_final": 0.0917277648177175,
+      "het_delta": -0.2082722351822825,
+      "deletion_het_final": 0.006295452271356754,
+      "ros_amplitude": 0.001065204422890771,
+      "classification": {
+        "best_archetype": "transplant_focused",
+        "best_score": 1.0,
+        "similarity_vector": {
+          "conservative": 0.75,
+          "aggressive": 0.75,
+          "transplant_focused": 1.0,
+          "metabolic_optimizer": 1.0
+        },
+        "grounding_ratio": 0.6153846153846154,
+        "grounded_features": 24,
+        "linking_features": 15
+      }
+    },
+    {
+      "patient_id": 22,
+      "patient_label": "cliff_het_0.55",
+      "patient_category": "cliff_boundary",
+      "baseline_age": 70.0,
+      "baseline_het": 0.6,
+      "atp_final": 0.7670631466149576,
+      "het_final": 0.13336395445848082,
+      "het_delta": -0.16663604554151917,
+      "deletion_het_final": 0.04261341045484035,
+      "ros_amplitude": 0.002086152111089693,
+      "classification": {
+        "best_archetype": "conservative",
+        "best_score": 0.75,
+        "similarity_vector": {
+          "conservative": 0.75,
+          "aggressive": 0.75,
+          "transplant_focused": 0.6666666666666666,
+          "metabolic_optimizer": 0.75
+        },
+        "grounding_ratio": 0.6153846153846154,
+        "grounded_features": 24,
+        "linking_features": 15
+      }
+    }
+  ],
+  "archetype_distribution": {
+    "conservative": 4,
+    "transplant_focused": 1
+  }
+}

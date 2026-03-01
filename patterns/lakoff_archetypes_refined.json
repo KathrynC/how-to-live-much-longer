@@ -1,0 +1,250 @@
+[
+  {
+    "name": "conservative",
+    "description": "Low-risk, maintenance-focused intervention with minimal energy cost",
+    "type": "Archetype",
+    "grounding_criteria": [
+      {
+        "feature": "energy.atp_cv",
+        "predicate": "lt",
+        "value": 0.1,
+        "tolerance": 0.0,
+        "rationale": "Conservative protocols maintain stable ATP (low variability)",
+        "layer": "grounded"
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "gt",
+        "value": -0.05,
+        "tolerance": 0.0,
+        "rationale": "Conservative protocols minimize heteroplasmy change (may slightly increase or decrease slowly)",
+        "layer": "grounded"
+      },
+      {
+        "feature": "dynamics.ros_amplitude",
+        "predicate": "lt",
+        "value": 0.15,
+        "tolerance": 0.0,
+        "rationale": "Conservative protocols avoid high ROS oscillations",
+        "layer": "grounded"
+      },
+      {
+        "feature": "dynamics.senescent_final",
+        "predicate": "lt",
+        "value": 0.3,
+        "tolerance": 0.0,
+        "rationale": "Conservative protocols keep senescence low",
+        "layer": "grounded"
+      }
+    ],
+    "icm": {
+      "name": "conservative_assumptions",
+      "background": [
+        "Patient is relatively healthy (heteroplasmy < 0.3)",
+        "Intervention aims to maintain health, not reverse damage",
+        "Energy cost of intervention should be minimal",
+        "Safety and tolerability prioritized over maximal benefit"
+      ],
+      "violation_conditions": [
+        {
+          "feature": "damage.het_initial",
+          "predicate": "gt",
+          "value": 0.5,
+          "tolerance": 0.0,
+          "rationale": "Patient too damaged for conservative approach"
+        },
+        {
+          "feature": "intervention.energy_cost_per_year",
+          "predicate": "gt",
+          "value": 0.2,
+          "tolerance": 0.0,
+          "rationale": "Energy cost too high for conservative protocol"
+        }
+      ]
+    }
+  },
+  {
+    "name": "aggressive",
+    "description": "High-intensity intervention aiming for damage reversal",
+    "type": "Archetype",
+    "grounding_criteria": [
+      {
+        "feature": "damage.delta_het",
+        "predicate": "lt",
+        "value": -0.15,
+        "tolerance": 0.0,
+        "rationale": "Aggressive protocols significantly reduce heteroplasmy",
+        "layer": "grounded"
+      },
+      {
+        "feature": "energy.atp_final",
+        "predicate": "gt",
+        "value": 0.75,
+        "tolerance": 0.0,
+        "rationale": "Aggressive protocols achieve ATP above 0.75 MU",
+        "layer": "grounded"
+      },
+      {
+        "feature": "dynamics.ros_amplitude",
+        "predicate": "gt",
+        "value": 0.2,
+        "tolerance": 0.0,
+        "rationale": "Aggressive protocols may induce hormetic ROS response",
+        "layer": "grounded"
+      },
+      {
+        "feature": "energy.time_to_crisis_years",
+        "predicate": "gt",
+        "value": 10.0,
+        "tolerance": 0.0,
+        "rationale": "Aggressive protocols delay energy crisis substantially",
+        "layer": "grounded"
+      }
+    ],
+    "icm": {
+      "name": "aggressive_assumptions",
+      "background": [
+        "Patient is significantly damaged (heteroplasmy > 0.3)",
+        "Risk-benefit tradeoff favors aggressive intervention",
+        "Energy reserves sufficient to support intensive treatment",
+        "Goal is damage reversal, not just maintenance"
+      ],
+      "violation_conditions": [
+        {
+          "feature": "energy.atp_initial",
+          "predicate": "lt",
+          "value": 0.5,
+          "tolerance": 0.0,
+          "rationale": "Insufficient energy reserves for aggressive protocol"
+        },
+        {
+          "feature": "damage.cliff_distance_initial",
+          "predicate": "lt",
+          "value": 0.1,
+          "tolerance": 0.0,
+          "rationale": "Too close to cliff for aggressive intervention safety"
+        }
+      ]
+    }
+  },
+  {
+    "name": "transplant_focused",
+    "description": "Protocol centered on mtDNA transplant as primary rejuvenation",
+    "type": "Archetype",
+    "grounding_criteria": [
+      {
+        "feature": "damage.deletion_het_final",
+        "predicate": "lt",
+        "value": 0.5,
+        "tolerance": 0.0,
+        "rationale": "Transplant reduces deletion heteroplasmy below 0.5",
+        "layer": "grounded"
+      },
+      {
+        "feature": "energy.atp_final",
+        "predicate": "gt",
+        "value": 0.8,
+        "tolerance": 0.0,
+        "rationale": "Transplant achieves ATP above 0.8 MU",
+        "layer": "grounded"
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "lt",
+        "value": -0.1,
+        "tolerance": 0.0,
+        "rationale": "Transplant reduces overall heteroplasmy",
+        "layer": "grounded"
+      }
+    ],
+    "icm": {
+      "name": "transplant_assumptions",
+      "background": [
+        "Deletion heteroplasmy is primary driver of pathology",
+        "Transplant competes with damaged mtDNA via displacement",
+        "Patient has sufficient NAD+ to support engraftment",
+        "Transplant is the primary rejuvenation modality (Cramer C8)"
+      ],
+      "violation_conditions": [
+        {
+          "feature": "dynamics.nad_slope",
+          "predicate": "lt",
+          "value": -0.01,
+          "tolerance": 0.0,
+          "rationale": "Declining NAD impairs transplant engraftment"
+        },
+        {
+          "feature": "damage.deletion_het_initial",
+          "predicate": "lt",
+          "value": 0.1,
+          "tolerance": 0.0,
+          "rationale": "Transplant not indicated for low deletion heteroplasmy"
+        }
+      ]
+    }
+  },
+  {
+    "name": "metabolic_optimizer",
+    "description": "Protocol optimizing metabolic flexibility via combined interventions",
+    "type": "Archetype",
+    "grounding_criteria": [
+      {
+        "feature": "dynamics.nad_slope",
+        "predicate": "gt",
+        "value": 0.0,
+        "tolerance": 0.0,
+        "rationale": "Metabolic optimizer improves or maintains NAD levels",
+        "layer": "grounded"
+      },
+      {
+        "feature": "energy.atp_cv",
+        "predicate": "lt",
+        "value": 0.15,
+        "tolerance": 0.0,
+        "rationale": "Metabolic optimizer maintains stable ATP",
+        "layer": "grounded"
+      },
+      {
+        "feature": "dynamics.ros_amplitude",
+        "predicate": "between",
+        "value": 0.0,
+        "tolerance": 0.2,
+        "rationale": "Metabolic optimizer maintains moderate ROS amplitude (0.0-0.2)",
+        "layer": "grounded"
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "lt",
+        "value": 0.0,
+        "tolerance": 0.0,
+        "rationale": "Metabolic optimizer does not increase heteroplasmy",
+        "layer": "grounded"
+      }
+    ],
+    "icm": {
+      "name": "metabolic_optimizer_assumptions",
+      "background": [
+        "Metabolic flexibility enables hormetic adaptation",
+        "Exercise-induced ROS triggers antioxidant upregulation",
+        "NAD+ supports mitochondrial biogenesis and quality control",
+        "Combined interventions have synergistic effects"
+      ],
+      "violation_conditions": [
+        {
+          "feature": "dynamics.ros_amplitude",
+          "predicate": "gt",
+          "value": 0.3,
+          "tolerance": 0.0,
+          "rationale": "Excessive ROS amplitude indicates poor metabolic control"
+        },
+        {
+          "feature": "energy.atp_cv",
+          "predicate": "gt",
+          "value": 0.2,
+          "tolerance": 0.0,
+          "rationale": "High ATP variability indicates unstable metabolism"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,12 @@
+boundary.buffer
+boundary.protector
+domain.resources
+domain.support_structure
+driver.enabler
+relation.group
+relation.mediation
+state.assembly
+state.capacity
+state.fault_recovery
+state.maintenance
+state.redundancy

@@ -1,0 +1,652 @@
+[
+  {
+    "tier": 1,
+    "name": "deletion_expansion_young",
+    "inputs": {
+      "N_deletion": "growing+"
+    },
+    "context": {
+      "age_epoch": "young"
+    },
+    "outputs": {
+      "N_deletion": "+1",
+      "N_healthy": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Appendix 2: deletion doubling 11.8yr young"
+  },
+  {
+    "tier": 1,
+    "name": "deletion_expansion_old",
+    "inputs": {
+      "N_deletion": "growing+"
+    },
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "N_deletion": "+1",
+      "N_healthy": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Appendix 2: deletion doubling 3.06yr old"
+  },
+  {
+    "tier": 1,
+    "name": "cliff_atp_collapse",
+    "inputs": {
+      "N_deletion": "past_cliff"
+    },
+    "context": {},
+    "outputs": {
+      "ATP": "-2"
+    },
+    "confidence": 0.1,
+    "citation": "HETEROPLASMY_CLIFF=0.50, sigmoid collapse"
+  },
+  {
+    "tier": 1,
+    "name": "cliff_approaching_warning",
+    "inputs": {
+      "N_deletion": "approaching_cliff",
+      "ATP": "compromised+"
+    },
+    "context": {},
+    "outputs": {
+      "ATP": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "Pre-cliff ATP degradation, Cramer Ch VIII.A"
+  },
+  {
+    "tier": 1,
+    "name": "deletion_acceleration_energy_crisis",
+    "inputs": {
+      "N_deletion": "growing+",
+      "ATP": "crisis-"
+    },
+    "context": {
+      "rapamycin": "none"
+    },
+    "outputs": {
+      "N_deletion": "+1",
+      "N_healthy": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "C10: ATP collapse + poor mitophagy accelerates deletion expansion"
+  },
+  {
+    "tier": 2,
+    "name": "ros_from_deletions",
+    "inputs": {
+      "N_deletion": "growing+"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Ch II.H: damaged mitos produce excess ROS"
+  },
+  {
+    "tier": 2,
+    "name": "ros_from_points",
+    "inputs": {
+      "N_point": "moderate+"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "C11: point mutations contribute ~33% ROS"
+  },
+  {
+    "tier": 2,
+    "name": "ros_drives_points",
+    "inputs": {
+      "ROS": "elevated+"
+    },
+    "context": {},
+    "outputs": {
+      "N_point": "+1"
+    },
+    "confidence": 0.15,
+    "citation": "C11: ROS causes point mutations (not deletions)"
+  },
+  {
+    "tier": 2,
+    "name": "ros_membrane_damage",
+    "inputs": {
+      "ROS": "pathological"
+    },
+    "context": {},
+    "outputs": {
+      "Membrane_potential": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Ch IV: ROS damages membrane potential"
+  },
+  {
+    "tier": 2,
+    "name": "point_mutation_pol_gamma_errors",
+    "inputs": {
+      "N_healthy": "adequate",
+      "age_epoch": [
+        "transition",
+        "old"
+      ]
+    },
+    "context": {},
+    "outputs": {
+      "N_point": "+1"
+    },
+    "confidence": 0.15,
+    "citation": "C11: Pol \u03b3 copying errors cause point mutations"
+  },
+  {
+    "tier": 3,
+    "name": "mitophagy_clears_deletions",
+    "inputs": {
+      "Membrane_potential": "impaired-",
+      "ATP": "compromised+"
+    },
+    "context": {
+      "rapamycin": "high"
+    },
+    "outputs": {
+      "N_deletion": "-1"
+    },
+    "confidence": 0.8,
+    "citation": "Cramer Ch VI.B: PINK1/Parkin + rapamycin"
+  },
+  {
+    "tier": 3,
+    "name": "mitophagy_atp_gated",
+    "inputs": {
+      "N_deletion": "growing+",
+      "ATP": "collapsed"
+    },
+    "context": {},
+    "outputs": {},
+    "confidence": 0.9,
+    "citation": "Fix C4: ATP collapse halts mitophagy"
+  },
+  {
+    "tier": 3,
+    "name": "mitophagy_weak_on_points",
+    "inputs": {
+      "N_point": "moderate+"
+    },
+    "context": {
+      "rapamycin": "high"
+    },
+    "outputs": {
+      "N_point": "-1"
+    },
+    "confidence": 0.55,
+    "citation": "C11: mitophagy less effective on point mutations"
+  },
+  {
+    "tier": 3,
+    "name": "rapamycin_membrane_benefit",
+    "inputs": {},
+    "context": {
+      "rapamycin": "high"
+    },
+    "outputs": {
+      "Membrane_potential": "+1"
+    },
+    "confidence": 0.75,
+    "citation": "Rapamycin enhances mitochondrial quality"
+  },
+  {
+    "tier": 4,
+    "name": "ros_drives_senescence",
+    "inputs": {
+      "ROS": "pathological"
+    },
+    "context": {},
+    "outputs": {
+      "Senescent_fraction": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Ch VII.A: ROS drives senescence"
+  },
+  {
+    "tier": 4,
+    "name": "senescent_energy_drain",
+    "inputs": {
+      "Senescent_fraction": "emerging+"
+    },
+    "context": {},
+    "outputs": {
+      "ATP": "-1"
+    },
+    "confidence": 0.1,
+    "citation": "Cramer Ch VII.A: senescent cells drain energy"
+  },
+  {
+    "tier": 4,
+    "name": "senescent_ros_amplification",
+    "inputs": {
+      "Senescent_fraction": "severe"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "SASP amplifies ROS production"
+  },
+  {
+    "tier": 4,
+    "name": "senolytics_clear",
+    "inputs": {
+      "Senescent_fraction": "emerging+"
+    },
+    "context": {
+      "senolytic": "high"
+    },
+    "outputs": {
+      "Senescent_fraction": "-1"
+    },
+    "confidence": 0.8,
+    "citation": "Dasatinib+quercetin clears senescent cells"
+  },
+  {
+    "tier": 5,
+    "name": "nad_age_decline",
+    "inputs": {
+      "NAD": "robust"
+    },
+    "context": {
+      "age_epoch": [
+        "transition",
+        "old"
+      ]
+    },
+    "outputs": {
+      "NAD": "-1"
+    },
+    "confidence": 0.2,
+    "citation": "Cramer Ch VI.A.3: NAD declines with age"
+  },
+  {
+    "tier": 5,
+    "name": "nad_supplement_restores",
+    "inputs": {
+      "NAD": "depleted+"
+    },
+    "context": {
+      "nad_supplement": "high"
+    },
+    "outputs": {
+      "NAD": "+1"
+    },
+    "confidence": 0.75,
+    "citation": "Cramer Ch VI.A.3: NMN/NR + CD38 suppression"
+  },
+  {
+    "tier": 5,
+    "name": "nad_low_dose_cd38_blocked",
+    "inputs": {
+      "NAD": "depleted"
+    },
+    "context": {
+      "nad_supplement": "low"
+    },
+    "outputs": {},
+    "confidence": 0.8,
+    "citation": "C7: CD38 destroys NMN/NR at low dose"
+  },
+  {
+    "tier": 5,
+    "name": "nad_boosts_defense",
+    "inputs": {
+      "NAD": "robust"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "-1"
+    },
+    "confidence": 0.7,
+    "citation": "NAD supports antioxidant defense pathways"
+  },
+  {
+    "tier": 6,
+    "name": "transplant_adds_healthy",
+    "inputs": {},
+    "context": {
+      "transplant": "high"
+    },
+    "outputs": {
+      "N_healthy": "+1",
+      "N_deletion": "-1"
+    },
+    "confidence": 0.85,
+    "citation": "Cramer Ch VIII.G: platelet-derived mitlets"
+  },
+  {
+    "tier": 6,
+    "name": "transplant_het_penalty",
+    "inputs": {
+      "N_deletion": "past_cliff"
+    },
+    "context": {
+      "transplant": "high"
+    },
+    "outputs": {},
+    "confidence": 0.9,
+    "citation": "C8: hostile environment impairs engraftment"
+  },
+  {
+    "tier": 6,
+    "name": "exercise_biogenesis",
+    "inputs": {},
+    "context": {
+      "exercise": "moderate+"
+    },
+    "outputs": {
+      "N_healthy": "+1"
+    },
+    "confidence": 0.75,
+    "citation": "Exercise promotes mitochondrial biogenesis"
+  },
+  {
+    "tier": 6,
+    "name": "exercise_hormesis",
+    "inputs": {},
+    "context": {
+      "exercise": "moderate"
+    },
+    "outputs": {
+      "ROS": "+1",
+      "Membrane_potential": "+1"
+    },
+    "confidence": 0.7,
+    "citation": "Moderate exercise: transient ROS -> adaptation"
+  },
+  {
+    "tier": 6,
+    "name": "yamanaka_repairs",
+    "inputs": {
+      "ATP": "compromised+"
+    },
+    "context": {
+      "yamanaka": "high"
+    },
+    "outputs": {
+      "N_deletion": "-1",
+      "N_point": "-1"
+    },
+    "confidence": 0.65,
+    "citation": "Partial reprogramming repairs mtDNA"
+  },
+  {
+    "tier": 6,
+    "name": "yamanaka_energy_cost",
+    "inputs": {},
+    "context": {
+      "yamanaka": "high"
+    },
+    "outputs": {
+      "ATP": "-1"
+    },
+    "confidence": 0.9,
+    "citation": "Cramer Ch VIII.A: Yamanaka costs 3-5 MU/day"
+  },
+  {
+    "tier": 0,
+    "name": "point_of_no_return",
+    "inputs": {
+      "N_deletion": "past_cliff",
+      "ATP": "collapsed",
+      "ROS": "pathological",
+      "Senescent_fraction": "severe"
+    },
+    "context": {},
+    "outputs": {},
+    "confidence": 0.1,
+    "citation": "Absorbing state: all repair pathways fail"
+  },
+  {
+    "tier": 0,
+    "name": "vicious_cycle_lock",
+    "inputs": {
+      "ROS": "pathological",
+      "Membrane_potential": "collapsed",
+      "ATP": "crisis-"
+    },
+    "context": {},
+    "outputs": {
+      "N_deletion": "+1",
+      "ROS": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "ROS-membrane-ATP vicious cycle"
+  },
+  {
+    "tier": 0,
+    "name": "transplant_rescue",
+    "inputs": {
+      "N_deletion": "approaching_cliff",
+      "ATP": "compromised"
+    },
+    "context": {
+      "transplant": "high"
+    },
+    "outputs": {
+      "N_deletion": "-1",
+      "ATP": "+1"
+    },
+    "confidence": 0.8,
+    "citation": "Transplant can rescue near-cliff patients"
+  },
+  {
+    "tier": 0,
+    "name": "cocktail_synergy",
+    "inputs": {
+      "NAD": "robust",
+      "Senescent_fraction": "minimal"
+    },
+    "context": {
+      "rapamycin": "high",
+      "exercise": "moderate+"
+    },
+    "outputs": {
+      "N_healthy": "+1",
+      "Membrane_potential": "+1"
+    },
+    "confidence": 0.75,
+    "citation": "Multi-intervention synergy"
+  },
+  {
+    "tier": 0,
+    "name": "age_transition_acceleration",
+    "inputs": {},
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "N_deletion": "+1",
+      "NAD": "-1",
+      "Senescent_fraction": "+1"
+    },
+    "confidence": 0.1,
+    "citation": "Old age accelerates all damage pathways"
+  },
+  {
+    "tier": 0,
+    "name": "young_homeostasis",
+    "inputs": {
+      "N_healthy": "adequate",
+      "ATP": "healthy"
+    },
+    "context": {
+      "age_epoch": "young"
+    },
+    "outputs": {},
+    "confidence": 0.8,
+    "citation": "Young + healthy = homeostatic maintenance"
+  },
+  {
+    "tier": 1,
+    "name": "deletion_growth_suppression",
+    "inputs": {
+      "N_deletion": "growing"
+    },
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "N_deletion": "0",
+      "N_healthy": "0"
+    },
+    "confidence": 0.9,
+    "citation": "Suppress deletion growth and healthy loss in elderly"
+  },
+  {
+    "tier": 1,
+    "name": "ATP_maintenance",
+    "inputs": {
+      "ATP": "healthy",
+      "Senescent_fraction": "emerging"
+    },
+    "context": {},
+    "outputs": {
+      "ATP": "0"
+    },
+    "confidence": 0.9,
+    "citation": "Maintain ATP despite emerging senescence"
+  },
+  {
+    "tier": 1,
+    "name": "ATP_resilience_severe",
+    "inputs": {
+      "ATP": "healthy",
+      "Senescent_fraction": "severe"
+    },
+    "context": {},
+    "outputs": {
+      "ATP": "0"
+    },
+    "confidence": 0.9,
+    "citation": "Maintain ATP even with severe senescence"
+  },
+  {
+    "tier": 2,
+    "name": "ROS_clearance_basal",
+    "inputs": {
+      "ROS": "elevated",
+      "NAD": "declining"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "-1"
+    },
+    "confidence": 0.9,
+    "citation": "Basal antioxidant defense with declining NAD"
+  },
+  {
+    "tier": 3,
+    "name": "NAD_stable",
+    "inputs": {
+      "NAD": "declining"
+    },
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "NAD": "0"
+    },
+    "confidence": 0.9,
+    "citation": "NAD level stable in elderly"
+  },
+  {
+    "tier": 4,
+    "name": "senescence_suppression",
+    "inputs": {
+      "NAD": "declining"
+    },
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "Senescent_fraction": "0"
+    },
+    "confidence": 0.9,
+    "citation": "NAD decline suppresses senescence accumulation"
+  },
+  {
+    "tier": 4,
+    "name": "slow_senescence_accumulation",
+    "inputs": {},
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "Senescent_fraction": "+1"
+    },
+    "confidence": 0.05,
+    "citation": "Very slow senescence accumulation"
+  },
+  {
+    "tier": 5,
+    "name": "N_point_suppression",
+    "inputs": {
+      "N_point": "low"
+    },
+    "context": {
+      "age_epoch": "old"
+    },
+    "outputs": {
+      "N_point": "0"
+    },
+    "confidence": 0.1,
+    "citation": "Suppress point mutation growth"
+  },
+  {
+    "tier": 2,
+    "name": "ROS_stabilization_elevated",
+    "inputs": {
+      "ROS": "elevated"
+    },
+    "context": {},
+    "outputs": {
+      "ROS": "0"
+    },
+    "confidence": 0.95,
+    "citation": "Stabilize ROS at elevated level to match ODE"
+  },
+  {
+    "tier": 5,
+    "name": "N_point_stabilize_moderate",
+    "inputs": {
+      "N_point": "moderate"
+    },
+    "context": {},
+    "outputs": {
+      "N_point": "0"
+    },
+    "confidence": 0.9,
+    "citation": "Stabilize point mutations at moderate level (ODE observation)"
+  },
+  {
+    "tier": 2,
+    "name": "N_point_slow_accumulation",
+    "inputs": {
+      "N_healthy": "adequate",
+      "age_epoch": [
+        "transition",
+        "old"
+      ]
+    },
+    "context": {},
+    "outputs": {
+      "N_point": "+1"
+    },
+    "confidence": 0.05,
+    "citation": "Slow linear accumulation of point mutations with age"
+  }
+]

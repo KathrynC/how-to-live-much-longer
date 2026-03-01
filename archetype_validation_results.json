@@ -1,0 +1,73 @@
+{
+  "validation_date": "2026-02-22",
+  "total_scenarios": 4,
+  "matches": 1,
+  "match_percentage": 25.0,
+  "average_grounding_ratio": 0.6153846153846154,
+  "results": [
+    {
+      "scenario_name": "A: Sleep + Alcohol Cessation",
+      "heuristic_archetype": "conservative",
+      "actual_archetype": "conservative",
+      "similarity_score": 0.75,
+      "agreement": true,
+      "grounding_ratio": 0.6153846153846154,
+      "grounded_features": 24,
+      "linking_features": 15,
+      "similarity_vector": {
+        "conservative": 0.75,
+        "aggressive": 0.5,
+        "transplant_focused": 0.6666666666666666,
+        "metabolic_optimizer": 0.5
+      }
+    },
+    {
+      "scenario_name": "B: A + OTC Supplements + Keto",
+      "heuristic_archetype": "metabolic_optimizer",
+      "actual_archetype": "conservative",
+      "similarity_score": 0.75,
+      "agreement": false,
+      "grounding_ratio": 0.6153846153846154,
+      "grounded_features": 24,
+      "linking_features": 15,
+      "similarity_vector": {
+        "conservative": 0.75,
+        "aggressive": 0.5,
+        "transplant_focused": 0.6666666666666666,
+        "metabolic_optimizer": 0.5
+      }
+    },
+    {
+      "scenario_name": "C: B + Prescription",
+      "heuristic_archetype": "aggressive",
+      "actual_archetype": "conservative",
+      "similarity_score": 1.0,
+      "agreement": false,
+      "grounding_ratio": 0.6153846153846154,
+      "grounded_features": 24,
+      "linking_features": 15,
+      "similarity_vector": {
+        "conservative": 1.0,
+        "aggressive": 0.5,
+        "transplant_focused": 0.6666666666666666,
+        "metabolic_optimizer": 0.75
+      }
+    },
+    {
+      "scenario_name": "D: C + Experimental",
+      "heuristic_archetype": "transplant_focused",
+      "actual_archetype": "conservative",
+      "similarity_score": 0.75,
+      "agreement": false,
+      "grounding_ratio": 0.6153846153846154,
+      "grounded_features": 24,
+      "linking_features": 15,
+      "similarity_vector": {
+        "conservative": 0.75,
+        "aggressive": 0.5,
+        "transplant_focused": 0.6666666666666666,
+        "metabolic_optimizer": 0.75
+      }
+    }
+  ]
+}

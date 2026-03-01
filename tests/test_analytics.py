@@ -118,7 +118,7 @@ class TestComputeAll:
     def test_all_pillars_present(self):
         result = simulate()
         analytics = compute_all(result)
-        assert set(analytics.keys()) == {"energy", "damage", "dynamics", "intervention"}
+        assert set(analytics.keys()) == {"energy", "damage", "dynamics", "intervention", "symmathesy"}
 
     def test_json_serialization(self, cocktail_intervention):
         treated = simulate(intervention=cocktail_intervention)

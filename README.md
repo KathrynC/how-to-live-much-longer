@@ -328,6 +328,10 @@ See the citation key at the top of `constants.py` for full details on each const
 | `compute_hypergraph_incidence.py` | Incidence matrix H (8 variables × 45 rules) for linear‑algebraic analysis; directed H_in/H_out |
 | `rule_confidence_simulator.py` | Simulator that perturbs rule confidence parameters (45‑D) for sensitivity analysis |
 | `hyper_sobol.py` | Hyper‑Sobol sensitivity analysis of rule confidence parameters; identifies rules driving outcome variance |
+| `ca_image_schemas.py` | Six Lakoff image‑schema detectors (PATH, CYCLE, CONTAINER, SCALE, BALANCE, FORCE) for CA trajectories |
+| `ca_lakoff_annotator.py` | Dual‑vocabulary annotation pipeline: CA+ODE simulation → schema detection → archetype matching → metaphor audit |
+| `run_ca_lakoff_batch.py` | Batch annotation of patient populations (`sample_patients_*.json`) with CA‑Lakoff annotations |
+| `add_ca_lakoff_to_dictionary.py` | Enriches existing protocol dictionaries with CA‑Lakoff annotations |
 
 ### Research Campaign Scripts
 
@@ -547,6 +551,39 @@ python compute_hypergraph_incidence.py
 # Run Hyper‑Sobol (45‑D, ~10k simulations)
 python hyper_sobol.py --n-base 64
 ```
+
+### Lakoff‑CA Integration (Dual‑Vocabulary Annotation)
+
+Maps discrete CA state transitions to Lakoffian image schemas (CONTAINER, PATH, SCALE, CYCLE, BALANCE, FORCE), providing a **dual‑vocabulary annotation layer** that links biological observables to cross‑domain cognitive abstractions (Lakoff Maxim‑7). Each CA trajectory receives global schema metrics, Lakoff archetype similarity scores, metaphor violation detection, and per‑step dual‑vocabulary annotations.
+
+| Module | Description |
+|---|---|
+| **`ca_image_schemas.py`** | Six image‑schema detectors adapted for mitochondrial CA trajectories (PATH, CYCLE, CONTAINER, SCALE, BALANCE, FORCE) |
+| **`ca_lakoff_annotator.py`** | Main annotation pipeline: runs CA+ODE simulations, extracts features, matches archetypes, builds dual‑vocabulary annotations |
+| **`run_ca_lakoff_batch.py`** | Batch annotation of patient populations (`sample_patients_*.json`) |
+| **`add_ca_lakoff_to_dictionary.py`** | Enriches existing protocol dictionaries with CA‑Lakoff annotations |
+
+**Usage:**
+```bash
+# Batch annotate patient populations
+python run_ca_lakoff_batch.py --population normal --max-patients 20
+
+# Add CA‑Lakoff annotations to protocol dictionary
+python add_ca_lakoff_to_dictionary.py --input artifacts/protocol_pipeline/protocol_dictionary.json
+
+# Direct API usage
+from ca_lakoff_annotator import annotate_from_simulation
+annotation = annotate_from_simulation(patient={...}, intervention={...})
+print(f"Best archetype: {annotation['best_archetype'][0]}")
+```
+
+**Key findings:**
+- Untreated protocols match **conservative** archetype (similarity 0.667)
+- Treated protocols shift toward **aggressive** archetype
+- All six image schemas detected in every mitochondrial CA trajectory
+- Zero metaphor violations across tested populations (grounding‑linking alignment intact)
+
+Full documentation: [`docs/lakoff_ca_integration.md`](docs/lakoff_ca_integration.md)
 
 ## Scenario-Based Resilience (K-Cramer Toolkit)
 

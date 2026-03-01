@@ -64,6 +64,7 @@ class Scenario:
     interventions: InterventionProfile
     duration_years: float = 30.0
     output_metrics: list = field(default_factory=lambda: ['heteroplasmy', 'atp', 'memory_index'])
+    metadata: dict = field(default_factory=dict)
 
 
 # ── Base patient ────────────────────────────────────────────────────────────

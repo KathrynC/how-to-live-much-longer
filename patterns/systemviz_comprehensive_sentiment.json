@@ -1,0 +1,1059 @@
+{
+  "analysis_date": "2026-02-22",
+  "method": "manual_classification_comprehensive",
+  "total_unique_terms": 86,
+  "sentiment_counts": {
+    "positive": 12,
+    "negative": 13,
+    "neutral": 61
+  },
+  "positive_terms": [
+    "boundary.buffer",
+    "boundary.protector",
+    "domain.resources",
+    "domain.support_structure",
+    "driver.enabler",
+    "relation.group",
+    "relation.mediation",
+    "state.assembly",
+    "state.capacity",
+    "state.fault_recovery",
+    "state.maintenance",
+    "state.redundancy"
+  ],
+  "negative_terms": [
+    "ca.cascade",
+    "ca.cliff_boundary",
+    "ca.cliff_crossing_signal",
+    "driver.cascade",
+    "driver.repeller",
+    "driver.side_effect",
+    "signal.alert",
+    "state.criticality",
+    "state.fault_detection",
+    "state.load",
+    "state.mutation",
+    "state.separation",
+    "state.tipping_point"
+  ],
+  "neutral_terms": [
+    "boundary.ca.bin_threshold",
+    "boundary.ca.cliff_boundary",
+    "boundary.container",
+    "boundary.divider",
+    "boundary.edge",
+    "boundary.gate",
+    "boundary.notional_boundary",
+    "boundary.permissions",
+    "boundary.reactive_boundary",
+    "boundary.semi_permiable",
+    "ca.attractor",
+    "ca.attractor_transition",
+    "ca.bin_lattice",
+    "ca.bin_ordering",
+    "ca.bin_state",
+    "ca.bin_threshold",
+    "ca.bin_transition",
+    "ca.discrete_state",
+    "ca.rule_firing",
+    "ca.state_space",
+    "ca.variable_coupling",
+    "domain.ca.bin_lattice",
+    "domain.ca.state_space",
+    "domain.levels_of_scale",
+    "domain.reference_points",
+    "driver.amplifier",
+    "driver.ca.attractor_transition",
+    "driver.ca.cascade",
+    "driver.ca.rule_firing",
+    "driver.conduit",
+    "driver.control_point",
+    "driver.cycle",
+    "driver.dampener",
+    "driver.equifinality",
+    "driver.genator",
+    "driver.inflection",
+    "relation.aggregate",
+    "relation.ca.bin_ordering",
+    "relation.ca.variable_coupling",
+    "relation.cluster",
+    "relation.coupling",
+    "relation.differentiation",
+    "relation.network",
+    "relation.rank",
+    "signal.ca.bin_transition",
+    "signal.ca.cliff_crossing_signal",
+    "signal.feed_back",
+    "signal.framing",
+    "signal.indicator",
+    "signal.monitor",
+    "signal.status_display",
+    "state.accumulation",
+    "state.ca.attractor",
+    "state.ca.bin_state",
+    "state.ca.discrete_state",
+    "state.fault",
+    "state.replication",
+    "state.reset",
+    "state.standard",
+    "state.stock",
+    "state.transition"
+  ],
+  "missing_from_lexicon": [
+    "boundary.ca.bin_threshold",
+    "boundary.ca.cliff_boundary",
+    "ca.attractor",
+    "ca.attractor_transition",
+    "ca.bin_lattice",
+    "ca.bin_ordering",
+    "ca.bin_state",
+    "ca.bin_threshold",
+    "ca.bin_transition",
+    "ca.cascade",
+    "ca.cliff_boundary",
+    "ca.cliff_crossing_signal",
+    "ca.discrete_state",
+    "ca.rule_firing",
+    "ca.state_space",
+    "ca.variable_coupling",
+    "domain.ca.bin_lattice",
+    "domain.ca.state_space",
+    "driver.ca.attractor_transition",
+    "driver.ca.cascade",
+    "driver.ca.rule_firing",
+    "driver.side_effect",
+    "relation.ca.bin_ordering",
+    "relation.ca.variable_coupling",
+    "signal.ca.bin_transition",
+    "signal.ca.cliff_crossing_signal",
+    "state.ca.attractor",
+    "state.ca.bin_state",
+    "state.ca.discrete_state",
+    "state.fault"
+  ],
+  "detailed_results": [
+    {
+      "full_term": "boundary.buffer",
+      "category": "boundary",
+      "term_name": "buffer",
+      "definition": "A boundary or zone that diminishes, delays, or otherwise alters a driver.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "boundary.ca.bin_threshold",
+      "category": "boundary",
+      "term_name": "ca.bin_threshold",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "boundary.ca.cliff_boundary",
+      "category": "boundary",
+      "term_name": "ca.cliff_boundary",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "boundary.container",
+      "category": "boundary",
+      "term_name": "container",
+      "definition": "A boundary that groups and isolates objects.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "boundary.divider",
+      "category": "boundary",
+      "term_name": "divider",
+      "definition": "A boundary that keeps two or more distinct objects apart.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "boundary.edge",
+      "category": "boundary",
+      "term_name": "edge",
+      "definition": "Outer boundary that defines the scope of domain or system.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "boundary.gate",
+      "category": "boundary",
+      "term_name": "gate",
+      "definition": "A controlled opening in a barrier.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "boundary.notional_boundary",
+      "category": "boundary",
+      "term_name": "notional_boundary",
+      "definition": "A conceptual boundary or delineation.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "boundary.permissions",
+      "category": "boundary",
+      "term_name": "permissions",
+      "definition": "The control of activity within a bounded area.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon"
+      ]
+    },
+    {
+      "full_term": "boundary.protector",
+      "category": "boundary",
+      "term_name": "protector",
+      "definition": "A barrier preventing damage by blocking unwanted forces.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "boundary.reactive_boundary",
+      "category": "boundary",
+      "term_name": "reactive_boundary",
+      "definition": "A boundary that responds to forces and acts as an actant.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "boundary.semi_permiable",
+      "category": "boundary",
+      "term_name": "semi_permiable",
+      "definition": "A barrier that blocks some objects while allowing others.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "ca.attractor",
+      "category": "ca",
+      "term_name": "attractor",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.attractor_transition",
+      "category": "ca",
+      "term_name": "attractor_transition",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.bin_lattice",
+      "category": "ca",
+      "term_name": "bin_lattice",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.bin_ordering",
+      "category": "ca",
+      "term_name": "bin_ordering",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.bin_state",
+      "category": "ca",
+      "term_name": "bin_state",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.bin_threshold",
+      "category": "ca",
+      "term_name": "bin_threshold",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.bin_transition",
+      "category": "ca",
+      "term_name": "bin_transition",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.cascade",
+      "category": "ca",
+      "term_name": "cascade",
+      "definition": null,
+      "sentiment": "negative",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.cliff_boundary",
+      "category": "ca",
+      "term_name": "cliff_boundary",
+      "definition": null,
+      "sentiment": "negative",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.cliff_crossing_signal",
+      "category": "ca",
+      "term_name": "cliff_crossing_signal",
+      "definition": null,
+      "sentiment": "negative",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.discrete_state",
+      "category": "ca",
+      "term_name": "discrete_state",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.rule_firing",
+      "category": "ca",
+      "term_name": "rule_firing",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.state_space",
+      "category": "ca",
+      "term_name": "state_space",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "ca.variable_coupling",
+      "category": "ca",
+      "term_name": "variable_coupling",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.ca.bin_lattice",
+      "category": "domain",
+      "term_name": "ca.bin_lattice",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.ca.state_space",
+      "category": "domain",
+      "term_name": "ca.state_space",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.levels_of_scale",
+      "category": "domain",
+      "term_name": "levels_of_scale",
+      "definition": "System attributes at different orders of analysis.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.reference_points",
+      "category": "domain",
+      "term_name": "reference_points",
+      "definition": "Features in the context that can act as orienting devices.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.resources",
+      "category": "domain",
+      "term_name": "resources",
+      "definition": "The availability and access to the factor inputs needed.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "domain.support_structure",
+      "category": "domain",
+      "term_name": "support_structure",
+      "definition": "Constructed supports that enables activity.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.amplifier",
+      "category": "driver",
+      "term_name": "amplifier",
+      "definition": "A combination of factors or process that increases the magnitude of an effect.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.ca.attractor_transition",
+      "category": "driver",
+      "term_name": "ca.attractor_transition",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.ca.cascade",
+      "category": "driver",
+      "term_name": "ca.cascade",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.ca.rule_firing",
+      "category": "driver",
+      "term_name": "ca.rule_firing",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.cascade",
+      "category": "driver",
+      "term_name": "cascade",
+      "definition": "A sequence of knock-on effects; a chain reaction.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.conduit",
+      "category": "driver",
+      "term_name": "conduit",
+      "definition": "A path along which actors are expected to move.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.control_point",
+      "category": "driver",
+      "term_name": "control_point",
+      "definition": "Contact between a subject and object whereby power or influence can be exerted.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.cycle",
+      "category": "driver",
+      "term_name": "cycle",
+      "definition": "A repeating process or iterative effort towards a goal.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.dampener",
+      "category": "driver",
+      "term_name": "dampener",
+      "definition": "A combination of factors or process that reduces the magnitude of an effect.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "driver.enabler",
+      "category": "driver",
+      "term_name": "enabler",
+      "definition": "A contributory cause; can encourage change.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "driver.equifinality",
+      "category": "driver",
+      "term_name": "equifinality",
+      "definition": "Multiple activities lead to the same outcome.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.genator",
+      "category": "driver",
+      "term_name": "genator",
+      "definition": "The original impetus or trigger of a sequence of events.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "driver.inflection",
+      "category": "driver",
+      "term_name": "inflection",
+      "definition": "A turning point or critical juncture.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "driver.repeller",
+      "category": "driver",
+      "term_name": "repeller",
+      "definition": "An object that pushes other objects away from itself.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "driver.side_effect",
+      "category": "driver",
+      "term_name": "side_effect",
+      "definition": null,
+      "sentiment": "negative",
+      "sources": [
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "relation.aggregate",
+      "category": "relation",
+      "term_name": "aggregate",
+      "definition": "A group of objects or actors of the same type.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon"
+      ]
+    },
+    {
+      "full_term": "relation.ca.bin_ordering",
+      "category": "relation",
+      "term_name": "ca.bin_ordering",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.ca.variable_coupling",
+      "category": "relation",
+      "term_name": "ca.variable_coupling",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.cluster",
+      "category": "relation",
+      "term_name": "cluster",
+      "definition": "Elements defined as a group by virtue of proximity.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.coupling",
+      "category": "relation",
+      "term_name": "coupling",
+      "definition": "The tightness or looseness of ties between parts of a system.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.differentiation",
+      "category": "relation",
+      "term_name": "differentiation",
+      "definition": "A contrast between other items or actors in a system.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.group",
+      "category": "relation",
+      "term_name": "group",
+      "definition": "An affiliated collective of actors that share patterns of behavior.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.mediation",
+      "category": "relation",
+      "term_name": "mediation",
+      "definition": "The mitigation or reconciliation of conflict between parties.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon"
+      ]
+    },
+    {
+      "full_term": "relation.network",
+      "category": "relation",
+      "term_name": "network",
+      "definition": "An arrangement of interconnected parts that interact directly.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "relation.rank",
+      "category": "relation",
+      "term_name": "rank",
+      "definition": "The hierarchical status bestowed on an object or actor.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.alert",
+      "category": "signal",
+      "term_name": "alert",
+      "definition": "A warning signal intended to mobilize a response.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon"
+      ]
+    },
+    {
+      "full_term": "signal.ca.bin_transition",
+      "category": "signal",
+      "term_name": "ca.bin_transition",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.ca.cliff_crossing_signal",
+      "category": "signal",
+      "term_name": "ca.cliff_crossing_signal",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.feed_back",
+      "category": "signal",
+      "term_name": "feed_back",
+      "definition": "Information about the outputs of an action are routed back as inputs.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.framing",
+      "category": "signal",
+      "term_name": "framing",
+      "definition": "Interpretive paradigm which makes the system understandable.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.indicator",
+      "category": "signal",
+      "term_name": "indicator",
+      "definition": "Indirect or partial signal of status; a symptom of a deeper cause.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.monitor",
+      "category": "signal",
+      "term_name": "monitor",
+      "definition": "Active scanning of a process or domain to compare with an expected state.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "signal.status_display",
+      "category": "signal",
+      "term_name": "status_display",
+      "definition": "Regularly updated information about a particular object.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.accumulation",
+      "category": "state",
+      "term_name": "accumulation",
+      "definition": "The build-up of items or experiences over time.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.assembly",
+      "category": "state",
+      "term_name": "assembly",
+      "definition": "Building blocks with which system structures are formed.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.ca.attractor",
+      "category": "state",
+      "term_name": "ca.attractor",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.ca.bin_state",
+      "category": "state",
+      "term_name": "ca.bin_state",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.ca.discrete_state",
+      "category": "state",
+      "term_name": "ca.discrete_state",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.capacity",
+      "category": "state",
+      "term_name": "capacity",
+      "definition": "The finite ability to handle a particular quantity of activity.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.criticality",
+      "category": "state",
+      "term_name": "criticality",
+      "definition": "The threshold beyond which a dynamic becomes self-sustaining.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.fault",
+      "category": "state",
+      "term_name": "fault",
+      "definition": null,
+      "sentiment": "neutral",
+      "sources": [
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.fault_detection",
+      "category": "state",
+      "term_name": "fault_detection",
+      "definition": "Self-diagnosis, self-monitoring, and system-problem identification.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.fault_recovery",
+      "category": "state",
+      "term_name": "fault_recovery",
+      "definition": "Correction or compensation that minimize impact of faults.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.load",
+      "category": "state",
+      "term_name": "load",
+      "definition": "A stock of items being moved under containment conditions.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.maintenance",
+      "category": "state",
+      "term_name": "maintenance",
+      "definition": "The restoration of operations after a malfunction.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.mutation",
+      "category": "state",
+      "term_name": "mutation",
+      "definition": "A reconfiguration of an object caused by an error or exogenous factor.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.redundancy",
+      "category": "state",
+      "term_name": "redundancy",
+      "definition": "Multiple stockpiles or parallel sub-systems that act as a back-up.",
+      "sentiment": "positive",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.replication",
+      "category": "state",
+      "term_name": "replication",
+      "definition": "When an object is copied, reproduced, or divided.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.reset",
+      "category": "state",
+      "term_name": "reset",
+      "definition": "Returning to original conditions or earlier state.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.separation",
+      "category": "state",
+      "term_name": "separation",
+      "definition": "The division of a part into two or more parts.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping"
+      ]
+    },
+    {
+      "full_term": "state.standard",
+      "category": "state",
+      "term_name": "standard",
+      "definition": "A set of items made more or less uniform; conformity to criteria.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.stock",
+      "category": "state",
+      "term_name": "stock",
+      "definition": "A discrete collection of consumable or expendable resources for future use.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.tipping_point",
+      "category": "state",
+      "term_name": "tipping_point",
+      "definition": "The threshold beyond which rapid, large-scale change happens.",
+      "sentiment": "negative",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    },
+    {
+      "full_term": "state.transition",
+      "category": "state",
+      "term_name": "transition",
+      "definition": "Changing from one state to another.",
+      "sentiment": "neutral",
+      "sources": [
+        "lexicon",
+        "mapping",
+        "crosswalk"
+      ]
+    }
+  ]
+}

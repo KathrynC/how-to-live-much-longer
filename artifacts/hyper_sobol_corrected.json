@@ -1,0 +1,2665 @@
+{
+  "timestamp": "2026-02-22 20:30:36",
+  "n_base": 64,
+  "n_total_sims": 5888,
+  "elapsed_sec": 12.449289083480835,
+  "sim_years": 30,
+  "parameter_names": [
+    "deletion_expansion_young",
+    "deletion_expansion_old",
+    "cliff_atp_collapse",
+    "cliff_approaching_warning",
+    "deletion_acceleration_energy_crisis",
+    "ros_from_deletions",
+    "ros_from_points",
+    "ros_drives_points",
+    "ros_membrane_damage",
+    "point_mutation_pol_gamma_errors",
+    "mitophagy_clears_deletions",
+    "mitophagy_atp_gated",
+    "mitophagy_weak_on_points",
+    "rapamycin_membrane_benefit",
+    "ros_drives_senescence",
+    "senescent_energy_drain",
+    "senescent_ros_amplification",
+    "senolytics_clear",
+    "nad_age_decline",
+    "nad_supplement_restores",
+    "nad_low_dose_cd38_blocked",
+    "nad_boosts_defense",
+    "transplant_adds_healthy",
+    "transplant_het_penalty",
+    "exercise_biogenesis",
+    "exercise_hormesis",
+    "yamanaka_repairs",
+    "yamanaka_energy_cost",
+    "point_of_no_return",
+    "vicious_cycle_lock",
+    "transplant_rescue",
+    "cocktail_synergy",
+    "age_transition_acceleration",
+    "young_homeostasis",
+    "deletion_growth_suppression",
+    "ATP_maintenance",
+    "ATP_resilience_severe",
+    "ROS_clearance_basal",
+    "NAD_stable",
+    "senescence_suppression",
+    "slow_senescence_accumulation",
+    "N_point_suppression",
+    "ROS_stabilization_elevated",
+    "N_point_stabilize_moderate",
+    "N_point_slow_accumulation"
+  ],
+  "sobol": {
+    "final_bin_N_deletion": {
+      "S1": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.1277020285999335,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.1277020285999335,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.0,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.0,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.34053874293315595,
+        "ATP_maintenance": 0.0,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "ST": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.29797140006651146,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.17026937146657797,
+        "ros_from_deletions": 0.04256734286664449,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.1277020285999335,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.08513468573328899,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.17026937146657797,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.8087795144662454,
+        "ATP_maintenance": 0.1277020285999335,
+        "ATP_resilience_severe": 0.04256734286664449,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.04256734286664449,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.04256734286664449,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "interaction": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.17026937146657797,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.042567342866644486,
+        "ros_from_deletions": 0.04256734286664449,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.1277020285999335,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.08513468573328899,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.17026937146657797,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.46824077153308946,
+        "ATP_maintenance": 0.1277020285999335,
+        "ATP_resilience_severe": 0.04256734286664449,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.04256734286664449,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.04256734286664449,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      }
+    },
+    "final_heteroplasmy": {
+      "S1": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.04670901418421705,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.057906692916786004,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.008060485289432139,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.0,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.0,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.29499617409945333,
+        "ATP_maintenance": 0.0,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.043795660639122054,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.003128195041266811,
+        "N_point_slow_accumulation": 0.0
+      },
+      "ST": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.1907384786355643,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.169623033120932,
+        "ros_from_deletions": 0.018489845603109307,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.15598516965853643,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.07128925455352021,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.03810159241555926,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.13718722033406222,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.6672577499033933,
+        "ATP_maintenance": 0.08513966073474251,
+        "ATP_resilience_severe": 0.01961174681244995,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.018489845603109307,
+        "senescence_suppression": 0.043795660639122054,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.060664866112056105,
+        "ROS_stabilization_elevated": 0.018489845603109307,
+        "N_point_stabilize_moderate": 0.02874619325495194,
+        "N_point_slow_accumulation": 0.0
+      },
+      "interaction": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.14402946445134726,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.11171634020414599,
+        "ros_from_deletions": 0.018489845603109307,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.14792468436910428,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.07128925455352021,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.03810159241555926,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.13718722033406222,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.3722615758039399,
+        "ATP_maintenance": 0.08513966073474251,
+        "ATP_resilience_severe": 0.01961174681244995,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.018489845603109307,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.060664866112056105,
+        "ROS_stabilization_elevated": 0.018489845603109307,
+        "N_point_stabilize_moderate": 0.02561799821368513,
+        "N_point_slow_accumulation": 0.0
+      }
+    },
+    "final_atp": {
+      "S1": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.0,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.10416666666666666,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.10416666666666666,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.0,
+        "ATP_maintenance": 0.2708333333333333,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "ST": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.04166666666666667,
+        "cliff_atp_collapse": 0.16666666666666669,
+        "cliff_approaching_warning": 0.08333333333333334,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.04166666666666667,
+        "senescent_energy_drain": 0.45833333333333337,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.10416666666666666,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.12500000000000003,
+        "ATP_maintenance": 0.5416666666666667,
+        "ATP_resilience_severe": 0.25000000000000006,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.16666666666666669,
+        "slow_senescence_accumulation": 0.08333333333333334,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "interaction": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.04166666666666667,
+        "cliff_atp_collapse": 0.16666666666666669,
+        "cliff_approaching_warning": 0.08333333333333334,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.04166666666666667,
+        "senescent_energy_drain": 0.35416666666666674,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.0,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.12500000000000003,
+        "ATP_maintenance": 0.2708333333333334,
+        "ATP_resilience_severe": 0.25000000000000006,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.16666666666666669,
+        "slow_senescence_accumulation": 0.08333333333333334,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      }
+    },
+    "final_bin_ATP": {
+      "S1": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.0,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.08333333333333333,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.08333333333333333,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.0,
+        "ATP_maintenance": 0.25,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.0,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "ST": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.041666666666666664,
+        "cliff_atp_collapse": 0.16666666666666666,
+        "cliff_approaching_warning": 0.08333333333333333,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.041666666666666664,
+        "senescent_energy_drain": 0.4583333333333333,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.08333333333333333,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.125,
+        "ATP_maintenance": 0.5416666666666666,
+        "ATP_resilience_severe": 0.25,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.16666666666666666,
+        "slow_senescence_accumulation": 0.08333333333333333,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "interaction": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.041666666666666664,
+        "cliff_atp_collapse": 0.16666666666666666,
+        "cliff_approaching_warning": 0.08333333333333333,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.041666666666666664,
+        "senescent_energy_drain": 0.375,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.0,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.125,
+        "ATP_maintenance": 0.29166666666666663,
+        "ATP_resilience_severe": 0.25,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.16666666666666666,
+        "slow_senescence_accumulation": 0.08333333333333333,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      }
+    },
+    "final_bin_Senescent_fraction": {
+      "S1": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.0,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.0,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.21200828157349896,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.21200828157349896,
+        "senescent_energy_drain": 0.0,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.0,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.0,
+        "ATP_maintenance": 0.0,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.0,
+        "senescence_suppression": 0.31801242236024846,
+        "slow_senescence_accumulation": 1.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.0,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "ST": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.0,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.10600414078674948,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.21200828157349896,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.21200828157349896,
+        "senescent_energy_drain": 0.0,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.3710144927536232,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.0,
+        "ATP_maintenance": 0.0,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.3710144927536232,
+        "senescence_suppression": 0.6360248447204969,
+        "slow_senescence_accumulation": 1.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.05300207039337474,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      },
+      "interaction": {
+        "deletion_expansion_young": 0.0,
+        "deletion_expansion_old": 0.0,
+        "cliff_atp_collapse": 0.0,
+        "cliff_approaching_warning": 0.0,
+        "deletion_acceleration_energy_crisis": 0.0,
+        "ros_from_deletions": 0.10600414078674948,
+        "ros_from_points": 0.0,
+        "ros_drives_points": 0.0,
+        "ros_membrane_damage": 0.0,
+        "point_mutation_pol_gamma_errors": 0.0,
+        "mitophagy_clears_deletions": 0.0,
+        "mitophagy_atp_gated": 0.0,
+        "mitophagy_weak_on_points": 0.0,
+        "rapamycin_membrane_benefit": 0.0,
+        "ros_drives_senescence": 0.0,
+        "senescent_energy_drain": 0.0,
+        "senescent_ros_amplification": 0.0,
+        "senolytics_clear": 0.0,
+        "nad_age_decline": 0.0,
+        "nad_supplement_restores": 0.0,
+        "nad_low_dose_cd38_blocked": 0.0,
+        "nad_boosts_defense": 0.0,
+        "transplant_adds_healthy": 0.0,
+        "transplant_het_penalty": 0.0,
+        "exercise_biogenesis": 0.0,
+        "exercise_hormesis": 0.0,
+        "yamanaka_repairs": 0.0,
+        "yamanaka_energy_cost": 0.0,
+        "point_of_no_return": 0.0,
+        "vicious_cycle_lock": 0.0,
+        "transplant_rescue": 0.0,
+        "cocktail_synergy": 0.0,
+        "age_transition_acceleration": 0.3710144927536232,
+        "young_homeostasis": 0.0,
+        "deletion_growth_suppression": 0.0,
+        "ATP_maintenance": 0.0,
+        "ATP_resilience_severe": 0.0,
+        "ROS_clearance_basal": 0.0,
+        "NAD_stable": 0.3710144927536232,
+        "senescence_suppression": 0.31801242236024846,
+        "slow_senescence_accumulation": 0.0,
+        "N_point_suppression": 0.0,
+        "ROS_stabilization_elevated": 0.05300207039337474,
+        "N_point_stabilize_moderate": 0.0,
+        "N_point_slow_accumulation": 0.0
+      }
+    }
+  },
+  "rankings": {
+    "final_bin_N_deletion": {
+      "top_S1": [
+        "deletion_growth_suppression",
+        "deletion_expansion_old",
+        "deletion_acceleration_energy_crisis",
+        "deletion_expansion_young",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "ros_from_deletions",
+        "ros_from_points",
+        "ros_drives_points",
+        "ros_membrane_damage"
+      ],
+      "top_ST": [
+        "deletion_growth_suppression",
+        "deletion_expansion_old",
+        "deletion_acceleration_energy_crisis",
+        "age_transition_acceleration",
+        "senescent_energy_drain",
+        "ATP_maintenance",
+        "vicious_cycle_lock",
+        "ros_from_deletions",
+        "ATP_resilience_severe",
+        "NAD_stable"
+      ],
+      "top_interaction": [
+        "deletion_growth_suppression",
+        "deletion_expansion_old",
+        "age_transition_acceleration",
+        "senescent_energy_drain",
+        "ATP_maintenance",
+        "vicious_cycle_lock",
+        "ros_from_deletions",
+        "ATP_resilience_severe",
+        "NAD_stable",
+        "ROS_stabilization_elevated"
+      ]
+    },
+    "final_heteroplasmy": {
+      "top_S1": [
+        "deletion_growth_suppression",
+        "deletion_acceleration_energy_crisis",
+        "deletion_expansion_old",
+        "senescence_suppression",
+        "ros_drives_points",
+        "N_point_stabilize_moderate",
+        "deletion_expansion_young",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "ros_from_deletions"
+      ],
+      "top_ST": [
+        "deletion_growth_suppression",
+        "deletion_expansion_old",
+        "deletion_acceleration_energy_crisis",
+        "ros_drives_points",
+        "age_transition_acceleration",
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "N_point_suppression",
+        "senescence_suppression",
+        "vicious_cycle_lock"
+      ],
+      "top_interaction": [
+        "deletion_growth_suppression",
+        "ros_drives_points",
+        "deletion_expansion_old",
+        "age_transition_acceleration",
+        "deletion_acceleration_energy_crisis",
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "N_point_suppression",
+        "vicious_cycle_lock",
+        "N_point_stabilize_moderate"
+      ]
+    },
+    "final_atp": {
+      "top_S1": [
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "age_transition_acceleration",
+        "deletion_expansion_young",
+        "deletion_expansion_old",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "deletion_acceleration_energy_crisis",
+        "ros_from_deletions",
+        "ros_from_points"
+      ],
+      "top_ST": [
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "ATP_resilience_severe",
+        "cliff_atp_collapse",
+        "senescence_suppression",
+        "deletion_growth_suppression",
+        "age_transition_acceleration",
+        "cliff_approaching_warning",
+        "slow_senescence_accumulation",
+        "deletion_expansion_old"
+      ],
+      "top_interaction": [
+        "senescent_energy_drain",
+        "ATP_maintenance",
+        "ATP_resilience_severe",
+        "cliff_atp_collapse",
+        "senescence_suppression",
+        "deletion_growth_suppression",
+        "cliff_approaching_warning",
+        "slow_senescence_accumulation",
+        "deletion_expansion_old",
+        "ros_drives_senescence"
+      ]
+    },
+    "final_bin_ATP": {
+      "top_S1": [
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "age_transition_acceleration",
+        "deletion_expansion_young",
+        "deletion_expansion_old",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "deletion_acceleration_energy_crisis",
+        "ros_from_deletions",
+        "ros_from_points"
+      ],
+      "top_ST": [
+        "ATP_maintenance",
+        "senescent_energy_drain",
+        "ATP_resilience_severe",
+        "cliff_atp_collapse",
+        "senescence_suppression",
+        "deletion_growth_suppression",
+        "cliff_approaching_warning",
+        "age_transition_acceleration",
+        "slow_senescence_accumulation",
+        "deletion_expansion_old"
+      ],
+      "top_interaction": [
+        "senescent_energy_drain",
+        "ATP_maintenance",
+        "ATP_resilience_severe",
+        "cliff_atp_collapse",
+        "senescence_suppression",
+        "deletion_growth_suppression",
+        "cliff_approaching_warning",
+        "slow_senescence_accumulation",
+        "deletion_expansion_old",
+        "ros_drives_senescence"
+      ]
+    },
+    "final_bin_Senescent_fraction": {
+      "top_S1": [
+        "slow_senescence_accumulation",
+        "senescence_suppression",
+        "ros_drives_points",
+        "ros_drives_senescence",
+        "deletion_expansion_young",
+        "deletion_expansion_old",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "deletion_acceleration_energy_crisis",
+        "ros_from_deletions"
+      ],
+      "top_ST": [
+        "slow_senescence_accumulation",
+        "senescence_suppression",
+        "age_transition_acceleration",
+        "NAD_stable",
+        "ros_drives_points",
+        "ros_drives_senescence",
+        "ros_from_deletions",
+        "ROS_stabilization_elevated",
+        "deletion_expansion_young",
+        "deletion_expansion_old"
+      ],
+      "top_interaction": [
+        "age_transition_acceleration",
+        "NAD_stable",
+        "senescence_suppression",
+        "ros_from_deletions",
+        "ROS_stabilization_elevated",
+        "deletion_expansion_young",
+        "deletion_expansion_old",
+        "cliff_atp_collapse",
+        "cliff_approaching_warning",
+        "deletion_acceleration_energy_crisis"
+      ]
+    }
+  },
+  "motifs": {
+    "pairs": [
+      {
+        "variables": [
+          "N_deletion",
+          "N_healthy"
+        ],
+        "count": 5
+      },
+      {
+        "variables": [
+          "ATP",
+          "N_deletion"
+        ],
+        "count": 9
+      },
+      {
+        "variables": [
+          "ATP",
+          "N_healthy"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "N_deletion",
+          "ROS"
+        ],
+        "count": 3
+      },
+      {
+        "variables": [
+          "N_point",
+          "ROS"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "Membrane_potential",
+          "ROS"
+        ],
+        "count": 3
+      },
+      {
+        "variables": [
+          "N_healthy",
+          "N_point"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "ATP",
+          "Membrane_potential"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "Membrane_potential",
+          "N_deletion"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "ROS",
+          "Senescent_fraction"
+        ],
+        "count": 3
+      },
+      {
+        "variables": [
+          "ATP",
+          "Senescent_fraction"
+        ],
+        "count": 4
+      },
+      {
+        "variables": [
+          "NAD",
+          "ROS"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "ATP",
+          "ROS"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "N_deletion",
+          "Senescent_fraction"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "NAD",
+          "Senescent_fraction"
+        ],
+        "count": 3
+      }
+    ],
+    "triplets": [
+      {
+        "variables": [
+          "ATP",
+          "Membrane_potential",
+          "N_deletion"
+        ],
+        "count": 2
+      },
+      {
+        "variables": [
+          "ATP",
+          "N_deletion",
+          "ROS"
+        ],
+        "count": 2
+      }
+    ],
+    "quadruplets": []
+  },
+  "motif_to_rules": {
+    "2:N_deletion,N_healthy": [
+      "deletion_expansion_young",
+      "deletion_expansion_old",
+      "deletion_acceleration_energy_crisis",
+      "transplant_adds_healthy",
+      "deletion_growth_suppression"
+    ],
+    "2:ATP,N_deletion": [
+      "cliff_atp_collapse",
+      "cliff_approaching_warning",
+      "deletion_acceleration_energy_crisis",
+      "mitophagy_clears_deletions",
+      "mitophagy_atp_gated",
+      "yamanaka_repairs",
+      "point_of_no_return",
+      "vicious_cycle_lock",
+      "transplant_rescue"
+    ],
+    "2:ATP,N_healthy": [
+      "deletion_acceleration_energy_crisis",
+      "young_homeostasis"
+    ],
+    "3:ATP,N_deletion,N_healthy": [
+      "deletion_acceleration_energy_crisis"
+    ],
+    "2:N_deletion,ROS": [
+      "ros_from_deletions",
+      "point_of_no_return",
+      "vicious_cycle_lock"
+    ],
+    "2:N_point,ROS": [
+      "ros_from_points",
+      "ros_drives_points"
+    ],
+    "2:Membrane_potential,ROS": [
+      "ros_membrane_damage",
+      "exercise_hormesis",
+      "vicious_cycle_lock"
+    ],
+    "2:N_healthy,N_point": [
+      "point_mutation_pol_gamma_errors",
+      "N_point_slow_accumulation"
+    ],
+    "2:ATP,Membrane_potential": [
+      "mitophagy_clears_deletions",
+      "vicious_cycle_lock"
+    ],
+    "2:Membrane_potential,N_deletion": [
+      "mitophagy_clears_deletions",
+      "vicious_cycle_lock"
+    ],
+    "3:ATP,Membrane_potential,N_deletion": [
+      "mitophagy_clears_deletions",
+      "vicious_cycle_lock"
+    ],
+    "2:ROS,Senescent_fraction": [
+      "ros_drives_senescence",
+      "senescent_ros_amplification",
+      "point_of_no_return"
+    ],
+    "2:ATP,Senescent_fraction": [
+      "senescent_energy_drain",
+      "point_of_no_return",
+      "ATP_maintenance",
+      "ATP_resilience_severe"
+    ],
+    "2:NAD,ROS": [
+      "nad_boosts_defense",
+      "ROS_clearance_basal"
+    ],
+    "2:ATP,N_point": [
+      "yamanaka_repairs"
+    ],
+    "2:N_deletion,N_point": [
+      "yamanaka_repairs"
+    ],
+    "3:ATP,N_deletion,N_point": [
+      "yamanaka_repairs"
+    ],
+    "2:ATP,ROS": [
+      "point_of_no_return",
+      "vicious_cycle_lock"
+    ],
+    "2:N_deletion,Senescent_fraction": [
+      "point_of_no_return",
+      "age_transition_acceleration"
+    ],
+    "3:ATP,N_deletion,ROS": [
+      "point_of_no_return",
+      "vicious_cycle_lock"
+    ],
+    "3:ATP,N_deletion,Senescent_fraction": [
+      "point_of_no_return"
+    ],
+    "3:ATP,ROS,Senescent_fraction": [
+      "point_of_no_return"
+    ],
+    "3:N_deletion,ROS,Senescent_fraction": [
+      "point_of_no_return"
+    ],
+    "4:ATP,N_deletion,ROS,Senescent_fraction": [
+      "point_of_no_return"
+    ],
+    "3:ATP,Membrane_potential,ROS": [
+      "vicious_cycle_lock"
+    ],
+    "3:Membrane_potential,N_deletion,ROS": [
+      "vicious_cycle_lock"
+    ],
+    "4:ATP,Membrane_potential,N_deletion,ROS": [
+      "vicious_cycle_lock"
+    ],
+    "2:Membrane_potential,NAD": [
+      "cocktail_synergy"
+    ],
+    "2:Membrane_potential,N_healthy": [
+      "cocktail_synergy"
+    ],
+    "2:Membrane_potential,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "2:NAD,N_healthy": [
+      "cocktail_synergy"
+    ],
+    "2:NAD,Senescent_fraction": [
+      "cocktail_synergy",
+      "age_transition_acceleration",
+      "senescence_suppression"
+    ],
+    "2:N_healthy,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "3:Membrane_potential,NAD,N_healthy": [
+      "cocktail_synergy"
+    ],
+    "3:Membrane_potential,NAD,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "3:Membrane_potential,N_healthy,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "3:NAD,N_healthy,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "4:Membrane_potential,NAD,N_healthy,Senescent_fraction": [
+      "cocktail_synergy"
+    ],
+    "2:NAD,N_deletion": [
+      "age_transition_acceleration"
+    ],
+    "3:NAD,N_deletion,Senescent_fraction": [
+      "age_transition_acceleration"
+    ]
+  },
+  "motif_interactions": {
+    "2:N_deletion,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.13621549717326237,
+        "std": 0.17735825287448995,
+        "n_rules": 5
+      },
+      "final_heteroplasmy": {
+        "mean": 0.12560147609188663,
+        "std": 0.1363268529208234,
+        "n_rules": 5
+      },
+      "final_atp": {
+        "mean": 0.03333333333333334,
+        "std": 0.048591265790377515,
+        "n_rules": 5
+      },
+      "final_bin_ATP": {
+        "mean": 0.03333333333333333,
+        "std": 0.04859126579037751,
+        "n_rules": 5
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 5
+      }
+    },
+    "2:ATP,N_deletion": {
+      "final_bin_N_deletion": {
+        "mean": 0.014189114288881496,
+        "std": 0.028378228577762996,
+        "n_rules": 9
+      },
+      "final_heteroplasmy": {
+        "mean": 0.016646436957745026,
+        "std": 0.03565005414163922,
+        "n_rules": 9
+      },
+      "final_atp": {
+        "mean": 0.027777777777777776,
+        "std": 0.05555555555555556,
+        "n_rules": 9
+      },
+      "final_bin_ATP": {
+        "mean": 0.027777777777777776,
+        "std": 0.05555555555555556,
+        "n_rules": 9
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 9
+      }
+    },
+    "2:ATP,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.021283671433322243,
+        "std": 0.021283671433322243,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.055858170102072995,
+        "std": 0.055858170102072995,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "3:ATP,N_deletion,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.042567342866644486,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.11171634020414599,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:N_deletion,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.03475608990979346,
+        "n_rules": 3
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01886381267288952,
+        "std": 0.015557157509804732,
+        "n_rules": 3
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.03533471359558316,
+        "std": 0.04997083118944269,
+        "n_rules": 3
+      }
+    },
+    "2:N_point,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.07396234218455214,
+        "std": 0.07396234218455214,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:Membrane_potential,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.028378228577762996,
+        "std": 0.04013287573079618,
+        "n_rules": 3
+      },
+      "final_heteroplasmy": {
+        "mean": 0.012700530805186419,
+        "std": 0.01796126291403192,
+        "n_rules": 3
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      }
+    },
+    "2:N_healthy,N_point": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:ATP,Membrane_potential": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.04256734286664449,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01905079620777963,
+        "std": 0.01905079620777963,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:Membrane_potential,N_deletion": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.04256734286664449,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01905079620777963,
+        "std": 0.01905079620777963,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "3:ATP,Membrane_potential,N_deletion": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.04256734286664449,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01905079620777963,
+        "std": 0.01905079620777963,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:ROS,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      },
+      "final_atp": {
+        "mean": 0.01388888888888889,
+        "std": 0.019641855032959656,
+        "n_rules": 3
+      },
+      "final_bin_ATP": {
+        "mean": 0.013888888888888888,
+        "std": 0.019641855032959652,
+        "n_rules": 3
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 3
+      }
+    },
+    "2:ATP,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.07449285001662787,
+        "std": 0.05529660044117467,
+        "n_rules": 4
+      },
+      "final_heteroplasmy": {
+        "mean": 0.04401016552517817,
+        "std": 0.035241884099906515,
+        "n_rules": 4
+      },
+      "final_atp": {
+        "mean": 0.21875000000000006,
+        "std": 0.13217268271301588,
+        "n_rules": 4
+      },
+      "final_bin_ATP": {
+        "mean": 0.22916666666666666,
+        "std": 0.13975424859373686,
+        "n_rules": 4
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 4
+      }
+    },
+    "2:NAD,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:ATP,N_point": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:N_deletion,N_point": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:ATP,N_deletion,N_point": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:ATP,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.04256734286664449,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01905079620777963,
+        "std": 0.01905079620777963,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "2:N_deletion,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.08513468573328899,
+        "std": 0.08513468573328899,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.06859361016703111,
+        "std": 0.06859361016703111,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.1855072463768116,
+        "std": 0.1855072463768116,
+        "n_rules": 2
+      }
+    },
+    "3:ATP,N_deletion,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.04256734286664449,
+        "std": 0.04256734286664449,
+        "n_rules": 2
+      },
+      "final_heteroplasmy": {
+        "mean": 0.01905079620777963,
+        "std": 0.01905079620777963,
+        "n_rules": 2
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 2
+      }
+    },
+    "3:ATP,N_deletion,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:ATP,ROS,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:N_deletion,ROS,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "4:ATP,N_deletion,ROS,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:ATP,Membrane_potential,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.08513468573328899,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.03810159241555926,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:Membrane_potential,N_deletion,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.08513468573328899,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.03810159241555926,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "4:ATP,Membrane_potential,N_deletion,ROS": {
+      "final_bin_N_deletion": {
+        "mean": 0.08513468573328899,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.03810159241555926,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:Membrane_potential,NAD": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:Membrane_potential,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:Membrane_potential,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:NAD,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:NAD,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.05675645715552599,
+        "std": 0.08026575146159236,
+        "n_rules": 3
+      },
+      "final_heteroplasmy": {
+        "mean": 0.04572907344468741,
+        "std": 0.06467067586023227,
+        "n_rules": 3
+      },
+      "final_atp": {
+        "mean": 0.05555555555555556,
+        "std": 0.07856742013183862,
+        "n_rules": 3
+      },
+      "final_bin_ATP": {
+        "mean": 0.05555555555555555,
+        "std": 0.07856742013183861,
+        "n_rules": 3
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.22967563837129057,
+        "std": 0.16384032676652174,
+        "n_rules": 3
+      }
+    },
+    "2:N_healthy,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:Membrane_potential,NAD,N_healthy": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:Membrane_potential,NAD,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:Membrane_potential,N_healthy,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:NAD,N_healthy,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "4:Membrane_potential,NAD,N_healthy,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "2:NAD,N_deletion": {
+      "final_bin_N_deletion": {
+        "mean": 0.17026937146657797,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.13718722033406222,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.3710144927536232,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    },
+    "3:NAD,N_deletion,Senescent_fraction": {
+      "final_bin_N_deletion": {
+        "mean": 0.17026937146657797,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_heteroplasmy": {
+        "mean": 0.13718722033406222,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_atp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_ATP": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n_rules": 1
+      },
+      "final_bin_Senescent_fraction": {
+        "mean": 0.3710144927536232,
+        "std": 0.0,
+        "n_rules": 1
+      }
+    }
+  },
+  "local_sensitivities": {
+    "deletion_expansion_young": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "deletion_expansion_old": {
+      "final_bin_N_deletion": 2.0,
+      "final_heteroplasmy": 0.5066666666666666,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "cliff_atp_collapse": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "cliff_approaching_warning": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "deletion_acceleration_energy_crisis": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ros_from_deletions": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ros_from_points": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ros_drives_points": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": -0.030967741935483878,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ros_membrane_damage": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "point_mutation_pol_gamma_errors": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "mitophagy_clears_deletions": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "mitophagy_atp_gated": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "mitophagy_weak_on_points": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "rapamycin_membrane_benefit": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ros_drives_senescence": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "senescent_energy_drain": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": -0.8,
+      "final_bin_ATP": -3.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "senescent_ros_amplification": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "senolytics_clear": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "nad_age_decline": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "nad_supplement_restores": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "nad_low_dose_cd38_blocked": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "nad_boosts_defense": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "transplant_adds_healthy": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "transplant_het_penalty": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "exercise_biogenesis": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "exercise_hormesis": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "yamanaka_repairs": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "yamanaka_energy_cost": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "point_of_no_return": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "vicious_cycle_lock": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "transplant_rescue": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "cocktail_synergy": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "age_transition_acceleration": {
+      "final_bin_N_deletion": 2.0,
+      "final_heteroplasmy": 0.5066666666666666,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 1.0
+    },
+    "young_homeostasis": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "deletion_growth_suppression": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ATP_maintenance": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ATP_resilience_severe": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ROS_clearance_basal": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "NAD_stable": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "senescence_suppression": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "slow_senescence_accumulation": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 1.0
+    },
+    "N_point_suppression": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.02181818181818182,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "ROS_stabilization_elevated": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "N_point_stabilize_moderate": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    },
+    "N_point_slow_accumulation": {
+      "final_bin_N_deletion": 0.0,
+      "final_heteroplasmy": 0.0,
+      "final_atp": 0.0,
+      "final_bin_ATP": 0.0,
+      "final_bin_Senescent_fraction": 0.0
+    }
+  },
+  "baseline": {
+    "final_bin_N_healthy": 2.0,
+    "final_bin_N_deletion": 1.0,
+    "final_bin_ATP": 3.0,
+    "final_bin_ROS": 1.0,
+    "final_bin_NAD": 1.0,
+    "final_bin_Senescent_fraction": 1.0,
+    "final_bin_Membrane_potential": 1.0,
+    "final_bin_N_point": 1.0,
+    "final_continuous_N_healthy": 0.85,
+    "final_continuous_N_deletion": 0.2,
+    "final_continuous_ATP": 0.9,
+    "final_continuous_ROS": 0.175,
+    "final_continuous_NAD": 0.5,
+    "final_continuous_Senescent_fraction": 0.25,
+    "final_continuous_Membrane_potential": 0.5,
+    "final_continuous_N_point": 0.2,
+    "final_heteroplasmy": 0.16,
+    "final_atp": 0.9
+  }
+}

@@ -33,6 +33,18 @@ class TestProtocolComplexity:
         c = protocol_complexity(iv)
         assert c["max_single_dose"] == 1.0
 
+    def test_mixed_type_intervention_skips_non_numeric(self):
+        from protocol_enrichment import protocol_complexity
+        iv = {
+            "rapamycin_dose": 0.5,
+            "diet_type": "keto",
+            "coffee_type": "filtered",
+            "nr_dose": 0.75,
+        }
+        c = protocol_complexity(iv)
+        assert c["total_dose"] == pytest.approx(1.25, abs=1e-9)
+        assert c["param_count"] == 2
+
 
 class TestClinicalSignature:
     """Test clinical signature extraction (analogous to sensory_signature)."""
@@ -95,6 +107,17 @@ class TestPrototypeGrouping:
               "yamanaka_intensity": 0.0, "transplant_rate": 0.0, "exercise_level": 0.0}
         pg = prototype_group(iv)
         assert pg["archetype"] == "no_treatment"
+
+    def test_prototype_group_ignores_categorical_fields(self):
+        from protocol_enrichment import prototype_group
+        iv = {
+            "rapamycin_dose": 0.5,
+            "nad_supplement": 0.5,
+            "diet_type": "keto",
+            "coffee_type": "filtered",
+        }
+        pg = prototype_group(iv)
+        assert pg["archetype"] == "dual_therapy"
 
 
 class TestEnrichRecord:

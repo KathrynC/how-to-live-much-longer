@@ -1,0 +1,10 @@
+Loading dictionary from /Users/gardenofcomputation/how-to-live-much-longer/artifacts/protocol_pipeline/protocol_dictionary_lakoff_v3.json
+Processing 2292 records
+Fixed 45 records
+Saving fixed dictionary to /Users/gardenofcomputation/how-to-live-much-longer/artifacts/protocol_pipeline/protocol_dictionary_lakoff_v4.json
+
+Archetype distribution after fix:
+  aggressive: 1795 records (78.3%)
+  conservative: 476 records (20.8%)
+  transplant_focused: 14 records (0.6%)
+  metabolic_optimizer: 7 records (0.3%)

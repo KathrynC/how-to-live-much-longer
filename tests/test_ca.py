@@ -118,7 +118,7 @@ class TestBinHelpers:
 
 class TestRuleTable:
     def test_rule_count(self):
-        assert len(RULE_TABLE) == 32
+        assert len(RULE_TABLE) == 34
 
     def test_all_rules_have_required_keys(self):
         required = {"tier", "name", "inputs", "context", "outputs", "confidence", "citation"}

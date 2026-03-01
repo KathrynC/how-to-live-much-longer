@@ -78,6 +78,30 @@ FEATURE_LAYERS: Dict[str, str] = {
     "energy_cost_per_year": "linking",
     "total_dose": "linking",  # aggregate intervention intensity
     "crisis_delay_years": "linking",  # temporal comparison
+    
+    # === Cellular Automaton (CA) specific metrics ===
+    # CA fidelity metrics (grounded in bin agreement with ODE)
+    "ca_bin_agreement": "grounded",      # fraction of steps where CA bin matches ODE bin
+    "ca_rmse": "grounded",               # root mean squared error between CA exemplar and ODE continuous
+    "ca_attractor": "grounded",          # terminal attractor classification index (0=healthy_aging, 1=slow_decline, 2=cliff_approaching, 3=point_of_no_return)
+    "ca_cliff_crossing": "grounded",     # boolean: did CA trajectory cross heteroplasmy cliff?
+    "ca_time_to_cliff": "grounded",      # years until N_deletion reaches past_cliff bin (or NaN if never)
+    "ca_rule_firings_total": "grounded", # total number of rule firings across simulation
+    "ca_cascade_count": "grounded",      # number of cascade events (≥3 rules fired consecutively)
+    
+    # CA image schema metrics (linking: abstractions of trajectory patterns)
+    "ca_path_net_displacement": "linking",           # PATH schema: net movement in normalized state space
+    "ca_path_straightness": "linking",               # PATH: straightness of trajectory
+    "ca_cycle_dominant_frequency": "linking",        # CYCLE: dominant oscillation frequency
+    "ca_cycle_regularity": "linking",                # CYCLE: regularity of oscillations
+    "ca_container_boundary_proximity": "linking",    # CONTAINER: average proximity to bounds
+    "ca_container_stability": "linking",             # CONTAINER: stability within bounds
+    "ca_scale_monotonicity": "linking",              # SCALE: monotonic progression along severity bins
+    "ca_scale_net_progression": "linking",           # SCALE: net bin movement (positive = worsening)
+    "ca_balance_homeostatic_deviation": "linking",   # BALANCE: deviation from homeostatic targets
+    "ca_balance_restoration_rate": "linking",        # BALANCE: rate of correction after perturbation
+    "ca_force_magnitude": "linking",                 # FORCE: improvement rate across variables
+    "ca_force_efficiency": "linking",                # FORCE: weighted improvement rate
 }
 
 # Aliases mapping dotted pillar.metric names to canonical keys
@@ -125,6 +149,27 @@ FEATURE_ALIASES: Dict[str, str] = {
     "intervention.energy_cost_per_year": "energy_cost_per_year",
     "intervention.total_dose": "total_dose",
     "intervention.crisis_delay_years": "crisis_delay_years",
+    
+    # CA-specific metrics
+    "ca.bin_agreement": "ca_bin_agreement",
+    "ca.rmse": "ca_rmse",
+    "ca.attractor": "ca_attractor",
+    "ca.cliff_crossing": "ca_cliff_crossing",
+    "ca.time_to_cliff": "ca_time_to_cliff",
+    "ca.rule_firings_total": "ca_rule_firings_total",
+    "ca.cascade_count": "ca_cascade_count",
+    "ca.path_net_displacement": "ca_path_net_displacement",
+    "ca.path_straightness": "ca_path_straightness",
+    "ca.cycle_dominant_frequency": "ca_cycle_dominant_frequency",
+    "ca.cycle_regularity": "ca_cycle_regularity",
+    "ca.container_boundary_proximity": "ca_container_boundary_proximity",
+    "ca.container_stability": "ca_container_stability",
+    "ca.scale_monotonicity": "ca_scale_monotonicity",
+    "ca.scale_net_progression": "ca_scale_net_progression",
+    "ca.balance_homeostatic_deviation": "ca_balance_homeostatic_deviation",
+    "ca.balance_restoration_rate": "ca_balance_restoration_rate",
+    "ca.force_magnitude": "ca_force_magnitude",
+    "ca.force_efficiency": "ca_force_efficiency",
 }
 
 
@@ -648,6 +693,10 @@ class LakoffSystemVizBridge:
         
         return analysis
     
+    def get_systemviz_terms_for_archetype(self, archetype_name: str) -> List[str]:
+        """Return list of SystemViz terms relevant to the given archetype."""
+        return self.archetype_to_terms.get(archetype_name, [])
+    
     def generate_crosswalk_report(self) -> Dict[str, Any]:
         """Generate a crosswalk report between SystemViz and Lakoff vocabularies."""
         report = {
@@ -920,6 +969,260 @@ def create_default_archetypes() -> ArchetypeLibrary:
     return library
 
 
+def create_refined_archetypes() -> ArchetypeLibrary:
+    """Create refined mitochondrial intervention archetypes with Lakoff-Maxim-7 compliant grounding.
+    
+    Grounding criteria use primarily grounded features (direct biological measurements)
+    rather than linking features (cross-domain abstractions), following Lakoff Maxim 7:
+    'ground first, link second'.
+    """
+    library = ArchetypeLibrary()
+    
+    # 1. Conservative protocol archetype - stability focused
+    conservative_icm = ICM(
+        name="conservative_assumptions",
+        background=[
+            "Patient is relatively healthy (heteroplasmy < 0.3)",
+            "Intervention aims to maintain health, not reverse damage",
+            "Energy cost of intervention should be minimal",
+            "Safety and tolerability prioritized over maximal benefit",
+        ],
+        violation_conditions=[
+            GroundingCriterion(
+                feature="damage.het_initial",
+                predicate="gt",
+                value=0.5,
+                rationale="Patient too damaged for conservative approach"
+            ),
+            GroundingCriterion(
+                feature="intervention.energy_cost_per_year",
+                predicate="gt",
+                value=0.2,
+                rationale="Energy cost too high for conservative protocol"
+            ),
+        ]
+    )
+    
+    conservative = Archetype(
+        name="conservative",
+        description="Low-risk, maintenance-focused intervention with minimal energy cost",
+        grounding_criteria=[
+            GroundingCriterion(
+                feature="energy.atp_cv",
+                predicate="lt",
+                value=0.1,
+                rationale="Conservative protocols maintain stable ATP (low variability)",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="damage.delta_het",
+                predicate="gt",
+                value=-0.05,
+                rationale="Conservative protocols minimize heteroplasmy change (may slightly increase or decrease slowly)",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="dynamics.ros_amplitude",
+                predicate="lt",
+                value=0.15,
+                rationale="Conservative protocols avoid high ROS oscillations",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="dynamics.senescent_final",
+                predicate="lt",
+                value=0.3,
+                rationale="Conservative protocols keep senescence low",
+                layer="grounded"
+            ),
+        ],
+        icm=conservative_icm
+    )
+    library.add(conservative)
+    
+    # 2. Aggressive protocol archetype - damage reversal focused
+    aggressive_icm = ICM(
+        name="aggressive_assumptions",
+        background=[
+            "Patient is significantly damaged (heteroplasmy > 0.3)",
+            "Risk-benefit tradeoff favors aggressive intervention",
+            "Energy reserves sufficient to support intensive treatment",
+            "Goal is damage reversal, not just maintenance",
+        ],
+        violation_conditions=[
+            GroundingCriterion(
+                feature="energy.atp_initial",
+                predicate="lt",
+                value=0.5,
+                rationale="Insufficient energy reserves for aggressive protocol"
+            ),
+            GroundingCriterion(
+                feature="damage.cliff_distance_initial",
+                predicate="lt",
+                value=0.1,
+                rationale="Too close to cliff for aggressive intervention safety"
+            ),
+        ]
+    )
+    
+    aggressive = Archetype(
+        name="aggressive",
+        description="High-intensity intervention aiming for damage reversal",
+        grounding_criteria=[
+            GroundingCriterion(
+                feature="damage.delta_het",
+                predicate="lt",
+                value=-0.15,
+                rationale="Aggressive protocols significantly reduce heteroplasmy",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="energy.atp_final",
+                predicate="gt",
+                value=0.75,
+                rationale="Aggressive protocols achieve ATP above 0.75 MU",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="dynamics.ros_amplitude",
+                predicate="gt",
+                value=0.2,
+                rationale="Aggressive protocols may induce hormetic ROS response",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="energy.time_to_crisis_years",
+                predicate="gt",
+                value=10.0,
+                rationale="Aggressive protocols delay energy crisis substantially",
+                layer="grounded"
+            ),
+        ],
+        icm=aggressive_icm
+    )
+    library.add(aggressive)
+    
+    # 3. Transplant-focused archetype - deletion-specific rejuvenation
+    transplant_icm = ICM(
+        name="transplant_assumptions",
+        background=[
+            "Deletion heteroplasmy is primary driver of pathology",
+            "Transplant competes with damaged mtDNA via displacement",
+            "Patient has sufficient NAD+ to support engraftment",
+            "Transplant is the primary rejuvenation modality (Cramer C8)",
+        ],
+        violation_conditions=[
+            GroundingCriterion(
+                feature="dynamics.nad_slope",
+                predicate="lt",
+                value=-0.01,
+                rationale="Declining NAD impairs transplant engraftment"
+            ),
+            GroundingCriterion(
+                feature="damage.deletion_het_initial",
+                predicate="lt",
+                value=0.1,
+                rationale="Transplant not indicated for low deletion heteroplasmy"
+            ),
+        ]
+    )
+    
+    transplant = Archetype(
+        name="transplant_focused",
+        description="Protocol centered on mtDNA transplant as primary rejuvenation",
+        grounding_criteria=[
+            GroundingCriterion(
+                feature="damage.deletion_het_final",
+                predicate="lt",
+                value=0.5,
+                rationale="Transplant reduces deletion heteroplasmy below 0.5",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="energy.atp_final",
+                predicate="gt",
+                value=0.8,
+                rationale="Transplant achieves ATP above 0.8 MU",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="damage.delta_het",
+                predicate="lt",
+                value=-0.1,
+                rationale="Transplant reduces overall heteroplasmy",
+                layer="grounded"
+            ),
+        ],
+        icm=transplant_icm
+    )
+    library.add(transplant)
+    
+    # 4. Metabolic optimizer archetype - metabolic flexibility focused
+    metabolic_icm = ICM(
+        name="metabolic_optimizer_assumptions",
+        background=[
+            "Metabolic flexibility enables hormetic adaptation",
+            "Exercise-induced ROS triggers antioxidant upregulation",
+            "NAD+ supports mitochondrial biogenesis and quality control",
+            "Combined interventions have synergistic effects",
+        ],
+        violation_conditions=[
+            GroundingCriterion(
+                feature="dynamics.ros_amplitude",
+                predicate="gt",
+                value=0.3,
+                rationale="Excessive ROS amplitude indicates poor metabolic control"
+            ),
+            GroundingCriterion(
+                feature="energy.atp_cv",
+                predicate="gt",
+                value=0.2,
+                rationale="High ATP variability indicates unstable metabolism"
+            ),
+        ]
+    )
+    
+    metabolic = Archetype(
+        name="metabolic_optimizer",
+        description="Protocol optimizing metabolic flexibility via combined interventions",
+        grounding_criteria=[
+            GroundingCriterion(
+                feature="dynamics.nad_slope",
+                predicate="gt",
+                value=0.0,
+                rationale="Metabolic optimizer improves or maintains NAD levels",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="energy.atp_cv",
+                predicate="lt",
+                value=0.15,
+                rationale="Metabolic optimizer maintains stable ATP",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="dynamics.ros_amplitude",
+                predicate="between",
+                value=0.0,
+                tolerance=0.2,
+                rationale="Metabolic optimizer maintains moderate ROS amplitude (0.0-0.2)",
+                layer="grounded"
+            ),
+            GroundingCriterion(
+                feature="damage.delta_het",
+                predicate="lt",
+                value=0.0,
+                rationale="Metabolic optimizer does not increase heteroplasmy",
+                layer="grounded"
+            ),
+        ],
+        icm=metabolic_icm
+    )
+    library.add(metabolic)
+    
+    return library
+
+
 # ------------------------------------------------------------------
 # Command-line interface
 # ------------------------------------------------------------------
@@ -939,6 +1242,13 @@ if __name__ == "__main__":
     output_path = ROOT / "lakoff_archetypes.json"
     library.save(output_path)
     print(f"\nSaved to {output_path}")
+    
+    # Save refined archetypes
+    refined_library = create_refined_archetypes()
+    refined_path = ROOT / "lakoff_archetypes_refined.json"
+    refined_library.save(refined_path)
+    print(f"Saved refined archetypes to {refined_path}")
+    print(f"Refined archetypes: {[a.name for a in refined_library.archetypes]}")
     
     # Test feature extraction
     print("\nFeature layer classification examples:")

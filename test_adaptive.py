@@ -44,7 +44,6 @@ def test_basic_adaptive():
     assert interv_low['nad_supplement'] > interv_high['nad_supplement'], "Adaptive rule should increase NAD when ATP low"
     print("✓ Adaptive rule works correctly")
     
-    return protocol
 
 def test_symmathesy_protocol_simulation():
     """Test full simulation with symmathesy adaptive protocol."""
@@ -89,7 +88,6 @@ def test_symmathesy_protocol_simulation():
     print(f"  Relationship diversity: {sym['relationship_diversity']:.4f} vs {sym_const['relationship_diversity']:.4f}")
     print(f"  Adaptation coherence: {sym['adaptation_coherence']:.4f} vs {sym_const['adaptation_coherence']:.4f}")
     
-    return result, sym
 
 def test_phased_with_adaptive():
     """Test adaptive protocol combined with phased schedule."""
@@ -125,7 +123,6 @@ def test_phased_with_adaptive():
     print(f"\nFinal ATP: {analytics['energy']['atp_final']:.4f}")
     print(f"Final heteroplasmy: {analytics['damage']['het_final']:.4f}")
     
-    return result
 
 def test_sick_patient_adaptive():
     """Test adaptive protocol with a sick patient where rules should trigger."""
@@ -211,7 +208,6 @@ def test_sick_patient_adaptive():
     else:
         print("⚠ No rules fired - thresholds may not have been crossed")
     
-    return result, sym, log
 
 
 def test_proportional_rules():
@@ -274,7 +270,6 @@ def test_proportional_rules():
     print(f"Heteroplasmy proportional rule: het=0.6 -> transplant target {target2['transplant_rate']:.3f} (expected 0.240)")
     
     print("✓ Proportional rules work correctly")
-    return rule_dict, rule_dict2
 
 
 def test_bidirectional_rule():
@@ -310,7 +305,6 @@ def test_bidirectional_rule():
     print(f"Bidirectional rule: ATP=0.9 -> NAD target {target2['nad_supplement']:.3f} (expected 0.250)")
     
     print("✓ Bidirectional rule works correctly")
-    return rule_dict
 
 
 def test_adaptive_symmathesy_improvement():
@@ -374,7 +368,6 @@ def test_adaptive_symmathesy_improvement():
     if sym['relationship_diversity'] > sym_const['relationship_diversity']:
         print("✓ Relationship diversity improved")
     
-    return result, sym
 
 
 def test_advanced_symmathesy_protocol():
@@ -430,7 +423,6 @@ def test_advanced_symmathesy_protocol():
     if abs(sym_adv['adaptation_coherence']) > abs(sym_basic['adaptation_coherence']):
         print("✓ Adaptation coherence magnitude increased")
     
-    return protocol, result_adv, sym_adv
 
 
 def main():
@@ -441,28 +433,28 @@ def main():
     
     try:
         # Test 1: Basic adaptive rule
-        protocol = test_basic_adaptive()
+        test_basic_adaptive()
         
         # Test 2: Full simulation with symmathesy protocol
-        result1, sym1 = test_symmathesy_protocol_simulation()
+        test_symmathesy_protocol_simulation()
         
         # Test 3: Phased schedule with adaptive rules
-        result2 = test_phased_with_adaptive()
+        test_phased_with_adaptive()
         
         # Test 4: Sick patient with adaptive rules
-        result3, sym3, log3 = test_sick_patient_adaptive()
+        test_sick_patient_adaptive()
         
         # Test 5: Proportional adjustment rules
-        rule1, rule2 = test_proportional_rules()
+        test_proportional_rules()
         
         # Test 6: Bidirectional rule
-        bidir_rule = test_bidirectional_rule()
+        test_bidirectional_rule()
         
         # Test 7: Adaptive symmathesy improvement
-        result4, sym4 = test_adaptive_symmathesy_improvement()
+        test_adaptive_symmathesy_improvement()
         
         # Test 8: Advanced symmathesy protocol
-        protocol_adv, result5, sym5 = test_advanced_symmathesy_protocol()
+        test_advanced_symmathesy_protocol()
         
         print("\n" + "=" * 70)
         print("All adaptive protocol tests completed successfully!")

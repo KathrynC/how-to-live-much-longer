@@ -20,12 +20,13 @@ _APOE_INT_TO_STR = {
 }
 
 
-def run_scenario(scenario: Scenario, years: float | None = None) -> dict:
+def run_scenario(scenario: Scenario, years: float | None = None, include_annotations: bool = True) -> dict:
     """Run a single scenario through the full pipeline.
 
     Args:
         scenario: A Scenario instance with patient_params and interventions.
         years: Override simulation duration (default: scenario.duration_years).
+        include_annotations: Whether to add SystemViz+Lakoff semantic annotations.
 
     Returns:
         Dict with keys:
@@ -33,6 +34,7 @@ def run_scenario(scenario: Scenario, years: float | None = None) -> dict:
             'downstream': list[dict] from downstream_chain.compute_downstream()
             'scenario_name': str
             'scenario': the Scenario object
+            'annotations': optional dict with SystemViz+Lakoff semantic annotations
     """
     from parameter_resolver import ParameterResolver
     from simulator import simulate
@@ -57,22 +59,40 @@ def run_scenario(scenario: Scenario, years: float | None = None) -> dict:
 
     downstream = compute_downstream(core, patient_for_downstream)
 
-    return {
+    result = {
         'core': core,
         'downstream': downstream,
         'scenario_name': scenario.name,
         'scenario': scenario,
     }
+    
+    # Add semantic annotations if requested
+    if include_annotations:
+        try:
+            from scenario_annotations import ScenarioAnnotator
+            annotator = ScenarioAnnotator()
+            annotation = annotator.annotate(scenario)
+            result['annotations'] = annotation.to_dict()
+            # Also update scenario metadata
+            if not scenario.metadata:
+                scenario.metadata = {}
+            scenario.metadata['annotations'] = annotation.to_dict()
+        except ImportError:
+            # scenario_annotations not available; skip annotations
+            pass
+    
+    return result
 
 
-def run_scenarios(scenarios: list[Scenario], years: float | None = None) -> list[dict]:
+def run_scenarios(scenarios: list[Scenario], years: float | None = None, include_annotations: bool = True) -> list[dict]:
     """Run multiple scenarios and return list of results.
 
     Args:
         scenarios: List of Scenario instances.
         years: Override simulation duration for all scenarios.
+        include_annotations: Whether to add SystemViz+Lakoff semantic annotations.
 
     Returns:
         List of result dicts (one per scenario).
     """
-    return [run_scenario(s, years) for s in scenarios]
+    return [run_scenario(s, years, include_annotations) for s in scenarios]

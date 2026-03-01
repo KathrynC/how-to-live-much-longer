@@ -1,0 +1,134 @@
+[
+  {
+    "archetype": "conservative",
+    "description": "Low-risk, maintenance-focused intervention with minimal energy cost",
+    "criteria_changes": [
+      {
+        "feature": "energy.atp_cv",
+        "predicate": "lt",
+        "original": 0.1,
+        "adjusted": 0.02,
+        "change": -0.08,
+        "adjustment_note": "tightened (was 0.100, 94.6% meet)",
+        "meet_percentage": 94.6
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "gt",
+        "original": -0.05,
+        "adjusted": -0.2517,
+        "change": -0.2017,
+        "adjustment_note": "relaxed (was -0.050, 9.8% meet)",
+        "meet_percentage": 9.8
+      },
+      {
+        "feature": "dynamics.ros_amplitude",
+        "predicate": "lt",
+        "original": 0.15,
+        "adjusted": 0.0035,
+        "change": -0.1465,
+        "adjustment_note": "tightened (was 0.150, 100.0% meet)",
+        "meet_percentage": 100.0
+      },
+      {
+        "feature": "dynamics.senescent_final",
+        "predicate": "lt",
+        "original": 0.3,
+        "adjusted": 0.0805,
+        "change": -0.21949999999999997,
+        "adjustment_note": "tightened (was 0.300, 77.2% meet)",
+        "meet_percentage": 77.2
+      }
+    ]
+  },
+  {
+    "archetype": "aggressive",
+    "description": "High-intensity intervention aiming for damage reversal",
+    "criteria_changes": [
+      {
+        "feature": "dynamics.ros_amplitude",
+        "predicate": "gt",
+        "original": 0.2,
+        "adjusted": 0.0035,
+        "change": -0.1965,
+        "adjustment_note": "relaxed (was 0.200, 0.0% meet)",
+        "meet_percentage": 0.0
+      },
+      {
+        "feature": "energy.time_to_crisis_years",
+        "predicate": "gt",
+        "original": 10.0,
+        "adjusted": 23.33,
+        "change": 13.329999999999998,
+        "adjustment_note": "tightened (was 10.000, 95.2% meet)",
+        "meet_percentage": 95.2
+      }
+    ]
+  },
+  {
+    "archetype": "transplant_focused",
+    "description": "Protocol centered on mtDNA transplant as primary rejuvenation",
+    "criteria_changes": [
+      {
+        "feature": "damage.deletion_het_final",
+        "predicate": "lt",
+        "original": 0.5,
+        "adjusted": 0.0477,
+        "change": -0.4523,
+        "adjustment_note": "tightened (was 0.500, 100.0% meet)",
+        "meet_percentage": 100.0
+      },
+      {
+        "feature": "energy.atp_final",
+        "predicate": "gt",
+        "original": 0.8,
+        "adjusted": 0.764,
+        "change": -0.03600000000000003,
+        "adjustment_note": "adjusted toward p25",
+        "meet_percentage": 44.2
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "lt",
+        "original": -0.1,
+        "adjusted": -0.2517,
+        "change": -0.15169999999999997,
+        "adjustment_note": "tightened (was -0.100, 83.0% meet)",
+        "meet_percentage": 83.0
+      }
+    ]
+  },
+  {
+    "archetype": "metabolic_optimizer",
+    "description": "Protocol optimizing metabolic flexibility via combined interventions",
+    "criteria_changes": [
+      {
+        "feature": "dynamics.nad_slope",
+        "predicate": "gt",
+        "original": 0.0,
+        "adjusted": -0.0079,
+        "change": -0.0079,
+        "adjustment_note": "relaxed (was 0.000, 0.0% meet)",
+        "meet_percentage": 0.0
+      },
+      {
+        "feature": "energy.atp_cv",
+        "predicate": "lt",
+        "original": 0.15,
+        "adjusted": 0.02,
+        "change": -0.13,
+        "adjustment_note": "tightened (was 0.150, 98.6% meet)",
+        "meet_percentage": 98.6
+      },
+      {
+        "feature": "damage.delta_het",
+        "predicate": "lt",
+        "original": 0.0,
+        "adjusted": -0.2517,
+        "change": -0.2517,
+        "adjustment_note": "tightened (was 0.000, 94.0% meet)",
+        "meet_percentage": 94.0
+      }
+    ]
+  }
+]

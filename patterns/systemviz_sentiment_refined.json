@@ -1,0 +1,362 @@
+{
+  "analysis_date": "2026-02-22",
+  "method": "manual_classification",
+  "total_terms": 56,
+  "sentiment_counts": {
+    "positive": 12,
+    "negative": 9,
+    "neutral": 35
+  },
+  "positive_terms": [
+    "driver.enabler",
+    "state.redundancy",
+    "state.fault_recovery",
+    "state.capacity",
+    "state.assembly",
+    "state.maintenance",
+    "boundary.buffer",
+    "boundary.protector",
+    "relation.group",
+    "relation.mediation",
+    "domain.support_structure",
+    "domain.resources"
+  ],
+  "detailed_results": [
+    {
+      "category": "driver",
+      "term": "control_point",
+      "definition": "Contact between a subject and object whereby power or influence can be exerted.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "conduit",
+      "definition": "A path along which actors are expected to move.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "amplifier",
+      "definition": "A combination of factors or process that increases the magnitude of an effect.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "repeller",
+      "definition": "An object that pushes other objects away from itself.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "driver",
+      "term": "enabler",
+      "definition": "A contributory cause; can encourage change.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "driver",
+      "term": "dampener",
+      "definition": "A combination of factors or process that reduces the magnitude of an effect.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "cycle",
+      "definition": "A repeating process or iterative effort towards a goal.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "genator",
+      "definition": "The original impetus or trigger of a sequence of events.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "cascade",
+      "definition": "A sequence of knock-on effects; a chain reaction.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "driver",
+      "term": "inflection",
+      "definition": "A turning point or critical juncture.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "driver",
+      "term": "equifinality",
+      "definition": "Multiple activities lead to the same outcome.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "framing",
+      "definition": "Interpretive paradigm which makes the system understandable.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "monitor",
+      "definition": "Active scanning of a process or domain to compare with an expected state.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "indicator",
+      "definition": "Indirect or partial signal of status; a symptom of a deeper cause.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "feed_back",
+      "definition": "Information about the outputs of an action are routed back as inputs.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "status_display",
+      "definition": "Regularly updated information about a particular object.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "signal",
+      "term": "alert",
+      "definition": "A warning signal intended to mobilize a response.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "stock",
+      "definition": "A discrete collection of consumable or expendable resources for future use.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "standard",
+      "definition": "A set of items made more or less uniform; conformity to criteria.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "fault_detection",
+      "definition": "Self-diagnosis, self-monitoring, and system-problem identification.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "redundancy",
+      "definition": "Multiple stockpiles or parallel sub-systems that act as a back-up.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "state",
+      "term": "fault_recovery",
+      "definition": "Correction or compensation that minimize impact of faults.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "state",
+      "term": "tipping_point",
+      "definition": "The threshold beyond which rapid, large-scale change happens.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "criticality",
+      "definition": "The threshold beyond which a dynamic becomes self-sustaining.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "load",
+      "definition": "A stock of items being moved under containment conditions.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "mutation",
+      "definition": "A reconfiguration of an object caused by an error or exogenous factor.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "transition",
+      "definition": "Changing from one state to another.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "accumulation",
+      "definition": "The build-up of items or experiences over time.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "capacity",
+      "definition": "The finite ability to handle a particular quantity of activity.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "state",
+      "term": "reset",
+      "definition": "Returning to original conditions or earlier state.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "replication",
+      "definition": "When an object is copied, reproduced, or divided.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "state",
+      "term": "assembly",
+      "definition": "Building blocks with which system structures are formed.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "state",
+      "term": "separation",
+      "definition": "The division of a part into two or more parts.",
+      "sentiment": "negative"
+    },
+    {
+      "category": "state",
+      "term": "maintenance",
+      "definition": "The restoration of operations after a malfunction.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "boundary",
+      "term": "gate",
+      "definition": "A controlled opening in a barrier.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "buffer",
+      "definition": "A boundary or zone that diminishes, delays, or otherwise alters a driver.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "boundary",
+      "term": "reactive_boundary",
+      "definition": "A boundary that responds to forces and acts as an actant.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "permissions",
+      "definition": "The control of activity within a bounded area.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "container",
+      "definition": "A boundary that groups and isolates objects.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "semi_permiable",
+      "definition": "A barrier that blocks some objects while allowing others.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "divider",
+      "definition": "A boundary that keeps two or more distinct objects apart.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "protector",
+      "definition": "A barrier preventing damage by blocking unwanted forces.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "boundary",
+      "term": "notional_boundary",
+      "definition": "A conceptual boundary or delineation.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "boundary",
+      "term": "edge",
+      "definition": "Outer boundary that defines the scope of domain or system.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "group",
+      "definition": "An affiliated collective of actors that share patterns of behavior.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "relation",
+      "term": "rank",
+      "definition": "The hierarchical status bestowed on an object or actor.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "differentiation",
+      "definition": "A contrast between other items or actors in a system.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "mediation",
+      "definition": "The mitigation or reconciliation of conflict between parties.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "relation",
+      "term": "aggregate",
+      "definition": "A group of objects or actors of the same type.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "coupling",
+      "definition": "The tightness or looseness of ties between parts of a system.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "network",
+      "definition": "An arrangement of interconnected parts that interact directly.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "relation",
+      "term": "cluster",
+      "definition": "Elements defined as a group by virtue of proximity.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "domain",
+      "term": "support_structure",
+      "definition": "Constructed supports that enables activity.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "domain",
+      "term": "reference_points",
+      "definition": "Features in the context that can act as orienting devices.",
+      "sentiment": "neutral"
+    },
+    {
+      "category": "domain",
+      "term": "resources",
+      "definition": "The availability and access to the factor inputs needed.",
+      "sentiment": "positive"
+    },
+    {
+      "category": "domain",
+      "term": "levels_of_scale",
+      "definition": "System attributes at different orders of analysis.",
+      "sentiment": "neutral"
+    }
+  ]
+}

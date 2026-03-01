@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
@@ -20,14 +21,44 @@ VALID_OUTCOME_CLASSES = frozenset({
 })
 
 
-def protocol_fingerprint(intervention: dict[str, Any]) -> str:
-    """Return a short stable hash for an intervention dict.
+def _normalize_fingerprint_value(value: Any) -> Any:
+    """Normalize arbitrary values into stable JSON-serializable primitives."""
+    if isinstance(value, bool):
+        return value
+
+    if isinstance(value, (int, float)):
+        num = float(value)
+        if math.isfinite(num):
+            return round(num, 8)
+        return str(num)
+
+    if isinstance(value, str):
+        return value
+
+    if isinstance(value, (list, tuple)):
+        return [_normalize_fingerprint_value(v) for v in value]
+
+    if isinstance(value, dict):
+        return {
+            str(k): _normalize_fingerprint_value(v)
+            for k, v in sorted(value.items(), key=lambda item: str(item[0]))
+            if v is not None
+        }
+
+    return str(value)
+
+
+def protocol_fingerprint(values: dict[str, Any]) -> str:
+    """Return a short stable hash for a parameter dict.
 
     Analogous to rosetta-motion's _hash_weights(). Produces a 10-char
     hex string from the sorted (key, value) pairs.
     """
-    items = sorted((str(k), float(v)) for k, v in intervention.items()
-                   if v is not None)
+    items = sorted(
+        (str(k), _normalize_fingerprint_value(v))
+        for k, v in values.items()
+        if v is not None
+    )
     payload = json.dumps(items, sort_keys=True).encode("utf-8")
     return hashlib.sha1(payload).hexdigest()[:10]
 

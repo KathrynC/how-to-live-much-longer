@@ -1,56 +1,70 @@
 {
   "systemviz_categories": {
     "driver": {
-      "term_count": 11,
+      "term_count": 14,
       "example_terms": [
         "control_point",
         "conduit",
-        "amplifier"
+        "amplifier",
+        "ca.rule_firing",
+        "ca.cascade",
+        "ca.attractor_transition"
       ],
       "lakoff_layer": "linking"
     },
     "signal": {
-      "term_count": 6,
+      "term_count": 8,
       "example_terms": [
         "framing",
         "monitor",
-        "indicator"
+        "indicator",
+        "ca.bin_transition",
+        "ca.cliff_crossing_signal"
       ],
       "lakoff_layer": "grounded"
     },
     "state": {
-      "term_count": 17,
+      "term_count": 20,
       "example_terms": [
         "stock",
         "standard",
-        "fault_detection"
+        "fault_detection",
+        "ca.attractor",
+        "ca.bin_state",
+        "ca.discrete_state"
       ],
       "lakoff_layer": "grounded"
     },
     "boundary": {
-      "term_count": 10,
+      "term_count": 12,
       "example_terms": [
         "gate",
         "buffer",
-        "reactive_boundary"
+        "reactive_boundary",
+        "ca.cliff_boundary",
+        "ca.bin_threshold"
       ],
       "lakoff_layer": "linking"
     },
     "relation": {
-      "term_count": 8,
+      "term_count": 10,
       "example_terms": [
         "group",
         "rank",
-        "differentiation"
+        "differentiation",
+        "ca.bin_ordering",
+        "ca.variable_coupling"
       ],
       "lakoff_layer": "linking"
     },
     "domain": {
-      "term_count": 4,
+      "term_count": 6,
       "example_terms": [
         "support_structure",
         "reference_points",
-        "resources"
+        "resources",
+        "ca.state_space",
+        "ca.bin_lattice"
       ],
       "lakoff_layer": "linking"
     }
@@ -299,6 +313,90 @@
         "aggressive",
         "metabolic_optimizer"
       ]
+    },
+    {
+      "systemviz_term": "driver.ca.rule_firing",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["aggressive", "transplant_focused"]
+    },
+    {
+      "systemviz_term": "driver.ca.cascade",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["aggressive", "transplant_focused"]
+    },
+    {
+      "systemviz_term": "driver.ca.attractor_transition",
+      "category": "driver",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["aggressive", "transplant_focused"]
+    },
+    {
+      "systemviz_term": "signal.ca.bin_transition",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "signal.ca.cliff_crossing_signal",
+      "category": "signal",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": ["aggressive", "transplant_focused"]
+    },
+    {
+      "systemviz_term": "state.ca.attractor",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": ["conservative", "aggressive", "transplant_focused", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "state.ca.bin_state",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "state.ca.discrete_state",
+      "category": "state",
+      "lakoff_layer": "grounded",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "boundary.ca.cliff_boundary",
+      "category": "boundary",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["aggressive", "transplant_focused"]
+    },
+    {
+      "systemviz_term": "boundary.ca.bin_threshold",
+      "category": "boundary",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "relation.ca.bin_ordering",
+      "category": "relation",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "relation.ca.variable_coupling",
+      "category": "relation",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "domain.ca.state_space",
+      "category": "domain",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["conservative", "aggressive", "transplant_focused", "metabolic_optimizer"]
+    },
+    {
+      "systemviz_term": "domain.ca.bin_lattice",
+      "category": "domain",
+      "lakoff_layer": "linking",
+      "relevant_archetypes": ["conservative", "metabolic_optimizer"]
     }
   ]
 }

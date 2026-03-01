@@ -1,0 +1,172 @@
+{
+  "sample_size": 50,
+  "comparison": {
+    "results": [
+      {
+        "protocol_id": "unknown",
+        "existing": "cocktail",
+        "default_archetype": "conservative",
+        "default_score": 1.0,
+        "refined_archetype": "conservative",
+        "refined_score": 1.0,
+        "agreement": "match"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "full_experimental",
+        "default_archetype": "aggressive",
+        "default_score": 0.3333333333333333,
+        "refined_archetype": "conservative",
+        "refined_score": 0.75,
+        "agreement": "mismatch"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "cocktail",
+        "default_archetype": "conservative",
+        "default_score": 0.6666666666666666,
+        "refined_archetype": "conservative",
+        "refined_score": 0.75,
+        "agreement": "match"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "full_experimental",
+        "default_archetype": "conservative",
+        "default_score": 0.3333333333333333,
+        "refined_archetype": "conservative",
+        "refined_score": 0.75,
+        "agreement": "match"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "transplant_focused",
+        "default_archetype": "conservative",
+        "default_score": 0.6666666666666666,
+        "refined_archetype": "transplant_focused",
+        "refined_score": 1.0,
+        "agreement": "partial"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "full_experimental",
+        "default_archetype": "aggressive",
+        "default_score": 0.6666666666666666,
+        "refined_archetype": "conservative",
+        "refined_score": 0.75,
+        "agreement": "partial"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "cocktail",
+        "default_archetype": "conservative",
+        "default_score": 1.0,
+        "refined_archetype": "transplant_focused",
+        "refined_score": 1.0,
+        "agreement": "partial"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "full_experimental",
+        "default_archetype": "aggressive",
+        "default_score": 0.6666666666666666,
+        "refined_archetype": "conservative",
+        "refined_score": 0.75,
+        "agreement": "partial"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "full_experimental",
+        "default_archetype": "conservative",
+        "default_score": 0.3333333333333333,
+        "refined_archetype": "metabolic_optimizer",
+        "refined_score": 0.75,
+        "agreement": "mismatch"
+      },
+      {
+        "protocol_id": "unknown",
+        "existing": "transplant_focused",
+        "default_archetype": "conservative",
+        "default_score": 1.0,
+        "refined_archetype": "aggressive",
+        "refined_score": 0.75,
+        "agreement": "partial"
+      }
+    ],
+    "summary": {
+      "total_classified": 10,
+      "agreement_counts": {
+        "match": 3,
+        "partial": 5,
+        "mismatch": 2
+      },
+      "match_percentage": 30.0,
+      "partial_percentage": 50.0,
+      "mismatch_percentage": 20.0,
+      "default_distribution": {
+        "conservative": 7,
+        "aggressive": 3
+      },
+      "refined_distribution": {
+        "conservative": 6,
+        "transplant_focused": 2,
+        "metabolic_optimizer": 1,
+        "aggressive": 1
+      }
+    }
+  },
+  "grounding_analysis": {
+    "conservative": {
+      "default": {
+        "total": 3,
+        "grounded": 1,
+        "linking": 2
+      },
+      "refined": {
+        "total": 4,
+        "grounded": 4,
+        "linking": 0
+      },
+      "grounding_improvement": 3
+    },
+    "aggressive": {
+      "default": {
+        "total": 3,
+        "grounded": 1,
+        "linking": 2
+      },
+      "refined": {
+        "total": 4,
+        "grounded": 4,
+        "linking": 0
+      },
+      "grounding_improvement": 3
+    },
+    "transplant_focused": {
+      "default": {
+        "total": 3,
+        "grounded": 1,
+        "linking": 2
+      },
+      "refined": {
+        "total": 3,
+        "grounded": 3,
+        "linking": 0
+      },
+      "grounding_improvement": 2
+    },
+    "metabolic_optimizer": {
+      "default": {
+        "total": 3,
+        "grounded": 0,
+        "linking": 3
+      },
+      "refined": {
+        "total": 4,
+        "grounded": 4,
+        "linking": 0
+      },
+      "grounding_improvement": 4
+    }
+  }
+}

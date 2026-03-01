@@ -2,6 +2,7 @@
 import json
 import pytest
 from pathlib import Path
+import numpy as np
 
 
 @pytest.fixture
@@ -101,3 +102,82 @@ class TestPipelineRunner:
         data = json.loads(dict_path.read_text())
         assert len(data["records"]) == 1
         assert data["records"][0]["outcome_class"] is not None
+
+    def test_pipeline_caches_patient_baseline_simulation(self, output_dir, monkeypatch):
+        from run_protocol_pipeline import run_pipeline
+        from protocol_record import ProtocolRecord
+        import simulator
+
+        call_count = {"n": 0}
+
+        def fake_simulate(*args, **kwargs):
+            call_count["n"] += 1
+            patient = kwargs.get("patient", {}) or {}
+            base_het = float(patient.get("baseline_heteroplasmy", 0.3))
+            return {
+                "states": np.array([
+                    [1.0, 0.1, 1.0, 0.1, 0.6, 0.1, 1.0, 0.1],
+                    [1.0, 0.1, 0.8, 0.1, 0.6, 0.1, 1.0, 0.1],
+                ], dtype=float),
+                "heteroplasmy": np.array([base_het, base_het + 0.05], dtype=float),
+                "time": np.array([0.0, 30.0], dtype=float),
+            }
+
+        monkeypatch.setattr(simulator, "simulate", fake_simulate)
+
+        patient = {
+            "baseline_age": 70.0,
+            "baseline_heteroplasmy": 0.30,
+            "baseline_nad_level": 0.6,
+            "genetic_vulnerability": 1.0,
+            "metabolic_demand": 1.0,
+            "inflammation_level": 0.25,
+        }
+        records = [
+            ProtocolRecord(
+                intervention={"rapamycin_dose": 0.5},
+                patient=dict(patient),
+                analytics={"energy": {"atp_final": 0.8}, "damage": {"het_final": 0.3}},
+                simulation={"final_atp": 0.8, "final_het": 0.3},
+                source="test",
+            ),
+            ProtocolRecord(
+                intervention={"rapamycin_dose": 0.25},
+                patient=dict(patient),
+                analytics={"energy": {"atp_final": 0.75}, "damage": {"het_final": 0.32}},
+                simulation={"final_atp": 0.75, "final_het": 0.32},
+                source="test",
+            ),
+        ]
+
+        result = run_pipeline(records, output_dir=output_dir)
+        assert result["total_processed"] == 2
+        # Same patient should trigger one cached baseline simulation.
+        assert call_count["n"] == 1
+
+    def test_pipeline_records_structured_errors(self, output_dir):
+        from run_protocol_pipeline import run_pipeline
+        from protocol_record import ProtocolRecord
+
+        # Invalid intervention payload triggers ingest simulation failure.
+        bad_record = ProtocolRecord(
+            intervention={"invalid_intervention_key": "bad"},
+            patient={
+                "baseline_age": 70.0,
+                "baseline_heteroplasmy": 0.30,
+                "baseline_nad_level": 0.6,
+                "genetic_vulnerability": 1.0,
+                "metabolic_demand": 1.0,
+                "inflammation_level": 0.25,
+            },
+            source="test",
+        )
+
+        result = run_pipeline([bad_record], output_dir=output_dir)
+        assert result["total_processed"] == 1
+
+        data = json.loads((output_dir / "protocol_dictionary.json").read_text())
+        record_meta = data["records"][0].get("meta", {})
+        assert "errors" in record_meta
+        assert len(record_meta["errors"]) >= 1
+        assert any(e.get("stage") == "ingest_from_simulation" for e in record_meta["errors"])

@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""
+Update protocol dictionary with Lakoff archetype classification.
+
+Loads the protocol dictionary, adds lakoff_archetype classification to each
+record's enrichment field, and saves the updated dictionary.
+"""
+
+import json
+import sys
+from pathlib import Path
+from typing import Dict, Any, List
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from patterns.lakoff_classifier import batch_classify_records, load_adjusted_archetypes
+
+def update_dictionary(input_path: Path, output_path: Path = None, backup: bool = True, limit: int = None):
+    """Update protocol dictionary with Lakoff archetype classification."""
+    if output_path is None:
+        output_path = input_path
+    
+    print(f"Loading protocol dictionary from {input_path}")
+    with open(input_path, 'r') as f:
+        data = json.load(f)
+    
+    records = data.get("records", [])
+    print(f"Found {len(records)} records")
+    
+    if limit is not None:
+        records = records[:limit]
+        print(f"Limiting to first {limit} records for testing")
+    
+    # Backup original if requested
+    if backup and output_path == input_path:
+        backup_path = input_path.with_suffix('.json.bak')
+        import shutil
+        shutil.copy2(input_path, backup_path)
+        print(f"Backup created at {backup_path}")
+    
+    # Load adjusted archetypes once
+    library = load_adjusted_archetypes()
+    
+    # Classify all records
+    print("Classifying records...")
+    classifications = batch_classify_records(records, library)
+    
+    # Update each record's enrichment field
+    updated_count = 0
+    for i, (record, classification) in enumerate(zip(records, classifications)):
+        if "error" in classification:
+            print(f"Warning: Record {i} classification error: {classification['error']}")
+            continue
+        
+        # Ensure enrichment dict exists
+        if "enrichment" not in record:
+            record["enrichment"] = {}
+        
+        # Add lakoff_archetype classification
+        # Store the full classification dict (contains best_archetype, score, etc.)
+        record["enrichment"]["lakoff_archetype"] = classification
+        
+        updated_count += 1
+    
+    print(f"Updated {updated_count} records with Lakoff archetype classification")
+    
+    # Save updated dictionary
+    print(f"Saving updated dictionary to {output_path}")
+    with open(output_path, 'w') as f:
+        json.dump(data, f, indent=2)
+    
+    # Generate summary statistics
+    archetype_counts = {}
+    for record in records:
+        if "enrichment" in record and "lakoff_archetype" in record["enrichment"]:
+            arch = record["enrichment"]["lakoff_archetype"].get("lakoff_archetype", "unknown")
+            archetype_counts[arch] = archetype_counts.get(arch, 0) + 1
+    
+    print("\nArchetype distribution in updated dictionary:")
+    for arch, count in sorted(archetype_counts.items(), key=lambda x: x[1], reverse=True):
+        print(f"  {arch}: {count} records ({count/len(records)*100:.1f}%)")
+    
+    return data
+
+def main():
+    """Command-line entry point."""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Update protocol dictionary with Lakoff archetype classification')
+    parser.add_argument('--input', default='artifacts/protocol_pipeline/protocol_dictionary.json',
+                       help='Input protocol dictionary path')
+    parser.add_argument('--output', default=None,
+                       help='Output path (default: overwrite input)')
+    parser.add_argument('--no-backup', action='store_true',
+                       help='Do not create backup of original file')
+    parser.add_argument('--limit', type=int, default=None,
+                       help='Limit processing to first N records (for testing)')
+    
+    args = parser.parse_args()
+    
+    input_path = Path(ROOT / args.input)
+    if not input_path.exists():
+        print(f"Error: Input file not found: {input_path}")
+        sys.exit(1)
+    
+    output_path = Path(ROOT / args.output) if args.output else input_path
+    
+    update_dictionary(input_path, output_path, backup=not args.no_backup, limit=args.limit)
+
+if __name__ == "__main__":
+    main()

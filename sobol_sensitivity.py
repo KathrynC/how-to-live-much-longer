@@ -131,13 +131,13 @@ def sobol_indices(y_A, y_B, y_AB, y_BA):
     ST = np.zeros(d)
 
     for i in range(d):
-        # First-order (S1): Jansen (1999) estimator.
-        # S1_i = V_i / Var(Y) where V_i = E[Y_B * (Y_AB_i - Y_A)].
+        # First-order (S1): Saltelli (2002) estimator.
+        # S1_i = V_i / Var(Y) where V_i = E[Y_A * (Y_AB_i - Y_B)].
         # Measures the fraction of output variance explained by parameter i
         # ALONE (main effect). High S1 means this parameter independently
         # drives the outcome — e.g., baseline_heteroplasmy likely has high S1
         # for het_final because it directly sets the initial condition.
-        V_i = np.mean(y_B * (y_AB[i] - y_A))
+        V_i = np.mean(y_A * (y_AB[i] - y_B))
         S1[i] = V_i / var_total
 
         # Total-order (ST): Jansen (1999) estimator.
@@ -150,6 +150,11 @@ def sobol_indices(y_A, y_B, y_AB, y_BA):
         VT_i = 0.5 * np.mean((y_A - y_BA[i]) ** 2)
         ST[i] = VT_i / var_total
 
+    # Clip to [0, 1] and enforce ST >= S1
+    S1 = np.clip(S1, 0.0, 1.0)
+    ST = np.clip(ST, 0.0, 1.0)
+    ST = np.maximum(ST, S1)
+    
     return S1, ST
 
 

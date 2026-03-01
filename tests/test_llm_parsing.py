@@ -132,6 +132,14 @@ class TestParseInterventionVector:
         result = parse_intervention_vector('{"rapamycin_dose": 0.5}')
         assert result is None
 
+    def test_patient_only_payload_rejected(self):
+        payload = (
+            '{"baseline_age": 70, "baseline_heteroplasmy": 0.3, "baseline_nad_level": 0.6, '
+            '"genetic_vulnerability": 1.0, "metabolic_demand": 1.0, "inflammation_level": 0.25}'
+        )
+        result = parse_intervention_vector(payload)
+        assert result is None
+
     def test_empty_returns_none(self):
         assert parse_intervention_vector("") is None
 

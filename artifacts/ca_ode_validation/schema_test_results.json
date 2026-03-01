@@ -1,0 +1,60 @@
+{
+  "original": [
+    {
+      "patient": 0,
+      "intervention": "no_treatment",
+      "overall_agreement": 0.091,
+      "overall_rmse": 0.5064655148332208
+    },
+    {
+      "patient": 0,
+      "intervention": "conservative",
+      "overall_agreement": 0.073,
+      "overall_rmse": 0.5323233143406771
+    },
+    {
+      "patient": 1,
+      "intervention": "no_treatment",
+      "overall_agreement": 0.018,
+      "overall_rmse": 0.49263994463608063
+    },
+    {
+      "patient": 1,
+      "intervention": "conservative",
+      "overall_agreement": 0.009,
+      "overall_rmse": 0.5237756564069082
+    }
+  ],
+  "updated": [
+    {
+      "patient": 0,
+      "intervention": "no_treatment",
+      "overall_agreement": 0.013,
+      "overall_rmse": 0.5165115513807642
+    },
+    {
+      "patient": 0,
+      "intervention": "conservative",
+      "overall_agreement": 0.131,
+      "overall_rmse": 0.5314966485002075
+    },
+    {
+      "patient": 1,
+      "intervention": "no_treatment",
+      "overall_agreement": 0.018,
+      "overall_rmse": 0.49273068396603115
+    },
+    {
+      "patient": 1,
+      "intervention": "conservative",
+      "overall_agreement": 0.009,
+      "overall_rmse": 0.5237697368102721
+    }
+  ],
+  "averages": {
+    "original_agreement": 0.047749999999999994,
+    "updated_agreement": 0.04275,
+    "original_rmse": 0.5138011075542216,
+    "updated_rmse": 0.5161271551643187
+  }
+}
