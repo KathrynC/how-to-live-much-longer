@@ -1,11 +1,11 @@
-"""Integration test -- run all 4 scenarios for the 63yo APOE4 patient end-to-end."""
+"""Integration test -- run all 7 scenarios for the 63yo APOE4 patient end-to-end."""
 import pytest
 import numpy as np
 
 
 class TestFourScenarioComparison:
     """Validate that the A-D scenario progression produces monotonically
-    improving outcomes, matching the projected trajectories from the handoff."""
+    improving outcomes, and E/F (sensor-constrained) produce reasonable results."""
 
     @pytest.fixture(scope='class')
     def all_results(self):
@@ -13,8 +13,8 @@ class TestFourScenarioComparison:
         from scenario_runner import run_scenarios
         return run_scenarios(get_example_scenarios(), years=30)
 
-    def test_four_scenarios_complete(self, all_results):
-        assert len(all_results) == 4
+    def test_seven_scenarios_complete(self, all_results):
+        assert len(all_results) == 7
 
     def test_scenario_b_better_than_a_het(self, all_results):
         a_het = all_results[0]['core']['heteroplasmy'][-1]
@@ -31,8 +31,9 @@ class TestFourScenarioComparison:
         d_het = all_results[3]['core']['heteroplasmy'][-1]
         assert d_het < c_het, "D (experimental) should have lower het than C"
 
-    def test_memory_index_monotonically_better(self, all_results):
-        memory_finals = [r['downstream'][-1]['memory_index'] for r in all_results]
+    def test_memory_index_monotonically_better_a_through_d(self, all_results):
+        """Scenarios A-D should show monotonically improving memory."""
+        memory_finals = [all_results[i]['downstream'][-1]['memory_index'] for i in range(4)]
         for i in range(len(memory_finals) - 1):
             assert memory_finals[i+1] >= memory_finals[i], \
                 f"Scenario {i+2} should have >= memory than scenario {i+1}"
@@ -42,6 +43,16 @@ class TestFourScenarioComparison:
         a_mi = all_results[0]['downstream'][-1]['memory_index']
         b_mi = all_results[1]['downstream'][-1]['memory_index']
         assert b_mi > a_mi
+
+    def test_scenario_f_has_sensor_config(self, all_results):
+        """Scenario F should have enhanced sensing config with 5 devices."""
+        from scenario_definitions import get_example_scenarios
+        scenarios = get_example_scenarios()
+        f_config = scenarios[5].sensor_config
+        assert f_config is not None
+        assert len(f_config['devices']) == 5
+        assert 'abbott_lingo' in f_config['devices']
+        assert 'periodic_biomarker' in f_config['devices']
 
 
 class TestBackwardCompatibilityNoResolver:

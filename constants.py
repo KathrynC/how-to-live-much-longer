@@ -1098,6 +1098,233 @@ TAU_TOXICITY = 0.5
 RESILIENCE_WEIGHTS = {'MEF2': 0.3, 'synaptic_gain': 0.3, 'CR': 0.4}
 
 
+# ── Wearable Sensor Observation Model (Phase 10 formalization) ────────────────
+#
+# Three consumer wearable devices as an observation layer between the 8D ODE
+# state vector and the adaptive controller. Maps hidden cellular state to
+# noisy, partial sensor readings.
+#
+# Device specifications based on manufacturer datasheets:
+#   Apple Watch Series 11 (2025): HR, HRV, SpO2, temperature, BP, accel
+#   Oura Ring 4 (2024): HR, HRV, SpO2, temperature, respiratory rate
+#   Dexcom Stelo CGM (2024): interstitial glucose (15-day wear cycle)
+
+# ── Sensor baselines (healthy 40-year-old at rest) ────────────────────────────
+SENSOR_BASELINE_HR = 70.0          # bpm; resting heart rate
+SENSOR_BASELINE_HRV = 40.0        # ms RMSSD; vagal tone marker
+SENSOR_BASELINE_SPO2 = 98.0       # %; arterial oxygen saturation
+SENSOR_BASELINE_TEMP = 36.8       # °C; core body temperature
+SENSOR_BASELINE_SYS_BP = 120.0    # mmHg; systolic blood pressure
+SENSOR_BASELINE_DIA_BP = 80.0     # mmHg; diastolic blood pressure
+SENSOR_BASELINE_GLUCOSE = 95.0    # mg/dL; fasting blood glucose
+SENSOR_BASELINE_RESP_RATE = 15.0  # brpm; respiratory rate
+SENSOR_BASELINE_ACTIVITY = 1.0    # g; resting accelerometer magnitude
+
+# ── Observation function sensitivity coefficients ─────────────────────────────
+# Each maps a hidden ODE variable to an observable sensor reading.
+# Derived from clinical physiology; magnitudes are simulation parameters.
+
+# Heart rate: low ATP → chronotropic compensation; ROS → sympathetic drive
+# Cramer Ch. VIII.A p.100: ATP deficit → compensatory cardiac output
+SENSOR_HR_ATP_SENSITIVITY = 30.0    # bpm per unit ATP deficit (below 1.0); positive = HR rises
+SENSOR_HR_ROS_SENSITIVITY = 15.0    # bpm per unit ROS excess (above 0.1)
+SENSOR_HR_AGE_DRIFT = 0.1          # bpm per year above 40
+
+# HRV (RMSSD): vagal tone requires ATP; SASP suppresses parasympathetic
+# Cramer Ch. VII.A p.89: senescent cells secrete SASP → chronic inflammation
+SENSOR_HRV_ATP_SENSITIVITY = 20.0   # ms RMSSD per unit ATP (scales with energy)
+SENSOR_HRV_ROS_SENSITIVITY = -10.0  # ms per unit ROS (sympathetic dominance)
+SENSOR_HRV_SEN_SENSITIVITY = -15.0  # ms per unit senescent fraction
+SENSOR_HRV_AGE_DECLINE = -0.3      # ms per year above 40
+
+# SpO2: low membrane potential → ETC dysfunction → poor O2 utilization
+# Cramer Ch. IV pp.46-47: ΔΨ drives proton gradient → ATP synthase
+SENSOR_SPO2_PSI_SENSITIVITY = 2.0   # % per unit membrane potential
+SENSOR_SPO2_SEN_SENSITIVITY = -3.0  # % per unit senescent fraction
+
+# Temperature: SASP→IL-6→thermogenesis; uncoupled respiration→heat
+# Cramer Ch. VII.A p.89: SASP includes IL-6, TNF-α
+SENSOR_TEMP_ROS_SENSITIVITY = 0.5   # °C per unit ROS excess
+SENSOR_TEMP_SEN_SENSITIVITY = 0.8   # °C per unit senescent fraction
+SENSOR_TEMP_PSI_SENSITIVITY = -0.3  # °C per unit ΔΨ deficit (uncoupling)
+
+# Blood pressure: endothelial senescence → reduced NO → vasoconstriction
+# Cramer Ch. VII.A pp.89-92: senescence impairs vascular function
+SENSOR_BP_SEN_SENSITIVITY = 30.0    # mmHg systolic per unit senescent fraction
+SENSOR_BP_ROS_SENSITIVITY = 10.0    # mmHg per unit ROS excess
+SENSOR_BP_AGE_DRIFT = 0.3          # mmHg per year above 40
+
+# Glucose: NAD→SIRT1→insulin sensitivity; ATP→beta-cell secretion
+# Cramer Ch. VI.A.3 pp.72-73: NAD+ required for sirtuin activity
+SENSOR_GLUCOSE_NAD_SENSITIVITY = -25.0  # mg/dL per unit NAD (higher NAD → lower glucose)
+SENSOR_GLUCOSE_ATP_SENSITIVITY = -15.0  # mg/dL per unit ATP (beta-cell function)
+
+# Respiratory rate: compensatory hyperventilation for ATP deficit
+SENSOR_RESP_ATP_SENSITIVITY = 8.0   # brpm per unit ATP deficit (below 1.0); positive = resp rises
+SENSOR_RESP_ROS_SENSITIVITY = 3.0   # brpm per unit ROS excess
+
+# Activity/accelerometer: fatigue limits exercise execution
+SENSOR_ACTIVITY_ATP_SCALING = 1.0   # multiplicative; activity ∝ ATP available
+
+# ── Device noise standard deviations ─────────────────────────────────────────
+# From manufacturer accuracy specifications and clinical validation studies.
+SENSOR_NOISE_APPLE_HR = 2.0        # bpm (Apple Watch optical HR ±2 bpm)
+SENSOR_NOISE_APPLE_HRV = 5.0       # ms RMSSD
+SENSOR_NOISE_APPLE_SPO2 = 1.0      # % (consumer pulse ox accuracy)
+SENSOR_NOISE_APPLE_TEMP = 0.1      # °C (wrist temperature)
+SENSOR_NOISE_APPLE_BP = 5.0        # mmHg (cuff-free BP estimate)
+SENSOR_NOISE_APPLE_ACTIVITY = 0.05 # g (accelerometer)
+
+SENSOR_NOISE_OURA_HR = 2.0         # bpm
+SENSOR_NOISE_OURA_HRV = 5.0        # ms RMSSD
+SENSOR_NOISE_OURA_SPO2 = 1.5       # % (finger-based pulse ox)
+SENSOR_NOISE_OURA_TEMP = 0.05      # °C (proximal phalanx, more stable)
+SENSOR_NOISE_OURA_RESP = 1.0       # brpm
+
+SENSOR_NOISE_DEXCOM_GLUCOSE = 9.0  # mg/dL (Stelo MARD ~9 mg/dL)
+
+# ── CGM wear cycle parameters ────────────────────────────────────────────────
+# Dexcom Stelo: 14 days active, ~1 day changeover (sensor warmup + replacement)
+CGM_ACTIVE_DAYS = 14.0
+CGM_CHANGEOVER_DAYS = 1.0
+CGM_CYCLE_DAYS = CGM_ACTIVE_DAYS + CGM_CHANGEOVER_DAYS  # 15 days total
+
+# ── Sensor ranges (hardware clamp) ───────────────────────────────────────────
+SENSOR_RANGE_HR = (30.0, 220.0)         # bpm
+SENSOR_RANGE_HRV = (0.0, 200.0)         # ms RMSSD
+SENSOR_RANGE_SPO2 = (70.0, 100.0)       # %
+SENSOR_RANGE_TEMP = (35.0, 42.0)        # °C
+SENSOR_RANGE_SYS_BP = (70.0, 250.0)     # mmHg
+SENSOR_RANGE_DIA_BP = (40.0, 150.0)     # mmHg
+SENSOR_RANGE_GLUCOSE = (40.0, 400.0)    # mg/dL
+SENSOR_RANGE_RESP_RATE = (4.0, 40.0)    # brpm
+SENSOR_RANGE_ACTIVITY = (0.0, 16.0)     # g
+
+# ── Population-average priors for unobservable state variables ────────────────
+# Used by estimate_state() when no sensor can observe a variable.
+# Based on healthy-aging population statistics.
+SENSOR_PRIOR_N_HEALTHY = 0.75      # assume 75% healthy copies (age-adjusted)
+SENSOR_PRIOR_N_DELETION = 0.15     # assume 15% deletion het (age-adjusted)
+SENSOR_PRIOR_N_POINT = 0.10        # assume 10% point mutations
+SENSOR_PRIOR_MEMBRANE_POTENTIAL = 0.85  # slightly below optimal
+
+# ── Lactate sensor (Abbott Lingo) ──────────────────────────────────────────
+# Continuous interstitial lactate monitor (14-day wear cycle like CGM).
+# Biology: low ATP → glycolytic compensation → lactate rises.
+# Cramer Ch. VIII.A p.100: ATP deficit forces glycolytic overdrive.
+SENSOR_BASELINE_LACTATE = 1.0           # mmol/L; resting blood lactate
+SENSOR_LACTATE_ATP_SENSITIVITY = -3.0   # mmol/L per unit ATP (low ATP → high lactate)
+SENSOR_LACTATE_ROS_SENSITIVITY = 1.5    # mmol/L per unit ROS excess
+SENSOR_LACTATE_SEN_SENSITIVITY = 0.8    # mmol/L per unit senescent fraction
+SENSOR_LACTATE_EXERCISE_BOOST = 4.0     # mmol/L per unit exercise level
+SENSOR_NOISE_LINGO_LACTATE = 0.15       # mmol/L (Abbott Lingo MARD ~12%)
+SENSOR_RANGE_LACTATE = (0.3, 25.0)      # mmol/L
+LINGO_ACTIVE_DAYS = 14.0
+LINGO_CHANGEOVER_DAYS = 1.0
+LINGO_CYCLE_DAYS = 15.0                 # same cycle as Dexcom
+
+# ── Periodic blood biomarker panel ──────────────────────────────────────────
+# Quarterly venous draw: hs-CRP, GDF-15, NAD+, 8-OHdG.
+# High precision (lab-grade) but low temporal resolution (~4x/year).
+BIOMARKER_INTERVAL_DAYS = 91.3          # quarterly (~365.25/4)
+
+# hs-CRP: high-sensitivity C-reactive protein (acute phase reactant)
+# Cramer Ch. VII.A pp.89-92: SASP→IL-6→hepatic CRP synthesis
+SENSOR_BASELINE_HS_CRP = 1.0           # mg/L; healthy baseline
+SENSOR_HS_CRP_SEN_SENSITIVITY = 8.0    # mg/L per unit senescent fraction
+SENSOR_HS_CRP_ROS_SENSITIVITY = 3.0    # mg/L per unit ROS excess
+SENSOR_NOISE_HS_CRP = 0.3              # mg/L (lab CV ~5-10%)
+SENSOR_RANGE_HS_CRP = (0.1, 200.0)     # mg/L
+
+# GDF-15: growth differentiation factor 15 (mitochondrial stress marker)
+# Most information-rich single biomarker: integrates ATP, ROS, NAD, Sen.
+# Literature: Wiklund et al. 2010; elevated in mitochondrial myopathy.
+SENSOR_BASELINE_GDF15 = 600.0          # pg/mL; healthy 60-70yo
+SENSOR_GDF15_ATP_SENSITIVITY = -800.0  # pg/mL per unit ATP deficit
+SENSOR_GDF15_ROS_SENSITIVITY = 400.0   # pg/mL per unit ROS excess
+SENSOR_GDF15_NAD_SENSITIVITY = -300.0  # pg/mL per unit NAD deficit
+SENSOR_GDF15_SEN_SENSITIVITY = 500.0   # pg/mL per unit senescent fraction
+SENSOR_NOISE_GDF15 = 80.0              # pg/mL (ELISA CV ~10-15%)
+SENSOR_RANGE_GDF15 = (100.0, 10000.0)  # pg/mL
+
+# NAD+ (whole blood): near-direct measurement of ODE state[4]
+# Cramer Ch. VI.A.3 pp.72-73: NAD+ as master metabolic cofactor
+SENSOR_BASELINE_NAD_BLOOD = 30.0       # μmol/L; healthy baseline
+SENSOR_NAD_BLOOD_SENSITIVITY = 30.0    # μmol/L per unit NAD (1:1 mapping)
+SENSOR_NOISE_NAD_BLOOD = 3.0           # μmol/L (LC-MS/MS CV ~8-12%)
+SENSOR_RANGE_NAD_BLOOD = (5.0, 80.0)   # μmol/L
+
+# 8-OHdG: 8-hydroxy-2'-deoxyguanosine (oxidative DNA damage marker)
+# Directly proportional to cumulative ROS exposure.
+SENSOR_BASELINE_8OHDG = 5.0            # ng/mL; healthy baseline
+SENSOR_8OHDG_ROS_SENSITIVITY = 20.0    # ng/mL per unit ROS
+SENSOR_NOISE_8OHDG = 1.0               # ng/mL (ELISA CV ~10%)
+SENSOR_RANGE_8OHDG = (1.0, 100.0)      # ng/mL
+
+
+# ── WGS genomics constants ─────────────────────────────────────────────────
+# Haplogroup → genetic vulnerability mapping.
+# Haplogroups with more D-loop direct repeats → more Pol γ slippage → faster
+# deletion accumulation. Values from Cramer Appendix 2, supplemented by
+# Kazuno et al. 2006 (common deletion frequency by haplogroup).
+HAPLOGROUP_VULNERABILITY = {
+    'H':  1.0,    # European reference haplogroup (most common)
+    'H2': 1.0,    # H sub-lineage
+    'J':  0.85,   # Lower deletion rate (fewer direct repeats)
+    'J1': 0.85,
+    'T':  1.05,   # Slightly elevated
+    'U':  0.90,   # Mildly protective
+    'U5': 0.88,
+    'K':  0.92,   # K is a sub-clade of U
+    'I':  1.10,   # Elevated deletion susceptibility
+    'W':  1.08,
+    'X':  1.05,
+    'M':  0.95,   # Asian macro-haplogroup
+    'N':  1.0,    # Basal Eurasian
+    'L':  0.90,   # African haplogroups — lower deletion burden in population studies
+    'L0': 0.88,
+    'L3': 0.92,
+}
+HAPLOGROUP_VULNERABILITY_DEFAULT = 1.0  # for unknown haplogroups
+
+# WGS depth → heteroplasmy call confidence
+WGS_HET_CONFIDENCE = {
+    1.0:   0.50,   # 1x low-pass: can detect haplogroup, not low-freq variants
+    30.0:  0.85,   # 30x standard WGS: reliable above ~10% allele fraction
+    100.0: 0.95,   # 100x ultra-deep: detects variants at ~3-5% allele fraction
+}
+
+# Pharmacogenomic metabolizer status multipliers
+# CYP3A4 metabolizes rapamycin/sirolimus; poor metabolizers need dose reduction
+PGX_CYP3A4_MULTIPLIER = {
+    'poor': 0.5,          # 50% effective dose (toxicity risk at standard dose)
+    'intermediate': 0.75,
+    'normal': 1.0,
+    'ultra': 1.3,         # rapid clearance, may need higher dose
+}
+# CYP2D6 metabolizes some supplements; affects bioavailability
+PGX_CYP2D6_MULTIPLIER = {
+    'poor': 0.6,
+    'intermediate': 0.8,
+    'normal': 1.0,
+    'ultra': 1.2,
+}
+
+# Direct repeat count → deletion rate multiplier
+# More direct repeats in mtDNA → more Pol γ slippage events → faster deletion growth
+DIRECT_REPEAT_VULNERABILITY_SLOPE = 0.015  # per additional direct repeat above baseline
+DIRECT_REPEAT_BASELINE_COUNT = 30          # typical number in human mtDNA
+
+# Nuclear allele IBD sharing expectations
+IBD_SHARING = {
+    'parent_child': 0.50,
+    'grandparent_grandchild': 0.25,
+    'sibling': 0.50,
+    'spouse': 0.0,       # unrelated
+    'half_sibling': 0.25,
+}
+
+
 # ── CA age epoch helper ──────────────────────────────────────────────────────
 
 def age_epoch(age: float) -> str:

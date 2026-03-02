@@ -41,13 +41,39 @@ def run_scenario(scenario: Scenario, years: float | None = None) -> dict:
     years = years if years is not None else scenario.duration_years
     intervention_dict = scenario.interventions.to_dict()
 
+    # Build the base parameter resolver
     pr = ParameterResolver(
         patient_expanded=scenario.patient_params,
         intervention_expanded=intervention_dict,
         duration_years=years,
     )
 
-    core = simulate(resolver=pr, sim_years=years)
+    # Phase 10: wrap in sensor-constrained adaptive protocol if configured
+    resolver = pr
+    if scenario.sensor_config is not None:
+        from adaptive_protocol import create_symmathesy_protocol
+        from wearable_sensors import WearableObservationModel
+        from sensor_constrained_adaptive import SensorConstrainedProtocol
+
+        sc = scenario.sensor_config
+        # Build adaptive protocol from base resolver's intervention
+        base_intervention = pr.resolve(0.0)[0]
+        base_patient = pr.resolve(0.0)[1]
+        adaptive = create_symmathesy_protocol(base_intervention, base_patient)
+
+        # Build observation model
+        obs_model = WearableObservationModel(
+            devices=sc.get('devices', ['apple_watch', 'oura_ring', 'dexcom_stelo']),
+            patient_age=scenario.patient_params.get('baseline_age', 63.0),
+            seed=sc.get('seed', 42),
+        )
+
+        family_priors = sc.get('family_priors', None)
+
+        resolver = SensorConstrainedProtocol(
+            adaptive, obs_model, family_priors=family_priors)
+
+    core = simulate(resolver=resolver, sim_years=years)
 
     # Build the patient_expanded dict for downstream_chain, mapping apoe int→str
     patient_for_downstream = dict(scenario.patient_params)

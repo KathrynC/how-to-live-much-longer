@@ -20,12 +20,15 @@ class TestScenarioDefinitions:
         assert s.name == "test"
         assert s.duration_years == 30.0
 
-    def test_example_scenarios_returns_four(self):
+    def test_example_scenarios_returns_seven(self):
         from scenario_definitions import get_example_scenarios
         scenarios = get_example_scenarios()
-        assert len(scenarios) == 4
+        assert len(scenarios) == 7
         assert scenarios[0].name.startswith("A")
         assert scenarios[3].name.startswith("D")
+        assert scenarios[4].name.startswith("E")
+        assert scenarios[5].name.startswith("F")
+        assert scenarios[6].name.startswith("G")
 
 
 class TestScenarioRunner:

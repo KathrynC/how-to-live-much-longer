@@ -221,8 +221,9 @@ lifestyle_module.py        ← Alcohol, coffee, diet, fasting (imports constants
 supplement_module.py       ← Hill-function dose-response 11 nutraceuticals (imports constants)
 parameter_resolver.py      ← 50D→12D modifier chain (imports genetics, lifestyle, supplements)
 downstream_chain.py        ← MEF2, HA, SS, CR, amyloid, tau ODEs + memory_index (imports constants)
-scenario_definitions.py    ← InterventionProfile, Scenario, A-D scenarios (imports nothing)
+scenario_definitions.py    ← InterventionProfile, Scenario, A-G scenarios (imports nothing; G imports family_genomics)
 scenario_runner.py         ← Pipeline orchestration (imports parameter_resolver, simulator, downstream_chain)
+family_genomics.py         ← WGS-informed priors: GenomicProfile, FamilyPedigree, compute_family_priors(), build_cramer_family() (imports constants, genetics_module)
 scenario_analysis.py       ← Milestone extraction (imports numpy)
 scenario_plot.py           ← Trajectory/milestone/heatmap plots (imports matplotlib)
 run_scenario_comparison.py ← CLI 4-scenario comparison (imports all scenario modules)
@@ -267,6 +268,10 @@ resilience_metrics.py      ← Resistance, recovery time, regime retention, elas
 resilience_viz.py          ← 5 visualization functions + CLI (imports disturbances, resilience_metrics, simulator, constants)
 
 archive/orphans/protocol_mtdna_synthesis.py  ← Standalone (archived; no imports from project)
+
+# Wearable Sensor Observation Model (Phase 10 formalization, no LLM)
+wearable_sensors.py            ← Device specs (Apple Watch 11, Oura Ring 4, Dexcom Stelo, Abbott Lingo lactate monitor, Periodic Biomarker Panel [hs-CRP, GDF-15, NAD+, 8-OHdG]), 13 observation functions (ODE state → noisy sensor readings), WearableObservationModel class with observe(), estimate_state(family_priors=), information_loss() (imports constants)
+sensor_constrained_adaptive.py ← SensorConstrainedProtocol: wraps AdaptiveProtocol to use sensor-derived state estimates instead of direct ODE access (imports adaptive_protocol, wearable_sensors)
 
 # Semantic Cellular Automaton (CA layer)
 ca_schema.py               ← 8-variable bin schema, discretize/exemplar (imports constants)
@@ -420,7 +425,8 @@ Three-layer architecture expanding the simulator from 8-state/12D to a precision
 | `supplement_module.py` | Hill-function dose-response for 11 nutraceuticals | constants |
 | `parameter_resolver.py` | 50D→12D modifier chain with time-varying trajectories | genetics, lifestyle, supplements |
 | `downstream_chain.py` | MEF2, HA, SS, CR, amyloid, tau ODEs + memory_index | constants |
-| `scenario_definitions.py` | InterventionProfile/Scenario dataclasses, A-D scenarios | — |
+| `scenario_definitions.py` | InterventionProfile/Scenario dataclasses, A-G scenarios | — |
+| `family_genomics.py` | WGS-informed priors, family pedigree, cross-generational calibration | constants, genetics_module |
 | `scenario_runner.py` | Pipeline: resolver → simulate → downstream | parameter_resolver, simulator, downstream_chain |
 | `scenario_analysis.py` | Milestone extraction, scenario comparison | — |
 | `scenario_plot.py` | Trajectory plots, milestone bars, heatmaps | matplotlib |
@@ -929,7 +935,7 @@ Notable extremes:
 - Type annotations on all public functions in core modules (`constants.py`, `simulator.py`, `analytics.py`, `llm_common.py`, `schemas.py`); type aliases: `ParamDict`, `InterventionDict`, `PatientDict` in `constants.py`
 - Time-varying interventions via `InterventionSchedule` class in `simulator.py`; convenience constructors `phased_schedule()` and `pulsed_schedule()`; plain dicts still work (backwards compatible)
 - Prompt templates include 2 few-shot examples (young prevention + near-cliff emergency) in OFFER_NUMERIC and OFFER_DIEGETIC to reduce LLM flattening and key omission
-- Formal test suite: `pytest tests/ -v` runs ~631 tests across 37 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_kcramer_bridge, test_grief_bridge, test_lemurs_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration, test_ca, test_ca_stochastic, test_ca_zimmerman_bridge, test_ca_visualize)
+- Formal test suite: `pytest tests/ -v` runs ~660 tests across 38 modules (test_simulator, test_analytics, test_llm_parsing, test_schemas, test_zimmerman_bridge, test_resilience, test_kcramer_bridge, test_grief_bridge, test_lemurs_bridge, test_expansion_constants, test_genetics_module, test_lifestyle_module, test_supplement_module, test_parameter_resolver, test_resolver_integration, test_downstream_chain, test_scenario_framework, test_integration_scenarios, test_family_genomics, test_protocol_record, test_protocol_dictionary, test_protocol_enrichment, test_protocol_classifier, test_protocol_rewrite_rules, test_protocol_pattern_language, test_protocol_review, test_protocol_pipeline, test_protocol_pipeline_integration, test_ca, test_ca_stochastic, test_ca_zimmerman_bridge, test_ca_visualize)
 - 10 clinical scenario seeds are hardcoded in `constants.py:CLINICAL_SEEDS`
 
 ## Agents (.claude/agents/)

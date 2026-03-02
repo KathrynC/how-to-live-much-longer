@@ -64,6 +64,7 @@ class Scenario:
     interventions: InterventionProfile
     duration_years: float = 30.0
     output_metrics: list = field(default_factory=lambda: ['heteroplasmy', 'atp', 'memory_index'])
+    sensor_config: dict | None = None  # Phase 10: wearable sensor observation model config
 
 
 # ── Base patient ────────────────────────────────────────────────────────────
@@ -140,8 +141,42 @@ def _scenario_d_interventions() -> InterventionProfile:
     return ip
 
 
+def _scenario_e_sensor_config() -> dict:
+    """E: Sensor-constrained adaptive dosing via wearable devices."""
+    return {
+        'devices': ['apple_watch', 'oura_ring', 'dexcom_stelo'],
+        'adaptive_rules': 'symmathesy',  # uses create_symmathesy_protocol
+        'seed': 42,
+    }
+
+
+def _scenario_f_sensor_config() -> dict:
+    """F: Enhanced sensing — wearables + lactate monitor + quarterly bloods."""
+    return {
+        'devices': ['apple_watch', 'oura_ring', 'dexcom_stelo',
+                     'abbott_lingo', 'periodic_biomarker'],
+        'adaptive_rules': 'symmathesy',
+        'seed': 42,
+    }
+
+
+def _scenario_g_sensor_config() -> dict:
+    """G: Enhanced sensing + WGS family genomics priors."""
+    from family_genomics import build_cramer_family, compute_family_priors
+    pedigree = build_cramer_family()
+    john_jr = pedigree.get_member("John Jr.")
+    priors = compute_family_priors(john_jr, pedigree)
+    return {
+        'devices': ['apple_watch', 'oura_ring', 'dexcom_stelo',
+                     'abbott_lingo', 'periodic_biomarker'],
+        'adaptive_rules': 'symmathesy',
+        'seed': 42,
+        'family_priors': priors,
+    }
+
+
 def get_example_scenarios() -> list[Scenario]:
-    """Return the 4 predefined scenarios A-D for the base patient."""
+    """Return the 7 predefined scenarios A-G for the base patient."""
     return [
         Scenario(
             name="A: Sleep + Alcohol Cessation",
@@ -170,5 +205,36 @@ def get_example_scenarios() -> list[Scenario]:
                         "mitlets) and partial Yamanaka reprogramming (OSKM).",
             patient_params=dict(BASE_PATIENT),
             interventions=_scenario_d_interventions(),
+        ),
+        Scenario(
+            name="E: D + Sensor-Constrained Adaptive",
+            description="Same therapies as D, but dosed via sensor-constrained adaptive "
+                        "protocol. Controller sees only noisy wearable sensor readings "
+                        "(Apple Watch, Oura Ring, Dexcom Stelo), not the true ODE state. "
+                        "Demonstrates information loss from partial observability.",
+            patient_params=dict(BASE_PATIENT),
+            interventions=_scenario_d_interventions(),
+            sensor_config=_scenario_e_sensor_config(),
+        ),
+        Scenario(
+            name="F: D + Enhanced Sensing Adaptive",
+            description="Same therapies as D, but with enhanced sensing: 3 wearables + "
+                        "Abbott Lingo continuous lactate monitor + quarterly blood biomarker "
+                        "panel (hs-CRP, GDF-15, NAD+, 8-OHdG). Shows how additional sensors "
+                        "improve adaptive control compared to E (wearables only).",
+            patient_params=dict(BASE_PATIENT),
+            interventions=_scenario_d_interventions(),
+            sensor_config=_scenario_f_sensor_config(),
+        ),
+        Scenario(
+            name="G: F + Family Genomics Informed",
+            description="Same therapies and devices as F, but with WGS-derived family "
+                        "genomics priors replacing population-average priors for mtDNA "
+                        "population variables. Direct heteroplasmy measurement from 100x "
+                        "WGS, haplogroup-specific vulnerability, and cross-generational "
+                        "calibration from family medical histories.",
+            patient_params=dict(BASE_PATIENT),
+            interventions=_scenario_d_interventions(),
+            sensor_config=_scenario_g_sensor_config(),
         ),
     ]
