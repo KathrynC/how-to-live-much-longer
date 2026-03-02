@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mitochondrial Longevity Atlas: D3.js Dashboard</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #0a0a0c; color: #d0d0d0; margin: 0; padding: 20px; }
+        h1 { color: #fff; text-align: center; font-weight: 200; }
+        #viz-container { display: flex; justify-content: center; margin-top: 20px; }
+        .viz-box { background-color: #141418; border-radius: 12px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        .tooltip { position: absolute; padding: 12px; background: rgba(20, 20, 25, 0.95); border: 1px solid #444; border-radius: 6px; pointer-events: none; font-size: 13px; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .axis-label { font-size: 14px; fill: #888; }
+        .grid-line { stroke: #222; stroke-width: 1; }
+        .cliff-line { stroke: #ff4444; stroke-width: 2; stroke-dasharray: 5; opacity: 0.5; }
+    </style>
+</head>
+<body>
+    <h1>Mitochondrial Longevity Atlas</h1>
+    <div id="viz-container">
+        <div id="viz" class="viz-box"></div>
+    </div>
+    <div style="text-align: center; margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <p><strong>X-Axis:</strong> Heteroplasmy (Damage) | <strong>Y-Axis:</strong> ATP (Energy)</p>
+        <p>Bubble size represents <strong>Survival Reserve</strong>. Colors transition from <strong>Purple (Stagnant)</strong> to <strong>Yellow (Explosive)</strong>.</p>
+    </div>
+
+    <script>
+        const width = 800;
+        const height = 600;
+        const margin = {top: 40, right: 40, bottom: 60, left: 60};
+
+        const svg = d3.select("#viz")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        d3.json("../artifacts/longevity_atlas_data.json").then(data => {
+            const xScale = d3.scaleLinear().domain([0, 1]).range([margin.left, width - margin.right]);
+            const yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom, margin.top]);
+            const rScale = d3.scaleSqrt().domain([0, 1]).range([2, 12]);
+            const colorScale = d3.scaleSequential(d3.interpolateMagma).domain([0, 1]);
+
+            // Add Cliff Line (Heteroplasmy 0.5)
+            svg.append("line")
+                .attr("class", "cliff-line")
+                .attr("x1", xScale(0.5)).attr("y1", margin.top)
+                .attr("x2", xScale(0.5)).attr("y2", height - margin.bottom);
+
+            svg.append("text")
+                .attr("x", xScale(0.5) + 5).attr("y", margin.top + 20)
+                .attr("fill", "#ff4444").attr("font-size", "10px")
+                .text("THE CLIFF");
+
+            // X-Axis
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale).ticks(10))
+                .attr("color", "#444");
+
+            // Y-Axis
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(yScale).ticks(10))
+                .attr("color", "#444");
+
+            // Points
+            svg.selectAll(".dot")
+                .data(data)
+                .enter().append("circle")
+                .attr("cx", d => xScale(d.x))
+                .attr("cy", d => yScale(d.y))
+                .attr("r", d => rScale(d.z))
+                .attr("fill", d => colorScale(d.y))
+                .attr("opacity", 0.7)
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", .95);
+                    tooltip.html(`
+                        <strong>Regime: ${d.regime}</strong><br/>
+                        Age: ${Math.round(d.age)}<br/>
+                        ATP: ${d.atp.toFixed(3)}<br/>
+                        Het: ${d.het.toFixed(3)}<br/>
+                        Fitness: ${d.fitness.toFixed(2)}
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
+        });
+    </script>
+</body>
+</html>
