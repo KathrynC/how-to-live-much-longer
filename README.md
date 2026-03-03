@@ -11,6 +11,14 @@ A computational simulation of mitochondrial aging dynamics and intervention stra
 
 This project adapts the TIQM (Transactional Interpretation of Quantum Mechanics) pipeline from the parent [Evolutionary-Robotics](https://github.com/gardenofcomputation/Evolutionary-Robotics) project for cellular energetics. Instead of LLM → physics simulation → VLM scoring for robot locomotion, we use LLM → mitochondrial ODE simulation → VLM scoring for intervention protocol design.
 
+### TIQM Architecture
+The core experiment loop (`tiqm_experiment.py`) implements a three-phase "Offer/Confirmation" cycle:
+1. **Offer Wave**: LLM generates a 12D intervention vector from a clinical scenario.
+2. **Simulation**: RK4 ODE solver models 30 years of mitochondrial dynamics.
+3. **Confirmation Wave**: A *different* model evaluates the trajectory for resonance and plausibility.
+
+For a detailed technical breakdown, see **[The TIQM Pipeline Documentation](docs/TIQM_PIPELINE.md)**.
+
 **Core thesis (Cramer, forthcoming 2026):** Aging is a cellular energy crisis caused by progressive mitochondrial DNA damage. When the fraction of damaged mtDNA (heteroplasmy) exceeds ~70% — the "heteroplasmy cliff" — ATP production collapses nonlinearly, triggering a cascade of cellular dysfunction.
 
 ## At the Outset: Slowing vs Reversing
@@ -751,4 +759,7 @@ This project extends the TIQM pipeline from [Evolutionary-Robotics](https://gith
 - **Model-form assumption:** Biological mechanisms are represented in reduced-form computational structures (ODE-style dynamics, scenario perturbations, and optimization surfaces) to make hypotheses testable and comparable.
 - **Parameter assumption:** Constants and intervention ranges are interpreted as theory-informed approximations for simulation and stress-testing, not as universal physiological truths for all populations.
 - **Evidence and scope assumption:** Outputs are hypothesis-generating research artifacts for mechanism exploration, sensitivity analysis, and scenario comparison. They are not clinical prescriptions, medical advice, or proof of efficacy.
-- **Validation assumption:** Scientific confidence depends on empirical triangulation (literature checks, mechanistic plausibility, sensitivity behavior, and experimental/clinical follow-up), not simulator output alone.
+## TODO & Future Research
+- [ ] **Temporal Confirmation Wave**: Investigate integrating **VideoCLIP** or **X-CLIP** to evaluate the *fluency* of mitochondrial trajectories rather than static outcome scores.
+- [ ] **Mutual Learning Optimization**: Refine the `resonance_symmathesy` metric to serve as a direct fitness function for evolving adaptive (time-varying) intervention protocols.
+- [ ] **Cross-Project Stability Consensus**: Use the Multi-Sim Spelunker to identify if "Resilient" mitochondrial patterns share mathematical cognates with stable "Family Office" or "Robotic Gait" profiles.
