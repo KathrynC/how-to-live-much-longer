@@ -275,6 +275,68 @@ _GRIEF_FULL_SUPPORT: dict[str, float] = {
 }
 
 
+# -- Reverse coupling: mito → grief modifiers ---------------------------------
+# Mitochondrial state affects grief processing capacity. At age 63 with APOE4,
+# the mito→grief channel is not negligible.
+
+# Healthy reference values for normalization
+ATP_HEALTHY: float = 0.85      # Healthy ATP at age 63 (from mito sim calibration)
+NAD_HEALTHY: float = 0.60      # Healthy NAD+ at age 63
+SENESCENCE_INFL_COEFF: float = 0.15  # Senescent fraction → baseline inflammation offset
+
+
+def mito_to_grief_modifiers(mito_state: dict[str, float]) -> dict[str, float]:
+    """Reverse coupling: mitochondrial state affects grief processing.
+
+    Three channels:
+        1. Low ATP → slower PE extinction (less energy for emotional processing)
+           The brain consumes ~20% of body's ATP. When ATP drops, cognitive
+           processes including extinction learning are impaired.
+
+        2. High senescence → elevated baseline inflammation (shifts infl_0 up)
+           Senescent cells secrete SASP (senescence-associated secretory
+           phenotype), adding to the inflammatory burden that grief already
+           creates.
+
+        3. Low NAD+ → impaired HRV recovery (reduces HRV recovery rate)
+           NAD+ is required for sirtuin-mediated mitochondrial repair in
+           cardiac tissue. Low NAD+ means the heart's ability to recover
+           vagal tone is compromised.
+
+    Args:
+        mito_state: Dict with keys 'atp', 'nad', 'senescent_fraction'.
+            Typically from a mito simulation snapshot.
+
+    Returns:
+        Dict with modifier keys:
+            pe_decay_modifier: 0.5-1.0 (scales PE extinction rate)
+            infl_0_offset: 0.0-0.15 (additive baseline inflammation)
+            hrv_recovery_modifier: 0.5-1.0 (scales HRV recovery rate)
+    """
+    atp = mito_state.get("atp", ATP_HEALTHY)
+    nad = mito_state.get("nad", NAD_HEALTHY)
+    sen = mito_state.get("senescent_fraction", 0.0)
+
+    # Channel 1: ATP → PE decay rate
+    # At healthy ATP, modifier = 1.0 (no change)
+    # At half ATP, modifier = 0.5 (extinction learning halved)
+    pe_decay_mod = max(0.5, min(1.0, atp / ATP_HEALTHY))
+
+    # Channel 2: Senescence → baseline inflammation
+    # SASP from senescent cells adds to infl_0
+    infl_offset = SENESCENCE_INFL_COEFF * max(0.0, min(1.0, sen))
+
+    # Channel 3: NAD+ → HRV recovery
+    # Low NAD+ impairs cardiac mitochondrial function → slower HRV recovery
+    hrv_recovery_mod = max(0.5, min(1.0, nad / NAD_HEALTHY))
+
+    return {
+        "pe_decay_modifier": pe_decay_mod,
+        "infl_0_offset": infl_offset,
+        "hrv_recovery_modifier": hrv_recovery_mod,
+    }
+
+
 def grief_scenarios() -> list[GriefDisturbance]:
     """Build GriefDisturbance objects for all 8 clinical seeds x 2 intervention levels.
 
